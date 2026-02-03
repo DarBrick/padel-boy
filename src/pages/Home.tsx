@@ -26,7 +26,7 @@ export function Home() {
       {/* CTA Button */}
       <div className="flex justify-center">
         <button
-          onClick={() => navigate('/setup')}
+          onClick={() => navigate('/create')}
           className="
             px-8 py-4 
             bg-gradient-to-r from-blue-600 to-[#D4FF00] 

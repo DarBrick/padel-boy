@@ -35,8 +35,40 @@ const resources = {
           step4: 'Enter scores and share standings via unique URL',
         },
       },
-      setup: {
-        title: 'Tournament Setup',
+      create: {
+        title: 'Create Tournament',
+        backToHome: 'Back to home',
+        eventType: {
+          label: 'Tournament Format',
+          americanoDesc: 'All players vs all',
+          mexicanoDesc: 'Dynamic pairing by ranking',
+        },
+        name: {
+          label: 'Tournament Name',
+          placeholder: 'Enter tournament name',
+          error: 'Please enter a tournament name',
+        },
+        players: {
+          label: 'Number of Players',
+          error: 'Please enter a number between 4 and 40',
+        },
+        courts: {
+          label: 'Number of Courts',
+          error: 'Please enter a number between 1 and 10',
+        },
+        mexicano: {
+          title: 'Mexicano Settings',
+          matchup: {
+            label: 'Matchup Style',
+            desc1: '1st & 4th vs 2nd & 3rd',
+            desc2: '1st & 3rd vs 2nd & 4th',
+          },
+          randomRounds: {
+            label: 'Random Rounds',
+            desc: 'Number of initial rounds with random pairings before ranking-based matchups',
+          },
+        },
+        submit: 'Continue to Players',
       },
       players: {
         title: 'Players',
@@ -49,6 +81,20 @@ const resources = {
       },
       footer: {
         createdBy: 'Created by Dariusz W.',
+      },
+      months: {
+        '0': 'Jan',
+        '1': 'Feb',
+        '2': 'Mar',
+        '3': 'Apr',
+        '4': 'May',
+        '5': 'Jun',
+        '6': 'Jul',
+        '7': 'Aug',
+        '8': 'Sep',
+        '9': 'Oct',
+        '10': 'Nov',
+        '11': 'Dec',
       },
     },
   },
@@ -84,8 +130,40 @@ const resources = {
           step4: 'Wprowadzaj wyniki i udostępniaj klasyfikację przez unikalny link',
         },
       },
-      setup: {
-        title: 'Ustawienia Turnieju',
+      create: {
+        title: 'Stwórz Turniej',
+        backToHome: 'Powrót do strony głównej',
+        eventType: {
+          label: 'Format Turnieju',
+          americanoDesc: 'Wszyscy gracze vs wszyscy',
+          mexicanoDesc: 'Dynamiczne parowanie wg rankingu',
+        },
+        name: {
+          label: 'Nazwa Turnieju',
+          placeholder: 'Wprowadź nazwę turnieju',
+          error: 'Wprowadź nazwę turnieju',
+        },
+        players: {
+          label: 'Liczba Graczy',
+          error: 'Wprowadź liczbę od 4 do 40',
+        },
+        courts: {
+          label: 'Liczba Kortów',
+          error: 'Wprowadź liczbę od 1 do 10',
+        },
+        mexicano: {
+          title: 'Ustawienia Mexicano',
+          matchup: {
+            label: 'Styl Parowania',
+            desc1: '1. i 4. vs 2. i 3.',
+            desc2: '1. i 3. vs 2. i 4.',
+          },
+          randomRounds: {
+            label: 'Rundy Losowe',
+            desc: 'Liczba początkowych rund z losowym parowaniem przed parowaniem według rankingu',
+          },
+        },
+        submit: 'Przejdź do Graczy',
       },
       players: {
         title: 'Gracze',
@@ -98,6 +176,20 @@ const resources = {
       },
       footer: {
         createdBy: 'Stworzono przez Dariusz W.',
+      },
+      months: {
+        '0': 'Sty',
+        '1': 'Lut',
+        '2': 'Mar',
+        '3': 'Kwi',
+        '4': 'Maj',
+        '5': 'Cze',
+        '6': 'Lip',
+        '7': 'Sie',
+        '8': 'Wrz',
+        '9': 'Paź',
+        '10': 'Lis',
+        '11': 'Gru',
       },
     },
   },
@@ -133,8 +225,40 @@ const resources = {
           step4: 'Introduce los resultados y comparte la clasificación mediante URL única',
         },
       },
-      setup: {
-        title: 'Configuración del Torneo',
+      create: {
+        title: 'Crear Torneo',
+        backToHome: 'Volver al inicio',
+        eventType: {
+          label: 'Formato del Torneo',
+          americanoDesc: 'Todos contra todos',
+          mexicanoDesc: 'Emparejamiento dinámico por ranking',
+        },
+        name: {
+          label: 'Nombre del Torneo',
+          placeholder: 'Introduce el nombre del torneo',
+          error: 'Introduce un nombre para el torneo',
+        },
+        players: {
+          label: 'Número de Jugadores',
+          error: 'Introduce un número entre 4 y 40',
+        },
+        courts: {
+          label: 'Número de Pistas',
+          error: 'Introduce un número entre 1 y 10',
+        },
+        mexicano: {
+          title: 'Configuración Mexicano',
+          matchup: {
+            label: 'Estilo de Emparejamiento',
+            desc1: '1º y 4º vs 2º y 3º',
+            desc2: '1º y 3º vs 2º y 4º',
+          },
+          randomRounds: {
+            label: 'Rondas Aleatorias',
+            desc: 'Número de rondas iniciales con emparejamientos aleatorios antes de basarse en el ranking',
+          },
+        },
+        submit: 'Continuar a Jugadores',
       },
       players: {
         title: 'Jugadores',
@@ -147,6 +271,20 @@ const resources = {
       },
       footer: {
         createdBy: 'Creado por Dariusz W.',
+      },
+      months: {
+        '0': 'Ene',
+        '1': 'Feb',
+        '2': 'Mar',
+        '3': 'Abr',
+        '4': 'May',
+        '5': 'Jun',
+        '6': 'Jul',
+        '7': 'Ago',
+        '8': 'Sep',
+        '9': 'Oct',
+        '10': 'Nov',
+        '11': 'Dic',
       },
     },
   },

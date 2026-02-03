@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 import { Home } from './pages/Home'
-import { Setup } from './pages/Setup'
+import { Create } from './pages/Create'
 import { Players } from './pages/Players'
 import { Tournament } from './pages/Tournament'
 import { Standings } from './pages/Standings'
@@ -18,7 +18,7 @@ export function App() {
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/setup" element={<Setup />} />
+            <Route path="/create" element={<Create />} />
             <Route path="/players" element={<Players />} />
             <Route path="/tournament" element={<Tournament />} />
             <Route path="/standings" element={<Standings />} />
