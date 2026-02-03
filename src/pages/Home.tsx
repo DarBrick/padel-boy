@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
-import { Trophy, Users, Calendar, Zap } from 'lucide-react'
+import { Trophy, Users, Calendar, Zap, ArrowUp } from 'lucide-react'
 
 export function Home() {
   const { t } = useTranslation()
@@ -29,8 +29,8 @@ export function Home() {
           onClick={() => navigate('/setup')}
           className="
             px-8 py-4 
-            bg-gradient-to-r from-blue-600 to-purple-600 
-            hover:from-blue-500 hover:to-purple-500
+            bg-gradient-to-r from-blue-600 to-[#D4FF00] 
+            hover:from-blue-500 hover:to-[#C5F000]
             rounded-lg 
             text-lg font-semibold
             transition-all duration-200
@@ -88,6 +88,32 @@ export function Home() {
           </li>
         </ol>
       </div>
+
+      {/* Scroll to Top Button */}
+      <div className="flex justify-center mt-12">
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="
+            p-3 
+            bg-slate-800 
+            hover:bg-slate-700 
+            border border-slate-600 
+            hover:border-blue-500
+            rounded-full 
+            transition-all duration-200
+            shadow-lg hover:shadow-xl
+            group
+          "
+          aria-label="Scroll to top"
+        >
+          <ArrowUp className="w-6 h-6 text-slate-400 group-hover:text-blue-400 transition-colors" />
+        </button>
+      </div>
+
+      {/* Footer */}
+      <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm">
+        {t('footer.createdBy')}
+      </footer>
     </div>
   )
 }
