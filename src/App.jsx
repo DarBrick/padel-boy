@@ -1,12 +1,14 @@
 import { useState } from 'react'
+import { PadelBallIcon } from './components/PadelBallIcon'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex flex-col items-center justify-center p-8">
+      <PadelBallIcon className="w-24 h-24 mb-6" animate={true} />
       <h1 className="text-5xl font-bold text-white mb-8">
-        🎾 Padel Boy
+        Padel Boy
       </h1>
       <div className="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
         <button 
