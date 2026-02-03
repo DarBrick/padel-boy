@@ -4,7 +4,7 @@ import { PadelBallIcon } from './components/PadelBallIcon'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState<number>(0)
   const { t } = useTranslation()
 
   return (

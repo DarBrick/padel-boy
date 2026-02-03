@@ -1,4 +1,9 @@
-export function PadelBallIcon({ className = "w-16 h-16", animate = true }) {
+interface PadelBallIconProps {
+  className?: string
+  animate?: boolean
+}
+
+export function PadelBallIcon({ className = "w-16 h-16", animate = true }: PadelBallIconProps) {
   return (
     <svg
       viewBox="0 0 100 100"

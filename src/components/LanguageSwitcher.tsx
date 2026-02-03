@@ -2,7 +2,13 @@ import { Languages } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 
-const languages = [
+interface Language {
+  code: string
+  name: string
+  flag: string
+}
+
+const languages: Language[] = [
   { code: 'en', name: 'English', flag: '🇬🇧' },
   { code: 'pl', name: 'Polski', flag: '🇵🇱' },
   { code: 'es', name: 'Español', flag: '🇪🇸' },
