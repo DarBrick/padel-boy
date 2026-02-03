@@ -19,7 +19,7 @@ export function LanguageSwitcher() {
   const [isOpen, setIsOpen] = useState(false)
   const currentLang = languages.find(lang => lang.code === i18n.language) || languages[0]
 
-  const handleLanguageChange = (langCode) => {
+  const handleLanguageChange = (langCode:string) => {
     i18n.changeLanguage(langCode)
     setIsOpen(false)
   }

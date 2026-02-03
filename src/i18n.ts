@@ -7,7 +7,7 @@ const resources = {
     translation: {
       appName: 'Padel Boy',
       home: {
-        subtitle: 'Organize and manage Padel games with ease',
+        subtitle: 'Organize and manage Padel games with ease. Free, no payments required.',
         startTournament: 'Start New Tournament',
         features: {
           formats: {
@@ -16,15 +16,15 @@ const resources = {
           },
           players: {
             title: 'Flexible Player Count',
-            description: 'Support for 4-16 players with automatic match generation',
+            description: 'Support for 4-40 players with automatic match generation',
           },
           rounds: {
             title: 'Smart Round Management',
             description: 'Automatic pairing and scheduling for multiple courts',
           },
           realtime: {
-            title: 'Live Standings',
-            description: 'Track scores and rankings in real-time as matches complete',
+            title: 'Share Results',
+            description: 'Share tournament standings with others via a unique URL',
           },
         },
         howItWorks: {
@@ -32,7 +32,7 @@ const resources = {
           step1: 'Choose tournament format (Americano or Mexicano)',
           step2: 'Add players and select number of courts',
           step3: 'System generates matches automatically',
-          step4: 'Enter scores and watch standings update live',
+          step4: 'Enter scores and share standings via unique URL',
         },
       },
       setup: {
@@ -47,13 +47,16 @@ const resources = {
       standings: {
         title: 'Standings',
       },
+      footer: {
+        createdBy: 'Created by Dariusz W.',
+      },
     },
   },
   pl: {
     translation: {
       appName: 'Padel Boy',
       home: {
-        subtitle: 'Organizuj i zarządzaj grami w Padel z łatwością',
+        subtitle: 'Organizuj i zarządzaj grami w Padel z łatwością. Bezpłatnie, bez opłat.',
         startTournament: 'Rozpocznij Nowy Turniej',
         features: {
           formats: {
@@ -62,15 +65,15 @@ const resources = {
           },
           players: {
             title: 'Elastyczna Liczba Graczy',
-            description: 'Wsparcie dla 4-16 graczy z automatycznym generowaniem meczów',
+            description: 'Wsparcie dla 4-40 graczy z automatycznym generowaniem meczów',
           },
           rounds: {
             title: 'Inteligentne Zarządzanie Rundami',
             description: 'Automatyczne parowanie i planowanie dla wielu kortów',
           },
           realtime: {
-            title: 'Na Żywo Klasyfikacja',
-            description: 'Śledź wyniki i rankingi w czasie rzeczywistym',
+            title: 'Podziel się wynikami',
+            description: 'Udostępnij klasyfikację turnieju innym za pomocą unikalnego linku',
           },
         },
         howItWorks: {
@@ -78,7 +81,7 @@ const resources = {
           step1: 'Wybierz format turnieju (Americano lub Mexicano)',
           step2: 'Dodaj graczy i wybierz liczbę kortów',
           step3: 'System automatycznie generuje mecze',
-          step4: 'Wprowadzaj wyniki i obserwuj aktualizacje na żywo',
+          step4: 'Wprowadzaj wyniki i udostępniaj klasyfikację przez unikalny link',
         },
       },
       setup: {
@@ -93,13 +96,16 @@ const resources = {
       standings: {
         title: 'Klasyfikacja',
       },
+      footer: {
+        createdBy: 'Stworzono przez Dariusz W.',
+      },
     },
   },
   es: {
     translation: {
       appName: 'Padel Boy',
       home: {
-        subtitle: 'Organiza y gestiona juegos de Padel con facilidad',
+        subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
         startTournament: 'Iniciar Nuevo Torneo',
         features: {
           formats: {
@@ -108,15 +114,15 @@ const resources = {
           },
           players: {
             title: 'Número Flexible de Jugadores',
-            description: 'Soporte para 4-16 jugadores con generación automática de partidos',
+            description: 'Soporte para 4-40 jugadores con generación automática de partidos',
           },
           rounds: {
             title: 'Gestión Inteligente de Rondas',
             description: 'Emparejamiento y programación automática para múltiples pistas',
           },
           realtime: {
-            title: 'Clasificación en Vivo',
-            description: 'Sigue las puntuaciones y clasificaciones en tiempo real',
+            title: 'Compartir Resultados',
+            description: 'Comparte la clasificación del torneo con otros mediante una URL única',
           },
         },
         howItWorks: {
@@ -124,7 +130,7 @@ const resources = {
           step1: 'Elige el formato del torneo (Americano o Mexicano)',
           step2: 'Añade jugadores y selecciona el número de pistas',
           step3: 'El sistema genera los partidos automáticamente',
-          step4: 'Introduce los resultados y observa las actualizaciones en vivo',
+          step4: 'Introduce los resultados y comparte la clasificación mediante URL única',
         },
       },
       setup: {
@@ -138,6 +144,9 @@ const resources = {
       },
       standings: {
         title: 'Clasificación',
+      },
+      footer: {
+        createdBy: 'Creado por Dariusz W.',
       },
     },
   },
