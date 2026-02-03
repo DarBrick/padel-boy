@@ -6,10 +6,12 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex flex-col items-center justify-center p-8">
-      <PadelBallIcon className="w-24 h-24 mb-6" animate={true} />
-      <h1 className="text-5xl font-bold text-white mb-8">
-        Padel Boy
-      </h1>
+      <div className="flex items-center gap-4 mb-8">
+        <PadelBallIcon className="w-20 h-20" animate={true} />
+        <h1 className="text-5xl font-bold text-white">
+          Padel Boy
+        </h1>
+      </div>
       <div className="bg-slate-700/50 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
         <button 
           onClick={() => setCount((count) => count + 1)}
