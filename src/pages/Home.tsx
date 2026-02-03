@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
+import { GradientButton } from '../components/GradientButton'
 import { Trophy, Users, Calendar, Zap, ArrowUp } from 'lucide-react'
 
 export function Home() {
@@ -25,21 +26,9 @@ export function Home() {
 
       {/* CTA Button */}
       <div className="flex justify-center">
-        <button
-          onClick={() => navigate('/create')}
-          className="
-            px-8 py-4 
-            bg-gradient-to-r from-blue-600 to-[#D4FF00] 
-            hover:from-blue-500 hover:to-[#C5F000]
-            rounded-lg 
-            text-lg font-semibold
-            transition-all duration-200
-            shadow-lg hover:shadow-xl
-            transform hover:scale-105
-          "
-        >
+        <GradientButton onClick={() => navigate('/create')}>
           {t('home.startTournament')}
-        </button>
+        </GradientButton>
       </div>
 
       {/* Features Grid */}
