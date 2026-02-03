@@ -32,7 +32,7 @@ export function PadelBallIcon({ className = "w-16 h-16", animate = true }) {
       />
       
       {/* Pulse Line */}
-      <g className={animate ? "animate-pulse" : ""}>
+      <g className={animate ? "animate-wave" : ""}>
         <path
           d="M 10 50 L 30 50 L 35 40 L 40 60 L 45 45 L 50 50 L 70 50"
           stroke="#FF0066"
@@ -50,7 +50,6 @@ export function PadelBallIcon({ className = "w-16 h-16", animate = true }) {
           strokeLinecap="round"
           strokeLinejoin="round"
           opacity="0.3"
-          className={animate ? "animate-pulse" : ""}
         />
       </g>
     </svg>
