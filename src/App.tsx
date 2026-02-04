@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { CookieBanner } from './components/CookieBanner'
 import { Home } from './pages/Home'
 import { Create } from './pages/Create'
 import { Tournament } from './pages/Tournament'
 import { Standings } from './pages/Standings'
+import { Privacy } from './pages/Privacy'
 
 export function App() {
   return (
@@ -20,9 +22,13 @@ export function App() {
             <Route path="/create" element={<Create />} />
             <Route path="/tournament" element={<Tournament />} />
             <Route path="/standings" element={<Standings />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
+
+        {/* Cookie Banner */}
+        <CookieBanner />
       </div>
     </BrowserRouter>
   )
