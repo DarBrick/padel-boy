@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, Rocket, Globe, Swords, Users, Wrench } from 'lucide-react'
 
 export function Help() {
   const { t } = useTranslation()
@@ -28,27 +28,27 @@ export function Help() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Getting Started */}
-        <ContentPanel icon="🚀" title={t('help.gettingStarted.title')}>
+        <ContentPanel icon={Rocket} title={t('help.gettingStarted.title')}>
           {t('help.gettingStarted.desc')}
         </ContentPanel>
 
         {/* Americano Format */}
-        <ContentPanel icon="🌎" title={t('help.americano.title')}>
+        <ContentPanel icon={Globe} title={t('help.americano.title')}>
           {t('help.americano.desc')}
         </ContentPanel>
 
         {/* Mexicano Format */}
-        <ContentPanel icon="🇲🇽" title={t('help.mexicano.title')}>
+        <ContentPanel icon={Swords} title={t('help.mexicano.title')}>
           {t('help.mexicano.desc')}
         </ContentPanel>
 
         {/* Managing Players */}
-        <ContentPanel icon="👥" title={t('help.players.title')}>
+        <ContentPanel icon={Users} title={t('help.players.title')}>
           {t('help.players.desc')}
         </ContentPanel>
 
         {/* Troubleshooting */}
-        <ContentPanel icon="🔧" title={t('help.troubleshooting.title')}>
+        <ContentPanel icon={Wrench} title={t('help.troubleshooting.title')}>
           {t('help.troubleshooting.desc')}
         </ContentPanel>
       </div>

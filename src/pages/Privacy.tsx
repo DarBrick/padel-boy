@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, Languages, Trophy, Settings } from 'lucide-react'
 
 export function Privacy() {
   const { t } = useTranslation()
@@ -28,17 +28,17 @@ export function Privacy() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Language Preference */}
-        <ContentPanel icon="📝" title={t('privacy.language.title')}>
+        <ContentPanel icon={Languages} title={t('privacy.language.title')}>
           {t('privacy.language.desc')}
         </ContentPanel>
 
         {/* Tournament Data */}
-        <ContentPanel icon="🏆" title={t('privacy.tournaments.title')}>
+        <ContentPanel icon={Trophy} title={t('privacy.tournaments.title')}>
           {t('privacy.tournaments.desc')}
         </ContentPanel>
 
         {/* User Control */}
-        <ContentPanel icon="⚙️" title={t('privacy.control.title')}>
+        <ContentPanel icon={Settings} title={t('privacy.control.title')}>
           {t('privacy.control.desc')}
         </ContentPanel>
       </div>

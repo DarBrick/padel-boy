@@ -1,22 +1,23 @@
 import { ReactNode } from 'react'
+import { LucideIcon } from 'lucide-react'
 
 interface ContentPanelProps {
   children: ReactNode
-  icon?: string
+  icon?: LucideIcon
   title?: string
   className?: string
 }
 
-export function ContentPanel({ children, icon, title, className = '' }: ContentPanelProps) {
+export function ContentPanel({ children, icon: Icon, title, className = '' }: ContentPanelProps) {
   return (
     <section className={`bg-slate-800/50 border border-[var(--color-padel-yellow)]/50 rounded-lg p-6 md:p-8 transition-colors ${className}`}>
-      {(icon || title) && (
+      {(Icon || title) && (
         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-          {icon && <span className="text-[var(--color-padel-yellow)]">{icon}</span>}
+          {Icon && <Icon className="w-6 h-6 text-[var(--color-padel-yellow)]" />}
           {title}
         </h2>
       )}
-      {(icon || title) ? (
+      {(Icon || title) ? (
         <div className="text-slate-300 leading-relaxed whitespace-pre-line">
           {children}
         </div>

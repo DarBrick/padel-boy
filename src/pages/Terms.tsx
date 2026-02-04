@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, FileText, UserCheck, AlertTriangle, Shield, RefreshCw } from 'lucide-react'
 
 export function Terms() {
   const { t } = useTranslation()
@@ -28,27 +28,27 @@ export function Terms() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Service Description */}
-        <ContentPanel icon="📋" title={t('terms.service.title')}>
+        <ContentPanel icon={FileText} title={t('terms.service.title')}>
           {t('terms.service.desc')}
         </ContentPanel>
 
         {/* User Responsibilities */}
-        <ContentPanel icon="👤" title={t('terms.responsibilities.title')}>
+        <ContentPanel icon={UserCheck} title={t('terms.responsibilities.title')}>
           {t('terms.responsibilities.desc')}
         </ContentPanel>
 
         {/* Disclaimer */}
-        <ContentPanel icon="⚠️" title={t('terms.disclaimer.title')}>
+        <ContentPanel icon={AlertTriangle} title={t('terms.disclaimer.title')}>
           {t('terms.disclaimer.desc')}
         </ContentPanel>
 
         {/* Liability */}
-        <ContentPanel icon="🛡️" title={t('terms.liability.title')}>
+        <ContentPanel icon={Shield} title={t('terms.liability.title')}>
           {t('terms.liability.desc')}
         </ContentPanel>
 
         {/* Changes */}
-        <ContentPanel icon="🔄" title={t('terms.changes.title')}>
+        <ContentPanel icon={RefreshCw} title={t('terms.changes.title')}>
           {t('terms.changes.desc')}
         </ContentPanel>
       </div>
