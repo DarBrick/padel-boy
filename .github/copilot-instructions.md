@@ -47,8 +47,9 @@ src/
 
 ### Component Patterns
 - Use named exports for components: `export function ComponentName()`
-- Import icons from lucide-react: `import { ArrowLeft, Cookie } from 'lucide-react'`
-- Use lucide icons with className for sizing and colors: `<Cookie className="w-5 h-5 text-[var(--color-padel-yellow)]" />`
+- **Icons**: ALWAYS use lucide-react icons for UI elements. Import icons from lucide-react: `import { ArrowLeft, Cookie } from 'lucide-react'`
+- **Icon usage**: Use lucide icons with className for sizing and colors: `<Cookie className="w-5 h-5 text-[var(--color-padel-yellow)]" />`
+- **NO emojis**: Never use emoji characters for icons in the UI. Always use lucide-react components instead
 - Custom SVG icons as React components with `className` and custom props (see `PadelBallIcon.jsx`)
 - Props with sensible defaults: `{ className = "w-16 h-16", animate = true }`
 
