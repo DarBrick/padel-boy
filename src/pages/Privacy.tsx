@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
+import { ContentPanel } from '../components/ContentPanel'
+import { Footer } from '../components/Footer'
 import { ArrowUp } from 'lucide-react'
 
 export function Privacy() {
@@ -26,37 +28,19 @@ export function Privacy() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Language Preference */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">📝</span>
-            {t('privacy.language.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('privacy.language.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="📝" title={t('privacy.language.title')}>
+          {t('privacy.language.desc')}
+        </ContentPanel>
 
         {/* Tournament Data */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🏆</span>
-            {t('privacy.tournaments.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('privacy.tournaments.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🏆" title={t('privacy.tournaments.title')}>
+          {t('privacy.tournaments.desc')}
+        </ContentPanel>
 
         {/* User Control */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">⚙️</span>
-            {t('privacy.control.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('privacy.control.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="⚙️" title={t('privacy.control.title')}>
+          {t('privacy.control.desc')}
+        </ContentPanel>
       </div>
 
       {/* Scroll to Top Button */}
@@ -66,6 +50,11 @@ export function Privacy() {
           icon={ArrowUp}
           label="Scroll to top"
         />
+      </div>
+
+      {/* Footer */}
+      <div className="container mx-auto px-4">
+        <Footer />
       </div>
     </div>
   )

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
+import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
 import { ArrowUp } from 'lucide-react'
 
@@ -27,59 +28,29 @@ export function Help() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Getting Started */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🚀</span>
-            {t('help.gettingStarted.title')}
-          </h2>
-          <div className="text-slate-300 leading-relaxed space-y-3">
-            <p className="whitespace-pre-line">{t('help.gettingStarted.desc')}</p>
-          </div>
-        </section>
+        <ContentPanel icon="🚀" title={t('help.gettingStarted.title')}>
+          {t('help.gettingStarted.desc')}
+        </ContentPanel>
 
         {/* Americano Format */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🌎</span>
-            {t('help.americano.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('help.americano.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🌎" title={t('help.americano.title')}>
+          {t('help.americano.desc')}
+        </ContentPanel>
 
         {/* Mexicano Format */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🇲🇽</span>
-            {t('help.mexicano.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('help.mexicano.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🇲🇽" title={t('help.mexicano.title')}>
+          {t('help.mexicano.desc')}
+        </ContentPanel>
 
         {/* Managing Players */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">👥</span>
-            {t('help.players.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('help.players.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="👥" title={t('help.players.title')}>
+          {t('help.players.desc')}
+        </ContentPanel>
 
         {/* Troubleshooting */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🔧</span>
-            {t('help.troubleshooting.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('help.troubleshooting.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🔧" title={t('help.troubleshooting.title')}>
+          {t('help.troubleshooting.desc')}
+        </ContentPanel>
       </div>
 
       {/* Scroll to Top Button */}

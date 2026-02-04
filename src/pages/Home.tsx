@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
 import { IconButton } from '../components/IconButton'
+import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
 import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb } from 'lucide-react'
 
@@ -35,30 +36,38 @@ export function Home() {
 
       {/* Features Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
-        <FeatureCard
-          icon={<Trophy className="w-8 h-8" />}
-          title={t('home.features.formats.title')}
-          description={t('home.features.formats.description')}
-        />
-        <FeatureCard
-          icon={<Users className="w-8 h-8" />}
-          title={t('home.features.players.title')}
-          description={t('home.features.players.description')}
-        />
-        <FeatureCard
-          icon={<Calendar className="w-8 h-8" />}
-          title={t('home.features.rounds.title')}
-          description={t('home.features.rounds.description')}
-        />
-        <FeatureCard
-          icon={<Zap className="w-8 h-8" />}
-          title={t('home.features.realtime.title')}
-          description={t('home.features.realtime.description')}
-        />
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <Trophy className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.formats.title')}</h3>
+          <p className="text-slate-400">{t('home.features.formats.description')}</p>
+        </ContentPanel>
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <Users className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.players.title')}</h3>
+          <p className="text-slate-400">{t('home.features.players.description')}</p>
+        </ContentPanel>
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <Calendar className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.rounds.title')}</h3>
+          <p className="text-slate-400">{t('home.features.rounds.description')}</p>
+        </ContentPanel>
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <Zap className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.realtime.title')}</h3>
+          <p className="text-slate-400">{t('home.features.realtime.description')}</p>
+        </ContentPanel>
       </div>
 
       {/* Info Section */}
-      <div className="mt-12 p-6 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+      <ContentPanel className="mt-12">
         <h2 className="text-2xl font-bold mb-4">
           <Lightbulb className="w-6 h-6 inline-block mr-2 text-[var(--color-padel-yellow)]" />
           {t('home.howItWorks.title')}
@@ -81,7 +90,7 @@ export function Home() {
             <span>{t('home.howItWorks.step4')}</span>
           </li>
         </ol>
-      </div>
+      </ContentPanel>
 
       {/* Scroll to Top Button */}
       <div className="flex justify-center mt-12">
@@ -94,24 +103,6 @@ export function Home() {
 
       {/* Footer */}
       <Footer />
-    </div>
-  )
-}
-
-interface FeatureCardProps {
-  icon: React.ReactNode
-  title: string
-  description: string
-}
-
-function FeatureCard({ icon, title, description }: FeatureCardProps) {
-  return (
-    <div className="p-6 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-[var(--color-padel-yellow)]/50 transition-colors">
-      <div className="text-[var(--color-padel-yellow)] mb-3">
-        {icon}
-      </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-slate-400">{description}</p>
     </div>
   )
 }

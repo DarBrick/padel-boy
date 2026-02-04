@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
+import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
 import { ArrowUp } from 'lucide-react'
 
@@ -27,59 +28,29 @@ export function Terms() {
       {/* Content Sections */}
       <div className="container mx-auto px-4 space-y-6">
         {/* Service Description */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">📋</span>
-            {t('terms.service.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('terms.service.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="📋" title={t('terms.service.title')}>
+          {t('terms.service.desc')}
+        </ContentPanel>
 
         {/* User Responsibilities */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">👤</span>
-            {t('terms.responsibilities.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('terms.responsibilities.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="👤" title={t('terms.responsibilities.title')}>
+          {t('terms.responsibilities.desc')}
+        </ContentPanel>
 
         {/* Disclaimer */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">⚠️</span>
-            {t('terms.disclaimer.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('terms.disclaimer.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="⚠️" title={t('terms.disclaimer.title')}>
+          {t('terms.disclaimer.desc')}
+        </ContentPanel>
 
         {/* Liability */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🛡️</span>
-            {t('terms.liability.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('terms.liability.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🛡️" title={t('terms.liability.title')}>
+          {t('terms.liability.desc')}
+        </ContentPanel>
 
         {/* Changes */}
-        <section className="bg-slate-800/50 border border-slate-700 rounded-lg p-6 md:p-8 hover:border-slate-600 transition-colors">
-          <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-            <span className="text-[var(--color-padel-yellow)]">🔄</span>
-            {t('terms.changes.title')}
-          </h2>
-          <p className="text-slate-300 leading-relaxed whitespace-pre-line">
-            {t('terms.changes.desc')}
-          </p>
-        </section>
+        <ContentPanel icon="🔄" title={t('terms.changes.title')}>
+          {t('terms.changes.desc')}
+        </ContentPanel>
       </div>
 
       {/* Scroll to Top Button */}
