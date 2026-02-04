@@ -1,6 +1,6 @@
 import { Languages } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 interface Language {
   code: string
@@ -17,9 +17,23 @@ const languages: Language[] = [
 export function LanguageSwitcher() {
   const { i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
+  const [openUpward, setOpenUpward] = useState(false)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   const currentLang = languages.find(lang => lang.code === i18n.language) || languages[0]
 
-  const handleLanguageChange = (langCode:string) => {
+  useEffect(() => {
+    if (isOpen && buttonRef.current) {
+      const buttonRect = buttonRef.current.getBoundingClientRect()
+      const dropdownHeight = languages.length * 48 // approximate height per item
+      const spaceBelow = window.innerHeight - buttonRect.bottom
+      const spaceAbove = buttonRect.top
+      
+      // Open upward if not enough space below but more space above
+      setOpenUpward(spaceBelow < dropdownHeight && spaceAbove > spaceBelow)
+    }
+  }, [isOpen])
+
+  const handleLanguageChange = (langCode: string) => {
     i18n.changeLanguage(langCode)
     setIsOpen(false)
   }
@@ -27,6 +41,7 @@ export function LanguageSwitcher() {
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors"
         aria-label="Change language"
@@ -44,7 +59,9 @@ export function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
           />
           
-          <div className="absolute right-0 mt-2 w-48 bg-slate-800 rounded-lg shadow-xl z-20">
+          <div className={`absolute right-0 w-48 bg-slate-800 rounded-lg shadow-xl z-20 ${
+            openUpward ? 'bottom-full mb-2' : 'top-full mt-2'
+          }`}>
             {languages.map((lang) => (
               <button
                 key={lang.code}
