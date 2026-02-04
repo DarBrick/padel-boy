@@ -561,7 +561,7 @@ i18n
     fallbackLng: 'en',
     supportedLngs: ['en', 'pl', 'es'],
     detection: {
-      order: ['navigator', 'localStorage', 'cookie'],
+      order: ['localStorage', 'cookie', 'navigator'],
       caches: ['localStorage', 'cookie'],
     },
     interpolation: {
