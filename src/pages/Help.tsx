@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
+import { ContentWithInfoPanels } from '../components/ContentWithInfoPanels'
 import { Footer } from '../components/Footer'
 import { ArrowUp, Rocket, Globe, Swords, Users, Wrench } from 'lucide-react'
 
@@ -29,27 +30,27 @@ export function Help() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Getting Started */}
         <ContentPanel icon={Rocket} title={t('help.gettingStarted.title')}>
-          {t('help.gettingStarted.desc')}
+          <ContentWithInfoPanels html={t('help.gettingStarted.desc')} />
         </ContentPanel>
 
         {/* Americano Format */}
         <ContentPanel icon={Globe} title={t('help.americano.title')}>
-          {t('help.americano.desc')}
+          <ContentWithInfoPanels html={t('help.americano.desc')} />
         </ContentPanel>
 
         {/* Mexicano Format */}
         <ContentPanel icon={Swords} title={t('help.mexicano.title')}>
-          {t('help.mexicano.desc')}
+          <ContentWithInfoPanels html={t('help.mexicano.desc')} />
         </ContentPanel>
 
         {/* Managing Players */}
         <ContentPanel icon={Users} title={t('help.players.title')}>
-          {t('help.players.desc')}
+          <ContentWithInfoPanels html={t('help.players.desc')} />
         </ContentPanel>
 
         {/* Troubleshooting */}
         <ContentPanel icon={Wrench} title={t('help.troubleshooting.title')}>
-          <div dangerouslySetInnerHTML={{ __html: t('help.troubleshooting.desc') }} />
+          <ContentWithInfoPanels html={t('help.troubleshooting.desc')} />
         </ContentPanel>
       </div>
 

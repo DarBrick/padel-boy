@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
+import { ContentWithInfoPanels } from '../components/ContentWithInfoPanels'
 import { Footer } from '../components/Footer'
 import { ArrowUp, FileText, UserCheck, AlertTriangle, Shield, RefreshCw } from 'lucide-react'
 
@@ -29,27 +30,27 @@ export function Terms() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Service Description */}
         <ContentPanel icon={FileText} title={t('terms.service.title')}>
-          {t('terms.service.desc')}
+          <ContentWithInfoPanels html={t('terms.service.desc')} />
         </ContentPanel>
 
         {/* User Responsibilities */}
         <ContentPanel icon={UserCheck} title={t('terms.responsibilities.title')}>
-          {t('terms.responsibilities.desc')}
+          <ContentWithInfoPanels html={t('terms.responsibilities.desc')} />
         </ContentPanel>
 
         {/* Disclaimer */}
         <ContentPanel icon={AlertTriangle} title={t('terms.disclaimer.title')}>
-          {t('terms.disclaimer.desc')}
+          <ContentWithInfoPanels html={t('terms.disclaimer.desc')} />
         </ContentPanel>
 
         {/* Liability */}
         <ContentPanel icon={Shield} title={t('terms.liability.title')}>
-          {t('terms.liability.desc')}
+          <ContentWithInfoPanels html={t('terms.liability.desc')} />
         </ContentPanel>
 
         {/* Changes */}
         <ContentPanel icon={RefreshCw} title={t('terms.changes.title')}>
-          {t('terms.changes.desc')}
+          <ContentWithInfoPanels html={t('terms.changes.desc')} />
         </ContentPanel>
       </div>
 

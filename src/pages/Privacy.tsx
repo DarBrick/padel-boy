@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
+import { ContentWithInfoPanels } from '../components/ContentWithInfoPanels'
 import { Footer } from '../components/Footer'
 import { ArrowUp, Languages, Trophy, Settings } from 'lucide-react'
 
@@ -29,17 +30,17 @@ export function Privacy() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Language Preference */}
         <ContentPanel icon={Languages} title={t('privacy.language.title')}>
-          {t('privacy.language.desc')}
+          <ContentWithInfoPanels html={t('privacy.language.desc')} />
         </ContentPanel>
 
         {/* Tournament Data */}
         <ContentPanel icon={Trophy} title={t('privacy.tournaments.title')}>
-          {t('privacy.tournaments.desc')}
+          <ContentWithInfoPanels html={t('privacy.tournaments.desc')} />
         </ContentPanel>
 
-        {/* User Control */}
+        {/* Your Control */}
         <ContentPanel icon={Settings} title={t('privacy.control.title')}>
-          {t('privacy.control.desc')}
+          <ContentWithInfoPanels html={t('privacy.control.desc')} />
         </ContentPanel>
       </div>
 
