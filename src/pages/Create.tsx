@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, Users, LayoutGrid, Type, Shuffle, Dices } from 'lucide-react'
+import { ArrowLeft, Users, LayoutGrid, PencilLine, Shuffle, Dices } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
@@ -86,10 +86,20 @@ export function Create() {
       <div className="flex items-center gap-4">
         <button
           onClick={() => navigate('/')}
-          className="p-2 hover:bg-slate-700 rounded-lg transition-colors"
+          className="
+            p-3 
+            bg-slate-800 
+            hover:bg-slate-700 
+            border border-slate-600 
+            hover:border-[var(--color-padel-yellow)]
+            rounded-full 
+            transition-all duration-200
+            shadow-lg hover:shadow-xl
+            group
+          "
           aria-label={t('create.backToHome')}
         >
-          <ArrowLeft className="w-6 h-6" />
+          <ArrowLeft className="w-6 h-6 text-slate-400 group-hover:text-[var(--color-padel-yellow)] transition-colors" />
         </button>
         <h1 className="text-3xl font-bold">{t('create.title')}</h1>
       </div>
@@ -115,7 +125,7 @@ export function Create() {
         {/* Tournament Name */}
         <FormSection>
           <label className="block text-lg font-semibold mb-4">
-            <Type className="w-5 h-5 inline-block mr-2" />
+            <PencilLine className="w-5 h-5 inline-block mr-2" />
             {t('create.name.label')}
           </label>
           <input
