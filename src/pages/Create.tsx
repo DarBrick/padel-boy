@@ -125,7 +125,7 @@ export function Create() {
               register('tournamentName').onChange(e)
               setIsManuallyEdited(true)
             }}
-            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-blue-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
             placeholder={t('create.name.placeholder')}
           />
           {errors.tournamentName && (

@@ -19,7 +19,7 @@ export function SliderInput({ min, max, value, onChange }: SliderInputProps) {
         step={1}
         value={value}
         onChange={handleChange}
-        className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
+        className="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-[var(--color-padel-yellow)]"
       />
       <input
         type="number"

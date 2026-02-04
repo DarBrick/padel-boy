@@ -35,6 +35,7 @@ src/
 - **Tailwind utilities**: Use utility classes directly in JSX, avoid separate CSS files
 - **Custom animations**: Define in `src/index.css` using `@keyframes` (see `animate-wave`)
 - **Color palette**: Dark theme with slate backgrounds (`slate-900`, `slate-800`, `slate-700`)
+- **Brand color**: Padel yellow (`--color-padel-yellow: #D4FF00`) defined in `src/index.css`, use as `text-[var(--color-padel-yellow)]` or in gradients
 
 ```jsx
 // ✅ Correct: mobile-first responsive

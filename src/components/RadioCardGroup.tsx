@@ -20,7 +20,7 @@ export function RadioCardGroup({ name, options, value, onChange }: RadioCardGrou
           className={`
             flex flex-col items-center p-4 rounded-lg border-2 cursor-pointer transition-all
             ${value === option.value 
-              ? 'border-blue-500 bg-blue-500/10' 
+              ? 'border-[var(--color-padel-yellow)] bg-[var(--color-padel-yellow)]/10' 
               : 'border-slate-600 hover:border-slate-500'}
           `}
         >

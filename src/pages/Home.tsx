@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
-import { Trophy, Users, Calendar, Zap, ArrowUp } from 'lucide-react'
+import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb } from 'lucide-react'
 
 export function Home() {
   const { t } = useTranslation()
@@ -56,23 +56,26 @@ export function Home() {
       </div>
 
       {/* Info Section */}
-      <div className="mt-12 p-6 bg-slate-800/50 rounded-lg border border-slate-700">
-        <h2 className="text-2xl font-bold mb-4">{t('home.howItWorks.title')}</h2>
+      <div className="mt-12 p-6 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+        <h2 className="text-2xl font-bold mb-4">
+          <Lightbulb className="w-6 h-6 inline-block mr-2 text-[var(--color-padel-yellow)]" />
+          {t('home.howItWorks.title')}
+        </h2>
         <ol className="space-y-3 text-slate-300">
           <li className="flex gap-3">
-            <span className="text-blue-400 font-bold">1.</span>
+            <span className="text-[var(--color-padel-yellow)] font-bold">1.</span>
             <span>{t('home.howItWorks.step1')}</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-blue-400 font-bold">2.</span>
+            <span className="text-[var(--color-padel-yellow)] font-bold">2.</span>
             <span>{t('home.howItWorks.step2')}</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-blue-400 font-bold">3.</span>
+            <span className="text-[var(--color-padel-yellow)] font-bold">3.</span>
             <span>{t('home.howItWorks.step3')}</span>
           </li>
           <li className="flex gap-3">
-            <span className="text-blue-400 font-bold">4.</span>
+            <span className="text-[var(--color-padel-yellow)] font-bold">4.</span>
             <span>{t('home.howItWorks.step4')}</span>
           </li>
         </ol>
@@ -87,7 +90,7 @@ export function Home() {
             bg-slate-800 
             hover:bg-slate-700 
             border border-slate-600 
-            hover:border-blue-500
+            hover:border-[var(--color-padel-yellow)]
             rounded-full 
             transition-all duration-200
             shadow-lg hover:shadow-xl
@@ -95,7 +98,7 @@ export function Home() {
           "
           aria-label="Scroll to top"
         >
-          <ArrowUp className="w-6 h-6 text-slate-400 group-hover:text-blue-400 transition-colors" />
+          <ArrowUp className="w-6 h-6 text-slate-400 group-hover:text-[var(--color-padel-yellow)] transition-colors" />
         </button>
       </div>
 
@@ -115,8 +118,8 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <div className="p-6 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-blue-500/50 transition-colors">
-      <div className="text-blue-400 mb-3">
+    <div className="p-6 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+      <div className="text-[var(--color-padel-yellow)] mb-3">
         {icon}
       </div>
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
