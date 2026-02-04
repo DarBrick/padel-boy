@@ -64,3 +64,19 @@ input[type="range"]::-moz-range-thumb:hover {
     0 4px 12px rgba(212, 255, 0, 0.4),
     0 0 0 8px rgba(212, 255, 0, 0.1);
 }
+
+/* Cookie banner slide-up animation */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.4s ease-out forwards;
+}
