@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ArrowLeft, Users, LayoutGrid, PencilLine, Shuffle, Dices } from 'lucide-react'
+import { ArrowLeft, LayoutGrid, PencilLine, Shuffle, Dices } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
@@ -12,6 +12,7 @@ import { CollapsiblePanel } from '../components/CollapsiblePanel'
 import { SliderInput } from '../components/SliderInput'
 import { RadioCardGroup } from '../components/RadioCardGroup'
 import { GradientButton } from '../components/GradientButton'
+import { PlayersPanel } from '../components/PlayersPanel'
 
 export function Create() {
   const { t } = useTranslation()
@@ -28,8 +29,8 @@ export function Create() {
     defaultValues: {
       eventType: 'americano',
       tournamentName: generateTournamentName('americano', t),
-      numberOfPlayers: 8,
-      numberOfCourts: 2,
+      numberOfPlayers: 0,
+      numberOfCourts: 0,
       matchupStyle: '1&4vs2&3',
       randomRounds: 2,
     },
@@ -47,6 +48,8 @@ export function Create() {
   const [isMatchupExpanded, setIsMatchupExpanded] = useState(false)
   const [isRandomRoundsExpanded, setIsRandomRoundsExpanded] = useState(false)
   const previousEventTypeRef = useRef(eventType)
+  
+  const [players, setPlayers] = useState<string[]>([])
 
   const maxCourts = Math.floor(numberOfPlayers / 4)
 
@@ -74,8 +77,18 @@ export function Create() {
     }
   }, [eventType, t, isManuallyEdited])
 
+  // Sync numberOfPlayers with players array length
+  useEffect(() => {
+    setValue('numberOfPlayers', players.length, { shouldValidate: true })
+  }, [players.length])
+
+  // Handle players change - also update form value
+  const handlePlayersChange = (newPlayers: string[]) => {
+    setPlayers(newPlayers)
+  }
+
   const onSubmit = (data: CreateTournamentForm) => {
-    console.log('Tournament data:', data)
+    console.log('Tournament data:', { ...data, players })
     // TODO: Save to store and navigate to tournament page
     navigate('/tournament')
   }
@@ -143,22 +156,11 @@ export function Create() {
           )}
         </FormSection>
 
-        {/* Number of Players */}
-        <FormSection>
-          <label className="block text-lg font-semibold mb-4">
-            <Users className="w-5 h-5 inline-block mr-2" />
-            {t('create.players.label')}
-          </label>
-          <SliderInput
-            min={4}
-            max={40}
-            value={numberOfPlayers}
-            onChange={(value) => setValue('numberOfPlayers', value, { shouldValidate: true })}
-          />
-          {errors.numberOfPlayers && (
-            <p className="text-red-400 text-sm mt-2">{t('create.players.error')}</p>
-          )}
-        </FormSection>
+        {/* Players */}
+        <PlayersPanel
+          players={players}
+          onPlayersChange={handlePlayersChange}
+        />
 
         {/* Number of Courts */}
         <CollapsiblePanel
@@ -226,7 +228,7 @@ export function Create() {
         )}
 
         {/* Submit Button */}
-        <GradientButton type="submit" fullWidth>
+        <GradientButton type="submit" fullWidth disabled={players.length < 4}>
           {t('create.submit')}
         </GradientButton>
       </form>
