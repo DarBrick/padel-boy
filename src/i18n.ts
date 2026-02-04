@@ -50,7 +50,11 @@ const resources = {
           error: 'Please enter a tournament name',
         },
         players: {
-          label: 'Number of Players',
+          label: 'Players',
+          add: 'Add Player',
+          namePlaceholder: 'Enter player name',
+          hint: 'Click on a name to edit it',
+          defaultName: 'Player',
           error: 'Please enter a number between 4 and 40',
         },
         courts: {
@@ -60,7 +64,7 @@ const resources = {
         mexicano: {
           title: 'Mexicano Settings',
           matchup: {
-            label: 'Matchup Style',
+            label: 'Pairing',
             desc1: '1st & 4th vs 2nd & 3rd',
             desc2: '1st & 3rd vs 2nd & 4th',
           },
@@ -69,7 +73,7 @@ const resources = {
             desc: 'Number of initial rounds with random pairings before ranking-based matchups',
           },
         },
-        submit: 'Continue to Players',
+        submit: 'Start Tournament',
       },
       players: {
         title: 'Players',
@@ -155,7 +159,11 @@ const resources = {
           error: 'Wprowadź nazwę turnieju',
         },
         players: {
-          label: 'Liczba Graczy',
+          label: 'Gracze',
+          add: 'Dodaj Gracza',
+          namePlaceholder: 'Wprowadź imię gracza',
+          hint: 'Kliknij na imię, aby je edytować',
+          defaultName: 'Gracz',
           error: 'Wprowadź liczbę od 4 do 40',
         },
         courts: {
@@ -165,7 +173,7 @@ const resources = {
         mexicano: {
           title: 'Ustawienia Mexicano',
           matchup: {
-            label: 'Styl Parowania',
+            label: 'Parowanie',
             desc1: '1. i 4. vs 2. i 3.',
             desc2: '1. i 3. vs 2. i 4.',
           },
@@ -174,7 +182,7 @@ const resources = {
             desc: 'Liczba początkowych rund z losowym parowaniem przed parowaniem według rankingu',
           },
         },
-        submit: 'Przejdź do Graczy',
+        submit: 'Rozpocznij Turniej',
       },
       players: {
         title: 'Gracze',
@@ -260,7 +268,11 @@ const resources = {
           error: 'Introduce un nombre para el torneo',
         },
         players: {
-          label: 'Número de Jugadores',
+          label: 'Jugadores',
+          add: 'Añadir Jugador',
+          namePlaceholder: 'Introduce el nombre del jugador',
+          hint: 'Haz clic en un nombre para editarlo',
+          defaultName: 'Jugador',
           error: 'Introduce un número entre 4 y 40',
         },
         courts: {
@@ -270,7 +282,7 @@ const resources = {
         mexicano: {
           title: 'Configuración Mexicano',
           matchup: {
-            label: 'Estilo de Emparejamiento',
+            label: 'Emparejamiento',
             desc1: '1º y 4º vs 2º y 3º',
             desc2: '1º y 3º vs 2º y 4º',
           },
@@ -279,7 +291,7 @@ const resources = {
             desc: 'Número de rondas iniciales con emparejamientos aleatorios antes de basarse en el ranking',
           },
         },
-        submit: 'Continuar a Jugadores',
+        submit: 'Iniciar Torneo',
       },
       players: {
         title: 'Jugadores',
