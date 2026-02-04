@@ -95,15 +95,18 @@ export function Create() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="min-h-screen py-8 space-y-8">
       {/* Header */}
-      <div className="flex items-center gap-4">
-        <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
-        <h1 className="text-3xl font-bold">{t('create.title')}</h1>
+      <div className="container mx-auto px-4">
+        <div className="flex items-center gap-4">
+          <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
+          <h1 className="text-3xl font-bold">{t('create.title')}</h1>
+        </div>
       </div>
 
       {/* Form */}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <div className="container mx-auto px-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Event Type */}
         <FormSection>
           <label className="block text-lg font-semibold mb-4">
@@ -216,7 +219,8 @@ export function Create() {
         <GradientButton type="submit" fullWidth disabled={players.length < 4}>
           {t('create.submit')}
         </GradientButton>
-      </form>
+        </form>
+      </div>
     </div>
   )
 }
