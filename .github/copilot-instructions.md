@@ -9,7 +9,7 @@ Mobile-first React web app for organizing padel games. Deployed to GitHub Pages 
 - **Routing**: react-router-dom
 - **Forms**: react-hook-form + zod for validation
 - **State**: Zustand for global state
-- **Icons**: lucide-react + custom SVG components
+- **Icons**: lucide-react for UI icons (e.g., `ArrowLeft`, `Cookie`, `Users`) + custom SVG components
 
 ## Commands
 ```bash
@@ -47,7 +47,9 @@ src/
 
 ### Component Patterns
 - Use named exports for components: `export function ComponentName()`
-- SVG icons as React components with `className` and custom props (see `PadelBallIcon.jsx`)
+- Import icons from lucide-react: `import { ArrowLeft, Cookie } from 'lucide-react'`
+- Use lucide icons with className for sizing and colors: `<Cookie className="w-5 h-5 text-[var(--color-padel-yellow)]" />`
+- Custom SVG icons as React components with `className` and custom props (see `PadelBallIcon.jsx`)
 - Props with sensible defaults: `{ className = "w-16 h-16", animate = true }`
 
 ### State Management
