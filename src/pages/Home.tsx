@@ -15,7 +15,7 @@ export function Home() {
     <div className="space-y-8">
       {/* Hero Section */}
       <div className="text-center space-y-6">
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex flex-col items-center justify-center gap-4">
           <PadelBallIcon className="w-20 h-20 md:w-24 md:h-24" />
           <h1 className="text-4xl md:text-6xl font-bold">
             {t('appName')}
@@ -35,7 +35,7 @@ export function Home() {
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ContentPanel>
           <div className="text-[var(--color-padel-yellow)] mb-3">
             <Trophy className="w-8 h-8" />
@@ -67,11 +67,11 @@ export function Home() {
       </div>
 
       {/* Info Section */}
-      <ContentPanel className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">
-          <Lightbulb className="w-6 h-6 inline-block mr-2 text-[var(--color-padel-yellow)]" />
-          {t('home.howItWorks.title')}
-        </h2>
+      <ContentPanel>
+        <div className="text-[var(--color-padel-yellow)] mb-3">
+          <Lightbulb className="w-8 h-8" />
+        </div>
+        <h3 className="text-2xl font-bold mb-4">{t('home.howItWorks.title')}</h3>
         <ol className="space-y-3 text-slate-300">
           <li className="flex gap-3">
             <span className="text-[var(--color-padel-yellow)] font-bold">1.</span>
