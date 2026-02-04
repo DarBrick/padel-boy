@@ -18,6 +18,7 @@ export function App() {
         
         <div className="container mx-auto px-4 py-8 max-w-4xl">
           <Routes>
+            <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />
             <Route path="/tournament" element={<Tournament />} />
