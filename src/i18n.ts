@@ -5,6 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 const resources = {
   en: {
     translation: {
+      lang: 'en',
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organize and manage Padel games with ease. Free, no payments required.',
@@ -96,10 +97,20 @@ const resources = {
         '10': 'Nov',
         '11': 'Dec',
       },
+      weekdays: {
+        '0': 'Sunday',
+        '1': 'Monday',
+        '2': 'Tuesday',
+        '3': 'Wednesday',
+        '4': 'Thursday',
+        '5': 'Friday',
+        '6': 'Saturday',
+      },
     },
   },
   pl: {
     translation: {
+      lang: 'pl',
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organizuj i zarządzaj grami w Padel z łatwością. Bezpłatnie, bez opłat.',
@@ -191,10 +202,20 @@ const resources = {
         '10': 'Lis',
         '11': 'Gru',
       },
+      weekdays: {
+        '0': 'niedziela',
+        '1': 'poniedziałek',
+        '2': 'wtorek',
+        '3': 'środa',
+        '4': 'czwartek',
+        '5': 'piątek',
+        '6': 'sobota',
+      },
     },
   },
   es: {
     translation: {
+      lang: 'es',
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
@@ -285,6 +306,15 @@ const resources = {
         '9': 'Oct',
         '10': 'Nov',
         '11': 'Dic',
+      },
+      weekdays: {
+        '0': 'domingo',
+        '1': 'lunes',
+        '2': 'martes',
+        '3': 'miércoles',
+        '4': 'jueves',
+        '5': 'viernes',
+        '6': 'sábado',
       },
     },
   },
