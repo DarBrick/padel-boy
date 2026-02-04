@@ -9,10 +9,12 @@ export function GradientButton({
   children, 
   fullWidth = false,
   className = '',
+  disabled = false,
   ...props 
 }: GradientButtonProps) {
   return (
     <button
+      disabled={disabled}
       className={`
         ${fullWidth ? 'w-full' : ''} 
         py-4 px-8
@@ -22,6 +24,7 @@ export function GradientButton({
         text-lg font-semibold
         transition-all duration-200
         shadow-lg hover:shadow-xl
+        disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-blue-600 disabled:hover:to-[var(--color-padel-yellow)]
         ${className}
       `}
       {...props}
