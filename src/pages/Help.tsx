@@ -49,7 +49,7 @@ export function Help() {
 
         {/* Troubleshooting */}
         <ContentPanel icon={Wrench} title={t('help.troubleshooting.title')}>
-          {t('help.troubleshooting.desc')}
+          <div dangerouslySetInnerHTML={{ __html: t('help.troubleshooting.desc') }} />
         </ContentPanel>
       </div>
 

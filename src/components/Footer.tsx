@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Github, Scale } from 'lucide-react'
 import { LanguageSwitcher } from './LanguageSwitcher'
+import { GITHUB_REPO_URL } from '../config'
 
 export function Footer() {
   const { t } = useTranslation()
@@ -42,7 +43,7 @@ export function Footer() {
         <span>{t('footer.version')} 0.0.1</span>
         <span>•</span>
         <a
-          href="https://github.com/DarBrick/padel-boy"
+          href={GITHUB_REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 hover:text-[var(--color-padel-yellow)] transition-colors"
@@ -52,7 +53,7 @@ export function Footer() {
         </a>
         <span>•</span>
         <a
-          href="https://github.com/DarBrick/padel-boy/blob/main/LICENSE"
+          href={`${GITHUB_REPO_URL}/blob/main/LICENSE`}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1 hover:text-[var(--color-padel-yellow)] transition-colors"
