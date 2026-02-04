@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
 import { IconButton } from '../components/IconButton'
+import { Footer } from '../components/Footer'
 import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb } from 'lucide-react'
 
 export function Home() {
@@ -92,17 +93,7 @@ export function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm space-y-3">
-        <div>
-          <button
-            onClick={() => navigate('/privacy')}
-            className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
-          >
-            {t('privacy.title')}
-          </button>
-        </div>
-        <div>{t('footer.createdBy')}</div>
-      </footer>
+      <Footer />
     </div>
   )
 }

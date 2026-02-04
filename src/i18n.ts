@@ -109,6 +109,56 @@ const resources = {
           desc: 'You have full control over your data:\n\n• Clear browser data: Clearing your browser\'s cache and cookies will remove all stored information including language preferences and tournament data.\n\n• Private browsing: Using incognito/private mode means data is deleted when you close the browser.\n\n• No tracking: We do not use cookies or localStorage for advertising, analytics, or tracking purposes.',
         },
       },
+      terms: {
+        title: 'Terms of Service',
+        back: 'Back',
+        intro: 'By using Padel Boy, you agree to these terms. Please read them carefully.',
+        service: {
+          title: 'Service Description',
+          desc: 'Padel Boy is a free web application for organizing padel tournaments. The service is provided "as is" without any warranties or guarantees.\n\nWe do not charge fees, collect personal data, or display advertisements. The app runs entirely in your browser using local storage.',
+        },
+        responsibilities: {
+          title: 'User Responsibilities',
+          desc: 'You are responsible for:\n\n• Ensuring accurate player information and tournament settings\n• Managing your own data stored in browser localStorage\n• Using the app in compliance with local laws and regulations\n• Respecting other players\' privacy when sharing tournament results\n\nWe are not responsible for disputes, errors in tournament organization, or any outcomes resulting from app usage.',
+        },
+        disclaimer: {
+          title: 'Disclaimer of Warranties',
+          desc: 'This app is provided without warranty of any kind, express or implied.\n\nWe do not guarantee:\n• Uninterrupted or error-free operation\n• Accuracy of match scheduling algorithms\n• Preservation of data (browser storage can be cleared)\n• Compatibility with all devices and browsers\n\nUse of this service is at your own risk.',
+        },
+        liability: {
+          title: 'Limitation of Liability',
+          desc: 'To the maximum extent permitted by law, we shall not be liable for:\n\n• Loss of tournament data\n• Scheduling errors or incorrect match pairings\n• Disputes between players\n• Any direct, indirect, incidental, or consequential damages\n\nYour sole remedy is to discontinue use of the app.',
+        },
+        changes: {
+          title: 'Changes to Terms',
+          desc: 'We reserve the right to modify these terms at any time. Continued use of the app after changes constitutes acceptance of the new terms.\n\nLast updated: February 4, 2026',
+        },
+      },
+      help: {
+        title: 'Help & FAQ',
+        back: 'Back',
+        intro: 'Learn how to use Padel Boy and understand tournament formats.',
+        gettingStarted: {
+          title: 'Getting Started',
+          desc: '1. Choose your tournament format (Americano or Mexicano)\n2. Enter a tournament name or use the auto-generated one\n3. Add players by clicking "Add Player" - you need at least 4 players\n4. Adjust the number of courts (automatically calculated based on players)\n5. Click "Start Tournament" to begin\n\nYour tournament data is saved locally in your browser.',
+        },
+        americano: {
+          title: 'Americano Format',
+          desc: 'In Americano, all players compete against all other players over multiple rounds.\n\nHow it works:\n• Players are paired randomly or by skill level\n• Each player partners with different teammates\n• Each player faces different opponents\n• Points are tracked individually\n• Perfect for social games where everyone plays together\n\nIdeal for: Casual games, social events, player development',
+        },
+        mexicano: {
+          title: 'Mexicano Format',
+          desc: 'In Mexicano, players are paired dynamically based on current rankings.\n\nHow it works:\n• First rounds use random pairing\n• After initial rounds, top-ranked players face each other\n• Lower-ranked players also face similar-ranked opponents\n• Creates competitive, balanced matches\n• Rankings update after each round\n\nSettings:\n• Pairing style: How partners are assigned (1st & 4th vs 2nd & 3rd, or 1st & 3rd vs 2nd & 4th)\n• Random rounds: Number of initial rounds before ranking-based pairing\n\nIdeal for: Competitive tournaments, skill-based matchmaking',
+        },
+        players: {
+          title: 'Managing Players',
+          desc: 'Adding players:\n• Click "Add Player" button\n• Type player name and press Enter or click away\n• Add as many players as needed (4-40 players)\n\nEditing players:\n• Click on any player name to edit it\n• Press Enter or click away to save\n\nRemoving players:\n• Click the X button next to player name\n• Player count updates automatically\n\nNote: You need at least 4 players to start a tournament.',
+        },
+        troubleshooting: {
+          title: 'Troubleshooting',
+          desc: 'My tournament disappeared:\n• Data is stored in browser localStorage\n• Clearing browser data will delete tournaments\n• Use incognito/private mode carefully - data is deleted when closed\n\nCan\'t add players:\n• Maximum 40 players allowed\n• Check if "Start Tournament" button is enabled (needs 4+ players)\n\nLanguage changed unexpectedly:\n• Your language preference is saved automatically\n• Use the language switcher (top-right) to change it back\n\nFor more help, visit our GitHub repository or contact us via the Privacy Policy page.',
+        },
+      },
       months: {
         '0': 'Jan',
         '1': 'Feb',
@@ -238,6 +288,56 @@ const resources = {
         control: {
           title: 'Twoja Kontrola',
           desc: 'Masz pełną kontrolę nad swoimi danymi:\n\n• Czyszczenie danych przeglądarki: Wyczyszczenie pamięci podręcznej i plików cookie przeglądarki usunie wszystkie przechowywane informacje, w tym preferencje językowe i dane turniejowe.\n\n• Przeglądanie prywatne: Używanie trybu incognito/prywatnego oznacza, że dane są usuwane po zamknięciu przeglądarki.\n\n• Brak śledzenia: Nie używamy plików cookie ani localStorage do celów reklamowych, analitycznych lub śledzenia.',
+        },
+      },
+      terms: {
+        title: 'Warunki Korzystania',
+        back: 'Wróć',
+        intro: 'Korzystając z Padel Boy, zgadzasz się na te warunki. Przeczytaj je uważnie.',
+        service: {
+          title: 'Opis Usługi',
+          desc: 'Padel Boy to darmowa aplikacja internetowa do organizowania turniejów padla. Usługa jest świadczona "tak jak jest" bez żadnych gwarancji.\n\nNie pobieramy opłat, nie zbieramy danych osobowych ani nie wyświetlamy reklam. Aplikacja działa całkowicie w przeglądarce przy użyciu lokalnej pamięci.',
+        },
+        responsibilities: {
+          title: 'Obowiązki Użytkownika',
+          desc: 'Jesteś odpowiedzialny za:\n\n• Zapewnienie dokładnych informacji o graczach i ustawień turnieju\n• Zarządzanie własnymi danymi przechowywanymi w localStorage przeglądarki\n• Korzystanie z aplikacji zgodnie z lokalnymi przepisami\n• Szanowanie prywatności innych graczy przy udostępnianiu wyników turnieju\n\nNie ponosimy odpowiedzialności za spory, błędy w organizacji turnieju ani jakiekolwiek skutki wynikające z użytkowania aplikacji.',
+        },
+        disclaimer: {
+          title: 'Wyłączenie Gwarancji',
+          desc: 'Ta aplikacja jest świadczona bez jakiejkolwiek gwarancji, wyraźnej lub dorozumianej.\n\nNie gwarantujemy:\n• Nieprzerwanej lub bezbłędnej pracy\n• Dokładności algorytmów planowania meczów\n• Zachowania danych (pamięć przeglądarki może zostać wyczyszczona)\n• Kompatybilności ze wszystkimi urządzeniami i przeglądarkami\n\nKorzystanie z tej usługi odbywa się na własne ryzyko.',
+        },
+        liability: {
+          title: 'Ograniczenie Odpowiedzialności',
+          desc: 'W maksymalnym zakresie dozwolonym przez prawo nie ponosimy odpowiedzialności za:\n\n• Utratę danych turniejowych\n• Błędy w harmonogramie lub nieprawidłowe parowanie meczów\n• Spory między graczami\n• Jakiekolwiek bezpośrednie, pośrednie, przypadkowe lub następcze szkody\n\nJedynym środkiem zaradczym jest zaprzestanie korzystania z aplikacji.',
+        },
+        changes: {
+          title: 'Zmiany Warunków',
+          desc: 'Zastrzegamy sobie prawo do modyfikacji tych warunków w dowolnym momencie. Dalsze korzystanie z aplikacji po wprowadzeniu zmian oznacza akceptację nowych warunków.\n\nOstatnia aktualizacja: 4 lutego 2026',
+        },
+      },
+      help: {
+        title: 'Pomoc i FAQ',
+        back: 'Wróć',
+        intro: 'Dowiedz się, jak korzystać z Padel Boy i poznaj formaty turniejów.',
+        gettingStarted: {
+          title: 'Pierwsze Kroki',
+          desc: '1. Wybierz format turnieju (Americano lub Mexicano)\n2. Wprowadź nazwę turnieju lub użyj automatycznie wygenerowanej\n3. Dodaj graczy, klikając "Dodaj Gracza" - potrzebujesz co najmniej 4 graczy\n4. Dostosuj liczbę kortów (automatycznie obliczana na podstawie liczby graczy)\n5. Kliknij "Rozpocznij Turniej", aby rozpocząć\n\nDane turnieju są zapisywane lokalnie w przeglądarce.',
+        },
+        americano: {
+          title: 'Format Americano',
+          desc: 'W Americano wszyscy gracze rywalizują ze wszystkimi innymi graczami w wielu rundach.\n\nJak to działa:\n• Gracze są dobierani losowo lub według poziomu umiejętności\n• Każdy gracz gra z różnymi partnerami\n• Każdy gracz zmierza się z różnymi przeciwnikami\n• Punkty są śledzone indywidualnie\n• Idealny do gier towarzyskich, gdzie wszyscy grają razem\n\nIdealny dla: Gier towarzyskich, wydarzeń społecznych, rozwoju graczy',
+        },
+        mexicano: {
+          title: 'Format Mexicano',
+          desc: 'W Mexicano gracze są dobierani dynamicznie na podstawie aktualnego rankingu.\n\nJak to działa:\n• Pierwsze rundy wykorzystują losowe parowanie\n• Po początkowych rundach najlepsi gracze grają ze sobą\n• Gracze z niższym rankingiem również grają z graczami o podobnym poziomie\n• Tworzy konkurencyjne, zrównoważone mecze\n• Rankingi aktualizowane po każdej rundzie\n\nUstawienia:\n• Styl parowania: Jak przydzielani są partnerzy (1. i 4. vs 2. i 3., lub 1. i 3. vs 2. i 4.)\n• Rundy losowe: Liczba początkowych rund przed parowaniem według rankingu\n\nIdealny dla: Turniejów konkurencyjnych, dopasowania według umiejętności',
+        },
+        players: {
+          title: 'Zarządzanie Graczami',
+          desc: 'Dodawanie graczy:\n• Kliknij przycisk "Dodaj Gracza"\n• Wpisz imię gracza i naciśnij Enter lub kliknij poza pole\n• Dodaj tyle graczy, ile potrzebujesz (4-40 graczy)\n\nEdycja graczy:\n• Kliknij na imię gracza, aby je edytować\n• Naciśnij Enter lub kliknij poza pole, aby zapisać\n\nUsuwanie graczy:\n• Kliknij przycisk X obok imienia gracza\n• Liczba graczy aktualizuje się automatycznie\n\nUwaga: Potrzebujesz co najmniej 4 graczy, aby rozpocząć turniej.',
+        },
+        troubleshooting: {
+          title: 'Rozwiązywanie Problemów',
+          desc: 'Mój turniej zniknął:\n• Dane są przechowywane w localStorage przeglądarki\n• Wyczyszczenie danych przeglądarki usunie turnieje\n• Używaj trybu incognito/prywatnego ostrożnie - dane są usuwane po zamknięciu\n\nNie mogę dodać graczy:\n• Maksymalnie 40 graczy\n• Sprawdź, czy przycisk "Rozpocznij Turniej" jest aktywny (wymaga 4+ graczy)\n\nJęzyk zmienił się nieoczekiwanie:\n• Twoje preferencje językowe są zapisywane automatycznie\n• Użyj przełącznika języka (prawy górny róg), aby go zmienić\n\nAby uzyskać więcej pomocy, odwiedź nasze repozytorium GitHub lub skontaktuj się z nami za pośrednictwem strony Polityki Prywatności.',
         },
       },
       months: {
@@ -370,8 +470,56 @@ const resources = {
           title: 'Tu Control',
           desc: 'Tienes control total sobre tus datos:\n\n• Borrar datos del navegador: Limpiar la caché y las cookies de tu navegador eliminará toda la información almacenada, incluidas las preferencias de idioma y los datos de torneos.\n\n• Navegación privada: Usar el modo incógnito/privado significa que los datos se eliminan cuando cierras el navegador.\n\n• Sin seguimiento: No usamos cookies ni localStorage con fines publicitarios, analíticos o de seguimiento.',
         },
+      },      terms: {
+        title: 'Términos de Servicio',
+        back: 'Volver',
+        intro: 'Al usar Padel Boy, aceptas estos términos. Por favor, léelos cuidadosamente.',
+        service: {
+          title: 'Descripción del Servicio',
+          desc: 'Padel Boy es una aplicación web gratuita para organizar torneos de pádel. El servicio se proporciona "tal cual" sin ninguna garantía.\n\nNo cobramos tarifas, no recopilamos datos personales y no mostramos anuncios. La aplicación opera completamente en tu navegador usando almacenamiento local.',
+        },
+        responsibilities: {
+          title: 'Responsabilidades del Usuario',
+          desc: 'Eres responsable de:\n\n• Proporcionar información precisa sobre jugadores y configuraciones de torneos\n• Gestionar tus propios datos almacenados en el localStorage del navegador\n• Usar la aplicación conforme a las leyes locales\n• Respetar la privacidad de otros jugadores al compartir resultados de torneos\n\nNo somos responsables de disputas, errores en la organización de torneos o consecuencias derivadas del uso de la aplicación.',
+        },
+        disclaimer: {
+          title: 'Descargo de Garantías',
+          desc: 'Esta aplicación se proporciona sin garantía alguna, expresa o implícita.\n\nNo garantizamos:\n• Operación ininterrumpida o libre de errores\n• Precisión de los algoritmos de programación de partidos\n• Preservación de datos (el almacenamiento del navegador puede borrarse)\n• Compatibilidad con todos los dispositivos y navegadores\n\nEl uso de este servicio es bajo tu propio riesgo.',
+        },
+        liability: {
+          title: 'Limitación de Responsabilidad',
+          desc: 'En la medida máxima permitida por la ley, no somos responsables de:\n\n• Pérdida de datos de torneos\n• Errores de programación o emparejamientos incorrectos\n• Disputas entre jugadores\n• Cualquier daño directo, indirecto, incidental o consecuente\n\nTu único recurso es dejar de usar la aplicación.',
+        },
+        changes: {
+          title: 'Cambios en los Términos',
+          desc: 'Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de la aplicación después de los cambios constituye la aceptación de los nuevos términos.\n\nÚltima actualización: 4 de febrero de 2026',
+        },
       },
-      months: {
+      help: {
+        title: 'Ayuda y Preguntas Frecuentes',
+        back: 'Volver',
+        intro: 'Aprende a usar Padel Boy y comprende los formatos de torneo.',
+        gettingStarted: {
+          title: 'Comenzando',
+          desc: '1. Elige el formato del torneo (Americano o Mexicano)\n2. Ingresa el nombre del torneo o usa el generado automáticamente\n3. Añade jugadores haciendo clic en "Añadir Jugador" - necesitas al menos 4 jugadores\n4. Ajusta el número de pistas (calculado automáticamente según el número de jugadores)\n5. Haz clic en "Iniciar Torneo" para comenzar\n\nLos datos del torneo se guardan localmente en tu navegador.',
+        },
+        americano: {
+          title: 'Formato Americano',
+          desc: 'En Americano, todos los jugadores compiten contra todos los demás jugadores en múltiples rondas.\n\nCómo funciona:\n• Los jugadores se emparejan al azar o por nivel de habilidad\n• Cada jugador juega con diferentes compañeros\n• Cada jugador se enfrenta a diferentes oponentes\n• Los puntos se rastrean individualmente\n• Ideal para juegos casuales donde todos juegan juntos\n\nPerfecto para: Juegos casuales, eventos sociales, desarrollo de jugadores',
+        },
+        mexicano: {
+          title: 'Formato Mexicano',
+          desc: 'En Mexicano, los jugadores se emparejan dinámicamente según la clasificación actual.\n\nCómo funciona:\n• Las primeras rondas usan emparejamiento aleatorio\n• Después de las rondas iniciales, los mejores jugadores juegan entre sí\n• Los jugadores de menor clasificación también juegan con jugadores de nivel similar\n• Crea partidos competitivos y equilibrados\n• Las clasificaciones se actualizan después de cada ronda\n\nConfiguraciones:\n• Estilo de emparejamiento: Cómo se asignan los compañeros (1º y 4º vs 2º y 3º, o 1º y 3º vs 2º y 4º)\n• Rondas aleatorias: Número de rondas iniciales antes del emparejamiento por clasificación\n\nPerfecto para: Torneos competitivos, emparejamiento por habilidad',
+        },
+        players: {
+          title: 'Gestión de Jugadores',
+          desc: 'Añadir jugadores:\n• Haz clic en el botón "Añadir Jugador"\n• Escribe el nombre del jugador y presiona Enter o haz clic fuera\n• Añade tantos jugadores como necesites (4-40 jugadores)\n\nEditar jugadores:\n• Haz clic en el nombre de un jugador para editarlo\n• Presiona Enter o haz clic fuera para guardar\n\nEliminar jugadores:\n• Haz clic en el botón X junto al nombre del jugador\n• El recuento de jugadores se actualiza automáticamente\n\nNota: Necesitas al menos 4 jugadores para iniciar un torneo.',
+        },
+        troubleshooting: {
+          title: 'Solución de Problemas',
+          desc: 'Mi torneo desapareció:\n• Los datos se almacenan en el localStorage del navegador\n• Borrar los datos del navegador eliminará los torneos\n• Usa el modo incógnito/privado con precaución: los datos se eliminan al cerrar\n\nNo puedo añadir jugadores:\n• Máximo 40 jugadores\n• Verifica que el botón "Iniciar Torneo" esté activo (requiere 4+ jugadores)\n\nEl idioma cambió inesperadamente:\n• Tu preferencia de idioma se guarda automáticamente\n• Usa el selector de idioma (esquina superior derecha) para cambiarlo\n\nPara más ayuda, visita nuestro repositorio de GitHub o contáctanos a través de la página de Política de Privacidad.',
+        },
+      },      months: {
         '0': 'Ene',
         '1': 'Feb',
         '2': 'Mar',

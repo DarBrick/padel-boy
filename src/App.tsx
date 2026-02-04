@@ -6,6 +6,8 @@ import { Create } from './pages/Create'
 import { Tournament } from './pages/Tournament'
 import { Standings } from './pages/Standings'
 import { Privacy } from './pages/Privacy'
+import { Terms } from './pages/Terms'
+import { Help } from './pages/Help'
 
 export function App() {
   return (
@@ -24,6 +26,8 @@ export function App() {
             <Route path="/tournament" element={<Tournament />} />
             <Route path="/standings" element={<Standings />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/help" element={<Help />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
