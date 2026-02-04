@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
+import { IconButton } from '../components/IconButton'
 import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb } from 'lucide-react'
 
 export function Home() {
@@ -83,28 +84,24 @@ export function Home() {
 
       {/* Scroll to Top Button */}
       <div className="flex justify-center mt-12">
-        <button
+        <IconButton
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="
-            p-3 
-            bg-slate-800 
-            hover:bg-slate-700 
-            border border-slate-600 
-            hover:border-[var(--color-padel-yellow)]
-            rounded-full 
-            transition-all duration-200
-            shadow-lg hover:shadow-xl
-            group
-          "
-          aria-label="Scroll to top"
-        >
-          <ArrowUp className="w-6 h-6 text-slate-400 group-hover:text-[var(--color-padel-yellow)] transition-colors" />
-        </button>
+          icon={ArrowUp}
+          label="Scroll to top"
+        />
       </div>
 
       {/* Footer */}
-      <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm">
-        {t('footer.createdBy')}
+      <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm space-y-3">
+        <div>
+          <button
+            onClick={() => navigate('/privacy')}
+            className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
+          >
+            {t('privacy.title')}
+          </button>
+        </div>
+        <div>{t('footer.createdBy')}</div>
       </footer>
     </div>
   )
