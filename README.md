@@ -2,7 +2,7 @@
 
 Mobile-first web app for organizing padel games with friends.
 
-![Deploy Status](https://github.com/<your-username>/padel-boy/actions/workflows/deploy.yml/badge.svg)
+![Deploy Status](https://github.com/darbrick/padel-boy/actions/workflows/deploy.yml/badge.svg)
 
 ## Tech Stack
 
