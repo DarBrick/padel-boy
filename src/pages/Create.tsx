@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LayoutGrid, PencilLine, Shuffle, Dices } from 'lucide-react'
+import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
@@ -32,6 +32,7 @@ export function Create() {
       tournamentName: generateTournamentName('americano', t),
       numberOfPlayers: 0,
       numberOfCourts: 0,
+      pointsPerMatch: 21,
       matchupStyle: '1&4vs2&3',
       randomRounds: 2,
     },
@@ -40,12 +41,14 @@ export function Create() {
   const eventType = watch('eventType')
   const numberOfPlayers = watch('numberOfPlayers')
   const numberOfCourts = watch('numberOfCourts')
+  const pointsPerMatch = watch('pointsPerMatch')
   const matchupStyle = watch('matchupStyle')
   const randomRounds = watch('randomRounds')
 
   const [isManuallyEdited, setIsManuallyEdited] = useState(false)
   const [isCourtsExpanded, setIsCourtsExpanded] = useState(false)
   const [isCourtsManuallyEdited, setIsCourtsManuallyEdited] = useState(false)
+  const [isPointsExpanded, setIsPointsExpanded] = useState(false)
   const [isMatchupExpanded, setIsMatchupExpanded] = useState(false)
   const [isRandomRoundsExpanded, setIsRandomRoundsExpanded] = useState(false)
   const previousEventTypeRef = useRef(eventType)
@@ -170,6 +173,30 @@ export function Create() {
           {errors.numberOfCourts && (
             <p className="text-red-400 text-sm mt-2">{t('create.courts.error')}</p>
           )}
+        </CollapsiblePanel>
+
+        {/* Points Per Match */}
+        <CollapsiblePanel
+          icon={<Trophy className="w-5 h-5 inline-block mr-2" />}
+          label={t('create.points.label')}
+          value={pointsPerMatch}
+          isExpanded={isPointsExpanded}
+          onToggle={() => setIsPointsExpanded(!isPointsExpanded)}
+        >
+          <RadioCardGroup
+            name="pointsPerMatch"
+            options={[
+              { value: 16, label: '16' },
+              { value: 21, label: '21' },
+              { value: 24, label: '24' },
+              { value: 32, label: '32' },
+            ]}
+            value={pointsPerMatch}
+            onChange={(value) => setValue('pointsPerMatch', value as 16 | 21 | 24 | 32)}
+          />
+          <p className="text-slate-400 text-sm mt-2">
+            {t('create.points.desc')}
+          </p>
         </CollapsiblePanel>
 
         {/* Mexicano-specific options */}
