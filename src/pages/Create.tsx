@@ -76,8 +76,8 @@ export function Create() {
 
   const onSubmit = (data: CreateTournamentForm) => {
     console.log('Tournament data:', data)
-    // TODO: Save to store and navigate to players page
-    navigate('/players')
+    // TODO: Save to store and navigate to tournament page
+    navigate('/tournament')
   }
 
   return (
