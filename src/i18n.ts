@@ -85,7 +85,11 @@ const resources = {
         title: 'Standings',
       },
       footer: {
+        home: 'Home',
         createdBy: 'Created by Dariusz W.',
+        github: 'GitHub',
+        license: 'CC BY-NC-SA 4.0',
+        version: 'Version',
       },
       cookieBanner: {
         message: 'This app stores your preferences and tournament information locally in your browser.',
@@ -144,7 +148,7 @@ const resources = {
         },
         americano: {
           title: 'Americano Format',
-          desc: 'In Americano, all players compete against all other players over multiple rounds.\n\nHow it works:\n• Players are paired randomly or by skill level\n• Each player partners with different teammates\n• Each player faces different opponents\n• Points are tracked individually\n• Perfect for social games where everyone plays together\n\nIdeal for: Casual games, social events, player development',
+          desc: 'In Americano, all players compete against all other players over multiple rounds.\n\nHow it works:\n• Players are paired randomly\n• Each player partners with different teammates\n• Each player faces different opponents\n• Points are tracked individually\n• Perfect for social games where everyone plays together\n\nIdeal for: Casual games, social events, player development',
         },
         mexicano: {
           title: 'Mexicano Format',
@@ -265,8 +269,7 @@ const resources = {
       standings: {
         title: 'Klasyfikacja',
       },
-      footer: {
-        createdBy: 'Stworzono przez Dariusz W.',
+      footer: {        home: 'Strona główna',        createdBy: 'Stworzono przez Dariusz W.',
       },
       cookieBanner: {
         message: 'Ta aplikacja przechowuje Twoje preferencje i informacje o turniejach lokalnie w Twojej przeglądarce.',
@@ -325,7 +328,7 @@ const resources = {
         },
         americano: {
           title: 'Format Americano',
-          desc: 'W Americano wszyscy gracze rywalizują ze wszystkimi innymi graczami w wielu rundach.\n\nJak to działa:\n• Gracze są dobierani losowo lub według poziomu umiejętności\n• Każdy gracz gra z różnymi partnerami\n• Każdy gracz zmierza się z różnymi przeciwnikami\n• Punkty są śledzone indywidualnie\n• Idealny do gier towarzyskich, gdzie wszyscy grają razem\n\nIdealny dla: Gier towarzyskich, wydarzeń społecznych, rozwoju graczy',
+          desc: 'W Americano wszyscy gracze rywalizują ze wszystkimi innymi graczami w wielu rundach.\n\nJak to działa:\n• Gracze są dobierani losowo\n• Każdy gracz gra z różnymi partnerami\n• Każdy gracz zmierza się z różnymi przeciwnikami\n• Punkty są śledzone indywidualnie\n• Idealny do gier towarzyskich, gdzie wszyscy grają razem\n\nIdealny dla: Gier towarzyskich, wydarzeń społecznych, rozwoju graczy',
         },
         mexicano: {
           title: 'Format Mexicano',
@@ -447,7 +450,11 @@ const resources = {
         title: 'Clasificación',
       },
       footer: {
+        home: 'Inicio',
         createdBy: 'Creado por Dariusz W.',
+        github: 'GitHub',
+        license: 'CC BY-NC-SA 4.0',
+        version: 'Versión',
       },
       cookieBanner: {
         message: 'Esta aplicación almacena tus preferencias e información de torneos localmente en tu navegador.',
@@ -505,7 +512,7 @@ const resources = {
         },
         americano: {
           title: 'Formato Americano',
-          desc: 'En Americano, todos los jugadores compiten contra todos los demás jugadores en múltiples rondas.\n\nCómo funciona:\n• Los jugadores se emparejan al azar o por nivel de habilidad\n• Cada jugador juega con diferentes compañeros\n• Cada jugador se enfrenta a diferentes oponentes\n• Los puntos se rastrean individualmente\n• Ideal para juegos casuales donde todos juegan juntos\n\nPerfecto para: Juegos casuales, eventos sociales, desarrollo de jugadores',
+          desc: 'En Americano, todos los jugadores compiten contra todos los demás jugadores en múltiples rondas.\n\nCómo funciona:\n• Los jugadores se emparejan al azar\n• Cada jugador juega con diferentes compañeros\n• Cada jugador se enfrenta a diferentes oponentes\n• Los puntos se rastrean individualmente\n• Ideal para juegos casuales donde todos juegan juntos\n\nPerfecto para: Juegos casuales, eventos sociales, desarrollo de jugadores',
         },
         mexicano: {
           title: 'Formato Mexicano',
