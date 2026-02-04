@@ -9,9 +9,14 @@ import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
 import { Help } from './pages/Help'
 
+// Smart detection: Use /padel-boy only for github.io subdirectory deployment
+const isGitHubPagesSubdirectory = window.location.hostname.includes('github.io') && 
+                                   window.location.pathname.startsWith('/padel-boy')
+const basename = isGitHubPagesSubdirectory ? '/padel-boy' : '/'
+
 export function App() {
   return (
-    <BrowserRouter basename="/padel-boy">
+    <BrowserRouter basename={basename}>
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
         {/* Language Switcher */}
         <div className="absolute top-4 right-4 z-30">

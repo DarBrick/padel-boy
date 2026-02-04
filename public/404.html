@@ -4,13 +4,15 @@
     <meta charset="utf-8">
     <title>Padel Boy</title>
     <script>
-      // Store the current path in sessionStorage and redirect to root
-      // This preserves the full URL (path + search + hash) for client-side routing
+      // Smart redirect: detect if we're on github.io subdirectory or custom domain
+      const isGitHubPagesSubdir = window.location.hostname.includes('github.io');
+      const redirectBase = isGitHubPagesSubdir ? '/padel-boy/' : '/';
+      
       sessionStorage.setItem(
         'redirectPath',
         window.location.pathname + window.location.search + window.location.hash
       );
-      window.location.replace('/padel-boy/');
+      window.location.replace(redirectBase);
     </script>
   </head>
   <body>
