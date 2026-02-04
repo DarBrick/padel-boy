@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Padel Boy</title>
+    <script>
+      // Store the current path in sessionStorage and redirect to root
+      // This preserves the full URL (path + search + hash) for client-side routing
+      sessionStorage.setItem(
+        'redirectPath',
+        window.location.pathname + window.location.search + window.location.hash
+      );
+      window.location.replace('/padel-boy/');
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
