@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const createTournamentSchema = z.object({
   eventType: z.enum(['americano', 'mexicano']),
-  tournamentName: z.string().min(1).max(50),
+  tournamentName: z.string().max(50).optional(),
   numberOfPlayers: z.number().min(4).max(40),
   numberOfCourts: z.number().min(1).max(10),
   pointsPerMatch: z.enum(['16', '21', '24', '32']),

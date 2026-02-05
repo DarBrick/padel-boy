@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake } from 'lucide-react'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
 import { generateTournamentName } from '../utils/tournament'
@@ -30,7 +30,7 @@ export function Create() {
     resolver: zodResolver(createTournamentSchema),
     defaultValues: {
       eventType: 'americano',
-      tournamentName: generateTournamentName('americano', t),
+      tournamentName: '',
       numberOfPlayers: 0,
       numberOfCourts: 0,
       pointsPerMatch: '21',
@@ -46,24 +46,16 @@ export function Create() {
   const matchupStyle = watch('matchupStyle')
   const randomRounds = watch('randomRounds')
 
-  const [isManuallyEdited, setIsManuallyEdited] = useState(false)
   const [isCourtsExpanded, setIsCourtsExpanded] = useState(false)
   const [isCourtsManuallyEdited, setIsCourtsManuallyEdited] = useState(false)
   const [isPointsExpanded, setIsPointsExpanded] = useState(false)
   const [isMatchupExpanded, setIsMatchupExpanded] = useState(false)
   const [isRandomRoundsExpanded, setIsRandomRoundsExpanded] = useState(false)
   const [isFixedPairs, setIsFixedPairs] = useState(false)
-  const previousEventTypeRef = useRef(eventType)
   
   const [players, setPlayers] = useState<string[]>([])
 
   const maxCourts = Math.floor(numberOfPlayers / 4)
-
-  // Reset tournament name on mount
-  useEffect(() => {
-    setValue('tournamentName', generateTournamentName(eventType, t))
-    setIsManuallyEdited(false)
-  }, [])
 
   // Auto-adjust courts based on number of players (unless manually edited)
   useEffect(() => {
@@ -74,14 +66,6 @@ export function Create() {
       setValue('numberOfCourts', maxCourts)
     }
   }, [numberOfPlayers, maxCourts, isCourtsManuallyEdited])
-
-  // Update tournament name when event type changes (unless manually edited)
-  useEffect(() => {
-    if (eventType !== previousEventTypeRef.current && !isManuallyEdited) {
-      setValue('tournamentName', generateTournamentName(eventType, t))
-      previousEventTypeRef.current = eventType
-    }
-  }, [eventType, t, isManuallyEdited])
 
   // Sync numberOfPlayers with players array length
   useEffect(() => {
@@ -137,12 +121,8 @@ export function Create() {
           <input
             type="text"
             {...register('tournamentName')}
-            onChange={(e) => {
-              register('tournamentName').onChange(e)
-              setIsManuallyEdited(true)
-            }}
             className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
-            placeholder={t('create.name.placeholder')}
+            placeholder={generateTournamentName(eventType, t)}
           />
           {errors.tournamentName && (
             <p className="text-red-400 text-sm mt-2">{t('create.name.error')}</p>
