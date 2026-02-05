@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake } from 'lucide-react'
+import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake, Grid2X2Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
@@ -15,6 +15,7 @@ import { GradientButton } from '../components/GradientButton'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { IconButton } from '../components/IconButton'
 import { ToggleSwitch } from '../components/ToggleSwitch'
+import { CourtChip } from '../components/CourtChip'
 
 export function Create() {
   const { t } = useTranslation()
@@ -47,25 +48,33 @@ export function Create() {
   const randomRounds = watch('randomRounds')
 
   const [isCourtsExpanded, setIsCourtsExpanded] = useState(false)
-  const [isCourtsManuallyEdited, setIsCourtsManuallyEdited] = useState(false)
   const [isPointsExpanded, setIsPointsExpanded] = useState(false)
   const [isMatchupExpanded, setIsMatchupExpanded] = useState(false)
   const [isRandomRoundsExpanded, setIsRandomRoundsExpanded] = useState(false)
   const [isFixedPairs, setIsFixedPairs] = useState(false)
   
   const [players, setPlayers] = useState<string[]>([])
+  const [courtNames, setCourtNames] = useState<string[]>([])
 
   const maxCourts = Math.floor(numberOfPlayers / 4)
 
-  // Auto-adjust courts based on number of players (unless manually edited)
+  // Auto-adjust courts based on number of players
   useEffect(() => {
-    if (!isCourtsManuallyEdited) {
-      setValue('numberOfCourts', maxCourts)
-    } else if (numberOfCourts > maxCourts) {
-      // If manually edited value exceeds new max, cap it
-      setValue('numberOfCourts', maxCourts)
-    }
-  }, [numberOfPlayers, maxCourts, isCourtsManuallyEdited])
+    const newCourts = Math.floor(players.length / 4)
+    setValue('numberOfCourts', newCourts)
+    
+    // Sync courtNames array with new courts count
+    setCourtNames(prev => {
+      if (newCourts > prev.length) {
+        // Add empty strings for new courts
+        return [...prev, ...Array(newCourts - prev.length).fill('')]
+      } else if (newCourts < prev.length) {
+        // Trim array if courts decreased
+        return prev.slice(0, newCourts)
+      }
+      return prev
+    })
+  }, [players.length, setValue])
 
   // Sync numberOfPlayers with players array length
   useEffect(() => {
@@ -77,8 +86,35 @@ export function Create() {
     setPlayers(newPlayers)
   }
 
+  // Handle court name change
+  const handleCourtNameChange = (index: number, newName: string) => {
+    setCourtNames(prev => {
+      const updated = [...prev]
+      updated[index] = newName
+      return updated
+    })
+  }
+
+  // Handle add court
+  const handleAddCourt = () => {
+    if (numberOfCourts < maxCourts) {
+      const newCount = numberOfCourts + 1
+      setValue('numberOfCourts', newCount, { shouldValidate: true })
+      setCourtNames(prev => [...prev, ''])
+    }
+  }
+
+  // Handle remove court
+  const handleRemoveCourt = () => {
+    if (numberOfCourts > 1) {
+      const newCount = numberOfCourts - 1
+      setValue('numberOfCourts', newCount, { shouldValidate: true })
+      setCourtNames(prev => prev.slice(0, -1))
+    }
+  }
+
   const onSubmit = (data: CreateTournamentForm) => {
-    console.log('Tournament data:', { ...data, players })
+    console.log('Tournament data:', { ...data, players, courtNames })
     // TODO: Save to store and navigate to tournament page
     navigate('/tournament')
   }
@@ -140,21 +176,38 @@ export function Create() {
         <CollapsiblePanel
           icon={<LayoutGrid className="w-5 h-5 inline-block mr-2" />}
           label={t('create.courts.label')}
-          value={numberOfCourts}
+          value={numberOfCourts === 1 ? t('create.courts.count', { count: 1 }) : t('create.courts.count', { count: numberOfCourts })}
           isExpanded={isCourtsExpanded}
           onToggle={() => setIsCourtsExpanded(!isCourtsExpanded)}
         >
-          <SliderInput
-            min={1}
-            max={maxCourts}
-            value={numberOfCourts}
-            onChange={(value) => {
-              setValue('numberOfCourts', value, { shouldValidate: true })
-              setIsCourtsManuallyEdited(true)
-            }}
-          />
-          {errors.numberOfCourts && (
-            <p className="text-red-400 text-sm mt-2">{t('create.courts.error')}</p>
+          {players.length < 4 ? (
+            <p className="text-slate-400 text-sm">
+              {t('create.courts.emptyState')}
+            </p>
+          ) : (
+            <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {Array.from({ length: numberOfCourts }).map((_, index) => (
+                  <CourtChip
+                    key={index}
+                    name={courtNames[index] || ''}
+                    index={index}
+                    onRename={(newName) => handleCourtNameChange(index, newName)}
+                    onDelete={handleRemoveCourt}
+                    canRemove={numberOfCourts > 1}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={handleAddCourt}
+                disabled={numberOfCourts >= maxCourts}
+                className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-[var(--color-padel-yellow)] border border-dashed border-slate-600 hover:border-[var(--color-padel-yellow)]/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+              >
+                <Grid2X2Plus className="w-5 h-5" />
+                {t('create.courts.addButton')}
+              </button>
+            </div>
           )}
         </CollapsiblePanel>
 

@@ -77,8 +77,15 @@ const translation = {
       error: 'Please enter a number between 4 and 40',
     },
     courts: {
-      label: 'Number of Courts',
-      error: 'Please enter a number between 1 and 10',
+      label: 'Courts',
+      count_one: '{{count}} court',
+      count_few: '{{count}} courts',
+      count_many: '{{count}} courts',
+      count_other: '{{count}} courts',
+      addButton: 'Add Court',
+      removeButton: 'Remove Court',
+      emptyState: 'Add at least 4 players to configure courts',
+      placeholder: 'Court {{number}}',
     },
     points: {
       label: 'Points Per Match',

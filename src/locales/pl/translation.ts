@@ -77,8 +77,15 @@ const translation = {
       error: 'Wprowadź liczbę od 4 do 40',
     },
     courts: {
-      label: 'Liczba Kortów',
-      error: 'Wprowadź liczbę od 1 do 10',
+      label: 'Korty',
+      count_one: '{{count}} kort',
+      count_few: '{{count}} korty',
+      count_many: '{{count}} kortów',
+      count_other: '{{count}} kortu',
+      addButton: 'Dodaj kort',
+      removeButton: 'Usuń kort',
+      emptyState: 'Dodaj co najmniej 4 graczy, aby skonfigurować korty',
+      placeholder: 'Kort {{number}}',
     },
     points: {
       label: 'Punkty na Mecz',

@@ -6,6 +6,7 @@ export const createTournamentSchema = z.object({
   numberOfPlayers: z.number().min(4).max(40),
   numberOfCourts: z.number().min(1).max(10),
   pointsPerMatch: z.enum(['16', '21', '24', '32']),
+  courtNames: z.array(z.string()).optional(),
   // Mexicano-specific fields
   matchupStyle: z.enum(['1&4vs2&3', '1&3vs2&4']).optional(),
   randomRounds: z.number().min(1).max(5).optional(),

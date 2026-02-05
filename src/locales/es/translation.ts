@@ -77,8 +77,15 @@ const translation = {
       error: 'Introduce un número entre 4 y 40',
     },
     courts: {
-      label: 'Número de Pistas',
-      error: 'Introduce un número entre 1 y 10',
+      label: 'Pistas',
+      count_one: '{{count}} pista',
+      count_few: '{{count}} pistas',
+      count_many: '{{count}} pistas',
+      count_other: '{{count}} pistas',
+      addButton: 'Añadir pista',
+      removeButton: 'Eliminar pista',
+      emptyState: 'Añade al menos 4 jugadores para configurar las pistas',
+      placeholder: 'Pista {{number}}',
     },
     points: {
       label: 'Puntos por Partido',
