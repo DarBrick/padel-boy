@@ -5,9 +5,11 @@ interface PlayerInputProps {
   onChange: (value: string) => void
   onSubmit: () => void
   onCancel?: () => void
+  onBlur?: () => void
   suggestions?: string[]
   placeholder?: string
   autoFocus?: boolean
+  hasError?: boolean
 }
 
 export function PlayerInput({
@@ -15,9 +17,11 @@ export function PlayerInput({
   onChange,
   onSubmit,
   onCancel,
+  onBlur,
   suggestions = [],
   placeholder = '',
   autoFocus = false,
+  hasError = false,
 }: PlayerInputProps) {
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(-1)
@@ -77,17 +81,33 @@ export function PlayerInput({
         }}
         onFocus={() => setShowSuggestions(true)}
         onBlur={() => {
-          // Accept value on blur
           setTimeout(() => {
             setShowSuggestions(false)
-            if (value.trim()) {
+            const trimmed = value.trim()
+            if (hasError) {
+              onCancel?.()
+            } else if (onBlur) {
+              if (trimmed) {
+                onChange(trimmed)
+                onBlur()
+              } else {
+                onCancel?.()
+              }
+            } else if (trimmed) {
               onSubmit()
+            } else {
+              onCancel?.()
             }
           }, 150)
         }}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
-        className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-base focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
+        maxLength={16}
+        className={`w-full px-4 py-3 bg-slate-700 rounded-lg text-base focus:outline-none transition-colors ${
+          hasError 
+            ? 'border-2 border-red-500 focus:border-red-500' 
+            : 'border border-slate-600 focus:border-[var(--color-padel-yellow)]'
+        }`}
       />
       
       {/* Suggestions dropdown (future use) */}

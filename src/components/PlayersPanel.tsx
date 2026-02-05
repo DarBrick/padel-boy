@@ -30,7 +30,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
 
   const handleAddPlayer = () => {
     const trimmed = newPlayerName.trim()
-    if (trimmed) {
+    if (trimmed && !isDuplicate) {
       onPlayersChange([...players, trimmed])
       setNewPlayerName('')
     }
@@ -42,6 +42,10 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
     setIsAdding(false)
   }
 
+  const isDuplicate = players.some(
+    player => player.toLowerCase() === newPlayerName.trim().toLowerCase()
+  )
+
   return (
     <CollapsiblePanel
       icon={<Users className="w-5 h-5 inline-block mr-2" />}
@@ -52,7 +56,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
     >
       <div className="space-y-4">
         {/* Player chips */}
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           {players.map((player, index) => (
             <PlayerChip
               key={`${player}-${index}`}
@@ -76,12 +80,14 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
                 suggestions={suggestions}
                 placeholder={t('create.players.namePlaceholder')}
                 autoFocus
+                hasError={isDuplicate && newPlayerName.trim().length > 0}
               />
             </div>
             <button
               type="button"
               onClick={handleAddPlayer}
-              className="p-3 bg-[var(--color-padel-yellow)] text-slate-900 rounded-lg hover:bg-[#C5F000] transition-colors min-h-[48px]"
+              disabled={isDuplicate || !newPlayerName.trim()}
+              className="p-3 bg-[var(--color-padel-yellow)] text-slate-900 rounded-lg hover:bg-[#C5F000] transition-colors min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--color-padel-yellow)]"
               aria-label={t('create.players.add')}
             >
               <Plus className="w-6 h-6" />
