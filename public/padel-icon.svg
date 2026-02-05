@@ -1,18 +1,28 @@
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
   <!-- Padel Ball -->
-  <circle cx="50" cy="50" r="30" fill="#D4FF00" stroke="#1F2937" stroke-width="2"/>
+  <circle cx="50" cy="50" r="45" fill="#D4FF00" stroke="#1F2937" stroke-width="3"/>
   
-  <!-- Ball texture lines -->
-  <path d="M 30 35 Q 50 40 70 35" stroke="#1F2937" stroke-width="1.5" fill="none" opacity="0.3"/>
-  <path d="M 30 65 Q 50 60 70 65" stroke="#1F2937" stroke-width="1.5" fill="none" opacity="0.3"/>
+  <!-- Ball texture lines (vertical) -->
+  <path d="M 28 15 Q 40 50 28 85" stroke="white" stroke-width="4" fill="none" opacity="1"/>
+  <path d="M 72 15 Q 60 50 72 85" stroke="white" stroke-width="4" fill="none" opacity="1"/>
   
   <!-- Pulse Line -->
   <path 
-    d="M 10 50 L 30 50 L 35 40 L 40 60 L 45 45 L 50 50 L 70 50" 
+    d="M 10 50 L 20 50 L 27 30 L 35 70 L 43 33 L 50 50 L 60 50" 
     stroke="#FF0066" 
-    stroke-width="3" 
+    stroke-width="4" 
     fill="none" 
     stroke-linecap="round" 
     stroke-linejoin="round"
+  />
+  <!-- Pulse Line Glow -->
+  <path 
+    d="M 10 50 L 20 50 L 27 30 L 35 70 L 43 33 L 50 50 L 60 50" 
+    stroke="#FF0066" 
+    stroke-width="7" 
+    fill="none" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+    opacity="0.3"
   />
 </svg>
