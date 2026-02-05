@@ -1,0 +1,216 @@
+const translation = {
+  lang: 'es',
+  appName: 'Padel Boy',
+  home: {
+    subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
+    underDevelopment:
+      'Este producto está actualmente en desarrollo activo. Se añaden nuevas funcionalidades regularmente.',
+    viewRoadmap: 'Ver Hoja de Ruta',
+    startTournament: 'Iniciar Nuevo Torneo',
+    features: {
+      formats: {
+        title: 'Dos Formatos de Torneo',
+        description: 'Elige entre Americano (todos contra todos) o Mexicano (emparejamiento dinámico)',
+      },
+      players: {
+        title: 'Número Flexible de Jugadores',
+        description: 'Soporte para 4-40 jugadores con generación automática de partidos',
+      },
+      rounds: {
+        title: 'Gestión Inteligente de Rondas',
+        description: 'Emparejamiento y programación automática para múltiples pistas',
+      },
+      realtime: {
+        title: 'Compartir Resultados',
+        description: 'Comparte la clasificación del torneo con otros mediante una URL única',
+      },
+    },
+    howItWorks: {
+      title: 'Cómo Funciona',
+      step1: 'Elige el formato del torneo (Americano o Mexicano)',
+      step2: 'Añade jugadores y selecciona el número de pistas',
+      step3: 'El sistema genera los partidos automáticamente',
+      step4: 'Introduce los resultados y comparte la clasificación mediante URL única',
+    },
+  },
+  roadmap: {
+    title: 'Hoja de Ruta',
+    subtitle: 'Mira en qué estamos trabajando y qué viene a continuación',
+    back: 'Volver',
+    completed: 'Completado',
+    inProgress: 'En Progreso',
+    planned: 'Planificado',
+    features: [
+      '¡Inicio del proyecto!',
+      'Posibilidad de organizar Americano para jugadores individuales',
+      'Posibilidad de organizar Mexicano para jugadores individuales',
+      'Diccionario local de jugadores, jugadores conocidos',
+      'Almacenar y compartir resultados de torneos mediante enlace único',
+      'Reabrir torneos',
+      'Retroceder a la última ronda',
+      'Estadísticas de torneo extendidas disponibles',
+      'Exportar/importar datos de uno o varios torneos',
+      'Estadísticas de jugadores en múltiples torneos',
+      'Código QR para compartir torneos',
+      'Añadir soporte para jugar torneos en parejas fijas',
+    ],
+  },
+  create: {
+    title: 'Crear Torneo',
+    backToHome: 'Volver al inicio',
+    eventType: {
+      label: 'Formato del Torneo',
+      americanoDesc: 'Todos contra todos',
+      mexicanoDesc: 'Emparejamiento dinámico por ranking',
+    },
+    name: {
+      label: 'Nombre del Torneo',
+      placeholder: 'Introduce el nombre del torneo',
+      error: 'Introduce un nombre para el torneo',
+    },
+    players: {
+      label: 'Jugadores',
+      add: 'Añadir Jugador',
+      namePlaceholder: 'Introduce el nombre del jugador',
+      hint: 'Haz clic en un nombre para editarlo',
+      defaultName: 'Jugador',
+      error: 'Introduce un número entre 4 y 40',
+    },
+    courts: {
+      label: 'Número de Pistas',
+      error: 'Introduce un número entre 1 y 10',
+    },
+    points: {
+      label: 'Puntos por Partido',
+      desc: 'Número de puntos a jugar en cada partido. El estándar es 21 puntos.',
+    },
+    mexicano: {
+      title: 'Configuración Mexicano',
+      matchup: {
+        label: 'Emparejamiento',
+        desc1: '1º y 4º vs 2º y 3º',
+        desc2: '1º y 3º vs 2º y 4º',
+      },
+      randomRounds: {
+        label: 'Rondas Aleatorias',
+        desc: 'Número de rondas iniciales con emparejamientos aleatorios antes de basarse en el ranking',
+      },
+    },
+    submit: 'Iniciar Torneo',
+  },
+  players: {
+    title: 'Jugadores',
+  },
+  tournament: {
+    title: 'Torneo',
+  },
+  standings: {
+    title: 'Clasificación',
+  },
+  footer: {
+    home: 'Inicio',
+    roadmap: 'Hoja de Ruta',
+    createdBy: 'Creado por Dariusz W.',
+    github: 'GitHub',
+    license: 'CC BY-NC-SA 4.0',
+    version: 'Versión',
+  },
+  cookieBanner: {
+    message: 'Esta aplicación almacena tus preferencias e información de torneos localmente en tu navegador.',
+    accept: 'Entendido',
+    close: 'Cerrar',
+  },
+  privacy: {
+    title: 'Política de Privacidad',
+    back: 'Volver',
+    intro:
+      'Padel Boy es una aplicación gratuita que almacena todos los datos localmente en tu navegador. No recopilamos, transmitimos ni almacenamos ninguna información personal en servidores externos.',
+    language: {
+      title: 'Preferencia de Idioma',
+      desc: '<p>Cuando seleccionas un idioma, tu elección se guarda en el localStorage de tu navegador bajo la clave "i18nextLng".</p><p>Esto permite que la aplicación recuerde tu preferencia de idioma en futuras visitas.</p><h3>Detalles Técnicos</h3><ul><li><strong>Propósito:</strong> Esencial para proporcionar la interfaz en tu idioma preferido</li><li><strong>Datos almacenados:</strong> Código de idioma (p. ej., "en", "pl", "es")</li></ul>',
+    },
+    tournaments: {
+      title: 'Datos de Torneos',
+      desc: '<p>Las configuraciones de torneos, nombres de jugadores y resultados de partidos se almacenan localmente en el localStorage de tu navegador.</p><infoPanel><p><strong>Garantía de privacidad:</strong> Estos datos nunca salen de tu dispositivo y no son accesibles para nosotros ni para terceros.</p></infoPanel><h3>Qué almacenamos</h3><ul><li><strong>Propósito:</strong> Esencial para mantener el estado del torneo entre sesiones</li><li><strong>Datos almacenados:</strong> Configuraciones de torneos, nombres de jugadores, resultados de partidos, clasificaciones</li></ul>',
+    },
+    control: {
+      title: 'Tu Control',
+      desc: '<p>Tienes control total sobre tus datos:</p><h3>Gestión de Datos</h3><ul><li><strong>Borrar datos del navegador:</strong> Limpiar la caché y las cookies de tu navegador eliminará toda la información almacenada, incluidas las preferencias de idioma y los datos de torneos</li><li><strong>Navegación privada:</strong> Usar el modo incógnito/privado significa que los datos se eliminan cuando cierras el navegador</li><li><strong>Sin seguimiento:</strong> No usamos cookies ni localStorage con fines publicitarios, analíticos o de seguimiento</li></ul>',
+    },
+  },
+  terms: {
+    title: 'Términos de Servicio',
+    back: 'Volver',
+    intro: 'Al usar Padel Boy, aceptas estos términos. Por favor, léelos cuidadosamente.',
+    service: {
+      title: 'Descripción del Servicio',
+      desc: '<p>Padel Boy es una aplicación web gratuita para organizar torneos de pádel. El servicio se proporciona "tal cual" sin ninguna garantía.</p><infoPanel><p><strong>Lo que NO hacemos:</strong> No cobramos tarifas, no recopilamos datos personales y no mostramos anuncios. La aplicación opera completamente en tu navegador usando almacenamiento local.</p></infoPanel>',
+    },
+    responsibilities: {
+      title: 'Responsabilidades del Usuario',
+      desc: '<p>Eres responsable de:</p><ul><li>Proporcionar información precisa sobre jugadores y configuraciones de torneos</li><li>Gestionar tus propios datos almacenados en el localStorage del navegador</li><li>Usar la aplicación conforme a las leyes locales</li><li>Respetar la privacidad de otros jugadores al compartir resultados de torneos</li></ul><infoPanel><p><strong>Importante:</strong> No somos responsables de disputas, errores en la organización de torneos o consecuencias derivadas del uso de la aplicación.</p></infoPanel>',
+    },
+    disclaimer: {
+      title: 'Descargo de Garantías',
+      desc: '<p>Esta aplicación se proporciona sin garantía alguna, expresa o implícita.</p><h3>No garantizamos</h3><ul><li>Operación ininterrumpida o libre de errores</li><li>Precisión de los algoritmos de programación de partidos</li><li>Preservación de datos (el almacenamiento del navegador puede borrarse)</li><li>Compatibilidad con todos los dispositivos y navegadores</li></ul><infoPanel><p><strong>Uso bajo tu propio riesgo:</strong> Al usar este servicio, reconoces y aceptas estas limitaciones.</p></infoPanel>',
+    },
+    liability: {
+      title: 'Limitación de Responsabilidad',
+      desc: '<p>En la medida máxima permitida por la ley, no somos responsables de:</p><ul><li>Pérdida de datos de torneos</li><li>Errores de programación o emparejamientos incorrectos</li><li>Disputas entre jugadores</li><li>Cualquier daño directo, indirecto, incidental o consecuente</li></ul><infoPanel><p><strong>Tu único recurso</strong> es dejar de usar la aplicación.</p></infoPanel>',
+    },
+    changes: {
+      title: 'Cambios en los Términos',
+      desc: '<p>Nos reservamos el derecho de modificar estos términos en cualquier momento. El uso continuado de la aplicación después de los cambios constituye la aceptación de los nuevos términos.</p><infoPanel><p><strong>Última actualización:</strong> 4 de febrero de 2026</p></infoPanel>',
+    },
+  },
+  help: {
+    title: 'Ayuda y Preguntas Frecuentes',
+    back: 'Volver',
+    intro: 'Aprende a usar Padel Boy y comprende los formatos de torneo.',
+    gettingStarted: {
+      title: 'Comenzando',
+      desc: '<ol><li>Elige el formato del torneo (Americano o Mexicano)</li><li>Ingresa el nombre del torneo o usa el generado automáticamente</li><li>Añade jugadores haciendo clic en "Añadir Jugador" - necesitas al menos 4 jugadores</li><li>Ajusta el número de pistas (calculado automáticamente según el número de jugadores)</li><li>Elige puntos por partido (16, 21, 24 o 32) - el estándar es 21 puntos</li><li>Haz clic en "Iniciar Torneo" para comenzar</li></ol><infoPanel><p><strong>Almacenamiento de datos:</strong> Los datos del torneo se guardan localmente en tu navegador.</p></infoPanel><h3>Puntos por Partido Explicado</h3><p>Esta configuración determina el número TOTAL combinado de puntos anotados por ambos equipos en cada partido. El partido termina cuando la suma de las puntuaciones de ambos equipos alcanza este número.</p><h3>Opciones Disponibles</h3><ul><li><strong>16 puntos</strong> - Partidos rápidos (~9 min), ideal para torneos grandes o restricciones de tiempo</li><li><strong>21 puntos</strong> - Formato estándar (~12 min), equilibrado entre velocidad y competición</li><li><strong>24 puntos</strong> - Partidos extendidos (~14 min), más tiempo para desarrollar estrategias</li><li><strong>32 puntos</strong> - Partidos completos (~18 min), estilo de torneos profesionales</li></ul><h3>Ejemplo con 21 puntos</h3><ul><li>El partido comienza 0-0</li><li>El marcador progresa: 1-0, 2-1, 3-2, 5-3, 7-5, 9-7...</li><li>El partido termina cuando el marcador combinado = 21 (ej., 12-9, 11-10 o 15-6)</li><li>El equipo con más puntos gana ese partido</li><li>Los puntos de ambos equipos cuentan para la clasificación del torneo</li></ul><infoPanel><p><strong>¿Por qué este sistema?</strong> Todos los partidos duran un tiempo similar, reduciendo los tiempos de espera entre rondas. Los jugadores en diferentes pistas terminan aproximadamente al mismo tiempo, manteniendo el torneo fluyendo sin problemas.</p></infoPanel><h3>Clasificación Final</h3><p>Al final del torneo, los jugadores se clasifican por sus puntos totales anotados en todos los partidos. El jugador con más puntos gana.</p>',
+    },
+    americano: {
+      title: 'Formato Americano',
+      desc: '<p>En Americano, todos los jugadores compiten contra todos los demás jugadores en múltiples rondas.</p><h3>Cómo funciona</h3><ul><li>Los jugadores se emparejan al azar</li><li>Cada jugador juega con diferentes compañeros</li><li>Cada jugador se enfrenta a diferentes oponentes</li><li>Los puntos se rastrean individualmente</li><li>Ideal para juegos casuales donde todos juegan juntos</li></ul><infoPanel><p><strong>Perfecto para:</strong> Juegos casuales, eventos sociales, desarrollo de jugadores</p></infoPanel>',
+    },
+    mexicano: {
+      title: 'Formato Mexicano',
+      desc: '<p>En Mexicano, los jugadores se emparejan dinámicamente según la clasificación actual.</p><h3>Cómo funciona</h3><ul><li>Las primeras rondas usan emparejamiento aleatorio</li><li>Después de las rondas iniciales, los mejores jugadores juegan entre sí</li><li>Los jugadores de menor clasificación también juegan con jugadores de nivel similar</li><li>Crea partidos competitivos y equilibrados</li><li>Las clasificaciones se actualizan después de cada ronda</li></ul><h3>Configuraciones</h3><ul><li><strong>Estilo de emparejamiento:</strong> Cómo se asignan los compañeros (1º y 4º vs 2º y 3º, o 1º y 3º vs 2º y 4º)</li><li><strong>Rondas aleatorias:</strong> Número de rondas iniciales antes del emparejamiento por clasificación</li></ul><infoPanel><p><strong>Perfecto para:</strong> Torneos competitivos, emparejamiento por habilidad</p></infoPanel>',
+    },
+    players: {
+      title: 'Gestión de Jugadores',
+      desc: '<h3>Nombres de Jugadores</h3><ul><li>No pueden estar vacíos ni contener solo espacios</li><li>Cada nombre debe ser único dentro del torneo</li><li>Máximo 40 jugadores por torneo</li></ul><h3>Añadir Jugadores</h3><ul><li>Debes seleccionar jugadores para cada nuevo torneo</li><li>Las sugerencias de jugadores provienen de todos los torneos completados almacenados en tu navegador</li><li>Escribe para buscar o selecciona de las sugerencias</li><li>Necesitas al menos 4 jugadores para iniciar un torneo</li></ul><h3>Asignación de Pistas</h3><ul><li>La aplicación sugiere automáticamente el número óptimo de pistas según el número de jugadores</li><li>Puedes ajustar manualmente el número de pistas si es necesario</li><li>No podrás establecer más pistas de las necesarias para garantizar que todas las pistas se utilicen durante las rondas</li></ul>',
+    },
+    troubleshooting: {
+      title: 'Solución de Problemas',
+      desc: '<h3>Mi torneo desapareció</h3><ul><li>Los datos se almacenan en el localStorage del navegador</li><li>Borrar los datos del navegador eliminará los torneos</li><li>Usa el modo incógnito/privado con precaución: los datos se eliminan al cerrar</li><li>Si tienes el enlace a un torneo completado, puedes recrear sus datos (incluyendo nombres de jugadores y resultados detallados) abriéndolo</li></ul><h3>No puedo añadir jugadores</h3><ul><li>Máximo 40 jugadores</li><li>Verifica que el botón "Iniciar Torneo" esté activo (requiere 4+ jugadores)</li></ul><h3>El idioma cambió inesperadamente</h3><ul><li>Tu preferencia de idioma se guarda automáticamente</li><li>Usa el selector de idioma (esquina superior derecha) para cambiarlo</li></ul><infoPanel><p><strong>¿Necesitas ayuda o encontraste un error?</strong><br>Reporta problemas en nuestro <githubIssuesLink>proyecto de GitHub</githubIssuesLink></p></infoPanel>',
+    },
+  },
+  months: {
+    '0': 'Ene',
+    '1': 'Feb',
+    '2': 'Mar',
+    '3': 'Abr',
+    '4': 'May',
+    '5': 'Jun',
+    '6': 'Jul',
+    '7': 'Ago',
+    '8': 'Sep',
+    '9': 'Oct',
+    '10': 'Nov',
+    '11': 'Dic',
+  },
+  weekdays: {
+    '0': 'domingo',
+    '1': 'lunes',
+    '2': 'martes',
+    '3': 'miércoles',
+    '4': 'jueves',
+    '5': 'viernes',
+    '6': 'sábado',
+  },
+} as const
+
+export default translation

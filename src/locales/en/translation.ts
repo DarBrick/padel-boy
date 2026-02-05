@@ -1,0 +1,216 @@
+const translation = {
+  lang: 'en',
+  appName: 'Padel Boy',
+  home: {
+    subtitle: 'Organize and manage Padel games with ease. Free, no payments required.',
+    underDevelopment:
+      'This product is currently under active development. New features are being added regularly.',
+    viewRoadmap: 'View Product Roadmap',
+    startTournament: 'Start New Tournament',
+    features: {
+      formats: {
+        title: 'Two Tournament Formats',
+        description: 'Choose between Americano (all vs all) or Mexicano (dynamic pairing)',
+      },
+      players: {
+        title: 'Flexible Player Count',
+        description: 'Support for 4-40 players with automatic match generation',
+      },
+      rounds: {
+        title: 'Smart Round Management',
+        description: 'Automatic pairing and scheduling for multiple courts',
+      },
+      realtime: {
+        title: 'Share Results',
+        description: 'Share tournament standings with others via a unique URL',
+      },
+    },
+    howItWorks: {
+      title: 'How It Works',
+      step1: 'Choose tournament format (Americano or Mexicano)',
+      step2: 'Add players and select number of courts',
+      step3: 'System generates matches automatically',
+      step4: 'Enter scores and share standings via unique URL',
+    },
+  },
+  roadmap: {
+    title: 'Product Roadmap',
+    subtitle: "See what we're working on and what's coming next",
+    back: 'Back',
+    completed: 'Completed',
+    inProgress: 'In Progress',
+    planned: 'Planned',
+    features: [
+      'Project start!',
+      'Possibility to organize Americano for individual players',
+      'Possibility to organize Mexicano for individual players',
+      'Local player dictionary, known players',
+      'Store and share tournament results via unique link',
+      'Reopen tournaments',
+      'Roll back to last round',
+      'Extended available tournament statistics',
+      'Export/import single or multiple tournament data',
+      'Player statistics across multiple tournaments',
+      'QR code to share tournaments',
+      'Add support for playing tournament in fixed pairs',
+    ],
+  },
+  create: {
+    title: 'Create Tournament',
+    backToHome: 'Back to home',
+    eventType: {
+      label: 'Tournament Format',
+      americanoDesc: 'All players vs all',
+      mexicanoDesc: 'Dynamic pairing by ranking',
+    },
+    name: {
+      label: 'Tournament Name',
+      placeholder: 'Enter tournament name',
+      error: 'Please enter a tournament name',
+    },
+    players: {
+      label: 'Players',
+      add: 'Add Player',
+      namePlaceholder: 'Enter player name',
+      hint: 'Click on a name to edit it',
+      defaultName: 'Player',
+      error: 'Please enter a number between 4 and 40',
+    },
+    courts: {
+      label: 'Number of Courts',
+      error: 'Please enter a number between 1 and 10',
+    },
+    points: {
+      label: 'Points Per Match',
+      desc: 'Number of points to play per match. Standard is 21 points.',
+    },
+    mexicano: {
+      title: 'Mexicano Settings',
+      matchup: {
+        label: 'Pairing',
+        desc1: '1st & 4th vs 2nd & 3rd',
+        desc2: '1st & 3rd vs 2nd & 4th',
+      },
+      randomRounds: {
+        label: 'Random Rounds',
+        desc: 'Number of initial rounds with random pairings before ranking-based matchups',
+      },
+    },
+    submit: 'Start Tournament',
+  },
+  players: {
+    title: 'Players',
+  },
+  tournament: {
+    title: 'Tournament',
+  },
+  standings: {
+    title: 'Standings',
+  },
+  footer: {
+    home: 'Home',
+    roadmap: 'Roadmap',
+    createdBy: 'Created by Dariusz W.',
+    github: 'GitHub',
+    license: 'CC BY-NC-SA 4.0',
+    version: 'Version',
+  },
+  cookieBanner: {
+    message: 'This app stores your preferences and tournament information locally in your browser.',
+    accept: 'Got it',
+    close: 'Close',
+  },
+  privacy: {
+    title: 'Privacy Policy',
+    back: 'Back',
+    intro:
+      'Padel Boy is a free application that stores all data locally in your browser. We do not collect, transmit, or store any personal information on external servers.',
+    language: {
+      title: 'Language Preference',
+      desc: '<p>When you select a language, your choice is saved in your browser\'s localStorage under the key "i18nextLng".</p><p>This allows the app to remember your language preference on future visits.</p><h3>Technical Details</h3><ul><li><strong>Purpose:</strong> Essential for providing the interface in your preferred language</li><li><strong>Data stored:</strong> Language code (e.g., "en", "pl", "es")</li></ul>',
+    },
+    tournaments: {
+      title: 'Tournament Data',
+      desc: '<p>Tournament configurations, player names, and match scores are stored locally in your browser\'s localStorage.</p><infoPanel><p><strong>Privacy guarantee:</strong> This data never leaves your device and is not accessible to us or any third parties.</p></infoPanel><h3>What we store</h3><ul><li><strong>Purpose:</strong> Essential for maintaining tournament state between sessions</li><li><strong>Data stored:</strong> Tournament settings, player names, match results, standings</li></ul>',
+    },
+    control: {
+      title: 'Your Control',
+      desc: '<p>You have full control over your data:</p><h3>Data Management</h3><ul><li><strong>Clear browser data:</strong> Clearing your browser\'s cache and cookies will remove all stored information including language preferences and tournament data</li><li><strong>Private browsing:</strong> Using incognito/private mode means data is deleted when you close the browser</li><li><strong>No tracking:</strong> We do not use cookies or localStorage for advertising, analytics, or tracking purposes</li></ul>',
+    },
+  },
+  terms: {
+    title: 'Terms of Service',
+    back: 'Back',
+    intro: 'By using Padel Boy, you agree to these terms. Please read them carefully.',
+    service: {
+      title: 'Service Description',
+      desc: '<p>Padel Boy is a free web application for organizing padel tournaments. The service is provided "as is" without any warranties or guarantees.</p><infoPanel><p><strong>What we DON\'T do:</strong> We do not charge fees, collect personal data, or display advertisements. The app runs entirely in your browser using local storage.</p></infoPanel>',
+    },
+    responsibilities: {
+      title: 'User Responsibilities',
+      desc: '<p>You are responsible for:</p><ul><li>Ensuring accurate player information and tournament settings</li><li>Managing your own data stored in browser localStorage</li><li>Using the app in compliance with local laws and regulations</li><li>Respecting other players\' privacy when sharing tournament results</li></ul><infoPanel><p><strong>Important:</strong> We are not responsible for disputes, errors in tournament organization, or any outcomes resulting from app usage.</p></infoPanel>',
+    },
+    disclaimer: {
+      title: 'Disclaimer of Warranties',
+      desc: '<p>This app is provided without warranty of any kind, express or implied.</p><h3>We do not guarantee</h3><ul><li>Uninterrupted or error-free operation</li><li>Accuracy of match scheduling algorithms</li><li>Preservation of data (browser storage can be cleared)</li><li>Compatibility with all devices and browsers</li></ul><infoPanel><p><strong>Use at your own risk:</strong> By using this service, you acknowledge and accept these limitations.</p></infoPanel>',
+    },
+    liability: {
+      title: 'Limitation of Liability',
+      desc: '<p>To the maximum extent permitted by law, we shall not be liable for:</p><ul><li>Loss of tournament data</li><li>Scheduling errors or incorrect match pairings</li><li>Disputes between players</li><li>Any direct, indirect, incidental, or consequential damages</li></ul><infoPanel><p><strong>Your sole remedy</strong> is to discontinue use of the app.</p></infoPanel>',
+    },
+    changes: {
+      title: 'Changes to Terms',
+      desc: '<p>We reserve the right to modify these terms at any time. Continued use of the app after changes constitutes acceptance of the new terms.</p><infoPanel><p><strong>Last updated:</strong> February 4, 2026</p></infoPanel>',
+    },
+  },
+  help: {
+    title: 'Help & FAQ',
+    back: 'Back',
+    intro: 'Learn how to use Padel Boy and understand tournament formats.',
+    gettingStarted: {
+      title: 'Getting Started',
+      desc: '<ol><li>Choose your tournament format (Americano or Mexicano)</li><li>Enter a tournament name or use the auto-generated one</li><li>Add players by clicking "Add Player" - you need at least 4 players</li><li>Adjust the number of courts (automatically calculated based on players)</li><li>Choose points per match (16, 21, 24, or 32) - standard is 21 points</li><li>Click "Start Tournament" to begin</li></ol><infoPanel><p><strong>Data storage:</strong> Your tournament data is saved locally in your browser.</p></infoPanel><h3>Points Per Match Explained</h3><p>This setting determines the TOTAL combined points scored by both teams in each match. The match ends when the sum of both teams\' scores reaches this number.</p><h3>Available Options</h3><ul><li><strong>16 points</strong> - Quick matches (~9 min), ideal for large tournaments or time constraints</li><li><strong>21 points</strong> - Standard format (~12 min), balanced between speed and competition</li><li><strong>24 points</strong> - Extended matches (~14 min), more time to develop strategies</li><li><strong>32 points</strong> - Full-length matches (~18 min), professional tournament style</li></ul><h3>Example with 21 points</h3><ul><li>Match starts 0-0</li><li>Score progresses: 1-0, 2-1, 3-2, 5-3, 7-5, 9-7...</li><li>Match ends when combined score = 21 (e.g., 12-9, 11-10, or 15-6)</li><li>The team with more points wins that match</li><li>Both teams\' points count toward tournament rankings</li></ul><infoPanel><p><strong>Why this system?</strong> All matches take similar time to complete, reducing wait times between rounds. Players on different courts finish at roughly the same time, keeping the tournament flowing smoothly.</p></infoPanel><h3>Final Rankings</h3><p>At the end of the tournament, players are ranked by their total points scored across all matches. The player with the most points wins.</p>',
+    },
+    americano: {
+      title: 'Americano Format',
+      desc: '<p>In Americano, all players compete against all other players over multiple rounds.</p><h3>How it works</h3><ul><li>Players are paired randomly</li><li>Each player partners with different teammates</li><li>Each player faces different opponents</li><li>Points are tracked individually</li><li>Perfect for social games where everyone plays together</li></ul><infoPanel><p><strong>Ideal for:</strong> Casual games, social events, player development</p></infoPanel>',
+    },
+    mexicano: {
+      title: 'Mexicano Format',
+      desc: '<p>In Mexicano, players are paired dynamically based on current rankings.</p><h3>How it works</h3><ul><li>First rounds use random pairing</li><li>After initial rounds, top-ranked players face each other</li><li>Lower-ranked players also face similar-ranked opponents</li><li>Creates competitive, balanced matches</li><li>Rankings update after each round</li></ul><h3>Settings</h3><ul><li><strong>Pairing style:</strong> How partners are assigned (1st & 4th vs 2nd & 3rd, or 1st & 3rd vs 2nd & 4th)</li><li><strong>Random rounds:</strong> Number of initial rounds before ranking-based pairing</li></ul><infoPanel><p><strong>Ideal for:</strong> Competitive tournaments, skill-based matchmaking</p></infoPanel>',
+    },
+    players: {
+      title: 'Managing Players',
+      desc: '<h3>Player Names</h3><ul><li>Cannot be empty or contain only spaces</li><li>Each name must be unique within the tournament</li><li>Maximum 40 players per tournament</li></ul><h3>Adding Players</h3><ul><li>You must select players for each new tournament</li><li>Player suggestions come from all completed tournaments stored in your browser</li><li>Type to search or select from suggestions</li><li>You need at least 4 players to start a tournament</li></ul><h3>Court Allocation</h3><ul><li>The app automatically suggests the optimal number of courts based on player count</li><li>You can manually adjust the court number if needed</li><li>You won\'t be able to set more courts than required to ensure all courts are used during rounds</li></ul>',
+    },
+    troubleshooting: {
+      title: 'Troubleshooting',
+      desc: '<h3>My tournament disappeared</h3><ul><li>Data is stored in browser localStorage</li><li>Clearing browser data will delete tournaments</li><li>Use incognito/private mode carefully - data is deleted when closed</li><li>If you have the link to a completed tournament, you can recreate its data (including player names and detailed results) by opening it</li></ul><h3>Can\'t add players</h3><ul><li>Maximum 40 players allowed</li><li>Check if "Start Tournament" button is enabled (needs 4+ players)</li></ul><h3>Language changed unexpectedly</h3><ul><li>Your language preference is saved automatically</li><li>Use the language switcher (top-right) to change it back</li></ul><infoPanel><p><strong>Need help or found a bug?</strong><br>Report issues on our <githubIssuesLink>GitHub project</githubIssuesLink></p></infoPanel>',
+    },
+  },
+  months: {
+    '0': 'Jan',
+    '1': 'Feb',
+    '2': 'Mar',
+    '3': 'Apr',
+    '4': 'May',
+    '5': 'Jun',
+    '6': 'Jul',
+    '7': 'Aug',
+    '8': 'Sep',
+    '9': 'Oct',
+    '10': 'Nov',
+    '11': 'Dec',
+  },
+  weekdays: {
+    '0': 'Sunday',
+    '1': 'Monday',
+    '2': 'Tuesday',
+    '3': 'Wednesday',
+    '4': 'Thursday',
+    '5': 'Friday',
+    '6': 'Saturday',
+  },
+} as const
+
+export default translation
