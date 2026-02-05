@@ -123,6 +123,7 @@ export function Create() {
             {...register('tournamentName')}
             className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
             placeholder={generateTournamentName(eventType, t)}
+            maxLength={40}
           />
           {errors.tournamentName && (
             <p className="text-red-400 text-sm mt-2">{t('create.name.error')}</p>
