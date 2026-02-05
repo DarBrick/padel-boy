@@ -20,7 +20,7 @@ export function CookieBanner() {
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 animate-slide-up">
       <div className="bg-slate-800/95 backdrop-blur-sm border-t border-slate-700 shadow-2xl">
-        <div className="container mx-auto px-4 py-4 md:py-5">
+        <div className="container mx-auto px-4 py-3 sm:py-3.5 md:py-4">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             {/* Message */}
             <div className="flex-1 pr-8">

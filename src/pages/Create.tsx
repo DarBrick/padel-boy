@@ -84,7 +84,7 @@ export function Create() {
   }
 
   return (
-    <div className="min-h-screen py-8 space-y-8">
+    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div className="container mx-auto px-4">
         <div className="flex items-center gap-4">
@@ -95,7 +95,7 @@ export function Create() {
 
       {/* Form */}
       <div className="container mx-auto px-4">
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Event Type */}
         <FormSection>
           <label className="block text-lg font-semibold mb-4">

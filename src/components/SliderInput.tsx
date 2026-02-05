@@ -11,7 +11,7 @@ export function SliderInput({ min, max, value, onChange }: SliderInputProps) {
   }
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-3 sm:gap-3.5 md:gap-4">
       <input
         type="range"
         min={min}

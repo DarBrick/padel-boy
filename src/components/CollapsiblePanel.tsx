@@ -22,7 +22,7 @@ export function CollapsiblePanel({
       <button
         type="button"
         onClick={onToggle}
-        className="w-full p-6 flex items-center justify-between hover:bg-slate-700/30 transition-colors"
+        className="w-full p-4 sm:p-5 md:p-6 flex items-center justify-between hover:bg-slate-700/30 transition-colors"
       >
         <span className="text-lg font-semibold">
           {icon}
@@ -34,7 +34,7 @@ export function CollapsiblePanel({
       </button>
       
       {isExpanded && (
-        <div className="px-6 pb-6">
+        <div className="px-4 pb-4 sm:px-5 sm:pb-5 md:px-6 md:pb-6">
           {children}
         </div>
       )}

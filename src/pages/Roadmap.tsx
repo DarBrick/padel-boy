@@ -12,7 +12,7 @@ export function Roadmap() {
   const features = t('roadmap.features', { returnObjects: true }) as readonly string[]
 
   return (
-    <div className="min-h-screen py-8 space-y-8">
+    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div className="container mx-auto px-4">
         <div className="mb-6">
@@ -28,7 +28,7 @@ export function Roadmap() {
       </div>
 
       {/* Roadmap Content */}
-      <div className="container mx-auto px-4 space-y-6">
+      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
         {/* Completed */}
         <ContentPanel>
           <div className="flex items-center gap-2 mb-4">
@@ -37,7 +37,7 @@ export function Roadmap() {
               {t('roadmap.completed')}
             </h2>
           </div>
-          <ul className="space-y-3">
+          <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
             <li className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
               <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
               <span className="text-slate-400 line-through text-sm md:text-base">
@@ -55,7 +55,7 @@ export function Roadmap() {
               {t('roadmap.inProgress')}
             </h2>
           </div>
-          <ul className="space-y-3">
+          <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
             {features.slice(1, 3).map((feature, index) => (
               <li key={index} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
                 <Clock className="w-5 h-5 text-[var(--color-padel-yellow)] mt-0.5 flex-shrink-0" />
@@ -75,7 +75,7 @@ export function Roadmap() {
               {t('roadmap.planned')}
             </h2>
           </div>
-          <ul className="space-y-3">
+          <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
             {features.slice(3).map((feature, index) => (
               <li key={index} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
                 <Circle className="w-5 h-5 text-slate-500 mt-0.5 flex-shrink-0" />

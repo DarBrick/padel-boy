@@ -11,7 +11,7 @@ export function Privacy() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen py-8 space-y-8">
+    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div className="container mx-auto px-4">
         <div className="mb-6">
@@ -27,7 +27,7 @@ export function Privacy() {
       </div>
 
       {/* Content Sections */}
-      <div className="container mx-auto px-4 space-y-6">
+      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
         {/* Language Preference */}
         <ContentPanel icon={Languages} title={t('privacy.language.title')}>
           <ContentWithInfoPanels i18nKey="privacy.language.desc" />

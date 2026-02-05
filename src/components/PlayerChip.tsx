@@ -43,7 +43,7 @@ export function PlayerChip({ name, index, onRename, onDelete, suggestions = [] }
   }
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-[var(--color-padel-yellow)]/50 transition-colors">
       <button
         type="button"
         onClick={() => {

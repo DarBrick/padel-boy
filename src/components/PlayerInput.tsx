@@ -103,7 +103,7 @@ export function PlayerInput({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         maxLength={16}
-        className={`w-full px-4 py-3 bg-slate-700 rounded-lg text-base focus:outline-none transition-colors ${
+        className={`w-full px-4 py-2 sm:py-2.5 md:py-3 bg-slate-700 rounded-lg text-base focus:outline-none transition-colors ${
           hasError 
             ? 'border-2 border-red-500 focus:border-red-500' 
             : 'border border-slate-600 focus:border-[var(--color-padel-yellow)]'
@@ -119,7 +119,7 @@ export function PlayerInput({
               type="button"
               onClick={() => handleSuggestionClick(suggestion)}
               className={`
-                w-full px-4 py-3 text-left text-base hover:bg-slate-600 transition-colors
+                w-full px-4 py-2 sm:py-2.5 md:py-3 text-left text-base hover:bg-slate-600 transition-colors
                 ${index === selectedIndex ? 'bg-slate-600' : ''}
                 ${index === 0 ? 'rounded-t-lg' : ''}
                 ${index === filteredSuggestions.length - 1 ? 'rounded-b-lg' : ''}

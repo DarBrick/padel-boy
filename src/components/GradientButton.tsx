@@ -17,7 +17,8 @@ export function GradientButton({
       disabled={disabled}
       className={`
         ${fullWidth ? 'w-full' : ''} 
-        py-4 px-8
+        py-2.5 px-6 sm:py-3 sm:px-7 md:py-4 md:px-8
+        min-h-[44px] sm:min-h-[46px] md:min-h-[48px]
         bg-gradient-to-r from-blue-600 to-[var(--color-padel-yellow)] 
         hover:from-blue-500 hover:to-[#C5F000]
         rounded-lg 

@@ -13,12 +13,12 @@ interface RadioCardGroupProps {
 
 export function RadioCardGroup({ name, options, value, onChange }: RadioCardGroupProps) {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-3.5 md:gap-4">
       {options.map((option) => (
         <label
           key={option.value}
           className={`
-            flex flex-col items-center p-4 rounded-lg border-2 cursor-pointer transition-all
+            flex flex-col items-center p-3 sm:p-3.5 md:p-4 rounded-lg border-2 cursor-pointer transition-all
             ${value === option.value 
               ? 'border-[var(--color-padel-yellow)] bg-[var(--color-padel-yellow)]/10' 
               : 'border-slate-600 hover:border-slate-500'}

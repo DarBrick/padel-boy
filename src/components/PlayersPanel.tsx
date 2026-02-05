@@ -88,7 +88,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
               type="button"
               onClick={handleAddPlayer}
               disabled={isDuplicate || !newPlayerName.trim()}
-              className="p-3 bg-[var(--color-padel-yellow)] text-slate-900 rounded-lg hover:bg-[#C5F000] transition-colors min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--color-padel-yellow)]"
+              className="p-2.5 sm:p-2.5 md:p-3 bg-[var(--color-padel-yellow)] text-slate-900 rounded-lg hover:bg-[#C5F000] transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-[var(--color-padel-yellow)]"
               aria-label={t('create.players.add')}
             >
               <Plus className="w-6 h-6" />
@@ -98,7 +98,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
           <button
             type="button"
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 px-5 py-3 text-base text-slate-300 hover:text-[var(--color-padel-yellow)] border border-dashed border-slate-600 hover:border-[var(--color-padel-yellow)]/50 rounded-lg transition-colors min-h-[48px]"
+            className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-[var(--color-padel-yellow)] border border-dashed border-slate-600 hover:border-[var(--color-padel-yellow)]/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
           >
             <Plus className="w-5 h-5" />
             {t('create.players.add')}
