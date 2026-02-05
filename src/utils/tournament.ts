@@ -17,13 +17,38 @@ export function generateTournamentName(
   eventType: 'americano' | 'mexicano',
   t: TFunction
 ): string {
+  const monthKeys = [
+    'months.0',
+    'months.1',
+    'months.2',
+    'months.3',
+    'months.4',
+    'months.5',
+    'months.6',
+    'months.7',
+    'months.8',
+    'months.9',
+    'months.10',
+    'months.11',
+  ] as const
+
+  const weekdayKeys = [
+    'weekdays.0',
+    'weekdays.1',
+    'weekdays.2',
+    'weekdays.3',
+    'weekdays.4',
+    'weekdays.5',
+    'weekdays.6',
+  ] as const
+
   const typeName = eventType === 'mexicano' ? 'Mexicano' : 'Americano'
   const now = new Date()
   const day = now.getDate()
   const monthIndex = now.getMonth()
-  const month = t(`months.${monthIndex}`)
+  const month = t(monthKeys[monthIndex])
   const dayOfWeekIndex = now.getDay()
-  const dayOfWeek = t(`weekdays.${dayOfWeekIndex}`)
+  const dayOfWeek = t(weekdayKeys[dayOfWeekIndex])
   
   // Get current language from i18next
   const language = t('lang')
