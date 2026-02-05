@@ -4,8 +4,9 @@ import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
+import { InfoPanel } from '../components/InfoPanel'
 import { Footer } from '../components/Footer'
-import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb } from 'lucide-react'
+import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, Sparkles } from 'lucide-react'
 
 export function Home() {
   const { t } = useTranslation()
@@ -25,6 +26,24 @@ export function Home() {
         <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
           {t('home.subtitle')}
         </p>
+        
+        {/* Under Development Notice */}
+        <InfoPanel>
+          <div className="space-y-2">
+            <p className="text-slate-300 text-sm md:text-base">
+              {t('home.underDevelopment')}
+            </p>
+            <div className="flex justify-center">
+              <button
+                onClick={() => navigate('/roadmap')}
+                className="flex items-center gap-2 text-sm md:text-base text-[var(--color-padel-yellow)] hover:text-[var(--color-padel-yellow)]/80 transition-colors font-semibold"
+              >
+                <Sparkles className="w-4 h-4" />
+                {t('home.viewRoadmap')}
+              </button>
+            </div>
+          </div>
+        </InfoPanel>
       </div>
 
       {/* CTA Button */}

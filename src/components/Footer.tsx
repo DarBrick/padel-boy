@@ -36,6 +36,12 @@ export function Footer() {
         >
           {t('help.title')}
         </button>
+        <button
+          onClick={() => navigate('/roadmap')}
+          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
+        >
+          {t('footer.roadmap')}
+        </button>
       </div>
 
       {/* Secondary Info: Version, GitHub, License */}

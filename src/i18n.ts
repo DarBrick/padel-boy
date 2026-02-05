@@ -9,6 +9,8 @@ const resources = {
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organize and manage Padel games with ease. Free, no payments required.',
+        underDevelopment: 'This product is currently under active development. New features are being added regularly.',
+        viewRoadmap: 'View Product Roadmap',
         startTournament: 'Start New Tournament',
         features: {
           formats: {
@@ -35,6 +37,28 @@ const resources = {
           step3: 'System generates matches automatically',
           step4: 'Enter scores and share standings via unique URL',
         },
+      },
+      roadmap: {
+        title: 'Product Roadmap',
+        subtitle: 'See what we\'re working on and what\'s coming next',
+        back: 'Back',
+        completed: 'Completed',
+        inProgress: 'In Progress',
+        planned: 'Planned',
+        features: [
+          'Project start!',
+          'Possibility to organize Americano for individual players',
+          'Possibility to organize Mexicano for individual players',
+          'Local player dictionary, known players',
+          'Store and share tournament results via unique link',
+          'Reopen tournaments',
+          'Roll back to last round',
+          'Extended available tournament statistics',
+          'Export/import single or multiple tournament data',
+          'Player statistics across multiple tournaments',
+          'QR code to share tournaments',
+          'Add support for playing tournament in fixed pairs',
+        ],
       },
       create: {
         title: 'Create Tournament',
@@ -90,6 +114,7 @@ const resources = {
       },
       footer: {
         home: 'Home',
+        roadmap: 'Roadmap',
         createdBy: 'Created by Dariusz W.',
         github: 'GitHub',
         license: 'CC BY-NC-SA 4.0',
@@ -198,6 +223,8 @@ const resources = {
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organizuj i zarządzaj grami w Padel z łatwością. Bezpłatnie, bez opłat.',
+        underDevelopment: 'Ten produkt jest aktualnie w fazie aktywnego rozwoju. Nowe funkcje są regularnie dodawane.',
+        viewRoadmap: 'Zobacz Plan Rozwoju',
         startTournament: 'Rozpocznij Nowy Turniej',
         features: {
           formats: {
@@ -224,6 +251,28 @@ const resources = {
           step3: 'System automatycznie generuje mecze',
           step4: 'Wprowadzaj wyniki i udostępniaj klasyfikację przez unikalny link',
         },
+      },
+      roadmap: {
+        title: 'Plan Rozwoju',
+        subtitle: 'Zobacz, nad czym pracujemy i co nadchodzi',
+        back: 'Wróć',
+        completed: 'Ukończone',
+        inProgress: 'W Trakcie',
+        planned: 'Zaplanowane',
+        features: [
+          'Start projektu!',
+          'Możliwość organizacji Americano dla indywidualnych graczy',
+          'Możliwość organizacji Mexicano dla indywidualnych graczy',
+          'Lokalny słownik graczy, znani gracze',
+          'Przechowywanie i udostępnianie wyników turnieju przez unikalny link',
+          'Ponowne otwieranie turniejów',
+          'Cofnięcie do ostatniej rundy',
+          'Rozszerzone dostępne statystyki turnieju',
+          'Eksport/import danych pojedynczego lub wielu turniejów',
+          'Statystyki graczy w wielu turniejach',
+          'Kod QR do udostępniania turniejów',
+          'Dodanie wsparcia dla gry w turnieju w stałych parach',
+        ],
       },
       create: {
         title: 'Stwórz Turniej',
@@ -277,7 +326,13 @@ const resources = {
       standings: {
         title: 'Klasyfikacja',
       },
-      footer: {        home: 'Strona główna',        createdBy: 'Stworzono przez Dariusz W.',
+      footer: {
+        home: 'Strona główna',
+        roadmap: 'Plan Rozwoju',
+        createdBy: 'Stworzono przez Dariusz W.',
+        github: 'GitHub',
+        license: 'CC BY-NC-SA 4.0',
+        version: 'Wersja',
       },
       cookieBanner: {
         message: 'Ta aplikacja przechowuje Twoje preferencje i informacje o turniejach lokalnie w Twojej przeglądarce.',
@@ -382,6 +437,8 @@ const resources = {
       appName: 'Padel Boy',
       home: {
         subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
+        underDevelopment: 'Este producto está actualmente en desarrollo activo. Se añaden nuevas funcionalidades regularmente.',
+        viewRoadmap: 'Ver Hoja de Ruta',
         startTournament: 'Iniciar Nuevo Torneo',
         features: {
           formats: {
@@ -408,6 +465,28 @@ const resources = {
           step3: 'El sistema genera los partidos automáticamente',
           step4: 'Introduce los resultados y comparte la clasificación mediante URL única',
         },
+      },
+      roadmap: {
+        title: 'Hoja de Ruta',
+        subtitle: 'Mira en qué estamos trabajando y qué viene a continuación',
+        back: 'Volver',
+        completed: 'Completado',
+        inProgress: 'En Progreso',
+        planned: 'Planificado',
+        features: [
+          '¡Inicio del proyecto!',
+          'Posibilidad de organizar Americano para jugadores individuales',
+          'Posibilidad de organizar Mexicano para jugadores individuales',
+          'Diccionario local de jugadores, jugadores conocidos',
+          'Almacenar y compartir resultados de torneos mediante enlace único',
+          'Reabrir torneos',
+          'Retroceder a la última ronda',
+          'Estadísticas de torneo extendidas disponibles',
+          'Exportar/importar datos de uno o varios torneos',
+          'Estadísticas de jugadores en múltiples torneos',
+          'Código QR para compartir torneos',
+          'Añadir soporte para jugar torneos en parejas fijas',
+        ],
       },
       create: {
         title: 'Crear Torneo',
@@ -463,6 +542,7 @@ const resources = {
       },
       footer: {
         home: 'Inicio',
+        roadmap: 'Hoja de Ruta',
         createdBy: 'Creado por Dariusz W.',
         github: 'GitHub',
         license: 'CC BY-NC-SA 4.0',

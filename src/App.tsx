@@ -8,6 +8,7 @@ import { Standings } from './pages/Standings'
 import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
 import { Help } from './pages/Help'
+import { Roadmap } from './pages/Roadmap'
 
 // Smart detection: Use /padel-boy only for github.io subdirectory deployment
 const isGitHubPagesSubdirectory = window.location.hostname.includes('github.io') && 
@@ -33,6 +34,7 @@ export function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/help" element={<Help />} />
+            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
