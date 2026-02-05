@@ -1,5 +1,5 @@
 interface InfoPanelProps {
-  children: React.ReactNode;
+  children?: React.ReactNode
 }
 
 export function InfoPanel({ children }: InfoPanelProps) {

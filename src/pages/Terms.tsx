@@ -30,27 +30,27 @@ export function Terms() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Service Description */}
         <ContentPanel icon={FileText} title={t('terms.service.title')}>
-          <ContentWithInfoPanels html={t('terms.service.desc')} />
+          <ContentWithInfoPanels i18nKey="terms.service.desc" />
         </ContentPanel>
 
         {/* User Responsibilities */}
         <ContentPanel icon={UserCheck} title={t('terms.responsibilities.title')}>
-          <ContentWithInfoPanels html={t('terms.responsibilities.desc')} />
+          <ContentWithInfoPanels i18nKey="terms.responsibilities.desc" />
         </ContentPanel>
 
         {/* Disclaimer */}
         <ContentPanel icon={AlertTriangle} title={t('terms.disclaimer.title')}>
-          <ContentWithInfoPanels html={t('terms.disclaimer.desc')} />
+          <ContentWithInfoPanels i18nKey="terms.disclaimer.desc" />
         </ContentPanel>
 
         {/* Liability */}
         <ContentPanel icon={Shield} title={t('terms.liability.title')}>
-          <ContentWithInfoPanels html={t('terms.liability.desc')} />
+          <ContentWithInfoPanels i18nKey="terms.liability.desc" />
         </ContentPanel>
 
         {/* Changes */}
         <ContentPanel icon={RefreshCw} title={t('terms.changes.title')}>
-          <ContentWithInfoPanels html={t('terms.changes.desc')} />
+          <ContentWithInfoPanels i18nKey="terms.changes.desc" />
         </ContentPanel>
       </div>
 

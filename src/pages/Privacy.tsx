@@ -30,17 +30,17 @@ export function Privacy() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Language Preference */}
         <ContentPanel icon={Languages} title={t('privacy.language.title')}>
-          <ContentWithInfoPanels html={t('privacy.language.desc')} />
+          <ContentWithInfoPanels i18nKey="privacy.language.desc" />
         </ContentPanel>
 
         {/* Tournament Data */}
         <ContentPanel icon={Trophy} title={t('privacy.tournaments.title')}>
-          <ContentWithInfoPanels html={t('privacy.tournaments.desc')} />
+          <ContentWithInfoPanels i18nKey="privacy.tournaments.desc" />
         </ContentPanel>
 
         {/* Your Control */}
         <ContentPanel icon={Settings} title={t('privacy.control.title')}>
-          <ContentWithInfoPanels html={t('privacy.control.desc')} />
+          <ContentWithInfoPanels i18nKey="privacy.control.desc" />
         </ContentPanel>
       </div>
 

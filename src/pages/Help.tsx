@@ -30,27 +30,27 @@ export function Help() {
       <div className="container mx-auto px-4 space-y-6">
         {/* Getting Started */}
         <ContentPanel icon={Rocket} title={t('help.gettingStarted.title')}>
-          <ContentWithInfoPanels html={t('help.gettingStarted.desc')} />
+            <ContentWithInfoPanels i18nKey="help.gettingStarted.desc" />
         </ContentPanel>
 
         {/* Americano Format */}
         <ContentPanel icon={Globe} title={t('help.americano.title')}>
-          <ContentWithInfoPanels html={t('help.americano.desc')} />
+            <ContentWithInfoPanels i18nKey="help.americano.desc" />
         </ContentPanel>
 
         {/* Mexicano Format */}
         <ContentPanel icon={Swords} title={t('help.mexicano.title')}>
-          <ContentWithInfoPanels html={t('help.mexicano.desc')} />
+            <ContentWithInfoPanels i18nKey="help.mexicano.desc" />
         </ContentPanel>
 
         {/* Managing Players */}
         <ContentPanel icon={Users} title={t('help.players.title')}>
-          <ContentWithInfoPanels html={t('help.players.desc')} />
+            <ContentWithInfoPanels i18nKey="help.players.desc" />
         </ContentPanel>
 
         {/* Troubleshooting */}
         <ContentPanel icon={Wrench} title={t('help.troubleshooting.title')}>
-          <ContentWithInfoPanels html={t('help.troubleshooting.desc')} />
+            <ContentWithInfoPanels i18nKey="help.troubleshooting.desc" />
         </ContentPanel>
       </div>
 

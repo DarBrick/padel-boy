@@ -9,7 +9,7 @@ export function Roadmap() {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
-  const features = t('roadmap.features', { returnObjects: true }) as string[]
+  const features = t('roadmap.features', { returnObjects: true }) as readonly string[]
 
   return (
     <div className="min-h-screen py-8 space-y-8">

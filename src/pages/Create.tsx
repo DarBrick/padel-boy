@@ -32,7 +32,7 @@ export function Create() {
       tournamentName: generateTournamentName('americano', t),
       numberOfPlayers: 0,
       numberOfCourts: 0,
-      pointsPerMatch: 21,
+      pointsPerMatch: '21',
       matchupStyle: '1&4vs2&3',
       randomRounds: 2,
     },
@@ -186,13 +186,13 @@ export function Create() {
           <RadioCardGroup
             name="pointsPerMatch"
             options={[
-              { value: 16, label: '16' },
-              { value: 21, label: '21' },
-              { value: 24, label: '24' },
-              { value: 32, label: '32' },
+              { value: '16', label: '16' },
+              { value: '21', label: '21' },
+              { value: '24', label: '24' },
+              { value: '32', label: '32' },
             ]}
             value={pointsPerMatch}
-            onChange={(value) => setValue('pointsPerMatch', value as 16 | 21 | 24 | 32)}
+            onChange={(value) => setValue('pointsPerMatch', value as CreateTournamentForm['pointsPerMatch'])}
           />
           <p className="text-slate-400 text-sm mt-2">
             {t('create.points.desc')}
