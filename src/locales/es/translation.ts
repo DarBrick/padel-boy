@@ -83,8 +83,11 @@ const translation = {
     points: {
       label: 'Puntos por Partido',
       desc: 'Número de puntos a jugar en cada partido. El estándar es 21 puntos.',
-    },
-    mexicano: {
+    },    fixedPairs: {
+      label: 'Inscripción en parejas',
+      desc: 'Los jugadores se inscriben como parejas fijas y compiten juntos durante todo el torneo',
+      notSupported: '⚠ Esta función aún no está disponible',
+    },    mexicano: {
       title: 'Configuración Mexicano',
       matchup: {
         label: 'Emparejamiento',

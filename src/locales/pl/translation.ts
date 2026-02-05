@@ -83,8 +83,11 @@ const translation = {
     points: {
       label: 'Punkty na Mecz',
       desc: 'Liczba punktów do rozegrania w każdym meczu. Standard to 21 punktów.',
-    },
-    mexicano: {
+    },    fixedPairs: {
+      label: 'Zapisy w parach',
+      desc: 'Gracze zapisują się jako stałe pary i grają razem przez cały turniej',
+      notSupported: '⚠ Ta funkcja nie jest jeszcze dostępna',
+    },    mexicano: {
       title: 'Ustawienia Mexicano',
       matchup: {
         label: 'Parowanie',

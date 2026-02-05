@@ -84,6 +84,11 @@ const translation = {
       label: 'Points Per Match',
       desc: 'Number of points to play per match. Standard is 21 points.',
     },
+    fixedPairs: {
+      label: 'Sign up in pairs',
+      desc: 'Players sign up as fixed pairs and compete together throughout the tournament',
+      notSupported: '⚠ This feature is not yet supported',
+    },
     mexicano: {
       title: 'Mexicano Settings',
       matchup: {

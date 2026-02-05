@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy } from 'lucide-react'
+import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake } from 'lucide-react'
 import { useEffect, useState, useRef } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
@@ -14,6 +14,7 @@ import { RadioCardGroup } from '../components/RadioCardGroup'
 import { GradientButton } from '../components/GradientButton'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { IconButton } from '../components/IconButton'
+import { ToggleSwitch } from '../components/ToggleSwitch'
 
 export function Create() {
   const { t } = useTranslation()
@@ -51,6 +52,7 @@ export function Create() {
   const [isPointsExpanded, setIsPointsExpanded] = useState(false)
   const [isMatchupExpanded, setIsMatchupExpanded] = useState(false)
   const [isRandomRoundsExpanded, setIsRandomRoundsExpanded] = useState(false)
+  const [isFixedPairs, setIsFixedPairs] = useState(false)
   const previousEventTypeRef = useRef(eventType)
   
   const [players, setPlayers] = useState<string[]>([])
@@ -198,6 +200,30 @@ export function Create() {
             {t('create.points.desc')}
           </p>
         </CollapsiblePanel>
+
+        {/* Fixed Pairs (Sign up in pairs) */}
+        <FormSection>
+          <div className="flex items-start gap-3">
+            <Handshake className="w-5 h-5 mt-1 flex-shrink-0" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-semibold">{t('create.fixedPairs.label')}</span>
+              </div>
+              <p className="text-slate-400 text-sm mt-1">
+                {t('create.fixedPairs.desc')}
+              </p>
+              <p className="text-amber-400 text-sm mt-2 italic">
+                {t('create.fixedPairs.notSupported')}
+              </p>
+            </div>
+            <ToggleSwitch
+              checked={isFixedPairs}
+              onChange={setIsFixedPairs}
+              label={t('create.fixedPairs.label')}
+              disabled
+            />
+          </div>
+        </FormSection>
 
         {/* Mexicano-specific options */}
         {eventType === 'mexicano' && (
