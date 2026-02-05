@@ -36,6 +36,18 @@ src/
 - **Custom animations**: Define in `src/index.css` using `@keyframes` (see `animate-wave`)
 - **Color palette**: Dark theme with slate backgrounds (`slate-900`, `slate-800`, `slate-700`)
 - **Brand color**: Padel yellow (`--color-padel-yellow: #D4FF00`) defined in `src/index.css`, use as `text-[var(--color-padel-yellow)]` or in gradients
+- **Spacing Scale**: Follow mobile-first responsive spacing
+  - Small padding: `p-3` (icon buttons, tight containers)
+  - Medium padding: `p-4 sm:p-5 md:p-6` (panels, sections, form containers)
+  - Large padding: `p-6 sm:p-7 md:p-8` (page containers, hero sections)
+  - Small gaps: `gap-2` (8px, chip grids)
+  - Medium gaps: `gap-3 sm:gap-3.5 md:gap-4` (12-14-16px, form elements, card grids)
+  - Large gaps: `gap-4 sm:gap-5 md:gap-6` (16-20-24px, major sections)
+  - Content rhythm: `space-y-4 sm:space-y-5 md:space-y-6` (within sections)
+  - Section rhythm: `space-y-6 sm:space-y-7 md:space-y-8` (between sections)
+- **Touch Targets**: Minimum 44px on mobile (iOS/Android guidelines), 46px on small screens, 48px on desktop
+  - Buttons: `min-h-[44px] sm:min-h-[46px] md:min-h-[48px]`
+  - Interactive elements: Ensure adequate padding for touch
 
 ```jsx
 // ✅ Correct: mobile-first responsive
