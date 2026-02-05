@@ -61,6 +61,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
             <PlayerChip
               key={`${player}-${index}`}
               name={player}
+              index={index}
               onRename={(newName) => handleRename(index, newName)}
               onDelete={() => handleDelete(index)}
               suggestions={suggestions}

@@ -4,12 +4,13 @@ import { PlayerInput } from './PlayerInput'
 
 interface PlayerChipProps {
   name: string
+  index: number
   onRename: (newName: string) => void
   onDelete: () => void
   suggestions?: string[]
 }
 
-export function PlayerChip({ name, onRename, onDelete, suggestions = [] }: PlayerChipProps) {
+export function PlayerChip({ name, index, onRename, onDelete, suggestions = [] }: PlayerChipProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(name)
 
@@ -51,6 +52,7 @@ export function PlayerChip({ name, onRename, onDelete, suggestions = [] }: Playe
         }}
         className="text-base hover:text-[var(--color-padel-yellow)] transition-colors min-h-[24px] flex-1 text-left"
       >
+        <span className="text-slate-400 mr-1.5">#{index + 1}</span>
         {name}
       </button>
       <button
