@@ -6,7 +6,7 @@ import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { InfoPanel } from '../components/InfoPanel'
 import { Footer } from '../components/Footer'
-import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, Sparkles } from 'lucide-react'
+import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, Sparkles, History } from 'lucide-react'
 
 export function Home() {
   const { t } = useTranslation()
@@ -47,10 +47,18 @@ export function Home() {
       </div>
 
       {/* CTA Button */}
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center gap-3">
         <GradientButton onClick={() => navigate('/create')}>
           {t('home.startTournament')}
         </GradientButton>
+        
+        <button
+          onClick={() => navigate('/past')}
+          className="flex items-center gap-2 px-6 py-3 text-base font-medium text-slate-300 hover:text-[var(--color-padel-yellow)] transition-colors"
+        >
+          <History className="w-5 h-5" />
+          {t('home.viewPastTournaments')}
+        </button>
       </div>
 
       {/* Features Grid */}
