@@ -5,8 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake, Grid2X2Plus } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { createTournamentSchema, type CreateTournamentForm } from '../schemas/tournament'
+import { createTournamentSchema, type CreateTournamentForm, type StoredTournament } from '../schemas/tournament'
 import { generateTournamentName } from '../utils/tournament'
+import { generateTournamentId } from '../utils/tournamentId'
+import { useTournaments } from '../stores/tournaments'
 import { FormSection } from '../components/FormSection'
 import { CollapsiblePanel } from '../components/CollapsiblePanel'
 import { SliderInput } from '../components/SliderInput'
@@ -20,6 +22,7 @@ import { CourtChip } from '../components/CourtChip'
 export function Create() {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const { addTournament } = useTournaments()
 
   const {
     register,
@@ -55,6 +58,7 @@ export function Create() {
   
   const [players, setPlayers] = useState<string[]>([])
   const [courtNames, setCourtNames] = useState<string[]>([])
+  const [prepareForLater, setPrepareForLater] = useState(false)
 
   const maxCourts = Math.floor(numberOfPlayers / 4)
 
@@ -114,9 +118,52 @@ export function Create() {
   }
 
   const onSubmit = (data: CreateTournamentForm) => {
-    console.log('Tournament data:', { ...data, players, courtNames })
-    // TODO: Save to store and navigate to tournament page
-    navigate('/tournament')
+    // Create tournament object
+    const tournamentId = generateTournamentId()
+    const tournamentName = data.tournamentName || generateTournamentName(data.eventType, t)
+    
+    // Convert court names array to record format
+    const courtNamesRecord: Record<number, string> = {}
+    courtNames.forEach((name, index) => {
+      if (name.trim()) {
+        courtNamesRecord[index] = name.trim().slice(0, 16) // Max 16 chars as per schema
+      }
+    })
+    
+    // Create StoredTournament object
+    const storedTournament: StoredTournament = {
+      version: 1,
+      id: tournamentId,
+      name: tournamentName.slice(0, 40), // Max 40 chars as per schema
+      format: data.eventType,
+      pointsPerGame: parseInt(data.pointsPerMatch) as 16 | 21 | 24 | 32,
+      numberOfCourts: data.numberOfCourts,
+      isFixedPairs: false, // Not yet supported
+      playerCount: players.length,
+      players: players.map(name => ({ name: name.slice(0, 16) })), // Max 16 chars per player
+      matches: [], // Matches will be generated when tournament starts
+      courtNames: Object.keys(courtNamesRecord).length > 0 ? courtNamesRecord : undefined,
+      // Mexicano-specific options
+      ...(data.eventType === 'mexicano' && {
+        mexicanoMatchupStyle: data.matchupStyle,
+        mexicanoRandomRounds: data.randomRounds,
+      }),
+    }
+    
+    // Save tournament to store
+    addTournament(storedTournament)
+    
+    console.log('Tournament saved:', storedTournament)
+    
+    if (prepareForLater) {
+      // Tournament saved for later
+      // TODO: Add toast notification for saved tournament
+      navigate('/')
+    } else {
+      // Start tournament immediately
+      // TODO: Navigate to tournament page with the ID
+      navigate(`/tournament/${tournamentId}`)
+    }
   }
 
   return (
@@ -302,10 +349,25 @@ export function Create() {
           </>
         )}
 
-        {/* Submit Button */}
-        <GradientButton type="submit" fullWidth disabled={players.length < 4}>
-          {t('create.submit')}
-        </GradientButton>
+        {/* Submit Buttons */}
+        <div className="space-y-3">
+          <GradientButton 
+            type="submit" 
+            fullWidth 
+            disabled={players.length < 4}
+            onClick={() => setPrepareForLater(false)}
+          >
+            {t('create.submitStart')}
+          </GradientButton>
+          <button
+            type="submit"
+            disabled={players.length < 4}
+            onClick={() => setPrepareForLater(true)}
+            className="w-full px-6 py-3 text-base font-medium text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:bg-slate-700 hover:text-[var(--color-padel-yellow)] hover:border-[var(--color-padel-yellow)]/50 transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-700/50 disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+          >
+            {t('create.submitPrepare')}
+          </button>
+        </div>
         </form>
       </div>
     </div>
