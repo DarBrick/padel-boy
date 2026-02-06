@@ -7,6 +7,7 @@ const translation = {
       'Ten produkt jest aktualnie w fazie aktywnego rozwoju. Nowe funkcje są regularnie dodawane.',
     viewRoadmap: 'Zobacz Plan Rozwoju',
     startTournament: 'Rozpocznij Nowy Turniej',
+    viewPastTournaments: 'Zobacz Poprzednie Turnieje',
     features: {
       formats: {
         title: 'Dwa Formaty Turniejów',
@@ -106,7 +107,8 @@ const translation = {
         desc: 'Liczba początkowych rund z losowym parowaniem przed parowaniem według rankingu',
       },
     },
-    submit: 'Rozpocznij Turniej',
+    submitStart: 'Rozpocznij Turniej',
+    submitPrepare: 'Przygotuj na Później',
   },
   players: {
     title: 'Gracze',
@@ -196,6 +198,81 @@ const translation = {
     troubleshooting: {
       title: 'Rozwiązywanie Problemów',
       desc: '<h3>Mój turniej zniknął</h3><ul><li>Dane są przechowywane w localStorage przeglądarki</li><li>Wyczyszczenie danych przeglądarki usunie turnieje</li><li>Używaj trybu incognito/prywatnego ostrożnie - dane są usuwane po zamknięciu</li><li>Jeśli posiadasz link do zakończonego turnieju, możesz odtworzyć jego dane (w tym nazwy graczy i szczegółowe wyniki) otwierając go</li></ul><h3>Nie mogę dodać graczy</h3><ul><li>Maksymalnie 40 graczy</li><li>Sprawdź, czy przycisk "Rozpocznij Turniej" jest aktywny (wymaga 4+ graczy)</li></ul><h3>Język zmienił się nieoczekiwanie</h3><ul><li>Twoje preferencje językowe są zapisywane automatycznie</li><li>Użyj przełącznika języka (prawy górny róg), aby go zmienić</li></ul><infoPanel><p><strong>Potrzebujesz pomocy lub znalazłeś błąd?</strong><br>Zgłoś problem na naszym <githubIssuesLink>projekcie GitHub</githubIssuesLink></p></infoPanel>',
+    },
+  },
+  pastTournaments: {
+    title: 'Poprzednie Turnieje',
+    subtitle: 'Przeglądaj i zarządzaj historią turniejów',
+    back: 'Wstecz',
+    searchPlaceholder: 'Szukaj turniejów po nazwie...',
+    defaultName: 'Turniej z {{date}}',
+    players: 'Gracze',
+    groups: {
+      today: 'Dzisiaj',
+      yesterday: 'Wczoraj',
+      thisWeek: 'W Tym Tygodniu',
+    },
+    date: {
+      today: 'Dzisiaj',
+      yesterday: 'Wczoraj',
+    },
+    status: {
+      setup: 'Konfiguracja',
+      playing: 'W Trakcie',
+      finished: 'Zakończony',
+    },
+    actions: {
+      view: 'Szczegóły',
+      share: 'Udostępnij',
+      delete: 'Usuń',
+    },
+    emptyState: {
+      title: 'Brak turniejów',
+      description: 'Rozpocznij swój pierwszy turniej, aby zobaczyć go tutaj',
+      createButton: 'Utwórz Turniej',
+    },
+    noResults: {
+      title: 'Nie znaleziono wyników',
+      description: 'Żaden turniej nie pasuje do "{{query}}"',
+    },
+    deleteConfirm: {
+      title: 'Usunąć turniej?',
+      description: 'Ta operacja jest nieodwracalna. Wszystkie dane turnieju zostaną trwale usunięte.',
+      cancel: 'Anuluj',
+      confirm: 'Usuń',
+    },
+    loadMore: 'Załaduj więcej turniejów',
+    scrollToTop: 'Przewiń do góry',
+    showing: 'Pokazano {{count}} z {{total}} turniejów',
+    corruption: {
+      title: 'Wykryto Uszkodzone Dane',
+      description: 'Znaleźliśmy {{count}} uszkodzony(ch) turniej(ów) w Twoim magazynie. Może to być spowodowane migracją danych lub problemami z przeglądarką.',
+      removeButton: 'Usuń Uszkodzone Dane',
+    },
+  },
+  calendar: {
+    months: {
+      '0': 'Styczeń',
+      '1': 'Luty',
+      '2': 'Marzec',
+      '3': 'Kwiecień',
+      '4': 'Maj',
+      '5': 'Czerwiec',
+      '6': 'Lipiec',
+      '7': 'Sierpień',
+      '8': 'Wrzesień',
+      '9': 'Październik',
+      '10': 'Listopad',
+      '11': 'Grudzień',
+    },
+    weekdays: {
+      '0': 'niedziela',
+      '1': 'poniedziałek',
+      '2': 'wtorek',
+      '3': 'środa',
+      '4': 'czwartek',
+      '5': 'piątek',
+      '6': 'sobota',
     },
   },
   months: {

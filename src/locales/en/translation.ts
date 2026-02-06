@@ -7,6 +7,7 @@ const translation = {
       'This product is currently under active development. New features are being added regularly.',
     viewRoadmap: 'View Product Roadmap',
     startTournament: 'Start New Tournament',
+    viewPastTournaments: 'View Past Tournaments',
     features: {
       formats: {
         title: 'Two Tournament Formats',
@@ -108,7 +109,8 @@ const translation = {
         desc: 'Number of initial rounds with random pairings before ranking-based matchups',
       },
     },
-    submit: 'Start Tournament',
+    submitStart: 'Start Tournament',
+    submitPrepare: 'Prepare for Later',
   },
   players: {
     title: 'Players',
@@ -198,6 +200,81 @@ const translation = {
     troubleshooting: {
       title: 'Troubleshooting',
       desc: '<h3>My tournament disappeared</h3><ul><li>Data is stored in browser localStorage</li><li>Clearing browser data will delete tournaments</li><li>Use incognito/private mode carefully - data is deleted when closed</li><li>If you have the link to a completed tournament, you can recreate its data (including player names and detailed results) by opening it</li></ul><h3>Can\'t add players</h3><ul><li>Maximum 40 players allowed</li><li>Check if "Start Tournament" button is enabled (needs 4+ players)</li></ul><h3>Language changed unexpectedly</h3><ul><li>Your language preference is saved automatically</li><li>Use the language switcher (top-right) to change it back</li></ul><infoPanel><p><strong>Need help or found a bug?</strong><br>Report issues on our <githubIssuesLink>GitHub project</githubIssuesLink></p></infoPanel>',
+    },
+  },
+  pastTournaments: {
+    title: 'Past Tournaments',
+    subtitle: 'Browse and manage your tournament history',
+    back: 'Back',
+    searchPlaceholder: 'Search tournaments by name...',
+    defaultName: 'Tournament from {{date}}',
+    players: 'Players',
+    groups: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+      thisWeek: 'This Week',
+    },
+    date: {
+      today: 'Today',
+      yesterday: 'Yesterday',
+    },
+    status: {
+      setup: 'Setup',
+      playing: 'In Progress',
+      finished: 'Finished',
+    },
+    actions: {
+      view: 'Details',
+      share: 'Share',
+      delete: 'Delete',
+    },
+    emptyState: {
+      title: 'No tournaments yet',
+      description: 'Start your first tournament to see it appear here',
+      createButton: 'Create Tournament',
+    },
+    noResults: {
+      title: 'No results found',
+      description: 'No tournaments match "{{query}}"',
+    },
+    deleteConfirm: {
+      title: 'Delete Tournament?',
+      description: 'This action cannot be undone. All tournament data will be permanently deleted.',
+      cancel: 'Cancel',
+      confirm: 'Delete',
+    },
+    loadMore: 'Load More Tournaments',
+    scrollToTop: 'Scroll to top',
+    showing: 'Showing {{count}} of {{total}} tournaments',
+    corruption: {
+      title: 'Corrupted Data Detected',
+      description: 'We found {{count}} corrupted tournament(s) in your storage. This may be due to data migration or browser issues.',
+      removeButton: 'Remove Corrupted Data',
+    },
+  },
+  calendar: {
+    months: {
+      '0': 'January',
+      '1': 'February',
+      '2': 'March',
+      '3': 'April',
+      '4': 'May',
+      '5': 'June',
+      '6': 'July',
+      '7': 'August',
+      '8': 'September',
+      '9': 'October',
+      '10': 'November',
+      '11': 'December',
+    },
+    weekdays: {
+      '0': 'Sunday',
+      '1': 'Monday',
+      '2': 'Tuesday',
+      '3': 'Wednesday',
+      '4': 'Thursday',
+      '5': 'Friday',
+      '6': 'Saturday',
     },
   },
   months: {
