@@ -9,7 +9,6 @@ import { createTournamentSchema, type CreateTournamentForm, type StoredTournamen
 import { generateTournamentName } from '../utils/tournament'
 import { generateTournamentId } from '../utils/tournamentId'
 import { useTournaments } from '../stores/tournaments'
-import { FormSection } from '../components/FormSection'
 import { CollapsiblePanel } from '../components/CollapsiblePanel'
 import { SliderInput } from '../components/SliderInput'
 import { RadioCardGroup } from '../components/RadioCardGroup'
@@ -18,6 +17,7 @@ import { PlayersPanel } from '../components/PlayersPanel'
 import { IconButton } from '../components/IconButton'
 import { ToggleSwitch } from '../components/ToggleSwitch'
 import { CourtChip } from '../components/CourtChip'
+import { ContentPanel } from '../components/ContentPanel'
 
 export function Create() {
   const { t } = useTranslation()
@@ -180,7 +180,7 @@ export function Create() {
       <div className="container mx-auto px-4">
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Event Type */}
-        <FormSection>
+        <ContentPanel>
           <label className="block text-lg font-semibold mb-4">
             {t('create.eventType.label')}
           </label>
@@ -193,10 +193,10 @@ export function Create() {
             value={eventType}
             onChange={(value) => setValue('eventType', value as 'americano' | 'mexicano')}
           />
-        </FormSection>
+        </ContentPanel>
 
         {/* Tournament Name */}
-        <FormSection>
+        <ContentPanel>
           <label className="block text-lg font-semibold mb-4">
             <PencilLine className="w-5 h-5 inline-block mr-2" />
             {t('create.name.label')}
@@ -211,7 +211,7 @@ export function Create() {
           {errors.tournamentName && (
             <p className="text-red-400 text-sm mt-2">{t('create.name.error')}</p>
           )}
-        </FormSection>
+        </ContentPanel>
 
         {/* Players */}
         <PlayersPanel
@@ -283,7 +283,7 @@ export function Create() {
         </CollapsiblePanel>
 
         {/* Fixed Pairs (Sign up in pairs) */}
-        <FormSection>
+        <ContentPanel>
           <div className="flex items-start gap-3">
             <Handshake className="w-5 h-5 mt-1 flex-shrink-0" />
             <div className="flex-1">
@@ -304,7 +304,7 @@ export function Create() {
               disabled
             />
           </div>
-        </FormSection>
+        </ContentPanel>
 
         {/* Mexicano-specific options */}
         {eventType === 'mexicano' && (

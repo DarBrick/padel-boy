@@ -4,6 +4,7 @@ import type { StoredTournament } from '../schemas/tournament'
 import { extractTimestampFromId } from '../utils/tournamentId'
 import { formatRelativeDate } from '../utils/dateGrouping'
 import { getTournamentStats } from '../utils/tournamentStats'
+import { ContentPanel } from './ContentPanel'
 
 interface TournamentCardProps {
   tournament: StoredTournament
@@ -35,7 +36,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
     : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
   
   return (
-    <div className="bg-slate-800/50 border border-slate-700 hover:border-slate-600 rounded-lg p-4 transition-all">
+    <ContentPanel className="p-4 md:p-4 transition-all">
       {/* Header with name and date */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
@@ -125,6 +126,6 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
           <Trash2 className="w-5 h-5" />
         </button>
       </div>
-    </div>
+    </ContentPanel>
   )
 }
