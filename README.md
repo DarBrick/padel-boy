@@ -37,17 +37,7 @@ npm run lint
 
 Automatically deployed to GitHub Pages on push to `main` branch.
 
-**Live site:** `https://<your-username>.github.io/padel-boy/`
-
-### Manual Deploy
-
-1. Go to **Actions** tab on GitHub
-2. Select **Deploy to GitHub Pages** workflow
-3. Click **Run workflow**
-
-## How to Use the App
-
-_Coming soon..._
+**Live site:** `https://padelboy.darikcube.com/`
 
 ## License
 
@@ -69,4 +59,4 @@ This project is licensed under the Creative Commons Attribution-NonCommercial-Sh
 Interested in using this commercially? Please contact the author for a commercial license.
 
 **Full license:** https://creativecommons.org/licenses/by-nc-sa/4.0/
-**Full license:** https://creativecommons.org/licenses/by-nc-sa/4.0/
+
