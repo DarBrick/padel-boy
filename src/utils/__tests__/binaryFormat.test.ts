@@ -101,14 +101,14 @@ describe('Binary Tournament Format v1', () => {
             team2: [2, 3],
             isFinished: true,
             winner: 0,
-            scoreDelta: 4, // 24-20
+            scoreDelta: 4, // 14-10
           },
           {
-            team1: [0, 2],
-            team2: [1, 3],
+            team1: [4, 5],
+            team2: [6, 7],
             isFinished: true,
             winner: 1,
-            scoreDelta: 8, // 16-24
+            scoreDelta: 8, // 8-16
           },
         ],
       }
@@ -536,7 +536,7 @@ describe('Binary Tournament Format v1', () => {
             team2: [2, 3],
             isFinished: true,
             winner: 0,
-            scoreDelta: 0, // 21-21 (though shouldn't happen in padel)
+            scoreDelta: 0, // 10.5-10.5 rounded to 10-10
           },
         ],
       }

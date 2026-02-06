@@ -9,6 +9,12 @@ export interface PlayerStanding {
   wins: number
   draws: number
   losses: number
+  gamesPlayed: number
+  gamesSitting: number
+  pointsPerGame: number
+  winRate: number
+  pointsFromSitting: number
+  totalPointsWithSitting: number
 }
 
 export interface TournamentStats {
@@ -60,9 +66,10 @@ export function getTournamentStats(tournament: StoredTournament): TournamentStat
     if (!match.isFinished || match.winner === undefined || match.scoreDelta === undefined) continue
 
     const isDraw = match.scoreDelta === 0
-    const losingScore = tournament.pointsPerGame - match.scoreDelta
-    const team1Score = match.winner === 0 ? tournament.pointsPerGame : losingScore
-    const team2Score = match.winner === 1 ? tournament.pointsPerGame : losingScore
+    const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
+    const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
+    const team1Score = match.winner === 0 ? winningScore : losingScore
+    const team2Score = match.winner === 1 ? winningScore : losingScore
 
     for (const playerIndex of match.team1) {
       pointsByPlayerIndex[playerIndex] += team1Score
@@ -87,23 +94,52 @@ export function getTournamentStats(tournament: StoredTournament): TournamentStat
   }
 
   // Create and sort standings
+  const sittingPointsPerRound = Math.ceil(tournament.pointsPerGame * 0.5)
+  
   const standings: PlayerStanding[] = tournament.players
-    .map((player, index) => ({ 
-      name: player.name, 
-      index, 
-      points: pointsByPlayerIndex[index],
-      wins: winsByPlayerIndex[index],
-      draws: drawsByPlayerIndex[index],
-      losses: lossesByPlayerIndex[index],
-    }))
+    .map((player, index) => {
+      const wins = winsByPlayerIndex[index]
+      const draws = drawsByPlayerIndex[index]
+      const losses = lossesByPlayerIndex[index]
+      const points = pointsByPlayerIndex[index]
+      const gamesPlayed = wins + draws + losses
+      const gamesSitting = completedRounds - gamesPlayed
+      const pointsPerGame = gamesPlayed > 0 ? points / gamesPlayed : 0
+      const winRate = gamesPlayed > 0 ? wins / gamesPlayed : 0
+      const pointsFromSitting = gamesSitting * sittingPointsPerRound
+      const totalPointsWithSitting = points + pointsFromSitting
+      
+      return {
+        name: player.name,
+        index,
+        points,
+        wins,
+        draws,
+        losses,
+        gamesPlayed,
+        gamesSitting,
+        pointsPerGame,
+        winRate,
+        pointsFromSitting,
+        totalPointsWithSitting,
+      }
+    })
     .sort((a, b) => {
-      // Primary: sort by points (descending)
-      if (b.points !== a.points) return b.points - a.points
-      // Secondary: sort by wins (descending)
+      // Primary: sort by points per game (descending)
+      if (Math.abs(b.pointsPerGame - a.pointsPerGame) > 0.001) {
+        return b.pointsPerGame - a.pointsPerGame
+      }
+      // Secondary: sort by win rate (descending)
+      if (Math.abs(b.winRate - a.winRate) > 0.001) {
+        return b.winRate - a.winRate
+      }
+      // Tertiary: sort by total points with sitting (descending)
+      if (b.totalPointsWithSitting !== a.totalPointsWithSitting) return b.totalPointsWithSitting - a.totalPointsWithSitting
+      // Quaternary: sort by total wins (descending)
       if (b.wins !== a.wins) return b.wins - a.wins
-      // Tertiary: sort by draws (descending)
+      // Quinary: sort by total draws (descending)
       if (b.draws !== a.draws) return b.draws - a.draws
-      // Quaternary: sort alphabetically
+      // Senary: sort alphabetically
       return a.name.localeCompare(b.name)
     })
 
