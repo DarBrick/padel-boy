@@ -3,6 +3,7 @@ import { Eye, Share2, Trash2, Users, Calendar, ClockCheck } from 'lucide-react'
 import type { StoredTournament } from '../schemas/tournament'
 import { extractTimestampFromId } from '../utils/tournamentId'
 import { formatRelativeDate } from '../utils/dateGrouping'
+import { getTournamentStats } from '../utils/tournamentStats'
 
 interface TournamentCardProps {
   tournament: StoredTournament
@@ -17,52 +18,10 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
   const date = extractTimestampFromId(tournament.id)
   const dateStr = formatRelativeDate(date, t)
   
-  // Get tournament status (finished if all matches are done)
-  const totalMatches = tournament.matches.length
-  const finishedMatches = tournament.matches.filter(m => m.isFinished).length
-  const status = finishedMatches === totalMatches && totalMatches > 0 ? 'finished' :
-    finishedMatches > 0 ? 'playing' : 'setup'
-
-  // Completed rounds (consecutive from the beginning)
-  const matchesPerRound = tournament.numberOfCourts
-  const totalRounds = totalMatches > 0 ? Math.ceil(totalMatches / matchesPerRound) : 0
-  let completedRounds = 0
-  for (let roundIndex = 0; roundIndex < totalRounds; roundIndex++) {
-    const start = roundIndex * matchesPerRound
-    const end = start + matchesPerRound
-    const roundMatches = tournament.matches.slice(start, end)
-    if (roundMatches.length === 0) break
-    const roundComplete = roundMatches.every(m => m.isFinished)
-    if (!roundComplete) break
-    completedRounds++
-  }
-
-  // Player points from finished matches (team score added to both players)
-  const pointsByPlayerIndex = new Array(tournament.players.length).fill(0)
-  for (const match of tournament.matches) {
-    if (!match.isFinished || match.winner === undefined || match.scoreDelta === undefined) continue
-
-    const losingScore = tournament.pointsPerGame - match.scoreDelta
-    const team1Score = match.winner === 0 ? tournament.pointsPerGame : losingScore
-    const team2Score = match.winner === 1 ? tournament.pointsPerGame : losingScore
-
-    for (const playerIndex of match.team1) {
-      pointsByPlayerIndex[playerIndex] += team1Score
-    }
-    for (const playerIndex of match.team2) {
-      pointsByPlayerIndex[playerIndex] += team2Score
-    }
-  }
-
-  const sortedPlayers = tournament.players
-    .map((player, index) => ({ name: player.name, index, points: pointsByPlayerIndex[index] }))
-    .sort((a, b) => {
-      if (b.points !== a.points) return b.points - a.points
-      return a.name.localeCompare(b.name)
-    })
-
-  const topPlayers = sortedPlayers.slice(0, 3)
-  const remainingPlayers = Math.max(0, sortedPlayers.length - 3)
+  // Get all tournament statistics in one call
+  const stats = getTournamentStats(tournament)
+  const { status, totalRounds, completedRounds, topPlayers, standings } = stats
+  const remainingPlayers = Math.max(0, standings.length - 3)
   
   // Format badge
   const formatBadgeColor = tournament.format === 'americano' 
