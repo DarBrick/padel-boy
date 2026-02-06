@@ -5,6 +5,12 @@ import {
   selectSittingPlayers,
   generateRandomPairings,
   generateRankingBasedPairings,
+  generateAmericanoPairings,
+  calculatePartnershipHistory,
+  calculateMatchupHistory,
+  generateAllMatchConfigurations,
+  scoreMatchConfiguration,
+  selectBestConfiguration,
 } from '../roundGenerator'
 import type { StoredTournament, StoredMatch } from '../../schemas/tournament'
 
@@ -52,13 +58,6 @@ function createMatch(
 
 describe('roundGenerator', () => {
   describe('generateNextRound', () => {
-    it('returns empty array for non-Mexicano format', () => {
-      const tournament = createBaseTournament({ format: 'americano' })
-      const matches = generateNextRound(tournament)
-      
-      expect(matches).toEqual([])
-    })
-
     it('returns empty array for less than 4 players', () => {
       const tournament = createBaseTournament({
         playerCount: 3,
@@ -478,6 +477,475 @@ describe('roundGenerator', () => {
       // (5 rounds * 2 sit-outs per round = 10 total sit-outs / 10 players = 1 each)
       sitOutHistory.forEach(count => {
         expect(count).toBe(1)
+      })
+    })
+  })
+
+  // ============================================================================
+  // AMERICANO TESTS
+  // ============================================================================
+
+  describe('Americano Round Generation', () => {
+    describe('calculatePartnershipHistory', () => {
+      it('returns empty map when no matches played', () => {
+        const tournament = createBaseTournament({ format: 'americano', matches: [] })
+        const history = calculatePartnershipHistory(tournament)
+        
+        expect(history.size).toBe(0)
+      })
+
+      it('tracks partnerships correctly for one round', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], true),
+            createMatch([4, 5], [6, 7], true),
+          ],
+        })
+        const history = calculatePartnershipHistory(tournament)
+        
+        expect(history.get('0-1')).toBe(1)
+        expect(history.get('2-3')).toBe(1)
+        expect(history.get('4-5')).toBe(1)
+        expect(history.get('6-7')).toBe(1)
+        expect(history.size).toBe(4)
+      })
+
+      it('increments count for repeat partnerships', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], true),
+            createMatch([0, 1], [4, 5], true), // 0-1 partnered again
+          ],
+        })
+        const history = calculatePartnershipHistory(tournament)
+        
+        expect(history.get('0-1')).toBe(2)
+        expect(history.get('2-3')).toBe(1)
+        expect(history.get('4-5')).toBe(1)
+      })
+
+      it('uses sorted indices for consistent keys', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([1, 0], [3, 2], true), // Reversed order
+          ],
+        })
+        const history = calculatePartnershipHistory(tournament)
+        
+        // Should still use sorted keys
+        expect(history.get('0-1')).toBe(1)
+        expect(history.get('2-3')).toBe(1)
+        expect(history.get('1-0')).toBeUndefined()
+      })
+    })
+
+    describe('calculateMatchupHistory', () => {
+      it('returns empty map when no matches played', () => {
+        const tournament = createBaseTournament({ format: 'americano', matches: [] })
+        const history = calculateMatchupHistory(tournament)
+        
+        expect(history.size).toBe(0)
+      })
+
+      it('tracks all opponent pairings for one match', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], true),
+          ],
+        })
+        const history = calculateMatchupHistory(tournament)
+        
+        // Each player in team1 played against each player in team2
+        expect(history.get('0-2')).toBe(1)
+        expect(history.get('0-3')).toBe(1)
+        expect(history.get('1-2')).toBe(1)
+        expect(history.get('1-3')).toBe(1)
+        expect(history.size).toBe(4)
+      })
+
+      it('increments count for repeat matchups', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], true),
+            createMatch([0, 4], [2, 5], true), // 0 vs 2 again
+          ],
+        })
+        const history = calculateMatchupHistory(tournament)
+        
+        expect(history.get('0-2')).toBe(2)
+        expect(history.get('0-3')).toBe(1)
+        expect(history.get('0-5')).toBe(1)
+      })
+    })
+
+    describe('generateAllMatchConfigurations', () => {
+      it('returns empty array when not enough players for one match', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2], 2)
+        
+        expect(configs).toEqual([])
+      })
+
+      it('generates configurations for exactly 4 players', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3], 1)
+        
+        expect(configs.length).toBeGreaterThan(0)
+        configs.forEach(config => {
+          expect(config).toHaveLength(1)
+          expect(config[0].team1).toHaveLength(2)
+          expect(config[0].team2).toHaveLength(2)
+        })
+      })
+
+      it('generates configurations for 8 players, 2 courts', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3, 4, 5, 6, 7], 2)
+        
+        expect(configs.length).toBeGreaterThan(0)
+        configs.forEach(config => {
+          expect(config).toHaveLength(2)
+          
+          // All 8 players should be used
+          const allPlayers = new Set<number>()
+          config.forEach(m => {
+            allPlayers.add(m.team1[0])
+            allPlayers.add(m.team1[1])
+            allPlayers.add(m.team2[0])
+            allPlayers.add(m.team2[1])
+          })
+          expect(allPlayers.size).toBe(8)
+        })
+      })
+
+      it('respects court limit', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3, 4, 5, 6, 7], 1)
+        
+        expect(configs.length).toBeGreaterThan(0)
+        configs.forEach(config => {
+          expect(config).toHaveLength(1) // Limited to 1 court
+        })
+      })
+
+      it('generates different configurations (randomized)', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3, 4, 5, 6, 7], 2)
+        
+        // Should have multiple different configurations
+        expect(configs.length).toBeGreaterThan(10)
+        
+        // Check that not all configurations are identical
+        const firstConfig = JSON.stringify(configs[0])
+        const allSame = configs.every(config => JSON.stringify(config) === firstConfig)
+        expect(allSame).toBe(false)
+      })
+    })
+
+    describe('scoreMatchConfiguration', () => {
+      it('returns zero penalty for first round (no history)', () => {
+        const config: StoredMatch[] = [
+          createMatch([0, 1], [2, 3], false),
+        ]
+        const partnerHistory = new Map<string, number>()
+        const matchupHistory = new Map<string, number>()
+        
+        const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
+        
+        expect(score).toBe(0)
+      })
+
+      it('penalizes repeat partnerships', () => {
+        const config: StoredMatch[] = [
+          createMatch([0, 1], [2, 3], false),
+        ]
+        const partnerHistory = new Map([['0-1', 1]]) // 0-1 partnered once before
+        const matchupHistory = new Map<string, number>()
+        
+        const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
+        
+        // Should have partnership penalty: 1^2 * 10 = 10
+        expect(score).toBe(10)
+      })
+
+      it('penalizes repeat matchups', () => {
+        const config: StoredMatch[] = [
+          createMatch([0, 1], [2, 3], false),
+        ]
+        const partnerHistory = new Map<string, number>()
+        const matchupHistory = new Map([
+          ['0-2', 1], // 0 vs 2 once before
+        ])
+        
+        const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
+        
+        // Should have opponent penalty: 1^2 * 3 = 3
+        expect(score).toBe(3)
+      })
+
+      it('uses exponential penalty for multiple repeats', () => {
+        const config: StoredMatch[] = [
+          createMatch([0, 1], [2, 3], false),
+        ]
+        const partnerHistory = new Map([['0-1', 2]]) // 0-1 partnered twice before
+        const matchupHistory = new Map<string, number>()
+        
+        const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
+        
+        // Should have partnership penalty: 2^2 * 10 = 40
+        expect(score).toBe(40)
+      })
+
+      it('weighs partnerships higher than matchups', () => {
+        const configWithPartner: StoredMatch[] = [createMatch([0, 1], [2, 3], false)]
+        const configWithOpponent: StoredMatch[] = [createMatch([0, 2], [1, 3], false)]
+        
+        const partnerHistory = new Map([['0-1', 1]])
+        const matchupHistory = new Map([['0-1', 1]])
+        
+        const partnerScore = scoreMatchConfiguration(configWithPartner, partnerHistory, new Map())
+        const opponentScore = scoreMatchConfiguration(configWithOpponent, new Map(), matchupHistory)
+        
+        // Partner penalty should be higher
+        expect(partnerScore).toBeGreaterThan(opponentScore)
+      })
+
+      it('sums penalties across multiple matches', () => {
+        const config: StoredMatch[] = [
+          createMatch([0, 1], [2, 3], false),
+          createMatch([4, 5], [6, 7], false),
+        ]
+        const partnerHistory = new Map([
+          ['0-1', 1],
+          ['4-5', 1],
+        ])
+        const matchupHistory = new Map<string, number>()
+        
+        const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
+        
+        // Should sum both partnership penalties: 10 + 10 = 20
+        expect(score).toBe(20)
+      })
+    })
+
+    describe('selectBestConfiguration', () => {
+      it('selects configuration with zero penalty when available', () => {
+        const goodConfig: StoredMatch[] = [createMatch([0, 1], [2, 3], false)]
+        const badConfig: StoredMatch[] = [createMatch([4, 5], [6, 7], false)]
+        
+        const configurations = [badConfig, goodConfig]
+        const partnerHistory = new Map([['4-5', 1]]) // badConfig has repeat
+        const matchupHistory = new Map<string, number>()
+        
+        const selected = selectBestConfiguration(configurations, partnerHistory, matchupHistory)
+        
+        expect(selected).toEqual(goodConfig)
+      })
+
+      it('selects lowest penalty configuration', () => {
+        const config1: StoredMatch[] = [createMatch([0, 1], [2, 3], false)]
+        const config2: StoredMatch[] = [createMatch([0, 2], [1, 3], false)]
+        const config3: StoredMatch[] = [createMatch([0, 3], [1, 2], false)]
+        
+        const configurations = [config1, config2, config3]
+        const partnerHistory = new Map([
+          ['0-1', 2], // config1 has high penalty
+          ['0-2', 1], // config2 has medium penalty
+          // config3 has no penalty
+        ])
+        const matchupHistory = new Map<string, number>()
+        
+        const selected = selectBestConfiguration(configurations, partnerHistory, matchupHistory)
+        
+        expect(selected).toEqual(config3)
+      })
+
+      it('returns random selection when tied', () => {
+        const config1: StoredMatch[] = [createMatch([0, 1], [2, 3], false)]
+        const config2: StoredMatch[] = [createMatch([0, 2], [1, 3], false)]
+        
+        const configurations = [config1, config2]
+        const partnerHistory = new Map<string, number>()
+        const matchupHistory = new Map<string, number>()
+        
+        // Both have zero penalty, should select one
+        const selected = selectBestConfiguration(configurations, partnerHistory, matchupHistory)
+        
+        expect([config1, config2]).toContainEqual(selected)
+      })
+    })
+
+    describe('generateAmericanoPairings', () => {
+      it('generates matches for americano format with no history', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [],
+        })
+        const activePlayerIndices = [0, 1, 2, 3, 4, 5, 6, 7]
+        
+        const matches = generateAmericanoPairings(tournament, activePlayerIndices)
+        
+        expect(matches).toHaveLength(2)
+        expect(matches[0].isFinished).toBe(false)
+      })
+
+      it('avoids repeat partnerships when possible', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], true),
+            createMatch([4, 5], [6, 7], true),
+          ],
+        })
+        const activePlayerIndices = [0, 1, 2, 3, 4, 5, 6, 7]
+        
+        const matches = generateAmericanoPairings(tournament, activePlayerIndices)
+        
+        // Check that 0-1, 2-3, 4-5, 6-7 are NOT repeated
+        const partnerships = [
+          `${Math.min(matches[0].team1[0], matches[0].team1[1])}-${Math.max(matches[0].team1[0], matches[0].team1[1])}`,
+          `${Math.min(matches[0].team2[0], matches[0].team2[1])}-${Math.max(matches[0].team2[0], matches[0].team2[1])}`,
+          `${Math.min(matches[1].team1[0], matches[1].team1[1])}-${Math.max(matches[1].team1[0], matches[1].team1[1])}`,
+          `${Math.min(matches[1].team2[0], matches[1].team2[1])}-${Math.max(matches[1].team2[0], matches[1].team2[1])}`,
+        ]
+        
+        // Should avoid repeat partnerships (greedy algorithm should find better options)
+        const hasRepeats = partnerships.some(p => ['0-1', '2-3', '4-5', '6-7'].includes(p))
+        
+        // With 8 players and only 4 used in first round, should easily avoid repeats
+        expect(hasRepeats).toBe(false)
+      })
+
+      it('handles 4 players correctly', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          playerCount: 4,
+          players: [
+            { name: 'Player 1' },
+            { name: 'Player 2' },
+            { name: 'Player 3' },
+            { name: 'Player 4' },
+          ],
+          matches: [],
+        })
+        const activePlayerIndices = [0, 1, 2, 3]
+        
+        const matches = generateAmericanoPairings(tournament, activePlayerIndices)
+        
+        expect(matches).toHaveLength(1)
+        
+        const allPlayers = new Set<number>()
+        matches[0].team1.forEach(p => allPlayers.add(p))
+        matches[0].team2.forEach(p => allPlayers.add(p))
+        expect(allPlayers.size).toBe(4)
+      })
+    })
+
+    describe('generateNextRound - Americano Integration', () => {
+      it('generates first round for americano format', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [],
+        })
+        
+        const matches = generateNextRound(tournament)
+        
+        expect(matches).toHaveLength(2)
+        expect(matches[0].isFinished).toBe(false)
+        
+        // All 8 players should be used
+        const allPlayers = new Set<number>()
+        matches.forEach(m => {
+          allPlayers.add(m.team1[0])
+          allPlayers.add(m.team1[1])
+          allPlayers.add(m.team2[0])
+          allPlayers.add(m.team2[1])
+        })
+        expect(allPlayers.size).toBe(8)
+      })
+
+      it('maximizes diversity over multiple rounds', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [],
+        })
+        
+        const partnershipCounts = new Map<string, number>()
+        const matchupCounts = new Map<string, number>()
+        
+        // Generate 3 rounds
+        for (let round = 0; round < 3; round++) {
+          const matches = generateNextRound(tournament)
+          
+          // Track partnerships
+          matches.forEach(match => {
+            const team1Key = `${Math.min(match.team1[0], match.team1[1])}-${Math.max(match.team1[0], match.team1[1])}`
+            const team2Key = `${Math.min(match.team2[0], match.team2[1])}-${Math.max(match.team2[0], match.team2[1])}`
+            
+            partnershipCounts.set(team1Key, (partnershipCounts.get(team1Key) ?? 0) + 1)
+            partnershipCounts.set(team2Key, (partnershipCounts.get(team2Key) ?? 0) + 1)
+            
+            // Track matchups
+            match.team1.forEach(t1p => {
+              match.team2.forEach(t2p => {
+                const matchupKey = `${Math.min(t1p, t2p)}-${Math.max(t1p, t2p)}`
+                matchupCounts.set(matchupKey, (matchupCounts.get(matchupKey) ?? 0) + 1)
+              })
+            })
+          })
+          
+          // Add matches as finished for next round
+          tournament.matches.push(...matches.map(m => ({ ...m, isFinished: true })))
+        }
+        
+        // After 3 rounds with 8 players, should have good diversity
+        // We use 4 partnerships per round × 3 rounds = 12 partnership slots
+        // Max possible unique partnerships for 8 players: C(8,2) = 28
+        // With greedy algorithm sampling random configs, should get mostly unique
+        expect(partnershipCounts.size).toBeGreaterThanOrEqual(10) // At least 10/12 unique
+        
+        // Most partnerships should occur only once (some may repeat)
+        const singleOccurrences = Array.from(partnershipCounts.values()).filter(count => count === 1).length
+        expect(singleOccurrences).toBeGreaterThanOrEqual(8) // At least 8/12 single occurrences
+      })
+
+      it('handles sit-outs correctly with americano format', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          playerCount: 10,
+          players: Array.from({ length: 10 }, (_, i) => ({ name: `Player ${i + 1}` })),
+          matches: [],
+        })
+        
+        const sitOutHistory = Array.from({ length: 10 }, () => 0)
+        
+        // Generate 5 rounds and track sit-outs
+        for (let round = 0; round < 5; round++) {
+          const newMatches = generateNextRound(tournament)
+          
+          const playingInRound = new Set<number>()
+          newMatches.forEach(m => {
+            playingInRound.add(m.team1[0])
+            playingInRound.add(m.team1[1])
+            playingInRound.add(m.team2[0])
+            playingInRound.add(m.team2[1])
+          })
+          
+          // Track who sat out
+          for (let i = 0; i < 10; i++) {
+            if (!playingInRound.has(i)) {
+              sitOutHistory[i]++
+            }
+          }
+          
+          // Add matches as finished for next round
+          tournament.matches.push(...newMatches.map(m => ({ ...m, isFinished: true })))
+        }
+        
+        // After 5 rounds with 10 players, each player should sit 1 time
+        sitOutHistory.forEach(count => {
+          expect(count).toBe(1)
+        })
       })
     })
   })

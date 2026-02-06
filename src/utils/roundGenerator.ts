@@ -2,37 +2,28 @@ import type { StoredTournament, StoredMatch } from '../schemas/tournament'
 import { getTournamentStats } from './tournamentStats'
 
 /**
- * Generates the next round of matches for a Mexicano tournament.
+ * Generates the next round of matches for a tournament.
  * 
- * Supports:
+ * Mexicano format:
  * - Random pairings for initial rounds (based on mexicanoRandomRounds config)
  * - Ranking-based pairings after random phase completes
  * - Fair player rotation when player count not divisible by 4
  * - Two matchup styles: '1&4vs2&3' and '1&3vs2&4'
  * 
+ * Americano format:
+ * - Maximizes player diversity (partners and opponents)
+ * - Greedy pairing algorithm based on history
+ * - Prioritizes avoiding repeat partnerships over repeat opponents
+ * 
  * @param tournament - The tournament to generate a round for
  * @returns Array of matches for the next round, ready to append to tournament.matches
  */
 export function generateNextRound(tournament: StoredTournament): StoredMatch[] {
-  // Validate tournament format
-  if (tournament.format !== 'mexicano') {
-    console.error('Round generation only supported for Mexicano format')
-    return []
-  }
-
   // Validate minimum players
   if (tournament.playerCount < 4) {
     console.error('Need at least 4 players to generate a round')
     return []
   }
-
-  // Get tournament statistics to determine current phase
-  const stats = getTournamentStats(tournament)
-  const { completedRounds } = stats
-
-  // Determine pairing strategy based on completed rounds
-  const randomRounds = tournament.mexicanoRandomRounds ?? 2
-  const useRandomPairing = completedRounds < randomRounds
 
   // Calculate sit-out distribution and select who sits this round
   const sitOutCounts = calculateSitOutCounts(tournament)
@@ -44,11 +35,32 @@ export function generateNextRound(tournament: StoredTournament): StoredMatch[] {
     (_, i) => i
   ).filter(i => !sittingPlayerIndices.includes(i))
 
-  // Generate matches based on strategy
-  if (useRandomPairing) {
+  // For first round (no matches yet), use random pairings for both formats
+  if (tournament.matches.length === 0) {
     return generateRandomPairings(activePlayerIndices, tournament.numberOfCourts)
+  }
+
+  // Generate matches based on tournament format
+  if (tournament.format === 'americano') {
+    return generateAmericanoPairings(tournament, activePlayerIndices)
+  } else if (tournament.format === 'mexicano') {
+    // Get tournament statistics to determine current phase
+    const stats = getTournamentStats(tournament)
+    const { completedRounds } = stats
+
+    // Determine pairing strategy based on completed rounds
+    // mexicanoRandomRounds should always be set for mexicano tournaments
+    const useRandomPairing = completedRounds < (tournament.mexicanoRandomRounds ?? 0)
+
+    // Generate matches based on strategy
+    if (useRandomPairing) {
+      return generateRandomPairings(activePlayerIndices, tournament.numberOfCourts)
+    } else {
+      return generateRankingBasedPairings(tournament, activePlayerIndices)
+    }
   } else {
-    return generateRankingBasedPairings(tournament, activePlayerIndices)
+    console.error(`Unsupported tournament format: ${tournament.format}`)
+    return []
   }
 }
 
@@ -223,4 +235,232 @@ function shuffleArray<T>(array: T[]): T[] {
     ;[array[i], array[j]] = [array[j], array[i]]
   }
   return array
+}
+
+// ============================================================================
+// AMERICANO ROUND GENERATION
+// ============================================================================
+
+/**
+ * Generates matches using diversity-based pairings (Americano format).
+ * Uses greedy algorithm to maximize partner and opponent diversity.
+ * 
+ * @param tournament - The tournament with match history
+ * @param activePlayerIndices - Player indices participating this round
+ * @returns Array of matches optimized for diversity
+ */
+export function generateAmericanoPairings(
+  tournament: StoredTournament,
+  activePlayerIndices: number[]
+): StoredMatch[] {
+  // Track partnership and matchup history
+  const partnershipHistory = calculatePartnershipHistory(tournament)
+  const matchupHistory = calculateMatchupHistory(tournament)
+
+  // Generate all possible match configurations
+  const configurations = generateAllMatchConfigurations(
+    activePlayerIndices,
+    tournament.numberOfCourts
+  )
+
+  // If no configurations possible, return empty
+  if (configurations.length === 0) {
+    return []
+  }
+
+  // Score each configuration and select the best
+  return selectBestConfiguration(configurations, partnershipHistory, matchupHistory)
+}
+
+/**
+ * Calculates partnership history across all completed rounds.
+ * Returns a map where key is "i-j" (sorted indices) and value is count.
+ * 
+ * @param tournament - The tournament to analyze
+ * @returns Map of partnership counts
+ */
+export function calculatePartnershipHistory(
+  tournament: StoredTournament
+): Map<string, number> {
+  const history = new Map<string, number>()
+
+  // Iterate through all matches
+  for (const match of tournament.matches) {
+    // Record team1 partnership
+    const team1Key = makePartnerKey(match.team1[0], match.team1[1])
+    history.set(team1Key, (history.get(team1Key) ?? 0) + 1)
+
+    // Record team2 partnership
+    const team2Key = makePartnerKey(match.team2[0], match.team2[1])
+    history.set(team2Key, (history.get(team2Key) ?? 0) + 1)
+  }
+
+  return history
+}
+
+/**
+ * Calculates matchup history (who played against whom) across all completed rounds.
+ * Returns a map where key is "i-j" (sorted indices) and value is count.
+ * 
+ * @param tournament - The tournament to analyze
+ * @returns Map of matchup counts
+ */
+export function calculateMatchupHistory(
+  tournament: StoredTournament
+): Map<string, number> {
+  const history = new Map<string, number>()
+
+  // Iterate through all matches
+  for (const match of tournament.matches) {
+    // Each player in team1 played against each player in team2
+    for (const team1Player of match.team1) {
+      for (const team2Player of match.team2) {
+        const matchupKey = makePartnerKey(team1Player, team2Player)
+        history.set(matchupKey, (history.get(matchupKey) ?? 0) + 1)
+      }
+    }
+  }
+
+  return history
+}
+
+/**
+ * Creates a consistent key for two player indices (sorted).
+ * 
+ * @param p1 - First player index
+ * @param p2 - Second player index
+ * @returns String key like "3-7" where first index is always smaller
+ */
+function makePartnerKey(p1: number, p2: number): string {
+  return p1 < p2 ? `${p1}-${p2}` : `${p2}-${p1}`
+}
+
+/**
+ * Generates all possible match configurations for given active players.
+ * Each configuration is a valid set of matches for one round.
+ * 
+ * Note: For large player counts (>20), this generates a sample of configurations
+ * to avoid combinatorial explosion.
+ * 
+ * @param activePlayerIndices - Players participating this round
+ * @param numberOfCourts - Maximum courts available
+ * @returns Array of possible match configurations
+ */
+export function generateAllMatchConfigurations(
+  activePlayerIndices: number[],
+  numberOfCourts: number
+): StoredMatch[][] {
+  const maxMatches = Math.min(numberOfCourts, Math.floor(activePlayerIndices.length / 4))
+  
+  // If can't form even one match, return empty
+  if (maxMatches === 0) {
+    return []
+  }
+
+  // For small groups, generate multiple random configurations
+  // For larger groups, generate fewer to keep it performant
+  const configCount = activePlayerIndices.length <= 12 ? 100 : 50
+  const configurations: StoredMatch[][] = []
+
+  for (let i = 0; i < configCount; i++) {
+    const shuffled = shuffleArray([...activePlayerIndices])
+    const matches: StoredMatch[] = []
+
+    for (let m = 0; m < maxMatches; m++) {
+      const baseIndex = m * 4
+      matches.push({
+        team1: [shuffled[baseIndex], shuffled[baseIndex + 1]],
+        team2: [shuffled[baseIndex + 2], shuffled[baseIndex + 3]],
+        isFinished: false,
+      })
+    }
+
+    configurations.push(matches)
+  }
+
+  return configurations
+}
+
+/**
+ * Scores a match configuration based on partnership and matchup history.
+ * Lower score = better diversity (fewer repeats).
+ * 
+ * Scoring formula:
+ * - Partnership penalty: repeat_count² × 10 (heavily penalize repeat partners)
+ * - Matchup penalty: repeat_count² × 3 (moderately penalize repeat opponents)
+ * 
+ * @param configuration - Array of matches to score
+ * @param partnershipHistory - Historical partnership counts
+ * @param matchupHistory - Historical matchup counts
+ * @returns Penalty score (lower is better)
+ */
+export function scoreMatchConfiguration(
+  configuration: StoredMatch[],
+  partnershipHistory: Map<string, number>,
+  matchupHistory: Map<string, number>
+): number {
+  const PARTNER_WEIGHT = 10
+  const OPPONENT_WEIGHT = 3
+  let totalPenalty = 0
+
+  for (const match of configuration) {
+    // Penalize repeat partnerships
+    const team1Key = makePartnerKey(match.team1[0], match.team1[1])
+    const team1Repeats = partnershipHistory.get(team1Key) ?? 0
+    totalPenalty += Math.pow(team1Repeats, 2) * PARTNER_WEIGHT
+
+    const team2Key = makePartnerKey(match.team2[0], match.team2[1])
+    const team2Repeats = partnershipHistory.get(team2Key) ?? 0
+    totalPenalty += Math.pow(team2Repeats, 2) * PARTNER_WEIGHT
+
+    // Penalize repeat matchups (opponents)
+    for (const team1Player of match.team1) {
+      for (const team2Player of match.team2) {
+        const matchupKey = makePartnerKey(team1Player, team2Player)
+        const matchupRepeats = matchupHistory.get(matchupKey) ?? 0
+        totalPenalty += Math.pow(matchupRepeats, 2) * OPPONENT_WEIGHT
+      }
+    }
+  }
+
+  return totalPenalty
+}
+
+/**
+ * Selects the best configuration from all possible configurations.
+ * Chooses configuration with lowest penalty score.
+ * Randomizes selection among tied configurations.
+ * 
+ * @param configurations - All possible match configurations
+ * @param partnershipHistory - Historical partnership counts
+ * @param matchupHistory - Historical matchup counts
+ * @returns Best configuration (or random among tied best)
+ */
+export function selectBestConfiguration(
+  configurations: StoredMatch[][],
+  partnershipHistory: Map<string, number>,
+  matchupHistory: Map<string, number>
+): StoredMatch[] {
+  let bestScore = Infinity
+  let bestConfigurations: StoredMatch[][] = []
+
+  // Score all configurations and track best
+  for (const config of configurations) {
+    const score = scoreMatchConfiguration(config, partnershipHistory, matchupHistory)
+    
+    if (score < bestScore) {
+      bestScore = score
+      bestConfigurations = [config]
+    } else if (score === bestScore) {
+      bestConfigurations.push(config)
+    }
+  }
+
+  // Randomly select among tied best configurations
+  if (bestConfigurations.length === 0) {
+    return []
+  }
+
+  const randomIndex = Math.floor(Math.random() * bestConfigurations.length)
+  return bestConfigurations[randomIndex]
 }
