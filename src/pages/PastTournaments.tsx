@@ -121,23 +121,19 @@ export function PastTournaments() {
     <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div className="container mx-auto px-4">
-        <div className="flex items-start gap-4 mb-6">
-          <div className="flex-shrink-0">
-            <IconButton onClick={() => navigate(-1)} label={t('pastTournaments.back')} />
-          </div>
-          
-          <div className="flex-1 min-w-0">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-              {t('pastTournaments.title')}
-            </h1>
-            <p className="text-slate-300 text-base md:text-lg">
-              {t('pastTournaments.subtitle')}
-            </p>
-          </div>
+        <div className="mb-6">
+          <IconButton onClick={() => navigate(-1)} label={t('pastTournaments.back')} />
         </div>
         
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+          {t('pastTournaments.title')}
+        </h1>
+        <p className="text-slate-300 text-base md:text-lg mb-6">
+          {t('pastTournaments.subtitle')}
+        </p>
+        
         {/* Search input */}
-        <div className="relative max-w-2xl mx-auto">
+        <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
           <input
             type="text"

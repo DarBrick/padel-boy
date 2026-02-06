@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Eye, Share2, Trash2, Users, Calendar, ClockCheck } from 'lucide-react'
+import { Eye, Share2, Trash2, Users, Calendar, Repeat2 } from 'lucide-react'
 import type { StoredTournament } from '../schemas/tournament'
 import { extractTimestampFromId } from '../utils/tournamentId'
 import { formatRelativeDate } from '../utils/dateGrouping'
@@ -21,7 +21,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
   
   // Get all tournament statistics in one call
   const stats = getTournamentStats(tournament)
-  const { status, totalRounds, completedRounds, topPlayers, standings } = stats
+  const { status, totalRounds, topPlayers, standings } = stats
   const remainingPlayers = Math.max(0, standings.length - 3)
   
   // Format badge
@@ -70,8 +70,8 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
         
         {/* Round progress */}
         <div className="flex items-center gap-1.5">
-          <ClockCheck className="w-4 h-4" />
-          <span>{completedRounds}/{totalRounds}</span>
+          <Repeat2 className="w-4 h-4" />
+          <span>{status === 'setup' ? '0' : totalRounds}</span>
         </div>
       </div>
       
@@ -86,7 +86,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
               return (
                 <span key={player.index}>
                   <span className="inline-flex items-center gap-1">
-                    <span aria-hidden="true">{medalEmoji}</span>
+                    {status !== 'setup' && <span aria-hidden="true">{medalEmoji}</span>}
                     <span>{player.name}</span>
                   </span>
                   {index < topPlayers.length - 1 ? ', ' : ''}
@@ -112,7 +112,8 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
         
         <button
           onClick={() => onShare(tournament)}
-          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-[var(--color-padel-yellow)] bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px]"
+          disabled={status !== 'finished'}
+          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-[var(--color-padel-yellow)] bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:bg-slate-700"
           title={t('pastTournaments.actions.share')}
         >
           <Share2 className="w-5 h-5" />
