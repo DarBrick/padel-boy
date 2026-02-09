@@ -47,7 +47,7 @@ export function Home() {
       </div>
 
       {/* CTA Button */}
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-5 sm:gap-6 md:gap-7">
         <GradientButton onClick={() => navigate('/create')}>
           {t('home.startTournament')}
         </GradientButton>
