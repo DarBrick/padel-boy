@@ -19,7 +19,7 @@ export function CollapsiblePanel({
   children,
 }: CollapsiblePanelProps) {
   return (
-    <div className="bg-slate-800/50 rounded-lg border border-[var(--color-padel-yellow)]/50 overflow-hidden">
+    <div className="bg-slate-800/50 rounded-lg border border-[var(--color-padel-yellow)]/20 overflow-hidden">
       <button
         type="button"
         onClick={onToggle}

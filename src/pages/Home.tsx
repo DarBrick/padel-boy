@@ -4,9 +4,10 @@ import { PadelBallIcon } from '../components/PadelBallIcon'
 import { GradientButton } from '../components/GradientButton'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
-import { InfoPanel } from '../components/InfoPanel'
+import { FormatComparisonCard } from '../components/FormatComparisonCard'
+import { StatsBanner } from '../components/StatsBanner'
 import { Footer } from '../components/Footer'
-import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, Sparkles, History } from 'lucide-react'
+import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, History, FolderOpen, CheckCircle } from 'lucide-react'
 
 export function Home() {
   const { t } = useTranslation()
@@ -15,7 +16,7 @@ export function Home() {
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Hero Section */}
-      <div className="text-center space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="text-center space-y-4 sm:space-y-5 md:space-y-6 max-w-3xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-4">
           <PadelBallIcon className="w-20 h-20 md:w-24 md:h-24" />
           <h1 className="text-4xl md:text-6xl font-bold">
@@ -23,67 +24,91 @@ export function Home() {
           </h1>
         </div>
         
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto">
+        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto px-4">
           {t('home.subtitle')}
         </p>
-        
-        {/* Under Development Notice */}
-        <InfoPanel>
-          <div className="space-y-2">
-            <p className="text-slate-300 text-sm md:text-base">
-              {t('home.underDevelopment')}
+      </div>
+
+      {/* CTA Section with Benefits */}
+      <ContentPanel className="text-center">
+        <div className="space-y-5 sm:space-y-6 md:space-y-7">
+          <div>
+            <p className="text-slate-300 text-base md:text-lg mb-6">
+              {t('home.cta.subtitle')}
             </p>
-            <div className="flex justify-center">
-              <button
-                onClick={() => navigate('/roadmap')}
-                className="flex items-center gap-2 text-sm md:text-base text-[var(--color-padel-yellow)] hover:text-[var(--color-padel-yellow)]/80 transition-colors font-semibold"
-              >
-                <Sparkles className="w-4 h-4" />
-                {t('home.viewRoadmap')}
-              </button>
+            <GradientButton 
+              onClick={() => navigate('/create')}
+              className="text-xl md:text-2xl py-4 px-8 sm:py-5 sm:px-10 md:py-6 md:px-12"
+            >
+              {t('home.startTournament')}
+            </GradientButton>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-slate-400">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-[var(--color-padel-yellow)]" />
+              <span>{t('home.cta.benefit1')}</span>
+            </div>
+            <div className="hidden sm:block text-slate-600">•</div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-[var(--color-padel-yellow)]" />
+              <span>{t('home.cta.benefit2')}</span>
+            </div>
+            <div className="hidden sm:block text-slate-600">•</div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-[var(--color-padel-yellow)]" />
+              <span>{t('home.cta.benefit3')}</span>
             </div>
           </div>
-        </InfoPanel>
+
+          <button
+            onClick={() => navigate('/past')}
+            className="flex items-center gap-2 mx-auto px-5 py-2.5 text-sm font-semibold text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-[var(--color-padel-yellow)] hover:text-white hover:bg-slate-700 transition-all duration-200"
+          >
+            <History className="w-5 h-5" />
+            {t('home.viewPastTournaments')}
+          </button>
+        </div>
+      </ContentPanel>
+
+      {/* Stats Banner */}
+      <StatsBanner />
+
+      {/* Format Comparison */}
+      <FormatComparisonCard />
+
+      {/* Featured Highlights - Top 3 Most Important Features */}
+      <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-2">
+          Key Features
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5 md:gap-4">
+          <ContentPanel>
+            <div className="text-[var(--color-padel-yellow)] mb-3">
+              <Trophy className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">{t('home.features.formats.title')}</h3>
+            <p className="text-slate-400">{t('home.features.formats.description')}</p>
+          </ContentPanel>
+          <ContentPanel>
+            <div className="text-[var(--color-padel-yellow)] mb-3">
+              <Users className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">{t('home.features.players.title')}</h3>
+            <p className="text-slate-400">{t('home.features.players.description')}</p>
+          </ContentPanel>
+          <ContentPanel>
+            <div className="text-[var(--color-padel-yellow)] mb-3">
+              <Calendar className="w-8 h-8" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">{t('home.features.rounds.title')}</h3>
+            <p className="text-slate-400">{t('home.features.rounds.description')}</p>
+          </ContentPanel>
+        </div>
       </div>
 
-      {/* CTA Button */}
-      <div className="flex flex-col items-center gap-5 sm:gap-6 md:gap-7">
-        <GradientButton onClick={() => navigate('/create')}>
-          {t('home.startTournament')}
-        </GradientButton>
-        
-        <button
-          onClick={() => navigate('/past')}
-          className="flex items-center gap-2 px-6 py-3 text-base font-medium text-slate-300 hover:text-[var(--color-padel-yellow)] transition-colors"
-        >
-          <History className="w-5 h-5" />
-          {t('home.viewPastTournaments')}
-        </button>
-      </div>
-
-      {/* Features Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-3.5 md:gap-4">
-        <ContentPanel>
-          <div className="text-[var(--color-padel-yellow)] mb-3">
-            <Trophy className="w-8 h-8" />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.formats.title')}</h3>
-          <p className="text-slate-400">{t('home.features.formats.description')}</p>
-        </ContentPanel>
-        <ContentPanel>
-          <div className="text-[var(--color-padel-yellow)] mb-3">
-            <Users className="w-8 h-8" />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.players.title')}</h3>
-          <p className="text-slate-400">{t('home.features.players.description')}</p>
-        </ContentPanel>
-        <ContentPanel>
-          <div className="text-[var(--color-padel-yellow)] mb-3">
-            <Calendar className="w-8 h-8" />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.rounds.title')}</h3>
-          <p className="text-slate-400">{t('home.features.rounds.description')}</p>
-        </ContentPanel>
+      {/* Additional Features Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5 md:gap-4">
         <ContentPanel>
           <div className="text-[var(--color-padel-yellow)] mb-3">
             <Zap className="w-8 h-8" />
@@ -91,9 +116,23 @@ export function Home() {
           <h3 className="text-xl font-semibold mb-2">{t('home.features.realtime.title')}</h3>
           <p className="text-slate-400">{t('home.features.realtime.description')}</p>
         </ContentPanel>
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <FolderOpen className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.library.title')}</h3>
+          <p className="text-slate-400">{t('home.features.library.description')}</p>
+        </ContentPanel>
+        <ContentPanel>
+          <div className="text-[var(--color-padel-yellow)] mb-3">
+            <History className="w-8 h-8" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2">{t('home.features.stats.title')}</h3>
+          <p className="text-slate-400">{t('home.features.stats.description')}</p>
+        </ContentPanel>
       </div>
 
-      {/* Info Section */}
+      {/* How It Works Section */}
       <ContentPanel>
         <div className="text-[var(--color-padel-yellow)] mb-3">
           <Lightbulb className="w-8 h-8" />

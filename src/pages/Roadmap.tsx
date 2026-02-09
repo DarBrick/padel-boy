@@ -56,7 +56,7 @@ export function Roadmap() {
             </h2>
           </div>
           <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
-            {features.slice(1, 3).map((feature, index) => (
+            {features.slice(1, 5).map((feature, index) => (
               <li key={index} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
                 <Clock className="w-5 h-5 text-[var(--color-padel-yellow)] mt-0.5 flex-shrink-0" />
                 <span className="text-white text-sm md:text-base">
@@ -76,7 +76,7 @@ export function Roadmap() {
             </h2>
           </div>
           <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
-            {features.slice(3).map((feature, index) => (
+            {features.slice(5).map((feature, index) => (
               <li key={index} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
                 <Circle className="w-5 h-5 text-slate-500 mt-0.5 flex-shrink-0" />
                 <span className="text-white text-sm md:text-base">
