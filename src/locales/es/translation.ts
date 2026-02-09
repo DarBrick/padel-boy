@@ -8,6 +8,7 @@ const translation = {
     viewRoadmap: 'Ver Hoja de Ruta',
     startTournament: 'Iniciar Nuevo Torneo',
     viewPastTournaments: 'Ver Torneos Anteriores',
+    keyFeaturesTitle: 'Características Clave',
     features: {
       formats: {
         title: 'Dos Formatos de Torneo',

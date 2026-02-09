@@ -11,9 +11,9 @@ export function Terms() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="mb-6">
           <IconButton onClick={() => navigate(-1)} label={t('terms.back')} />
         </div>
@@ -27,7 +27,7 @@ export function Terms() {
       </div>
 
       {/* Content Sections */}
-      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Service Description */}
         <ContentPanel icon={FileText} title={t('terms.service.title')}>
           <ContentWithInfoPanels i18nKey="terms.service.desc" />
@@ -55,7 +55,7 @@ export function Terms() {
       </div>
 
       {/* Scroll to Top Button */}
-      <div className="container mx-auto px-4 flex justify-center mt-12">
+      <div className="flex justify-center mt-12">
         <IconButton
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           icon={ArrowUp}
@@ -64,9 +64,7 @@ export function Terms() {
       </div>
 
       {/* Footer */}
-      <div className="container mx-auto px-4">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

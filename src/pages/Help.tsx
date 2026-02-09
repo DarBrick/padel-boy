@@ -11,9 +11,9 @@ export function Help() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="mb-6">
           <IconButton onClick={() => navigate(-1)} label={t('help.back')} />
         </div>
@@ -27,7 +27,7 @@ export function Help() {
       </div>
 
       {/* Content Sections */}
-      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Getting Started */}
         <ContentPanel icon={Rocket} title={t('help.gettingStarted.title')}>
             <ContentWithInfoPanels i18nKey="help.gettingStarted.desc" />
@@ -55,7 +55,7 @@ export function Help() {
       </div>
 
       {/* Scroll to Top Button */}
-      <div className="container mx-auto px-4 flex justify-center mt-12">
+      <div className="flex justify-center mt-12">
         <IconButton
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           icon={ArrowUp}
@@ -64,9 +64,7 @@ export function Help() {
       </div>
 
       {/* Footer */}
-      <div className="container mx-auto px-4">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

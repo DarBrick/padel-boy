@@ -65,6 +65,36 @@ src/
 - Custom SVG icons as React components with `className` and custom props (see `PadelBallIcon.jsx`)
 - Props with sensible defaults: `{ className = "w-16 h-16", animate = true }`
 
+### Page Structure
+**CRITICAL**: App.tsx already provides `container mx-auto px-4 py-8 max-w-4xl` wrapper for all routes. Pages MUST NOT add additional container wrappers.
+
+**Standard page pattern** (see [Home.tsx](../src/pages/Home.tsx) as reference):
+```jsx
+export function PageName() {
+  return (
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
+      {/* Page content directly here - no extra container wrappers */}
+      <ContentPanel>...</ContentPanel>
+      <div>...</div>
+    </div>
+  )
+}
+```
+
+**❌ NEVER do this** (creates double containering and inconsistent width):
+```jsx
+// ❌ Wrong: extra container wrapper
+<div className="container mx-auto px-4">
+  <ContentPanel>...</ContentPanel>
+</div>
+```
+
+**Key points**:
+- Use only spacing classes: `space-y-6 sm:space-y-7 md:space-y-8` for main container
+- NO `container mx-auto px-4` inside pages - App.tsx handles this
+- NO `min-h-screen py-8` - App.tsx provides padding
+- All pages should have consistent width matching Home.tsx
+
 ### State Management
 - **Local state**: `useState` for component-specific state
 - **Global state**: Zustand stores (to be added in `src/stores/`)

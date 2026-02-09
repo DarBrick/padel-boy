@@ -131,9 +131,9 @@ export function PastTournaments() {
   const hasSearch = searchQuery.trim().length > 0
   
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="mb-6">
           <IconButton onClick={() => navigate(-1)} label={t('pastTournaments.back')} />
         </div>
@@ -266,7 +266,7 @@ export function PastTournaments() {
       </div>
       
       {/* Content */}
-      <div className="container mx-auto px-4">
+      <div>
         {/* Result count */}
         {hasResults && (
           <div className="mb-4 text-sm text-slate-400">

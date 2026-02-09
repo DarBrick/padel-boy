@@ -80,7 +80,7 @@ export function Home() {
       {/* Featured Highlights - Top 3 Most Important Features */}
       <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
         <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-2">
-          Key Features
+          {t('home.keyFeaturesTitle')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5 md:gap-4">
           <ContentPanel>

@@ -167,9 +167,9 @@ export function Create() {
   }
 
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="flex items-center gap-4">
           <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
           <h1 className="text-3xl font-bold">{t('create.title')}</h1>
@@ -177,7 +177,7 @@ export function Create() {
       </div>
 
       {/* Form */}
-      <div className="container mx-auto px-4">
+      <div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Event Type */}
         <ContentPanel>

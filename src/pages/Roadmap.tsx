@@ -12,9 +12,9 @@ export function Roadmap() {
   const features = t('roadmap.features', { returnObjects: true }) as readonly string[]
 
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="mb-6">
           <IconButton onClick={() => navigate(-1)} label={t('roadmap.back')} />
         </div>
@@ -28,7 +28,7 @@ export function Roadmap() {
       </div>
 
       {/* Roadmap Content */}
-      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Completed */}
         <ContentPanel>
           <div className="flex items-center gap-2 mb-4">

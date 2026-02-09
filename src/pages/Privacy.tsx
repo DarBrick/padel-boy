@@ -11,9 +11,9 @@ export function Privacy() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen py-8 space-y-6 sm:space-y-7 md:space-y-8">
+    <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="container mx-auto px-4">
+      <div>
         <div className="mb-6">
           <IconButton onClick={() => navigate(-1)} label={t('privacy.back')} />
         </div>
@@ -27,7 +27,7 @@ export function Privacy() {
       </div>
 
       {/* Content Sections */}
-      <div className="container mx-auto px-4 space-y-4 sm:space-y-5 md:space-y-6">
+      <div className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Language Preference */}
         <ContentPanel icon={Languages} title={t('privacy.language.title')}>
           <ContentWithInfoPanels i18nKey="privacy.language.desc" />
@@ -45,7 +45,7 @@ export function Privacy() {
       </div>
 
       {/* Scroll to Top Button */}
-      <div className="container mx-auto px-4 flex justify-center mt-12">
+      <div className="flex justify-center mt-12">
         <IconButton
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           icon={ArrowUp}
@@ -54,9 +54,7 @@ export function Privacy() {
       </div>
 
       {/* Footer */}
-      <div className="container mx-auto px-4">
-        <Footer />
-      </div>
+      <Footer />
     </div>
   )
 }

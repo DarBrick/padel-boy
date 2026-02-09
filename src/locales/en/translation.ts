@@ -8,6 +8,7 @@ const translation = {
     viewRoadmap: 'View Product Roadmap',
     startTournament: 'Start New Tournament',
     viewPastTournaments: 'View Past Tournaments',
+    keyFeaturesTitle: 'Key Features',
     features: {
       formats: {
         title: 'Two Tournament Formats',
