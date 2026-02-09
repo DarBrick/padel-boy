@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { useState, useMemo, useEffect } from 'react'
-import { Search, History, Inbox, ArrowUp, Download, X, ArrowLeftFromLine, ArrowRightFromLine, ChevronDown } from 'lucide-react'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { Search, History, Inbox, ArrowUp, Download, X, CalendarArrowDown, CalendarArrowUp, ChevronDown } from 'lucide-react'
 import { IconButton } from '../components/IconButton'
 import { TournamentCard } from '../components/TournamentCard'
 import { GradientButton } from '../components/GradientButton'
@@ -21,6 +21,10 @@ export function PastTournaments() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
   const [visibleCount, setVisibleCount] = useState(10)
   const [showScrollTop, setShowScrollTop] = useState(false)
+  
+  // Refs for date pickers
+  const dateFromRef = useRef<HTMLInputElement>(null)
+  const dateToRef = useRef<HTMLInputElement>(null)
   
   // Filter states
   const [selectedFormat, setSelectedFormat] = useState<'americano' | 'mexicano' | null>(null)
@@ -158,9 +162,11 @@ export function PastTournaments() {
         </div>
         
         {/* Filters */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          {/* Format dropdown with clear button */}
-          <div className="relative">
+        <div className="space-y-2">
+          {/* Format and Status in first row */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* Format dropdown with clear button */}
+            <div className="relative">
             <select
               value={selectedFormat || ''}
               onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
@@ -185,10 +191,10 @@ export function PastTournaments() {
                 <X className="w-4 h-4 text-slate-400" />
               </button>
             )}
-          </div>
-          
-          {/* Status dropdown with clear button */}
-          <div className="relative">
+            </div>
+            
+            {/* Status dropdown with clear button */}
+            <div className="relative">
             <select
               value={selectedStatus || ''}
               onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
@@ -214,53 +220,69 @@ export function PastTournaments() {
                 <X className="w-4 h-4 text-slate-400" />
               </button>
             )}
+            </div>
           </div>
           
-          {/* Date range with clear buttons */}
-          <div className="relative">
-            <ArrowRightFromLine className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none z-10" />
+          {/* Unified date range bar */}
+          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-[var(--color-padel-yellow)] transition-colors">
+            {/* From date section */}
+            <button
+              type="button"
+              onClick={() => dateFromRef.current?.showPicker?.() || dateFromRef.current?.focus()}
+              className="p-1 hover:bg-slate-700 rounded transition-colors"
+              aria-label="Select from date"
+            >
+              <CalendarArrowDown className="w-4 h-4 text-slate-400" />
+            </button>
+            
             <input
+              ref={dateFromRef}
               type="date"
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
               max={dateTo || undefined}
-              className="w-full pl-9 pr-9 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:ml-1 [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:brightness-150"
+              className="bg-transparent border-none outline-none text-white text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-white [&::-webkit-datetime-edit-fields-wrapper]:text-white"
             />
-            {dateFrom && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setDateFrom('')
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors z-10"
-                aria-label="Clear from date"
-              >
-                <X className="w-3.5 h-3.5 text-slate-400" />
-              </button>
-            )}
-          </div>
-          
-          <div className="relative">
-            <ArrowLeftFromLine className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none z-10" />
+            
+            <button
+              type="button"
+              onClick={() => setDateFrom('')}
+              className={`p-0.5 hover:bg-slate-700 rounded transition-colors ${!dateFrom ? 'invisible pointer-events-none' : ''}`}
+              aria-label="Clear from date"
+            >
+              <X className="w-3.5 h-3.5 text-slate-400" />
+            </button>
+            
+            {/* Separator */}
+            <span className="text-slate-500 text-sm px-1">-</span>
+            
+            {/* To date section */}
+            <button
+              type="button"
+              onClick={() => dateToRef.current?.showPicker?.() || dateToRef.current?.focus()}
+              className="p-1 hover:bg-slate-700 rounded transition-colors"
+              aria-label="Select to date"
+            >
+              <CalendarArrowUp className="w-4 h-4 text-slate-400" />
+            </button>
+            
             <input
+              ref={dateToRef}
               type="date"
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
               min={dateFrom || undefined}
-              className="w-full pl-9 pr-9 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:ml-1 [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:brightness-150"
+              className="bg-transparent border-none outline-none text-white text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-white [&::-webkit-datetime-edit-fields-wrapper]:text-white"
             />
-            {dateTo && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setDateTo('')
-                }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors z-10"
-                aria-label="Clear to date"
-              >
-                <X className="w-3.5 h-3.5 text-slate-400" />
-              </button>
-            )}
+            
+            <button
+              type="button"
+              onClick={() => setDateTo('')}
+              className={`p-0.5 hover:bg-slate-700 rounded transition-colors ${!dateTo ? 'invisible pointer-events-none' : ''}`}
+              aria-label="Clear to date"
+            >
+              <X className="w-3.5 h-3.5 text-slate-400" />
+            </button>
           </div>
         </div>
       </div>
