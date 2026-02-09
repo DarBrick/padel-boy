@@ -1,3 +1,4 @@
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 interface CollapsiblePanelProps {
@@ -29,7 +30,7 @@ export function CollapsiblePanel({
           {label} <span className="text-slate-400">({value})</span>
         </span>
         <span className="text-slate-400">
-          {isExpanded ? '▲' : '▼'}
+          {isExpanded ? <ChevronUp /> : <ChevronDown />}
         </span>
       </button>
       
