@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useState, useMemo, useEffect } from 'react'
-import { Search, History, Inbox, ArrowUp, Download } from 'lucide-react'
+import { Search, History, Inbox, ArrowUp, Download, X, ArrowLeftFromLine, ArrowRightFromLine, ChevronDown } from 'lucide-react'
 import { IconButton } from '../components/IconButton'
 import { TournamentCard } from '../components/TournamentCard'
 import { GradientButton } from '../components/GradientButton'
@@ -9,7 +9,9 @@ import { CorruptionBanner } from '../components/CorruptionBanner'
 import { useTournaments } from '../stores/tournaments'
 import { groupTournamentsByDate } from '../utils/dateGrouping'
 import { encodeTournament } from '../utils/binaryFormat'
+import { filterTournamentsBySearch } from '../utils/tournamentSearch'
 import type { StoredTournament } from '../schemas/tournament'
+import type { TournamentStatus } from '../utils/tournamentSearch'
 
 export function PastTournaments() {
   const { t } = useTranslation()
@@ -20,10 +22,16 @@ export function PastTournaments() {
   const [visibleCount, setVisibleCount] = useState(10)
   const [showScrollTop, setShowScrollTop] = useState(false)
   
-  // Reset visible count when search query changes
+  // Filter states
+  const [selectedFormat, setSelectedFormat] = useState<'americano' | 'mexicano' | null>(null)
+  const [selectedStatus, setSelectedStatus] = useState<TournamentStatus | null>(null)
+  const [dateFrom, setDateFrom] = useState<string>('')
+  const [dateTo, setDateTo] = useState<string>('')
+  
+  // Reset visible count when search query or filters change
   useEffect(() => {
     setVisibleCount(10)
-  }, [searchQuery])
+  }, [searchQuery, selectedFormat, selectedStatus, dateFrom, dateTo])
   
   // Handle scroll for scroll-to-top button visibility
   useEffect(() => {
@@ -35,18 +43,23 @@ export function PastTournaments() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
   
-  // Filter tournaments by search query
-  const filteredTournaments = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return tournaments
+  // Parse date strings to Date objects for filtering
+  const dateRange = useMemo(() => {
+    return {
+      dateFrom: dateFrom ? new Date(dateFrom) : undefined,
+      dateTo: dateTo ? new Date(dateTo + 'T23:59:59') : undefined, // End of day
     }
-    
-    const query = searchQuery.toLowerCase().trim()
-    return tournaments.filter(tournament => {
-      const name = tournament.name?.toLowerCase() || ''
-      return name.includes(query)
+  }, [dateFrom, dateTo])
+  
+  // Filter tournaments by search query and filters
+  const filteredTournaments = useMemo(() => {
+    return filterTournamentsBySearch(tournaments, searchQuery, {
+      format: selectedFormat || undefined,
+      status: selectedStatus || undefined,
+      dateFrom: dateRange.dateFrom,
+      dateTo: dateRange.dateTo,
     })
-  }, [tournaments, searchQuery])
+  }, [tournaments, searchQuery, selectedFormat, selectedStatus, dateRange])
   
   // Apply pagination to filtered tournaments
   const paginatedTournaments = useMemo(() => {
@@ -133,7 +146,7 @@ export function PastTournaments() {
         </p>
         
         {/* Search input */}
-        <div className="relative">
+        <div className="relative mb-6">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
           <input
             type="text"
@@ -143,10 +156,124 @@ export function PastTournaments() {
             className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
           />
         </div>
+        
+        {/* Filters */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          {/* Format dropdown with clear button */}
+          <div className="relative">
+            <select
+              value={selectedFormat || ''}
+              onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
+              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+            >
+              <option value="">{t('pastTournaments.filters.allFormats')}</option>
+              <option value="americano">Americano</option>
+              <option value="mexicano">Mexicano</option>
+            </select>
+            {!selectedFormat && (
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            )}
+            {selectedFormat && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setSelectedFormat(null)
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                aria-label="Clear format filter"
+              >
+                <X className="w-4 h-4 text-slate-400" />
+              </button>
+            )}
+          </div>
+          
+          {/* Status dropdown with clear button */}
+          <div className="relative">
+            <select
+              value={selectedStatus || ''}
+              onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
+              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+            >
+              <option value="">{t('pastTournaments.filters.allStatus')}</option>
+              <option value="setup">{t('pastTournaments.filters.setup')}</option>
+              <option value="in-progress">{t('pastTournaments.filters.inProgress')}</option>
+              <option value="finished">{t('pastTournaments.filters.finished')}</option>
+            </select>
+            {!selectedStatus && (
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+            )}
+            {selectedStatus && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setSelectedStatus(null)
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                aria-label="Clear status filter"
+              >
+                <X className="w-4 h-4 text-slate-400" />
+              </button>
+            )}
+          </div>
+          
+          {/* Date range with clear buttons */}
+          <div className="relative">
+            <ArrowRightFromLine className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none z-10" />
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={(e) => setDateFrom(e.target.value)}
+              max={dateTo || undefined}
+              className="w-full pl-9 pr-9 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:ml-1 [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:brightness-150"
+            />
+            {dateFrom && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setDateFrom('')
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors z-10"
+                aria-label="Clear from date"
+              >
+                <X className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+            )}
+          </div>
+          
+          <div className="relative">
+            <ArrowLeftFromLine className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-400 pointer-events-none z-10" />
+            <input
+              type="date"
+              value={dateTo}
+              onChange={(e) => setDateTo(e.target.value)}
+              min={dateFrom || undefined}
+              className="w-full pl-9 pr-9 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:ml-1 [&::-webkit-calendar-picker-indicator]:brightness-0 [&::-webkit-calendar-picker-indicator]:invert [&::-webkit-calendar-picker-indicator]:hover:brightness-150"
+            />
+            {dateTo && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setDateTo('')
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors z-10"
+                aria-label="Clear to date"
+              >
+                <X className="w-3.5 h-3.5 text-slate-400" />
+              </button>
+            )}
+          </div>
+        </div>
       </div>
       
       {/* Content */}
       <div className="container mx-auto px-4">
+        {/* Result count */}
+        {hasResults && (
+          <div className="mb-4 text-sm text-slate-400">
+            {t('pastTournaments.resultCount', { count: filteredTournaments.length })}
+          </div>
+        )}
+        
         {/* Corruption Banner */}
         <CorruptionBanner />
         
