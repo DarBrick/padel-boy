@@ -7,6 +7,7 @@ interface TournamentsState {
   corruptedIds: string[]
   addTournament: (tournament: StoredTournament) => void
   getTournament: (id: string) => StoredTournament | undefined
+  updateTournament: (tournament: StoredTournament) => void
   deleteTournament: (id: string) => void
   clearAllTournaments: () => void
   removeCorruptedTournaments: () => void
@@ -26,6 +27,14 @@ export const useTournaments = create<TournamentsState>()(
       
       getTournament: (id: string) => {
         return get().tournaments.find((t) => t.id === id)
+      },
+      
+      updateTournament: (tournament: StoredTournament) => {
+        set((state) => ({
+          tournaments: state.tournaments.map((t) => 
+            t.id === tournament.id ? tournament : t
+          ),
+        }))
       },
       
       deleteTournament: (id: string) => {

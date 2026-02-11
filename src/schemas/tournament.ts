@@ -49,6 +49,9 @@ export const storedTournamentSchema = z.object({
   // Data arrays
   players: z.array(storedPlayerSchema).min(4).max(40),
   matches: z.array(storedMatchSchema),
+  
+  // Optional finish timestamp
+  finishedAt: z.number().optional(),
 })
 
 export type StoredPlayer = z.infer<typeof storedPlayerSchema>

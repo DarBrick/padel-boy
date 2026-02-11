@@ -655,4 +655,97 @@ describe('Binary Tournament Format v1', () => {
       expect(base64url.length).toBeLessThan(4000)
     })
   })
+
+  describe('Finished Tournament', () => {
+    it('should encode and decode finishedAt timestamp', () => {
+      const finishedAt = Date.now()
+      const tournament: StoredTournament = {
+        version: 1,
+        format: 'americano',
+        pointsPerGame: 24,
+        numberOfCourts: 2,
+        isFixedPairs: false,
+        playerCount: 4,
+        id: 'fin123456',
+        players: [
+          { name: 'Alice' },
+          { name: 'Bob' },
+          { name: 'Charlie' },
+          { name: 'Diana' },
+        ],
+        matches: [
+          {
+            team1: [0, 1],
+            team2: [2, 3],
+            isFinished: true,
+            winner: 0,
+            scoreDelta: 4,
+          },
+        ],
+        finishedAt,
+      }
+
+      const encoded = encodeTournament(tournament)
+      const decoded = decodeTournament(encoded)
+
+      expect(decoded.finishedAt).toBe(finishedAt)
+    })
+
+    it('should handle tournament without finishedAt', () => {
+      const tournament: StoredTournament = {
+        version: 1,
+        format: 'americano',
+        pointsPerGame: 24,
+        numberOfCourts: 2,
+        isFixedPairs: false,
+        playerCount: 4,
+        id: 'nof123456',
+        players: [
+          { name: 'Alice' },
+          { name: 'Bob' },
+          { name: 'Charlie' },
+          { name: 'Diana' },
+        ],
+        matches: [
+          {
+            team1: [0, 1],
+            team2: [2, 3],
+            isFinished: false,
+          },
+        ],
+      }
+
+      const encoded = encodeTournament(tournament)
+      const decoded = decodeTournament(encoded)
+
+      expect(decoded.finishedAt).toBeUndefined()
+    })
+
+    it('should handle timestamps from different years', () => {
+      // Test with a specific timestamp (Jan 1, 2024)
+      const finishedAt = new Date('2024-01-01T00:00:00Z').getTime()
+      const tournament: StoredTournament = {
+        version: 1,
+        format: 'americano',
+        pointsPerGame: 24,
+        numberOfCourts: 1,
+        isFixedPairs: false,
+        playerCount: 4,
+        id: 'old123456',
+        players: [
+          { name: 'Alice' },
+          { name: 'Bob' },
+          { name: 'Charlie' },
+          { name: 'Diana' },
+        ],
+        matches: [],
+        finishedAt,
+      }
+
+      const encoded = encodeTournament(tournament)
+      const decoded = decodeTournament(encoded)
+
+      expect(decoded.finishedAt).toBe(finishedAt)
+    })
+  })
 })

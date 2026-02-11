@@ -39,6 +39,11 @@ export function encodeTournament(tournament: StoredTournament): Uint8Array {
   // 6. Matches array
   buffers.push(encodeMatches(tournament.matches))
   
+  // 7. Finished timestamp (conditional)
+  if (tournament.finishedAt !== undefined) {
+    buffers.push(encodeTimestamp(tournament.finishedAt))
+  }
+  
   return concatenateBuffers(buffers)
 }
 
@@ -78,6 +83,15 @@ export function decodeTournament(data: Uint8Array): StoredTournament {
   
   // 6. Matches array
   const matchesResult = decodeMatches(data, offset)
+  offset = matchesResult.nextOffset
+  
+  // 7. Finished timestamp (conditional)
+  let finishedAt: number | undefined
+  if (header.hasFinishedAt) {
+    const result = decodeTimestamp(data, offset)
+    finishedAt = result.value
+    offset = result.nextOffset
+  }
   
   return {
     version: VERSION,
@@ -93,6 +107,7 @@ export function decodeTournament(data: Uint8Array): StoredTournament {
     courtNames,
     players: playersResult.value,
     matches: matchesResult.value,
+    finishedAt,
   }
 }
 
@@ -110,6 +125,7 @@ interface HeaderData {
   playerCount: number
   hasCustomName: boolean
   hasCustomCourtNames: boolean
+  hasFinishedAt: boolean
 }
 
 function encodeHeader(tournament: StoredTournament): Uint8Array {
@@ -154,6 +170,9 @@ function encodeHeader(tournament: StoredTournament): Uint8Array {
   const hasCourtNames = tournament.courtNames && Object.keys(tournament.courtNames).length > 0
   metadata |= (hasCourtNames ? 1 : 0) << 19
   
+  // Bit 20: hasFinishedAt
+  metadata |= (tournament.finishedAt !== undefined ? 1 : 0) << 20
+  
   // Write as little-endian 24-bit (3 bytes)
   header[1] = metadata & 0xFF
   header[2] = (metadata >> 8) & 0xFF
@@ -181,6 +200,7 @@ function decodeHeader(data: Uint8Array): HeaderData {
   const playerCount = (metadata >> 12) & 0x3F
   const hasCustomName = Boolean((metadata >> 18) & 1)
   const hasCustomCourtNames = Boolean((metadata >> 19) & 1)
+  const hasFinishedAt = Boolean((metadata >> 20) & 1)
   
   let mexicanoMatchupStyle: '1&4vs2&3' | '1&3vs2&4' | undefined
   let mexicanoRandomRounds: number | undefined
@@ -200,6 +220,7 @@ function decodeHeader(data: Uint8Array): HeaderData {
     playerCount,
     hasCustomName,
     hasCustomCourtNames,
+    hasFinishedAt,
   }
 }
 
@@ -512,6 +533,38 @@ function concatenateBuffers(buffers: Uint8Array[]): Uint8Array {
   }
   
   return result
+}
+
+// ============================================================================
+// Timestamp Encoding/Decoding
+// ============================================================================
+
+function encodeTimestamp(timestamp: number): Uint8Array {
+  // Encode as 6-byte (48-bit) little-endian unsigned integer
+  // Sufficient for timestamps up to year ~10889
+  // Use Math.floor and division since bitwise ops only work on 32-bit integers
+  const buffer = new Uint8Array(6)
+  buffer[0] = timestamp & 0xFF
+  buffer[1] = Math.floor(timestamp / 0x100) & 0xFF
+  buffer[2] = Math.floor(timestamp / 0x10000) & 0xFF
+  buffer[3] = Math.floor(timestamp / 0x1000000) & 0xFF
+  buffer[4] = Math.floor(timestamp / 0x100000000) & 0xFF
+  buffer[5] = Math.floor(timestamp / 0x10000000000) & 0xFF
+  return buffer
+}
+
+function decodeTimestamp(data: Uint8Array, offset: number): { value: number; nextOffset: number } {
+  // Read 6-byte (48-bit) little-endian unsigned integer
+  // Use multiplication to avoid bitwise overflow issues
+  const value = 
+    data[offset] +
+    data[offset + 1] * 0x100 +
+    data[offset + 2] * 0x10000 +
+    data[offset + 3] * 0x1000000 +
+    data[offset + 4] * 0x100000000 +
+    data[offset + 5] * 0x10000000000
+  
+  return { value, nextOffset: offset + 6 }
 }
 
 /**

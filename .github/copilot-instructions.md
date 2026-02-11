@@ -100,6 +100,36 @@ export function PageName() {
 - **Global state**: Zustand stores (to be added in `src/stores/`)
 - **Forms**: react-hook-form with zodResolver for validation
 
+### Tournament Data Management
+**CRITICAL**: All tournament data manipulations and calculations MUST be centralized in utility files to maintain a single source of truth.
+
+**Core files**:
+- `src/utils/tournamentState.ts` - All tournament state calculations, round logic, match updates, and data transformations
+- `src/utils/tournamentStats.ts` - Player standings, statistics, and tournament status calculations
+
+**Rules**:
+- ✅ **DO**: Add new functions to these utility files when you need to read, calculate, or manipulate tournament data
+- ✅ **DO**: Use existing functions from these files in components
+- ❌ **DON'T**: Duplicate tournament logic in components or other files
+- ❌ **DON'T**: Access nested tournament data structures directly in components - create utility functions instead
+
+**Why**: This pattern ensures:
+- Consistent interpretation of tournament data across the entire app
+- Single place to update when data structure changes
+- Easier testing and debugging
+- Clear separation between business logic and presentation
+
+**Example**:
+```tsx
+// ❌ Wrong: Direct data access in component
+const pausingPlayers = tournament.players.filter((_, i) => 
+  !tournament.matches[currentRound].some(m => 
+    m.team1.includes(i) || m.team2.includes(i)))
+
+// ✅ Correct: Use utility function
+const pausingPlayerIndices = getPausingPlayers(tournament, currentRound)
+```
+
 ## Deployment
 - **Base path**: `/padel-boy/` (configured in `vite.config.js`)
 - **CI/CD**: Push to `main` triggers build → lint → deploy to GitHub Pages
