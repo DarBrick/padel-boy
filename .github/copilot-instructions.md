@@ -106,16 +106,21 @@ export function PageName() {
 **Core files**:
 - `src/utils/tournamentState.ts` - All tournament state calculations, round logic, match updates, and data transformations
 - `src/utils/tournamentStats.ts` - Player standings, statistics, and tournament status calculations
+- `src/schemas/tournament.ts` - Tournament data schemas and TypeScript types
+- `src/utils/binaryFormat.ts` - Binary serialization/deserialization for compact storage
 
 **Rules**:
 - ✅ **DO**: Add new functions to these utility files when you need to read, calculate, or manipulate tournament data
 - ✅ **DO**: Use existing functions from these files in components
+- ✅ **DO**: Update BOTH `schemas/tournament.ts` AND `utils/binaryFormat.ts` when adding/modifying tournament fields
 - ❌ **DON'T**: Duplicate tournament logic in components or other files
 - ❌ **DON'T**: Access nested tournament data structures directly in components - create utility functions instead
+- ❌ **DON'T**: Add fields to tournament schema without updating the binary encoder/decoder
 
 **Why**: This pattern ensures:
 - Consistent interpretation of tournament data across the entire app
 - Single place to update when data structure changes
+- Binary format stays in sync with schema
 - Easier testing and debugging
 - Clear separation between business logic and presentation
 
@@ -129,6 +134,13 @@ const pausingPlayers = tournament.players.filter((_, i) =>
 // ✅ Correct: Use utility function
 const pausingPlayerIndices = getPausingPlayers(tournament, currentRound)
 ```
+
+**When adding new tournament fields**:
+1. Update `storedTournamentSchema` in `src/schemas/tournament.ts`
+2. Update `encodeTournament()` in `src/utils/binaryFormat.ts` to encode the new field
+3. Update `decodeTournament()` in `src/utils/binaryFormat.ts` to decode the new field
+4. If the field affects binary format structure, update header flags and metadata
+5. Add tests in `src/utils/__tests__/binaryFormat.test.ts` to verify encoding/decoding
 
 ## Deployment
 - **Base path**: `/padel-boy/` (configured in `vite.config.js`)
