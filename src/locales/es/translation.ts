@@ -1,6 +1,9 @@
 const translation = {
   lang: 'es',
   appName: 'Padel Boy',
+  common: {
+    cancel: 'Cancelar',
+  },
   home: {
     subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
     underDevelopment:
@@ -161,6 +164,39 @@ const translation = {
   },
   tournament: {
     title: 'Torneo',
+    notFound: 'Torneo no encontrado',
+    notFoundDesc: 'El torneo que buscas no existe o ha sido eliminado.',
+    backToHome: 'Volver al inicio',
+    format: {
+      americano: 'Americano',
+      mexicano: 'Mexicano',
+    },
+    round: 'Ronda {{current}}',
+    roundOf: 'Ronda {{current}} de {{total}}',
+    generateNextRound: 'Generar siguiente ronda',
+    finishTournament: 'Finalizar Torneo',
+    previousRound: 'Ronda anterior',
+    nextRound: 'Siguiente ronda',
+    lastRound: 'Ir a última ronda',
+    matches: 'Partidos',
+    players: 'jugadores',
+    pausingPlayers: 'Descansando',
+    pairingStyle: 'Emparejamiento',
+    activeRound: 'Ronda Activa',
+    completedRound: 'Completada',
+    allMatchesComplete: '¡Todos los partidos de esta ronda están completos!',
+    matchesRemaining_one: '{{count}} partido restante',
+    matchesRemaining_other: '{{count}} partidos restantes',
+    courtLabel: 'Pista {{number}}',
+    viewStandings: 'Ver clasificación',
+    match: {
+      vs: 'vs',
+      selectScore: 'Selecciona la puntuación para este equipo:',
+      teamScored: 'Equipo anotó:',
+      incomplete: 'En progreso',
+      draw: 'Empate',
+      finalScore: '{{score1}} - {{score2}}',
+    },
   },
   standings: {
     title: 'Clasificación',

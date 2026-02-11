@@ -30,7 +30,7 @@ export function App() {
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
             <Route path="/create" element={<Create />} />
-            <Route path="/tournament" element={<Tournament />} />
+            <Route path="/tournament/:id" element={<Tournament />} />
             <Route path="/past" element={<PastTournaments />} />
             <Route path="/standings" element={<Standings />} />
             <Route path="/privacy" element={<Privacy />} />
