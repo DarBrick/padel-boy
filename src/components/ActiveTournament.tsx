@@ -12,6 +12,8 @@ import {
   isLastRound as checkIsLastRound,
   isTournamentFinished as checkIsTournamentFinished,
   canGenerateNextRound,
+  canFinishTournament,
+  hasNoScoredMatches,
   updateMatch,
   appendRoundMatches,
   finishTournament,
@@ -85,6 +87,7 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
   const isLastRound = checkIsLastRound(tournament, currentRound)
   const isTournamentFinished = checkIsTournamentFinished(tournament)
   const pausingPlayerIndices = getPausingPlayers(tournament, currentRound)
+  const canFinish = canFinishTournament(tournament, currentRound)
 
   // Handle round navigation
   function handleRoundChange(newRound: number) {
@@ -148,7 +151,10 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
   function handleFinishTournament() {
     if (isTournamentFinished) return
 
-    const updatedTournament = finishTournament(tournament)
+    // Check if we need to remove incomplete matches (scenario B)
+    const shouldRemoveIncomplete = currentRound >= 2 && hasNoScoredMatches(tournament, currentRound)
+    
+    const updatedTournament = finishTournament(tournament, shouldRemoveIncomplete)
     updateTournament(updatedTournament)
     setTournament(updatedTournament)
   }
@@ -213,6 +219,7 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
         hasMatches={currentRoundMatches.length > 0}
         remainingMatches={remainingMatches}
         isGenerating={isGenerating}
+        canFinish={canFinish}
         onFinishTournament={handleFinishTournament}
         onGenerateNextRound={handleGenerateNextRound}
       />

@@ -108,10 +108,48 @@ export function appendRoundMatches(
   }
 }
 
-/** Mark a tournament as finished. Returns a new tournament object. */
-export function finishTournament(tournament: StoredTournament): StoredTournament {
+/** Check if a round has no matches with scores (all matches are unfinished) */
+export function hasNoScoredMatches(tournament: StoredTournament, roundNumber: number): boolean {
+  const matches = getRoundMatches(tournament, roundNumber)
+  return matches.length > 0 && matches.every(m => !m.isFinished)
+}
+
+/** Check if tournament can be finished from the current round */
+export function canFinishTournament(tournament: StoredTournament, currentRound: number): boolean {
+  if (!isLastRound(tournament, currentRound)) return false
+  
+  // Scenario A: All matches in the round are completed
+  if (isRoundComplete(tournament, currentRound)) return true
+  
+  // Scenario B: Round is 2 or above AND no matches have scores
+  if (currentRound >= 2 && hasNoScoredMatches(tournament, currentRound)) return true
+  
+  return false
+}
+
+/**
+ * Mark a tournament as finished. Returns a new tournament object.
+ * If removeIncompleteRound is true, removes the last round's matches if they're all incomplete.
+ */
+export function finishTournament(
+  tournament: StoredTournament,
+  removeIncompleteRound: boolean = false
+): StoredTournament {
+  let finalMatches = tournament.matches
+  
+  // Remove incomplete matches from the last round if requested
+  if (removeIncompleteRound) {
+    const totalRounds = getTotalRounds(tournament)
+    if (totalRounds > 0 && hasNoScoredMatches(tournament, totalRounds)) {
+      const matchesPerRound = tournament.numberOfCourts
+      const keepUntilIndex = (totalRounds - 1) * matchesPerRound
+      finalMatches = tournament.matches.slice(0, keepUntilIndex)
+    }
+  }
+  
   return {
     ...tournament,
+    matches: finalMatches,
     finishedAt: Date.now(),
   }
 }

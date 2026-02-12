@@ -72,8 +72,9 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
   const finishedMatches = matchesToConsider.filter(m => m.isFinished).length
   
   // Determine tournament status
+  // Primary indicator: finishedAt timestamp
   const status: TournamentStatus = 
-    finishedMatches === totalMatches && totalMatches > 0 ? 'finished' :
+    tournament.finishedAt !== undefined ? 'finished' :
     finishedMatches > 0 ? 'playing' : 'setup'
 
   // Calculate rounds

@@ -83,6 +83,7 @@ describe('getTournamentStats', () => {
           createMatch([0, 1], [2, 3], true, 0, 4),
           createMatch([0, 2], [1, 3], true, 1, 6),
         ],
+        finishedAt: Date.now(),
       })
       const stats = getTournamentStats(tournament)
 

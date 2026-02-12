@@ -521,7 +521,8 @@ describe('filterTournamentsBySearch', () => {
         matches: [
           { team1: [0, 1], team2: [2, 3], isFinished: true, winner: 0, scoreDelta: 4 },
           { team1: [0, 2], team2: [1, 3], isFinished: true, winner: 1, scoreDelta: 2 }
-        ] // all finished = finished status
+        ], // all finished = finished status
+        finishedAt: new Date('2024-03-10T15:30:00').getTime()
       } as any,
       {
         id: '4',
@@ -545,7 +546,8 @@ describe('filterTournamentsBySearch', () => {
           { team1: [0, 1], team2: [2, 3], isFinished: true, winner: 0, scoreDelta: 6 },
           { team1: [0, 2], team2: [1, 3], isFinished: true, winner: 0, scoreDelta: 4 },
           { team1: [0, 3], team2: [1, 2], isFinished: true, winner: 1, scoreDelta: 3 }
-        ] // all finished = finished status
+        ], // all finished = finished status
+        finishedAt: new Date('2024-09-05T18:45:00').getTime()
       } as any
     ]
     
@@ -726,7 +728,8 @@ describe('getTournamentStatus', () => {
       matches: [
         { team1: [0, 1], team2: [2, 3], isFinished: true, winner: 0, scoreDelta: 5 },
         { team1: [0, 2], team2: [1, 3], isFinished: true, winner: 1, scoreDelta: 3 }
-      ]
+      ],
+      finishedAt: Date.now()
     }
     expect(getTournamentStatus(tournament)).toBe('finished')
   })
@@ -746,7 +749,8 @@ describe('getTournamentStatus', () => {
         { team1: [0, 1], team2: [2, 3], isFinished: true, winner: 0, scoreDelta: 5 },
         { team1: [0, 2], team2: [1, 3], isFinished: true, winner: 1, scoreDelta: 3 },
         { team1: [0, 3], team2: [1, 2], isFinished: true, winner: 0, scoreDelta: 4 }
-      ]
+      ],
+      finishedAt: Date.now()
     }
     expect(getTournamentStatus(tournament)).toBe('finished')
   })
