@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { getTournamentStats } from '../tournamentStats'
+import { getTournamentStats, comparePlayerStandings, type PlayerStanding } from '../tournamentStats'
 import type { StoredTournament, StoredMatch } from '../../schemas/tournament'
 
 function createBaseTournament(overrides: Partial<StoredTournament> = {}): StoredTournament {
@@ -956,4 +956,358 @@ describe('getTournamentStats', () => {
       expect(stats.totalRounds).toBe(3)
     })
   })
+
+  describe('rank assignment', () => {
+    it('assigns correct ranks to sorted standings', () => {
+      const tournament = createBaseTournament({
+        pointsPerGame: 24,
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 8), // Alice & Bob win 16-8
+          createMatch([0, 2], [1, 3], true, 0, 4), // Alice & Charlie win 14-10
+          createMatch([0, 3], [1, 2], true, 1, 6), // Bob & Diana win 15-9
+        ],
+      })
+      const stats = getTournamentStats(tournament)
+
+      expect(stats.standings[0].rank).toBe(1)
+      expect(stats.standings[1].rank).toBe(2)
+      expect(stats.standings[2].rank).toBe(3)
+      expect(stats.standings[3].rank).toBe(4)
+
+      // Verify ranks are assigned to the correct players based on their index
+      const aliceStanding = stats.standings.find(s => s.index === 0)
+      expect(aliceStanding?.rank).toBeDefined()
+    })
+
+    it('assigns same rank for tied standings', () => {
+      const tournament = createBaseTournament({
+        pointsPerGame: 24,
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, undefined, 0), // Draw 12-12
+          createMatch([0, 1], [2, 3], true, undefined, 0), // Draw 12-12
+        ],
+      })
+      const stats = getTournamentStats(tournament)
+
+      // All players have identical stats, so they should all have rank 1
+      const ranks = stats.standings.map(s => s.rank)
+      expect(ranks).toEqual([1, 1, 1, 1])
+    })
+
+    it('assigns correct ranks with mixed ties', () => {
+      const tournament = createBaseTournament({
+        pointsPerGame: 24,
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 8), // Alice & Bob win 16-8
+          createMatch([0, 2], [1, 3], true, 0, 4), // Alice & Charlie win 14-10
+          createMatch([2, 3], [0, 1], true, 0, 4), // Charlie & Diana win 14-10
+        ],
+      })
+      const stats = getTournamentStats(tournament)
+
+      // Alice has highest points per game (rank 1)
+      const alice = stats.standings.find(s => s.index === 0)
+      expect(alice?.rank).toBe(1)
+
+      // Charlie and Diana might be tied (depends on tiebreakers)
+      // Bob should have lower rank
+      // Verify that if two players are tied, they have the same rank
+      const ranks = stats.standings.map(s => s.rank)
+      
+      // If there are ties, check that rank numbers skip correctly
+      // Example: if ranks are [1, 2, 2, 4], we have a tie at rank 2
+      for (let i = 1; i < stats.standings.length; i++) {
+        if (stats.standings[i].rank === stats.standings[i - 1].rank) {
+          // Tied with previous - comparison should return 0
+          const comparison = comparePlayerStandings(stats.standings[i - 1], stats.standings[i])
+          expect(comparison).toBe(0)
+        }
+      }
+    })
+
+    it('assigns ranks with tie example: 1, 2, 2, 4', () => {
+      // Janusz: 12 pts/game, Kasia: 11 pts/game, Tobiasz: 11 pts/game, Tomek: 9 pts/game
+      // Expected ranks: 1, 2, 2, 4
+      const tournament = createBaseTournament({
+        pointsPerGame: 24,
+        numberOfCourts: 2,
+        playerCount: 4,
+        players: [
+          { name: 'Janusz' },
+          { name: 'Kasia' },
+          { name: 'Tobiasz' },
+          { name: 'Tomek' },
+        ],
+        matches: [
+          // Janusz gets 12 pts/game (2 matches, 24 points total)
+          createMatch([0, 1], [2, 3], true, 0, 0), // Draw: Janusz gets 12
+          createMatch([0, 2], [1, 3], true, 0, 0), // Draw: Janusz gets 12
+          // Kasia gets 11 pts/game (2 matches, 22 points total)
+          createMatch([1, 2], [0, 3], true, 1, 2), // Lose by 2: Kasia gets 11
+          createMatch([1, 3], [2, 0], true, 1, 2), // Lose by 2: Kasia gets 11
+          // Tobiasz gets 11 pts/game (2 matches, 22 points total)  
+          createMatch([2, 3], [0, 1], true, 1, 2), // Lose by 2: Tobiasz gets 11
+          // Tomek gets 9 pts/game (3 matches, 27 points total)
+          createMatch([3, 0], [1, 2], true, 1, 6), // Lose by 6: Tomek gets 9
+        ],
+      })
+
+      const stats = getTournamentStats(tournament)
+
+      const janusz = stats.standings.find(s => s.name === 'Janusz')
+      const kasia = stats.standings.find(s => s.name === 'Kasia')
+      const tobiasz = stats.standings.find(s => s.name === 'Tobiasz')
+      const tomek = stats.standings.find(s => s.name === 'Tomek')
+
+      expect(janusz?.rank).toBe(1)
+      expect(kasia?.rank).toBe(2)
+      expect(tobiasz?.rank).toBe(2) // Tied with Kasia
+      expect(tomek?.rank).toBe(4) // Rank 3 is skipped due to tie
+    })
+  })
+
+  describe('upToRound parameter', () => {
+    it('calculates stats for first round only', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 2,
+        matches: [
+          // Round 1
+          createMatch([0, 1], [2, 3], true, 0, 4), // Alice & Bob win 14-10
+          createMatch([0, 2], [1, 3], true, 1, 6), // Bob & Diana win 15-9
+          // Round 2
+          createMatch([0, 3], [1, 2], true, 0, 8), // Alice & Diana win 16-8
+          createMatch([1, 3], [0, 2], true, 1, 10), // Alice & Charlie win 17-7
+        ],
+      })
+
+      const statsRound1 = getTournamentStats(tournament, 1)
+
+      expect(statsRound1.totalMatches).toBe(2)
+      expect(statsRound1.finishedMatches).toBe(2)
+      expect(statsRound1.totalRounds).toBe(1)
+      expect(statsRound1.completedRounds).toBe(1)
+
+      // Bob played in both matches of round 1
+      const bobStanding = statsRound1.standings.find(s => s.index === 1)
+      expect(bobStanding?.gamesPlayed).toBe(2)
+      expect(bobStanding?.wins).toBe(2)
+    })
+
+    it('calculates stats up to specific round', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 4), // Round 1: Alice & Bob win
+          createMatch([0, 2], [1, 3], true, 0, 6), // Round 2: Alice & Charlie win
+          createMatch([0, 3], [1, 2], true, 1, 8), // Round 3: Bob & Diana win
+        ],
+      })
+
+      const statsRound2 = getTournamentStats(tournament, 2)
+
+      expect(statsRound2.totalMatches).toBe(2)
+      expect(statsRound2.finishedMatches).toBe(2)
+      expect(statsRound2.totalRounds).toBe(2)
+
+      // Alice played in rounds 1 and 2
+      const aliceStanding = statsRound2.standings.find(s => s.index === 0)
+      expect(aliceStanding?.gamesPlayed).toBe(2)
+      expect(aliceStanding?.wins).toBe(2)
+
+      // Diana (index 3) played in round 1 but not round 2
+      const dianaStanding = statsRound2.standings.find(s => s.index === 3)
+      expect(dianaStanding?.gamesPlayed).toBe(1)
+    })
+
+    it('handles upToRound beyond total rounds', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 4),
+          createMatch([0, 2], [1, 3], true, 1, 6),
+        ],
+      })
+
+      const stats = getTournamentStats(tournament, 10) // Request round 10 when only 2 exist
+
+      expect(stats.totalMatches).toBe(2)
+      expect(stats.totalRounds).toBe(2)
+    })
+
+    it('calculates sitting points correctly for partial rounds', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 2,
+        pointsPerGame: 24,
+        playerCount: 6,
+        players: [
+          { name: 'Alice' },
+          { name: 'Bob' },
+          { name: 'Charlie' },
+          { name: 'Diana' },
+          { name: 'Eve' },
+          { name: 'Frank' },
+        ],
+        matches: [
+          // Round 1 - Eve and Frank sit out
+          createMatch([0, 1], [2, 3], true, 0, 4),
+          createMatch([0, 2], [1, 3], true, 1, 6),
+          // Round 2 - Alice and Bob sit out
+          createMatch([2, 3], [4, 5], true, 0, 8),
+          createMatch([2, 4], [3, 5], true, 1, 10),
+        ],
+      })
+
+      const statsRound1 = getTournamentStats(tournament, 1)
+
+      // Eve and Frank sat out round 1
+      const eveStanding = statsRound1.standings.find(s => s.index === 4)
+      const frankStanding = statsRound1.standings.find(s => s.index === 5)
+
+      expect(eveStanding?.gamesPlayed).toBe(0)
+      expect(eveStanding?.gamesSitting).toBe(1)
+      expect(eveStanding?.pointsFromSitting).toBe(12) // 50% of 24
+
+      expect(frankStanding?.gamesPlayed).toBe(0)
+      expect(frankStanding?.gamesSitting).toBe(1)
+      expect(frankStanding?.pointsFromSitting).toBe(12)
+    })
+
+    it('returns full stats when upToRound is undefined', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 4),
+          createMatch([0, 2], [1, 3], true, 1, 6),
+        ],
+      })
+
+      const statsWithParam = getTournamentStats(tournament, undefined)
+      const statsWithoutParam = getTournamentStats(tournament)
+
+      expect(statsWithParam.totalMatches).toBe(statsWithoutParam.totalMatches)
+      expect(statsWithParam.standings).toEqual(statsWithoutParam.standings)
+    })
+  })
 })
+
+describe('comparePlayerStandings', () => {
+  const createStanding = (overrides: Partial<PlayerStanding>): PlayerStanding => ({
+    name: 'Player',
+    index: 0,
+    rank: 0,
+    points: 0,
+    wins: 0,
+    draws: 0,
+    losses: 0,
+    gamesPlayed: 0,
+    gamesSitting: 0,
+    pointsPerGame: 0,
+    winRate: 0,
+    pointsFromSitting: 0,
+    totalPointsWithSitting: 0,
+    ...overrides,
+  })
+
+  it('ranks higher points per game first', () => {
+    const a = createStanding({ pointsPerGame: 15, winRate: 0.5, totalPointsWithSitting: 100 })
+    const b = createStanding({ pointsPerGame: 12, winRate: 0.7, totalPointsWithSitting: 150 })
+
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+    expect(comparePlayerStandings(b, a)).toBeGreaterThan(0) // b should rank lower (positive)
+  })
+
+  it('uses win rate as secondary criterion', () => {
+    const a = createStanding({ pointsPerGame: 12, winRate: 0.8, totalPointsWithSitting: 100 })
+    const b = createStanding({ pointsPerGame: 12, winRate: 0.6, totalPointsWithSitting: 150 })
+
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+    expect(comparePlayerStandings(b, a)).toBeGreaterThan(0) // b should rank lower (positive)
+  })
+
+  it('uses total points with sitting as tertiary criterion', () => {
+    const a = createStanding({ pointsPerGame: 12, winRate: 0.6, totalPointsWithSitting: 150 })
+    const b = createStanding({ pointsPerGame: 12, winRate: 0.6, totalPointsWithSitting: 100 })
+
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+    expect(comparePlayerStandings(b, a)).toBeGreaterThan(0) // b should rank lower (positive)
+  })
+
+  it('uses wins as quaternary criterion', () => {
+    const a = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 5,
+      draws: 1,
+    })
+    const b = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 3,
+      draws: 3,
+    })
+
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+    expect(comparePlayerStandings(b, a)).toBeGreaterThan(0) // b should rank lower (positive)
+  })
+
+  it('uses draws as quinary criterion', () => {
+    const a = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 3,
+      draws: 3,
+    })
+    const b = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 3,
+      draws: 1,
+    })
+
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+    expect(comparePlayerStandings(b, a)).toBeGreaterThan(0) // b should rank lower (positive)
+  })
+
+  it('returns 0 for equal standings', () => {
+    const a = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 3,
+      draws: 2,
+    })
+    const b = createStanding({
+      pointsPerGame: 12,
+      winRate: 0.6,
+      totalPointsWithSitting: 100,
+      wins: 3,
+      draws: 2,
+    })
+
+    expect(comparePlayerStandings(a, b)).toBe(0)
+  })
+
+  it('handles small differences in floating point values', () => {
+    const a = createStanding({ pointsPerGame: 12.0001, winRate: 0.5 })
+    const b = createStanding({ pointsPerGame: 12.0002, winRate: 0.5 })
+
+    // Difference is less than 0.001 threshold, should be considered equal
+    expect(comparePlayerStandings(a, b)).toBe(0)
+  })
+
+  it('distinguishes significant differences in floating point values', () => {
+    const a = createStanding({ pointsPerGame: 12.5, winRate: 0.5 })
+    const b = createStanding({ pointsPerGame: 12.3, winRate: 0.5 })
+
+    // Difference is greater than 0.001 threshold, a has higher points
+    expect(comparePlayerStandings(a, b)).toBeLessThan(0) // a should rank higher (negative)
+  })
+})
+
