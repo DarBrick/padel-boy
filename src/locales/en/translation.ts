@@ -198,6 +198,7 @@ const translation = {
       incomplete: 'In progress',
       draw: 'Draw',
       finalScore: '{{score1}} - {{score2}}',
+      clearResults: 'Clear Results',
     },
   },
   standings: {

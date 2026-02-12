@@ -195,8 +195,7 @@ const translation = {
       teamScored: 'Drużyna zdobyła:',
       incomplete: 'W trakcie',
       draw: 'Remis',
-      finalScore: '{{score1}} - {{score2}}',
-    },
+      finalScore: '{{score1}} - {{score2}}',      clearResults: 'Wyczyść Wyniki',    },
   },
   standings: {
     title: 'Klasyfikacja',

@@ -80,6 +80,18 @@ export function MatchCard({
     setSelectedTeam(null)
   }
 
+  // Clear match results
+  const handleClearResults = () => {
+    const clearedMatch: StoredMatch = {
+      ...match,
+      isFinished: false,
+      winner: undefined,
+      scoreDelta: undefined,
+    }
+    onUpdateMatch(clearedMatch)
+    handleCloseScorePicker()
+  }
+
   return (
     <>
       <ContentPanel className="relative">
@@ -190,7 +202,7 @@ export function MatchCard({
               <h3 className="text-xl font-bold text-center mb-2">
                 {t('tournament.match.selectScore')}
               </h3>
-              <p className="text-sm text-slate-400 text-center">
+              <p className="text-2xl font-bold text-[var(--color-padel-yellow)] text-center">
                 {selectedTeam === 0 ? team1Players.join(' & ') : team2Players.join(' & ')}
               </p>
             </div>
@@ -217,13 +229,24 @@ export function MatchCard({
               })}
             </div>
             
-            <button
-              type="button"
-              onClick={handleCloseScorePicker}
-              className="mt-6 w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors text-base font-medium"
-            >
-              {t('common.cancel')}
-            </button>
+            <div className="mt-6 flex gap-3">
+              {match.isFinished && (
+                <button
+                  type="button"
+                  onClick={handleClearResults}
+                  className="flex-1 px-6 py-3 bg-red-700/80 hover:bg-red-700 rounded-lg transition-colors text-base font-medium"
+                >
+                  {t('tournament.match.clearResults')}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={handleCloseScorePicker}
+                className="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors text-base font-medium"
+              >
+                {t('common.cancel')}
+              </button>
+            </div>
           </div>
         </div>
       )}

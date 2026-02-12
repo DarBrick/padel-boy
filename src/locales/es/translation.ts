@@ -195,8 +195,7 @@ const translation = {
       teamScored: 'Equipo anotó:',
       incomplete: 'En progreso',
       draw: 'Empate',
-      finalScore: '{{score1}} - {{score2}}',
-    },
+      finalScore: '{{score1}} - {{score2}}',      clearResults: 'Borrar Resultados',    },
   },
   standings: {
     title: 'Clasificación',
