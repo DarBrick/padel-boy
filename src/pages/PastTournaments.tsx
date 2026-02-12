@@ -8,7 +8,7 @@ import { GradientButton } from '../components/GradientButton'
 import { CorruptionBanner } from '../components/CorruptionBanner'
 import { useTournaments } from '../stores/tournaments'
 import { groupTournamentsByDate } from '../utils/dateGrouping'
-import { encodeTournament } from '../utils/binaryFormat'
+import { shareTournament } from '../utils/shareHelper'
 import { filterTournamentsBySearch } from '../utils/tournamentSearch'
 import type { StoredTournament } from '../schemas/tournament'
 import type { TournamentStatus } from '../utils/tournamentSearch'
@@ -85,31 +85,9 @@ export function PastTournaments() {
   // Handle share tournament
   const handleShare = async (tournament: StoredTournament) => {
     try {
-      const encoded = encodeTournament(tournament)
-      const base64 = btoa(String.fromCharCode(...encoded))
-      // Get base URL from current location (handles both local and GitHub Pages)
-      const baseUrl = window.location.origin + window.location.pathname.replace(/\/past$/, '')
-      const url = `${baseUrl}?t=${base64}`
-      
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(url)
-        // TODO: Show success toast notification
-        console.log('Tournament link copied to clipboard')
-      } else {
-        // Fallback for older browsers
-        const textarea = document.createElement('textarea')
-        textarea.value = url
-        textarea.style.position = 'fixed'
-        textarea.style.opacity = '0'
-        document.body.appendChild(textarea)
-        textarea.select()
-        document.execCommand('copy')
-        document.body.removeChild(textarea)
-        console.log('Tournament link copied to clipboard (fallback)')
-      }
+      await shareTournament(tournament, t)
     } catch (error) {
-      console.error('Failed to share tournament:', error)
-      // TODO: Show error toast notification
+      // Error already logged in shareTournament
     }
   }
   

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import type { StoredTournament } from '../schemas/tournament'
 import { getTournamentStats } from '../utils/tournamentStats'
 import { formatTournamentDate } from '../utils/tournamentState'
+import { shareTournament } from '../utils/shareHelper'
 import { TabSelector } from './TabSelector'
 import { StandingsTable } from './StandingsTable'
 import { RoundsHistory } from './RoundsHistory'
@@ -11,7 +12,7 @@ import { TournamentInsights } from './TournamentInsights'
 import { TournamentPlayers } from './TournamentPlayers'
 import { ContentPanel } from './ContentPanel'
 import { IconButton } from './IconButton'
-import { Calendar, Users, Trophy, ArrowUp } from 'lucide-react'
+import { Calendar, Users, Trophy, ArrowUp, Share2 } from 'lucide-react'
 
 type TabId = 'standings' | 'rounds' | 'players' | 'insights'
 
@@ -38,6 +39,15 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Handle share tournament
+  const handleShare = async () => {
+    try {
+      await shareTournament(tournament, t)
+    } catch (error) {
+      // Error already logged in shareTournament
+    }
+  }
+
   const tabs = [
     { id: 'standings' as TabId, label: t('results.tabs.standings') },
     { id: 'rounds' as TabId, label: t('results.tabs.rounds') },
@@ -58,9 +68,16 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
-      {/* Back Button */}
-      <div>
+      {/* Back and Share buttons */}
+      <div className="flex items-center gap-2">
         <IconButton onClick={() => navigate(-1)} label={t('results.back')} />
+        {stats.status === 'finished' && (
+          <IconButton 
+            onClick={handleShare} 
+            icon={Share2} 
+            label={t('pastTournaments.actions.share')} 
+          />
+        )}
       </div>
       
       {/* Header */}

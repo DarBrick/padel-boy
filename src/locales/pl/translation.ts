@@ -366,6 +366,17 @@ const translation = {
       desc: '<h3>Mój turniej zniknął</h3><ul><li>Dane są przechowywane w localStorage przeglądarki</li><li>Wyczyszczenie danych przeglądarki usunie turnieje</li><li>Używaj trybu incognito/prywatnego ostrożnie - dane są usuwane po zamknięciu</li><li>Jeśli posiadasz link do zakończonego turnieju, możesz odtworzyć jego dane (w tym nazwy graczy i szczegółowe wyniki) otwierając go</li></ul><h3>Nie mogę dodać graczy</h3><ul><li>Maksymalnie 40 graczy</li><li>Sprawdź, czy przycisk "Rozpocznij Turniej" jest aktywny (wymaga 4+ graczy)</li></ul><h3>Język zmienił się nieoczekiwanie</h3><ul><li>Twoje preferencje językowe są zapisywane automatycznie</li><li>Użyj przełącznika języka (prawy górny róg), aby go zmienić</li></ul><infoPanel><p><strong>Potrzebujesz pomocy lub znalazłeś błąd?</strong><br>Zgłoś problem na naszym <githubIssuesLink>projekcie GitHub</githubIssuesLink></p></infoPanel>',
     },
   },
+  shared: {
+    loading: 'Ładowanie turnieju...',
+    savedNotification: 'Turniej został zapisany w Twojej kolekcji',
+    alreadySaved: 'Ten turniej jest już w Twojej kolekcji',
+    shareMessage: 'Zobacz mój turniej {{format}} z {{players}} graczami: {{tournamentName}}',
+    error: {
+      title: 'Nieprawidłowe Dane Turnieju',
+      description: 'Udostępniony link wydaje się być uszkodzony lub nieprawidłowy. Nie udało się zdekodować danych turnieju.',
+      goHome: 'Przejdź do Strony Głównej',
+    },
+  },
   pastTournaments: {
     title: 'Poprzednie Turnieje',
     subtitle: 'Przeglądaj i zarządzaj historią turniejów',

@@ -370,6 +370,17 @@ const translation = {
       desc: '<h3>My tournament disappeared</h3><ul><li>Data is stored in browser localStorage</li><li>Clearing browser data will delete tournaments</li><li>Use incognito/private mode carefully - data is deleted when closed</li><li>If you have the link to a completed tournament, you can recreate its data (including player names and detailed results) by opening it</li></ul><h3>Can\'t add players</h3><ul><li>Maximum 40 players allowed</li><li>Check if "Start Tournament" button is enabled (needs 4+ players)</li></ul><h3>Language changed unexpectedly</h3><ul><li>Your language preference is saved automatically</li><li>Use the language switcher (top-right) to change it back</li></ul><infoPanel><p><strong>Need help or found a bug?</strong><br>Report issues on our <githubIssuesLink>GitHub project</githubIssuesLink></p></infoPanel>',
     },
   },
+  shared: {
+    loading: 'Loading tournament...',
+    savedNotification: 'Tournament has been saved to your collection',
+    alreadySaved: 'This tournament is already in your collection',
+    shareMessage: 'Check out my {{format}} tournament with {{players}} players: {{tournamentName}}',
+    error: {
+      title: 'Invalid Tournament Data',
+      description: 'The shared link appears to be corrupted or invalid. The tournament data could not be decoded.',
+      goHome: 'Go to Home',
+    },
+  },
   pastTournaments: {
     title: 'Past Tournaments',
     subtitle: 'Browse and manage your tournament history',

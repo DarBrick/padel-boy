@@ -364,6 +364,17 @@ const translation = {
       desc: '<h3>Mi torneo desapareció</h3><ul><li>Los datos se almacenan en el localStorage del navegador</li><li>Borrar los datos del navegador eliminará los torneos</li><li>Usa el modo incógnito/privado con precaución: los datos se eliminan al cerrar</li><li>Si tienes el enlace a un torneo completado, puedes recrear sus datos (incluyendo nombres de jugadores y resultados detallados) abriéndolo</li></ul><h3>No puedo añadir jugadores</h3><ul><li>Máximo 40 jugadores</li><li>Verifica que el botón "Iniciar Torneo" esté activo (requiere 4+ jugadores)</li></ul><h3>El idioma cambió inesperadamente</h3><ul><li>Tu preferencia de idioma se guarda automáticamente</li><li>Usa el selector de idioma (esquina superior derecha) para cambiarlo</li></ul><infoPanel><p><strong>¿Necesitas ayuda o encontraste un error?</strong><br>Reporta problemas en nuestro <githubIssuesLink>proyecto de GitHub</githubIssuesLink></p></infoPanel>',
     },
   },
+  shared: {
+    loading: 'Cargando torneo...',
+    savedNotification: 'El torneo se ha guardado en tu colección',
+    alreadySaved: 'Este torneo ya está en tu colección',
+    shareMessage: 'Mira mi torneo {{format}} con {{players}} jugadores: {{tournamentName}}',
+    error: {
+      title: 'Datos de Torneo Inválidos',
+      description: 'El enlace compartido parece estar corrupto o no es válido. No se pudieron decodificar los datos del torneo.',
+      goHome: 'Ir a Inicio',
+    },
+  },
   pastTournaments: {
     title: 'Torneos Anteriores',
     subtitle: 'Explora y gestiona tu historial de torneos',

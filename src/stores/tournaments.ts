@@ -6,6 +6,7 @@ interface TournamentsState {
   tournaments: StoredTournament[]
   corruptedIds: string[]
   addTournament: (tournament: StoredTournament) => void
+  addTournamentIfNotExists: (tournament: StoredTournament) => boolean
   getTournament: (id: string) => StoredTournament | undefined
   updateTournament: (tournament: StoredTournament) => void
   deleteTournament: (id: string) => void
@@ -23,6 +24,18 @@ export const useTournaments = create<TournamentsState>()(
         set((state) => ({
           tournaments: [...state.tournaments, tournament],
         }))
+      },
+      
+      addTournamentIfNotExists: (tournament: StoredTournament) => {
+        const existing = get().tournaments.find((t) => t.id === tournament.id)
+        if (existing) {
+          return false // Already exists
+        }
+        
+        set((state) => ({
+          tournaments: [...state.tournaments, tournament],
+        }))
+        return true // Newly added
       },
       
       getTournament: (id: string) => {
