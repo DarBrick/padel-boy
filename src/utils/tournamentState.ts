@@ -157,3 +157,68 @@ export function parseRoundParam(
   }
   return total
 }
+
+// ── Player Match Outcomes ───────────────────────────────────────────
+
+export type MatchOutcome = 'won' | 'lost' | 'drew' | 'paused'
+
+export interface PlayerMatchOutcome {
+  outcome: MatchOutcome
+  pointsEarned: number
+}
+
+/**
+ * Determine a player's outcome and points earned in a specific round.
+ * Returns 'paused' if the player was sitting out, otherwise checks match result.
+ */
+export function getPlayerMatchOutcome(
+  tournament: StoredTournament,
+  playerIndex: number,
+  roundNumber: number,
+): PlayerMatchOutcome {
+  // Check if player was pausing
+  const pausingPlayers = getPausingPlayers(tournament, roundNumber)
+  if (pausingPlayers.includes(playerIndex)) {
+    const sittingPointsPerRound = Math.ceil(tournament.pointsPerGame * 0.5)
+    return {
+      outcome: 'paused',
+      pointsEarned: sittingPointsPerRound,
+    }
+  }
+
+  // Find the match this player participated in
+  const roundMatches = getRoundMatches(tournament, roundNumber)
+  const match = roundMatches.find(
+    m => m.team1.includes(playerIndex) || m.team2.includes(playerIndex)
+  )
+
+  // If no match found or match not finished, return default
+  if (!match || !match.isFinished || match.winner === undefined || match.scoreDelta === undefined) {
+    return { outcome: 'lost', pointsEarned: 0 }
+  }
+
+  // Determine which team the player is on
+  const isTeam1 = match.team1.includes(playerIndex)
+  const playerTeamIndex = isTeam1 ? 0 : 1
+  const isDraw = match.scoreDelta === 0
+
+  // Calculate scores
+  const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
+  const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
+  
+  let outcome: MatchOutcome
+  let pointsEarned: number
+
+  if (isDraw) {
+    outcome = 'drew'
+    pointsEarned = winningScore // Both teams get the same points in a draw
+  } else if (match.winner === playerTeamIndex) {
+    outcome = 'won'
+    pointsEarned = winningScore
+  } else {
+    outcome = 'lost'
+    pointsEarned = losingScore
+  }
+
+  return { outcome, pointsEarned }
+}
