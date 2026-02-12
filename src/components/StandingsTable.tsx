@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown, ChevronUp, Check } from 'lucide-react'
 import type { PlayerStanding } from '../utils/tournamentStats'
 
 type SortField = 'rank' | 'pointsPerGame' | 'winRate' | 'totalPoints' | 'record'
@@ -13,6 +13,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
   const { t } = useTranslation()
   const [sortField, setSortField] = useState<SortField>('rank')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   if (standings.length === 0) {
     return (
@@ -84,6 +85,8 @@ export function StandingsTable({ standings }: StandingsTableProps) {
         <table className="min-w-full divide-y divide-slate-700">
           <thead className="bg-slate-800/50">
             <tr>
+              <th className="px-3 py-3 w-10" aria-label="Selection">
+              </th>
               <th
                 onClick={() => handleSort('rank')}
                 className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
@@ -126,7 +129,20 @@ export function StandingsTable({ standings }: StandingsTableProps) {
           </thead>
           <tbody className="bg-slate-800/30 divide-y divide-slate-700">
             {sortedStandings.map((standing) => (
-              <tr key={standing.index}>
+              <tr 
+                key={standing.index}
+                onClick={() => setSelectedIndex(selectedIndex === standing.index ? null : standing.index)}
+                className={`cursor-pointer transition-colors ${
+                  selectedIndex === standing.index 
+                    ? 'bg-[var(--color-padel-yellow)]/10 ring-2 ring-[var(--color-padel-yellow)]/30 ring-inset' 
+                    : 'hover:bg-slate-700/30'
+                }`}
+              >
+                    <td className="px-3 py-4 whitespace-nowrap">
+                      {selectedIndex === standing.index && (
+                        <Check className="w-5 h-5 text-[var(--color-padel-yellow)]" />
+                      )}
+                    </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-white">
                       <div className="flex items-center gap-2">
                         <span>{standing.rank}</span>
