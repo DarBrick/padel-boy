@@ -107,7 +107,11 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
           className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px]"
         >
           <Eye className="w-4 h-4" />
-          {t('pastTournaments.actions.view')}
+          {status === 'finished' 
+            ? t('pastTournaments.actions.viewResults')
+            : status === 'playing'
+            ? t('pastTournaments.actions.continue')
+            : t('pastTournaments.actions.view')}
         </button>
         
         <button
