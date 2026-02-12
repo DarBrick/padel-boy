@@ -10,7 +10,7 @@ interface ContentPanelProps {
 
 export function ContentPanel({ children, icon: Icon, title, className = '' }: ContentPanelProps) {
   return (
-    <section className={`bg-slate-800/50 border border-[var(--color-padel-yellow)]/20 rounded-lg p-6 md:p-8 transition-all duration-200 hover:shadow-xl hover:border-[var(--color-padel-yellow)]/60 ${className}`}>
+    <section className={`bg-slate-800/50 border border-[var(--color-padel-yellow)]/20 rounded-lg p-3 md:p-6 transition-all duration-200 hover:shadow-xl hover:border-[var(--color-padel-yellow)]/60 ${className}`}>
       {(Icon || title) && (
         <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
           {Icon && <Icon className="w-6 h-6 text-[var(--color-padel-yellow)]" />}
