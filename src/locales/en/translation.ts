@@ -109,7 +109,7 @@ const translation = {
     title: 'Create Tournament',
     backToHome: 'Back to home',
     eventType: {
-      label: 'Tournament Format',
+      label: 'Format',
       americanoDesc: 'All players vs all',
       mexicanoDesc: 'Dynamic pairing by ranking',
     },

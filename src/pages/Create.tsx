@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake, Grid2X2Plus } from 'lucide-react'
+import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake, Grid2X2Plus, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm, type StoredTournament } from '../schemas/tournament'
@@ -169,11 +169,9 @@ export function Create() {
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div>
-        <div className="flex items-center gap-4">
-          <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
-          <h1 className="text-3xl font-bold">{t('create.title')}</h1>
-        </div>
+      <div className="space-y-4">
+        <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
+        <h1 className="text-3xl font-bold">{t('create.title')}</h1>
       </div>
 
       {/* Form */}
@@ -182,6 +180,7 @@ export function Create() {
         {/* Event Type */}
         <ContentPanel>
           <label className="block text-lg font-semibold mb-4">
+            <Sparkles className="w-5 h-5 inline-block mr-2" />
             {t('create.eventType.label')}
           </label>
           <RadioCardGroup
