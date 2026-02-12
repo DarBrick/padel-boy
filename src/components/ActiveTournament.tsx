@@ -157,6 +157,9 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
     const updatedTournament = finishTournament(tournament, shouldRemoveIncomplete)
     updateTournament(updatedTournament)
     setTournament(updatedTournament)
+    
+    // Remove round parameter from URL when finishing tournament
+    setSearchParams({}, { replace: true })
   }
 
   return (
