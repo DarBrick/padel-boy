@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
+import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { ContentPanel } from './ContentPanel'
 import type { StoredMatch } from '../schemas/tournament'
 
@@ -96,15 +97,16 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(0)}
             disabled={readonly}
-            className="text-left py-2 hover:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 text-left py-2 cursor-pointer hover:text-[var(--color-padel-yellow)] active:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
           >
-            <div className="space-y-1">
+            <div className="space-y-1 flex-1">
               {team1Players.map((name, idx) => (
                 <div key={idx} className="text-base font-medium truncate">
                   {name}
                 </div>
               ))}
             </div>
+            <ChevronLeft className="w-4 h-4 text-slate-500 flex-shrink-0" />
           </button>
 
           {/* VS Divider */}
@@ -119,9 +121,10 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(1)}
             disabled={readonly}
-            className="text-right py-2 hover:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 justify-end text-right py-2 cursor-pointer hover:text-[var(--color-padel-yellow)] active:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
           >
-            <div className="space-y-1">
+            <ChevronRight className="w-4 h-4 text-slate-500 flex-shrink-0" />
+            <div className="space-y-1 flex-1">
               {team2Players.map((name, idx) => (
                 <div key={idx} className="text-base font-medium truncate">
                   {name}
@@ -139,18 +142,20 @@ export function MatchCard({
                 type="button"
                 onClick={() => handleOpenScorePicker(0)}
                 disabled={readonly}
-                className="text-4xl font-bold text-[var(--color-padel-yellow)] hover:opacity-80 transition-opacity px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-[var(--color-padel-yellow)] cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
-                {team1Score}
+                <span>{team1Score}</span>
+                <ChevronLeft className="w-5 h-5 text-slate-500" />
               </button>
               <div className="text-2xl font-bold text-slate-600">-</div>
               <button
                 type="button"
                 onClick={() => handleOpenScorePicker(1)}
                 disabled={readonly}
-                className="text-4xl font-bold text-[var(--color-padel-yellow)] hover:opacity-80 transition-opacity px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-[var(--color-padel-yellow)] cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
-                {team2Score}
+                <ChevronRight className="w-5 h-5 text-slate-500" />
+                <span>{team2Score}</span>
               </button>
             </div>
             {isDraw && (

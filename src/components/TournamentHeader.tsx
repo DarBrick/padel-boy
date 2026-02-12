@@ -14,7 +14,7 @@ export function TournamentHeader({ tournament, stats }: TournamentHeaderProps) {
 
   return (
     <div>
-      <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+      <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
         {tournament.name || t('tournament.title')}
       </h1>
 

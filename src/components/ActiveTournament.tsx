@@ -19,6 +19,7 @@ import {
   getPausingPlayers,
 } from '../utils/tournamentState'
 import { IconButton } from './IconButton'
+import { ContentPanel } from './ContentPanel'
 import { TournamentHeader } from './TournamentHeader'
 import { RoundNavigation } from './RoundNavigation'
 import { MatchesSectionHeader } from './MatchesSectionHeader'
@@ -159,22 +160,26 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
         <IconButton onClick={() => navigate('/')} label={t('tournament.backToHome')} />
       </div>
 
-      {/* Tournament Header */}
-      <TournamentHeader tournament={tournament} stats={stats} />
+      {/* Tournament Header and Round Navigation */}
+      <ContentPanel>
+        <div className="space-y-4 sm:space-y-5 md:space-y-6">
+          <TournamentHeader tournament={tournament} stats={stats} />
 
-      {/* Round Navigation */}
-      {currentRoundMatches.length > 0 && totalAvailableRounds > 0 && (
-        <RoundNavigation
-          currentRound={currentRound}
-          totalRounds={totalAvailableRounds}
-          isLastRound={isLastRound}
-          isTournamentFinished={isTournamentFinished}
-          onPreviousRound={handlePreviousRound}
-          onNextRound={handleNextRound}
-          onJumpToLast={handleJumpToLast}
-          onRoundSelect={handleRoundSelect}
-        />
-      )}
+          {/* Round Navigation */}
+          {currentRoundMatches.length > 0 && totalAvailableRounds > 0 && (
+            <RoundNavigation
+              currentRound={currentRound}
+              totalRounds={totalAvailableRounds}
+              isLastRound={isLastRound}
+              isTournamentFinished={isTournamentFinished}
+              onPreviousRound={handlePreviousRound}
+              onNextRound={handleNextRound}
+              onJumpToLast={handleJumpToLast}
+              onRoundSelect={handleRoundSelect}
+            />
+          )}
+        </div>
+      </ContentPanel>
 
       {/* Matches Section Header */}
       {currentRoundMatches.length > 0 && (

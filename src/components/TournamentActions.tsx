@@ -41,13 +41,7 @@ export function TournamentActions({
 
   // Show action buttons when all matches are finished
   return (
-    <div className="flex gap-3">
-      <button
-        onClick={onFinishTournament}
-        className="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded-lg transition-colors text-base font-medium min-h-[44px] sm:min-h-[46px] md:min-h-[48px] whitespace-nowrap"
-      >
-        {t('tournament.finishTournament')}
-      </button>
+    <div className="space-y-3">
       <GradientButton
         onClick={onGenerateNextRound}
         disabled={isGenerating}
@@ -55,6 +49,12 @@ export function TournamentActions({
       >
         {t('tournament.generateNextRound')}
       </GradientButton>
+      <button
+        onClick={onFinishTournament}
+        className="w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded-lg transition-colors text-base font-medium min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+      >
+        {t('tournament.finishTournament')}
+      </button>
     </div>
   )
 }
