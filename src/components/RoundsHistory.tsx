@@ -79,13 +79,14 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                 const isTeam2Winner = match.isFinished && match.winner === 1 && !isDraw
 
                 return (
-                  <div key={localIndex} className="grid grid-cols-[1fr_auto_1fr] gap-6 sm:gap-8 md:gap-10 items-center text-base text-slate-300 py-1">
-                    <div className="text-right space-y-0.5">
+                  <div key={localIndex} className="flex items-center text-base text-slate-300 py-1 gap-3 sm:gap-4">
+                    {/* Team 1 - flexible width, right-aligned */}
+                    <div className="flex-1 text-right space-y-0.5 min-w-0">
                       {team1Names.map((name, idx) => (
                         <div 
                           key={idx}
                           onClick={(e) => handlePlayerClick(name, e)}
-                          className={`cursor-pointer transition-colors ${
+                          className={`cursor-pointer transition-colors truncate ${
                             selectedPlayer === name 
                               ? 'text-[var(--color-padel-yellow)] font-semibold' 
                               : 'hover:text-white'
@@ -95,7 +96,9 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                         </div>
                       ))}
                     </div>
-                    <span className="flex-shrink-0 flex items-center gap-1 justify-center">
+
+                    {/* Score - fixed width, always centered */}
+                    <span className="flex-shrink-0 w-12 sm:w-14 flex items-center gap-1 justify-center">
                       <span className={isTeam1Winner ? 'text-[var(--color-padel-yellow)] font-semibold' : 'text-slate-500'}>
                         {score1}
                       </span>
@@ -104,12 +107,14 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                         {score2}
                       </span>
                     </span>
-                    <div className="text-left space-y-0.5">
+
+                    {/* Team 2 - flexible width, left-aligned */}
+                    <div className="flex-1 text-left space-y-0.5 min-w-0">
                       {team2Names.map((name, idx) => (
                         <div 
                           key={idx}
                           onClick={(e) => handlePlayerClick(name, e)}
-                          className={`cursor-pointer transition-colors ${
+                          className={`cursor-pointer transition-colors truncate ${
                             selectedPlayer === name 
                               ? 'text-[var(--color-padel-yellow)] font-semibold' 
                               : 'hover:text-white'
