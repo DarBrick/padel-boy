@@ -1,5 +1,4 @@
-import { useTranslation } from 'react-i18next'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useTournaments } from '../stores/tournaments'
 import { getTournamentStats } from '../utils/tournamentStats'
@@ -20,7 +19,6 @@ import {
   parseRoundParam,
   getPausingPlayers,
 } from '../utils/tournamentState'
-import { IconButton } from './IconButton'
 import { ContentPanel } from './ContentPanel'
 import { TournamentHeader } from './TournamentHeader'
 import { RoundNavigation } from './RoundNavigation'
@@ -35,8 +33,6 @@ interface ActiveTournamentProps {
 }
 
 export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
-  const { t } = useTranslation()
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
   const { getTournament, updateTournament } = useTournaments()
   
@@ -164,11 +160,6 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
-      {/* Back Button */}
-      <div>
-        <IconButton onClick={() => navigate('/')} label={t('tournament.backToHome')} />
-      </div>
-
       {/* Tournament Header and Round Navigation */}
       <ContentPanel>
         <div className="space-y-4 sm:space-y-5 md:space-y-6">

@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Github, Scale } from 'lucide-react'
-import { LanguageSwitcher } from './LanguageSwitcher'
 import { GITHUB_REPO_URL } from '../config'
 
 export function Footer() {
@@ -10,14 +9,8 @@ export function Footer() {
 
   return (
     <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm space-y-4">
-      {/* Primary Navigation Links */}
+      {/* Legal & Info Links */}
       <div className="flex flex-wrap justify-center gap-4 md:gap-6">
-        <button
-          onClick={() => navigate('/')}
-          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
-        >
-          {t('footer.home')}
-        </button>
         <button
           onClick={() => navigate('/privacy')}
           className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
@@ -29,12 +22,6 @@ export function Footer() {
           className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
         >
           {t('terms.title')}
-        </button>
-        <button
-          onClick={() => navigate('/help')}
-          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
-        >
-          {t('help.title')}
         </button>
         <button
           onClick={() => navigate('/roadmap')}
@@ -67,11 +54,6 @@ export function Footer() {
           <Scale className="w-4 h-4" />
           {t('footer.license')}
         </a>
-      </div>
-
-      {/* Language Selector */}
-      <div className="flex justify-center">
-        <LanguageSwitcher />
       </div>
 
       {/* Creator Credit */}

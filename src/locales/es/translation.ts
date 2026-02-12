@@ -4,6 +4,18 @@ const translation = {
   common: {
     cancel: 'Cancelar',
   },
+  nav: {
+    home: 'Inicio',
+    create: 'Crear',
+    history: 'Historial',
+    help: 'Ayuda',
+  },
+  language: {
+    switch: 'Cambiar idioma',
+    en: 'English',
+    es: 'Español',
+    pl: 'Polski',
+  },
   home: {
     subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
     underDevelopment:

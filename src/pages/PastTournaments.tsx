@@ -116,10 +116,6 @@ export function PastTournaments() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <div className="mb-6">
-          <IconButton onClick={() => navigate(-1)} label={t('pastTournaments.back')} />
-        </div>
-        
         <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
           {t('pastTournaments.title')}
         </h1>

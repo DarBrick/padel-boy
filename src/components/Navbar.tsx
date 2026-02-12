@@ -1,18 +1,18 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Plus, History, HelpCircle } from 'lucide-react';
+import { Home, Plus, History, HelpCircle, Languages } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { PadelBallIcon } from './PadelBallIcon';
 import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Navbar() {
   const location = useLocation();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const navItems = [
-    { path: '/', label: t('nav.home'), icon: Home, exact: true },
-    { path: '/create', label: t('nav.create'), icon: Plus, exact: false },
-    { path: '/past', label: t('nav.history'), icon: History, exact: false },
-    { path: '/help', label: t('nav.help'), icon: HelpCircle, exact: false },
+    { path: '/', label: 'nav.home' as const, icon: Home, exact: true },
+    { path: '/create', label: 'nav.create' as const, icon: Plus, exact: false },
+    { path: '/past', label: 'nav.history' as const, icon: History, exact: false },
+    { path: '/help', label: 'nav.help' as const, icon: HelpCircle, exact: false },
   ];
 
   const isActive = (path: string, exact: boolean) => {
@@ -20,6 +20,14 @@ export function Navbar() {
       return location.pathname === path;
     }
     return location.pathname.startsWith(path);
+  };
+
+  // Mobile language switcher: cycle through languages on tap
+  const handleMobileLanguageSwitch = () => {
+    const languages = ['en', 'es', 'pl'];
+    const currentIndex = languages.indexOf(i18n.language);
+    const nextIndex = (currentIndex + 1) % languages.length;
+    i18n.changeLanguage(languages[nextIndex]);
   };
 
   return (
@@ -34,17 +42,27 @@ export function Navbar() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex flex-col items-center justify-center min-h-[44px] py-2 px-3 flex-1 transition-colors ${
+                className={`flex flex-col items-center justify-center min-h-[44px] py-2 px-2 flex-1 transition-colors ${
                   active
                     ? 'text-[var(--color-padel-yellow)]'
                     : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
                 <Icon className="w-5 h-5 mb-1" />
-                <span className="text-xs font-medium">{item.label}</span>
+                <span className="text-xs font-medium">{t(item.label)}</span>
               </Link>
             );
           })}
+          
+          {/* Language switcher as 5th item */}
+          <button
+            onClick={handleMobileLanguageSwitch}
+            className="flex flex-col items-center justify-center min-h-[44px] py-2 px-2 flex-1 text-slate-400 hover:text-slate-200 transition-colors"
+            aria-label={t('language.switch')}
+          >
+            <Languages className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium uppercase">{i18n.language}</span>
+          </button>
         </div>
       </nav>
 
@@ -79,7 +97,7 @@ export function Navbar() {
                     }`}
                   >
                     <Icon className="w-5 h-5" />
-                    <span className="font-medium">{item.label}</span>
+                    <span className="font-medium">{t(item.label)}</span>
                   </Link>
                 );
               })}

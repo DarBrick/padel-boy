@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import { LanguageSwitcher } from './components/LanguageSwitcher'
+import { Navbar } from './components/Navbar'
 import { CookieBanner } from './components/CookieBanner'
 import { Home } from './pages/Home'
 import { Create } from './pages/Create'
@@ -21,12 +21,10 @@ export function App() {
   return (
     <BrowserRouter basename={basename}>
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
-        {/* Language Switcher */}
-        <div className="absolute top-4 right-4 z-30">
-          <LanguageSwitcher />
-        </div>
+        {/* Navigation Bar */}
+        <Navbar />
         
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 pb-20 md:pt-24 md:pb-8 max-w-4xl">
           <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />

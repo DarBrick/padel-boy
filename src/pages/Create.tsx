@@ -14,7 +14,6 @@ import { SliderInput } from '../components/SliderInput'
 import { RadioCardGroup } from '../components/RadioCardGroup'
 import { GradientButton } from '../components/GradientButton'
 import { PlayersPanel } from '../components/PlayersPanel'
-import { IconButton } from '../components/IconButton'
 import { ToggleSwitch } from '../components/ToggleSwitch'
 import { CourtChip } from '../components/CourtChip'
 import { ContentPanel } from '../components/ContentPanel'
@@ -169,8 +168,7 @@ export function Create() {
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
-      <div className="space-y-4">
-        <IconButton onClick={() => navigate('/')} label={t('create.backToHome')} />
+      <div>
         <h1 className="text-3xl font-bold">{t('create.title')}</h1>
       </div>
 

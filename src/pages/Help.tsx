@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { ContentWithInfoPanels } from '../components/ContentWithInfoPanels'
@@ -8,16 +7,11 @@ import { ArrowUp, Rocket, Globe, Swords, Users, Wrench } from 'lucide-react'
 
 export function Help() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <div className="mb-6">
-          <IconButton onClick={() => navigate(-1)} label={t('help.back')} />
-        </div>
-        
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
           {t('help.title')}
         </h1>

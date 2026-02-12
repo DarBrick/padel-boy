@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import { IconButton } from '../components/IconButton'
 import { ContentPanel } from '../components/ContentPanel'
 import { Footer } from '../components/Footer'
@@ -7,7 +6,6 @@ import { CheckCircle2, Clock, Circle, ArrowUp } from 'lucide-react'
 
 export function Roadmap() {
   const { t } = useTranslation()
-  const navigate = useNavigate()
 
   const features = t('roadmap.features', { returnObjects: true }) as readonly string[]
 
@@ -15,10 +13,6 @@ export function Roadmap() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <div className="mb-6">
-          <IconButton onClick={() => navigate(-1)} label={t('roadmap.back')} />
-        </div>
-        
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
           {t('roadmap.title')}
         </h1>

@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 import type { StoredTournament } from '../schemas/tournament'
 import { getTournamentStats } from '../utils/tournamentStats'
 import { formatTournamentDate } from '../utils/tournamentState'
@@ -22,7 +21,6 @@ interface TournamentResultsProps {
 
 export function TournamentResults({ tournament }: TournamentResultsProps) {
   const { t, i18n } = useTranslation()
-  const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState<TabId>('standings')
   const [showScrollTop, setShowScrollTop] = useState(false)
 
@@ -68,17 +66,16 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
-      {/* Back and Share buttons */}
-      <div className="flex items-center gap-2">
-        <IconButton onClick={() => navigate(-1)} label={t('results.back')} />
-        {stats.status === 'finished' && (
+      {/* Share button */}
+      {stats.status === 'finished' && (
+        <div>
           <IconButton 
             onClick={handleShare} 
             icon={Share2} 
             label={t('pastTournaments.actions.share')} 
           />
-        )}
-      </div>
+        </div>
+      )}
       
       {/* Header */}
       <ContentPanel>
