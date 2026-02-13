@@ -8,7 +8,13 @@ const translation = {
     home: 'Start',
     create: 'Utwórz',
     history: 'Historia',
+    players: 'Gracze',
+    settings: 'Ustawienia',
     help: 'Pomoc',
+  },
+  settings: {
+    description: 'Dostosuj swoje doświadczenie z Padel Boy',
+    language: 'Język',
   },
   language: {
     switch: 'Zmień język',

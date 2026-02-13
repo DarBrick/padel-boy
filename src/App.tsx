@@ -11,6 +11,8 @@ import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
 import { Help } from './pages/Help'
 import { Roadmap } from './pages/Roadmap'
+import { Settings } from './pages/Settings'
+import { Players } from './pages/Players'
 
 // Smart detection: Use /padel-boy only for github.io subdirectory deployment
 const isGitHubPagesSubdirectory = window.location.hostname.includes('github.io') && 
@@ -24,7 +26,7 @@ export function App() {
         {/* Navigation Bar */}
         <Navbar />
         
-        <div className="container mx-auto px-4 py-8 pb-20 md:pt-24 md:pb-8 max-w-4xl">
+        <div className="container mx-auto px-4 pt-24 pb-8 max-w-4xl">
           <Routes>
             <Route index element={<Home />} />
             <Route path="/" element={<Home />} />
@@ -37,6 +39,8 @@ export function App() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/help" element={<Help />} />
             <Route path="/roadmap" element={<Roadmap />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/players" element={<Players />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>

@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Github, Scale } from 'lucide-react'
 import { GITHUB_REPO_URL } from '../config'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Footer() {
   const { t } = useTranslation()
@@ -9,6 +10,11 @@ export function Footer() {
 
   return (
     <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm space-y-4">
+      {/* Language Switcher */}
+      <div className="flex justify-center">
+        <LanguageSwitcher />
+      </div>
+
       {/* Legal & Info Links */}
       <div className="flex flex-wrap justify-center gap-4 md:gap-6">
         <button

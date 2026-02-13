@@ -7,6 +7,7 @@ import { ContentPanel } from '../components/ContentPanel'
 import { FormatComparisonCard } from '../components/FormatComparisonCard'
 import { StatsBanner } from '../components/StatsBanner'
 import { Footer } from '../components/Footer'
+import { LanguageSwitcher } from '../components/LanguageSwitcher'
 import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, History, FolderOpen, CheckCircle } from 'lucide-react'
 
 export function Home() {
@@ -15,6 +16,11 @@ export function Home() {
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
+      {/* Language Switcher - Top Right */}
+      <div className="flex justify-end">
+        <LanguageSwitcher />
+      </div>
+
       {/* Hero Section */}
       <div className="text-center space-y-4 sm:space-y-5 md:space-y-6 max-w-3xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-4">

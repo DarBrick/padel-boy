@@ -1,17 +1,23 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Plus, History, HelpCircle, Languages } from 'lucide-react';
+import { Home, Plus, History, Users, Settings, HelpCircle, Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
 import { PadelBallIcon } from './PadelBallIcon';
-import { LanguageSwitcher } from './LanguageSwitcher';
 
 export function Navbar() {
   const location = useLocation();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const navItems = [
+  const primaryNavItems = [
     { path: '/', label: 'nav.home' as const, icon: Home, exact: true },
     { path: '/create', label: 'nav.create' as const, icon: Plus, exact: false },
     { path: '/past', label: 'nav.history' as const, icon: History, exact: false },
+    { path: '/players', label: 'nav.players' as const, icon: Users, exact: false, disabled: true },
+  ];
+
+  const secondaryNavItems = [
+    { path: '/settings', label: 'nav.settings' as const, icon: Settings, exact: false },
     { path: '/help', label: 'nav.help' as const, icon: HelpCircle, exact: false },
   ];
 
@@ -22,58 +28,20 @@ export function Navbar() {
     return location.pathname.startsWith(path);
   };
 
-  // Mobile language switcher: cycle through languages on tap
-  const handleMobileLanguageSwitch = () => {
-    const languages = ['en', 'es', 'pl'];
-    const currentIndex = languages.indexOf(i18n.language);
-    const nextIndex = (currentIndex + 1) % languages.length;
-    i18n.changeLanguage(languages[nextIndex]);
+  const handleNavClick = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
     <>
-      {/* Mobile: Bottom Tab Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-sm border-t border-slate-700/50 md:hidden">
-        <div className="flex items-center justify-around px-2 pb-safe">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            const active = isActive(item.path, item.exact);
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={`flex flex-col items-center justify-center min-h-[44px] py-2 px-2 flex-1 transition-colors ${
-                  active
-                    ? 'text-[var(--color-padel-yellow)]'
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                <Icon className="w-5 h-5 mb-1" />
-                <span className="text-xs font-medium">{t(item.label)}</span>
-              </Link>
-            );
-          })}
-          
-          {/* Language switcher as 5th item */}
-          <button
-            onClick={handleMobileLanguageSwitch}
-            className="flex flex-col items-center justify-center min-h-[44px] py-2 px-2 flex-1 text-slate-400 hover:text-slate-200 transition-colors"
-            aria-label={t('language.switch')}
-          >
-            <Languages className="w-5 h-5 mb-1" />
-            <span className="text-xs font-medium uppercase">{i18n.language}</span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Desktop: Top Navbar */}
-      <nav className="hidden md:block fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center justify-between h-16">
             {/* Left: Logo + Title */}
             <Link
               to="/"
               className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              onClick={handleNavClick}
             >
               <PadelBallIcon className="w-8 h-8" animate={false} />
               <span className="text-xl font-bold">
@@ -81,16 +49,85 @@ export function Navbar() {
               </span>
             </Link>
 
-            {/* Right: Nav Items + Language Switcher */}
-            <div className="flex items-center gap-6">
-              {navItems.map((item) => {
+            {/* Desktop: Nav Items */}
+            <div className="hidden md:flex items-center gap-2">
+              {[...primaryNavItems, ...secondaryNavItems].map((item) => {
                 const Icon = item.icon;
                 const active = isActive(item.path, item.exact);
+                const disabled = 'disabled' in item && item.disabled;
+                
+                if (disabled) {
+                  return (
+                    <button
+                      key={item.path}
+                      disabled
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm text-slate-500 cursor-not-allowed opacity-50"
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="font-medium">{t(item.label)}</span>
+                    </button>
+                  );
+                }
+
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`flex items-center gap-2 min-h-[48px] px-3 py-2 rounded-lg transition-colors ${
+                    className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm transition-colors ${
+                      active
+                        ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="font-medium">{t(item.label)}</span>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Mobile: Hamburger Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-slate-800/50 transition-colors"
+              aria-label="Toggle menu"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile: Dropdown Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 space-y-1 border-t border-slate-700/50 bg-slate-900/95 backdrop-blur-sm">
+              {/* Primary Nav Items */}
+              {primaryNavItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path, item.exact);
+                const disabled = 'disabled' in item && item.disabled;
+
+                if (disabled) {
+                  return (
+                    <button
+                      key={item.path}
+                      disabled
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 cursor-not-allowed opacity-50 w-full"
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span className="font-medium">{t(item.label)}</span>
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={handleNavClick}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       active
                         ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
@@ -101,13 +138,42 @@ export function Navbar() {
                   </Link>
                 );
               })}
-              <div className="ml-2 pl-2 border-l border-slate-700/50">
-                <LanguageSwitcher />
-              </div>
+
+              {/* Divider */}
+              <div className="border-t border-slate-700/50 my-2" />
+
+              {/* Secondary Nav Items */}
+              {secondaryNavItems.map((item) => {
+                const Icon = item.icon;
+                const active = isActive(item.path, item.exact);
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={handleNavClick}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                      active
+                        ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
+                        : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                    <span className="font-medium">{t(item.label)}</span>
+                  </Link>
+                );
+              })}
             </div>
-          </div>
+          )}
         </div>
       </nav>
+
+      {/* Backdrop - rendered outside nav to properly cover content */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden" 
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
     </>
   );
 }
