@@ -250,6 +250,7 @@ const translation = {
       rankProgression: 'Progresja Rankingu',
       partnerships: 'Partnerstwa',
       partnershipEmpty: 'Brak danych o partnerstwach.',
+      opponents: 'Przeciwnicy',
       consistency: 'Konsystencja',
       avgScore: 'Średni Wynik',
       scoreRange: 'Zakres Wyniku',

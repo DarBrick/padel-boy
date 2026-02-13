@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Line } from 'recharts'
+import { Link, Swords, CircleSlash2 } from 'lucide-react'
 import type { PlayerStanding } from '../utils/tournamentStats'
 import type { StoredTournament } from '../schemas/tournament'
-import { getPartnershipStats, getStandingsProgression } from '../utils/tournamentInsights'
+import { getPartnershipStats, getOpponentStats, getStandingsProgression } from '../utils/tournamentInsights'
 import { getTournamentStats } from '../utils/tournamentStats'
 import { ChartContainer } from './ChartContainer'
 
@@ -22,6 +23,9 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const playerPartnerships = allPartnerships.filter(
     p => p.player1Index === standing.index || p.player2Index === standing.index
   )
+
+  // Get opponent stats for this player
+  const opponentStats = getOpponentStats(tournament, standing.index)
 
   // Get score progression data
   const progression = getStandingsProgression(tournament)
@@ -234,28 +238,67 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
             {t('results.playerDetail.partnerships')}
           </h4>
           <div className="space-y-2">
-            {playerPartnerships.map((partnership) => {
-              const partnerName = partnership.player1Index === standing.index
-                ? partnership.player2Name
-                : partnership.player1Name
+            {playerPartnerships
+              .sort((a, b) => b.pointsGained - a.pointsGained)
+              .map((partnership) => {
+                const partnerName = partnership.player1Index === standing.index
+                  ? partnership.player2Name
+                  : partnership.player1Name
 
-              return (
-                <div
-                  key={`${partnership.player1Index}-${partnership.player2Index}`}
-                  className="flex justify-between items-center text-sm"
-                >
-                  <span className="text-white">{partnerName}</span>
-                  <div className="flex items-center gap-4">
-                    <span className="text-slate-400">
-                      {partnership.gamesPlayed} {partnership.gamesPlayed === 1 ? 'game' : 'games'}
-                    </span>
-                    <span className="text-[var(--color-padel-yellow)] font-medium">
-                      {(partnership.winRate * 100).toFixed(0)}%
-                    </span>
+                return (
+                  <div
+                    key={`${partnership.player1Index}-${partnership.player2Index}`}
+                    className="flex justify-between items-center text-sm"
+                  >
+                    <span className="text-white">{partnerName}</span>
+                    <div className="flex items-center gap-4">
+                      <span className="text-slate-400 flex items-center gap-1">
+                        <Link className="w-3.5 h-3.5" />
+                        {partnership.gamesPlayed}
+                      </span>
+                      <span className="text-slate-400">
+                        {partnership.pointsGained}p
+                      </span>
+                      <span className="text-[var(--color-padel-yellow)] font-medium flex items-center gap-1">
+                        <CircleSlash2 className="w-3.5 h-3.5" />
+                        {partnership.avgPointsPerGame.toFixed(1)}
+                      </span>
+                    </div>
                   </div>
+                )
+              })}
+          </div>
+        </div>
+      )}
+
+      {/* Opponents */}
+      {opponentStats.length > 0 && (
+        <div className="bg-slate-800/50 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-slate-300 mb-3">
+            {t('results.playerDetail.opponents')}
+          </h4>
+          <div className="space-y-2">
+            {opponentStats.map((opponent) => (
+              <div
+                key={opponent.opponentIndex}
+                className="flex justify-between items-center text-sm"
+              >
+                <span className="text-white">{opponent.opponentName}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Swords className="w-3.5 h-3.5" />
+                    {opponent.gamesPlayed}
+                  </span>
+                  <span className="text-slate-400">
+                    {opponent.pointsScored}p
+                  </span>
+                  <span className="text-[var(--color-padel-yellow)] font-medium flex items-center gap-1">
+                    <CircleSlash2 className="w-3.5 h-3.5" />
+                    {opponent.avgPointsPerGame.toFixed(1)}
+                  </span>
                 </div>
-              )
-            })}
+              </div>
+            ))}
           </div>
         </div>
       )}

@@ -14,6 +14,18 @@ export interface PartnershipStats {
   losses: number
   draws: number
   winRate: number
+  pointsGained: number
+  avgPointsPerGame: number
+}
+
+// ── Opponent Types ─────────────────────────────────────────────────
+
+export interface OpponentStats {
+  opponentIndex: number
+  opponentName: string
+  gamesPlayed: number
+  pointsScored: number
+  avgPointsPerGame: number
 }
 
 // ── Match Superlative Types ────────────────────────────────────────
@@ -84,6 +96,8 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
     if (match.winner === undefined || match.scoreDelta === undefined) return
 
     const isDraw = match.scoreDelta === 0
+    const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
+    const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
 
     // Process team1
     const [p1, p2] = match.team1.sort((a, b) => a - b)
@@ -99,16 +113,21 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
         losses: 0,
         draws: 0,
         winRate: 0,
+        pointsGained: 0,
+        avgPointsPerGame: 0,
       })
     }
     const stats1 = partnershipMap.get(key1)!
     stats1.gamesPlayed++
     if (isDraw) {
       stats1.draws++
+      stats1.pointsGained += winningScore // In a draw, both teams get the same score
     } else if (match.winner === 0) {
       stats1.wins++
+      stats1.pointsGained += winningScore
     } else {
       stats1.losses++
+      stats1.pointsGained += losingScore
     }
 
     // Process team2
@@ -125,34 +144,117 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
         losses: 0,
         draws: 0,
         winRate: 0,
+        pointsGained: 0,
+        avgPointsPerGame: 0,
       })
     }
     const stats2 = partnershipMap.get(key2)!
     stats2.gamesPlayed++
     if (isDraw) {
       stats2.draws++
+      stats2.pointsGained += winningScore // In a draw, both teams get the same score
     } else if (match.winner === 1) {
       stats2.wins++
+      stats2.pointsGained += winningScore
     } else {
       stats2.losses++
+      stats2.pointsGained += losingScore
     }
   })
 
-  // Calculate win rates and convert to array
+  // Calculate win rates, averages and convert to array
   const partnerships = Array.from(partnershipMap.values()).map(stats => ({
     ...stats,
     winRate: stats.gamesPlayed > 0 ? stats.wins / stats.gamesPlayed : 0,
+    avgPointsPerGame: stats.gamesPlayed > 0 ? stats.pointsGained / stats.gamesPlayed : 0,
   }))
 
-  // Sort by win rate (desc), then games played (desc)
+  // Sort by points gained (desc), then games played (desc)
   partnerships.sort((a, b) => {
-    if (Math.abs(b.winRate - a.winRate) > 0.001) {
-      return b.winRate - a.winRate
+    if (b.pointsGained !== a.pointsGained) {
+      return b.pointsGained - a.pointsGained
     }
     return b.gamesPlayed - a.gamesPlayed
   })
 
   return partnerships
+}
+
+// ── Opponent Stats ─────────────────────────────────────────────────
+
+/**
+ * Calculate statistics for opponents a specific player has faced
+ * Returns sorted by points scored (descending), then games played (descending)
+ */
+export function getOpponentStats(tournament: StoredTournament, playerIndex: number): OpponentStats[] {
+  // Map: opponentIndex -> stats
+  const opponentMap = new Map<number, OpponentStats>()
+
+  const finishedMatches = tournament.matches.filter(m => m.isFinished)
+
+  finishedMatches.forEach(match => {
+    if (match.winner === undefined || match.scoreDelta === undefined) return
+
+    const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
+    const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
+
+    // Check if player is on team1
+    if (match.team1.includes(playerIndex)) {
+      const playerScore = match.winner === 0 ? winningScore : losingScore
+      
+      // Add stats for each opponent on team2
+      match.team2.forEach(opponentIndex => {
+        if (!opponentMap.has(opponentIndex)) {
+          opponentMap.set(opponentIndex, {
+            opponentIndex,
+            opponentName: tournament.players[opponentIndex].name,
+            gamesPlayed: 0,
+            pointsScored: 0,
+            avgPointsPerGame: 0,
+          })
+        }
+        const stats = opponentMap.get(opponentIndex)!
+        stats.gamesPlayed++
+        stats.pointsScored += playerScore
+      })
+    }
+    // Check if player is on team2
+    else if (match.team2.includes(playerIndex)) {
+      const playerScore = match.winner === 1 ? winningScore : losingScore
+      
+      // Add stats for each opponent on team1
+      match.team1.forEach(opponentIndex => {
+        if (!opponentMap.has(opponentIndex)) {
+          opponentMap.set(opponentIndex, {
+            opponentIndex,
+            opponentName: tournament.players[opponentIndex].name,
+            gamesPlayed: 0,
+            pointsScored: 0,
+            avgPointsPerGame: 0,
+          })
+        }
+        const stats = opponentMap.get(opponentIndex)!
+        stats.gamesPlayed++
+        stats.pointsScored += playerScore
+      })
+    }
+  })
+
+  // Calculate averages and convert to array
+  const opponents = Array.from(opponentMap.values()).map(stats => ({
+    ...stats,
+    avgPointsPerGame: stats.gamesPlayed > 0 ? stats.pointsScored / stats.gamesPlayed : 0,
+  }))
+
+  // Sort by points scored (desc), then games played (desc)
+  opponents.sort((a, b) => {
+    if (b.pointsScored !== a.pointsScored) {
+      return b.pointsScored - a.pointsScored
+    }
+    return b.gamesPlayed - a.gamesPlayed
+  })
+
+  return opponents
 }
 
 // ── Match Superlatives ─────────────────────────────────────────────

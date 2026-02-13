@@ -254,6 +254,7 @@ const translation = {
       rankProgression: 'Rank Progression',
       partnerships: 'Partnerships',
       partnershipEmpty: 'No partnership data available.',
+      opponents: 'Opponents',
       consistency: 'Consistency',
       avgScore: 'Average Score',
       scoreRange: 'Score Range',

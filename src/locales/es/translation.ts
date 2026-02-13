@@ -248,6 +248,7 @@ const translation = {
       totalPointsWithSitting: 'Puntos Totales',
       scoreProgression: 'Progresión de Puntuación',      rankProgression: 'Progresión de clasificación',      partnerships: 'Parejas',
       partnershipEmpty: 'No hay datos de parejas disponibles.',
+      opponents: 'Oponentes',
       consistency: 'Consistencia',
       avgScore: 'Puntuación Media',
       scoreRange: 'Rango de Puntuación',
