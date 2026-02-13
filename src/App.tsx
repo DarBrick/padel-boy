@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import { Navbar } from './components/Navbar'
 import { CookieBanner } from './components/CookieBanner'
 import { Home } from './pages/Home'
@@ -47,6 +48,9 @@ export function App() {
 
         {/* Cookie Banner */}
         <CookieBanner />
+        
+        {/* Toast Notifications */}
+        <Toaster position="top-center" theme="dark" richColors duration={2500} />
       </div>
     </BrowserRouter>
   )

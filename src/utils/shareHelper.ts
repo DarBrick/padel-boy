@@ -2,6 +2,12 @@ import type { TFunction } from 'i18next'
 import type { StoredTournament } from '../schemas/tournament'
 import { encodeTournament, encodeBase64Url } from './binaryFormat'
 
+export type ShareResult = {
+  success: boolean
+  method: 'share' | 'clipboard' | 'fallback'
+  error?: Error
+}
+
 /**
  * Detects if the device is mobile based on touch support and screen size
  */
@@ -15,9 +21,9 @@ function isMobileDevice(): boolean {
  * Shares a tournament via native share API (mobile) or copies URL to clipboard (desktop)
  * @param tournament - The tournament to share
  * @param t - i18next translation function
- * @returns Promise that resolves when share/copy is complete
+ * @returns Promise that resolves with share result status
  */
-export async function shareTournament(tournament: StoredTournament, t: TFunction): Promise<void> {
+export async function shareTournament(tournament: StoredTournament, t: TFunction): Promise<ShareResult> {
   try {
     const encoded = encodeTournament(tournament)
     const base64url = encodeBase64Url(encoded)
@@ -39,8 +45,7 @@ export async function shareTournament(tournament: StoredTournament, t: TFunction
           }),
           url: url,
         })
-        console.log('Tournament shared successfully')
-        return
+        return { success: true, method: 'share' }
       } catch (shareError) {
         // User cancelled share dialog or share failed
         if ((shareError as Error).name !== 'AbortError') {
@@ -53,8 +58,7 @@ export async function shareTournament(tournament: StoredTournament, t: TFunction
     // Fallback: copy to clipboard
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(url)
-      // TODO: Show success toast notification
-      console.log('Tournament link copied to clipboard')
+      return { success: true, method: 'clipboard' }
     } else {
       // Fallback for older browsers
       const textarea = document.createElement('textarea')
@@ -65,11 +69,14 @@ export async function shareTournament(tournament: StoredTournament, t: TFunction
       textarea.select()
       document.execCommand('copy')
       document.body.removeChild(textarea)
-      console.log('Tournament link copied to clipboard (fallback)')
+      return { success: true, method: 'fallback' }
     }
   } catch (error) {
     console.error('Failed to share tournament:', error)
-    // TODO: Show error toast notification
-    throw error
+    return { 
+      success: false, 
+      method: 'clipboard',
+      error: error instanceof Error ? error : new Error('Unknown error')
+    }
   }
 }

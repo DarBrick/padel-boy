@@ -389,6 +389,9 @@ const translation = {
     savedNotification: 'Turniej został zapisany w Twojej kolekcji',
     alreadySaved: 'Ten turniej jest już w Twojej kolekcji',
     shareMessage: 'Zobacz mój turniej {{format}} z {{players}} graczami: {{tournamentName}}',
+    copySuccess: 'Link skopiowany do schowka!',
+    copyError: 'Nie udało się skopiować linku. Spróbuj ponownie.',
+    shareError: 'Nie udało się udostępnić turnieju. Spróbuj ponownie.',
     error: {
       title: 'Nieprawidłowe Dane Turnieju',
       description: 'Udostępniony link wydaje się być uszkodzony lub nieprawidłowy. Nie udało się zdekodować danych turnieju.',

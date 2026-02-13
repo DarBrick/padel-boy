@@ -387,6 +387,9 @@ const translation = {
     savedNotification: 'El torneo se ha guardado en tu colección',
     alreadySaved: 'Este torneo ya está en tu colección',
     shareMessage: 'Mira mi torneo {{format}} con {{players}} jugadores: {{tournamentName}}',
+    copySuccess: '¡Enlace copiado al portapapeles!',
+    copyError: 'Error al copiar el enlace. Inténtalo de nuevo.',
+    shareError: 'Error al compartir el torneo. Inténtalo de nuevo.',
     error: {
       title: 'Datos de Torneo Inválidos',
       description: 'El enlace compartido parece estar corrupto o no es válido. No se pudieron decodificar los datos del torneo.',

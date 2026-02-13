@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
+import { toast } from 'sonner'
 import { Search, History, Inbox, ArrowUp, Download, X, CalendarArrowDown, CalendarArrowUp, ChevronDown } from 'lucide-react'
 import { IconButton } from '../components/IconButton'
 import { TournamentCard } from '../components/TournamentCard'
@@ -85,9 +86,17 @@ export function PastTournaments() {
   // Handle share tournament
   const handleShare = async (tournament: StoredTournament) => {
     try {
-      await shareTournament(tournament, t)
+      const result = await shareTournament(tournament, t)
+      if (result.success && result.method !== 'share') {
+        // Show success toast only for clipboard copy (not for native share)
+        toast.success(t('shared.copySuccess'))
+      } else if (!result.success) {
+        // Show error toast
+        toast.error(t('shared.shareError'))
+      }
+      // Native share API shows its own UI, so no toast needed
     } catch (error) {
-      // Error already logged in shareTournament
+      toast.error(t('shared.shareError'))
     }
   }
   

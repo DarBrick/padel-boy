@@ -393,6 +393,9 @@ const translation = {
     savedNotification: 'Tournament has been saved to your collection',
     alreadySaved: 'This tournament is already in your collection',
     shareMessage: 'Check out my {{format}} tournament with {{players}} players: {{tournamentName}}',
+    copySuccess: 'Link copied to clipboard!',
+    copyError: 'Failed to copy link. Please try again.',
+    shareError: 'Failed to share tournament. Please try again.',
     error: {
       title: 'Invalid Tournament Data',
       description: 'The shared link appears to be corrupted or invalid. The tournament data could not be decoded.',

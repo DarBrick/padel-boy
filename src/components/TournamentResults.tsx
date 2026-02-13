@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import type { StoredTournament } from '../schemas/tournament'
 import { getTournamentStats } from '../utils/tournamentStats'
 import { formatTournamentDate } from '../utils/tournamentState'
@@ -23,6 +24,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
   const { t, i18n } = useTranslation()
   const [activeTab, setActiveTab] = useState<TabId>('standings')
   const [showScrollTop, setShowScrollTop] = useState(false)
+  const [isSharing, setIsSharing] = useState(false)
 
   const stats = getTournamentStats(tournament)
   const formattedDate = formatTournamentDate(tournament, i18n.language)
@@ -39,10 +41,23 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
   // Handle share tournament
   const handleShare = async () => {
+    if (isSharing) return // Prevent multiple clicks
+    
+    setIsSharing(true)
     try {
-      await shareTournament(tournament, t)
+      const result = await shareTournament(tournament, t)
+      if (result.success && result.method !== 'share') {
+        // Show success toast only for clipboard copy (not for native share)
+        toast.success(t('shared.copySuccess'))
+      } else if (!result.success) {
+        // Show error toast
+        toast.error(t('shared.shareError'))
+      }
+      // Native share API shows its own UI, so no toast needed
     } catch (error) {
-      // Error already logged in shareTournament
+      toast.error(t('shared.shareError'))
+    } finally {
+      setIsSharing(false)
     }
   }
 
