@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next'
 import { Eye, Share2, Trash2, Users, Calendar, Repeat2 } from 'lucide-react'
-import type { StoredTournament } from '../schemas/tournament'
-import { extractTimestampFromId } from '../utils/tournamentId'
-import { formatRelativeDate } from '../utils/dateGrouping'
-import { getTournamentStats } from '../utils/tournamentStats'
-import { ContentPanel } from './ContentPanel'
+import type { StoredTournament } from '../../schemas/tournament'
+import { extractTimestampFromId } from '../../utils/tournamentId'
+import { formatRelativeDate } from '../../utils/dateGrouping'
+import { getTournamentStats } from '../../utils/tournamentStats'
+import { ContentPanel } from '../ui'
 
 interface TournamentCardProps {
   tournament: StoredTournament

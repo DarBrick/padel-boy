@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { decodeBase64Url, decodeTournament } from '../utils/binaryFormat'
 import { storedTournamentSchema } from '../schemas/tournament'
 import { useTournaments } from '../stores/tournaments'
-import { ContentPanel } from '../components/ContentPanel'
+import { ContentPanel } from '../components/ui'
 
 export function SharedTournament() {
   const { data } = useParams<{ data: string }>()

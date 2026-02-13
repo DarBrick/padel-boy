@@ -1,8 +1,8 @@
 import { useSearchParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { useTournaments } from '../stores/tournaments'
-import { getTournamentStats } from '../utils/tournamentStats'
-import { generateNextRound } from '../utils/roundGenerator'
+import { useTournaments } from '../../stores/tournaments'
+import { getTournamentStats } from '../../utils/tournamentStats'
+import { generateNextRound } from '../../utils/roundGenerator'
 import {
   getTotalRounds,
   getRoundMatches,
@@ -18,15 +18,15 @@ import {
   finishTournament,
   parseRoundParam,
   getPausingPlayers,
-} from '../utils/tournamentState'
-import { ContentPanel } from './ContentPanel'
+} from '../../utils/tournamentState'
+import { ContentPanel } from '../ui'
 import { TournamentHeader } from './TournamentHeader'
 import { RoundNavigation } from './RoundNavigation'
 import { MatchesSectionHeader } from './MatchesSectionHeader'
 import { PausingPlayersPanel } from './PausingPlayersPanel'
 import { MatchesGrid } from './MatchesGrid'
 import { TournamentActions } from './TournamentActions'
-import type { StoredTournament, StoredMatch } from '../schemas/tournament'
+import type { StoredTournament, StoredMatch } from '../../schemas/tournament'
 
 interface ActiveTournamentProps {
   initialTournament: StoredTournament

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Users, Plus } from 'lucide-react'
 import { PlayerChip } from './PlayerChip'
 import { PlayerInput } from './PlayerInput'
-import { CollapsiblePanel } from './CollapsiblePanel'
+import { CollapsiblePanel } from '../ui'
 
 interface PlayersPanelProps {
   players: string[]

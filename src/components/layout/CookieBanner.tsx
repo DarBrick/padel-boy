@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { X, Cookie } from 'lucide-react'
-import { useCookieConsent } from '../stores/cookieConsent'
+import { useCookieConsent } from '../../stores/cookieConsent'
 
 export function CookieBanner() {
   const { t } = useTranslation()

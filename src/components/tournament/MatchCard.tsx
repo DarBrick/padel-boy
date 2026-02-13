@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
-import { ContentPanel } from './ContentPanel'
-import type { StoredMatch } from '../schemas/tournament'
+import { ContentPanel } from '../ui'
+import type { StoredMatch } from '../../schemas/tournament'
 
 interface MatchCardProps {
   match: StoredMatch

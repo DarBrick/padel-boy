@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { AlertTriangle } from 'lucide-react'
-import { useTournaments } from '../stores/tournaments'
+import { useTournaments } from '../../stores/tournaments'
 
 export function CorruptionBanner() {
   const { t } = useTranslation()

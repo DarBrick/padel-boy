@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Bar, Line } from 'recharts'
-import type { StoredTournament } from '../schemas/tournament'
+import type { StoredTournament } from '../../schemas/tournament'
 import {
   getPartnershipStats,
   getMatchSuperlatives,
   getStandingsProgression,
   getPlayerConsistency,
-} from '../utils/tournamentInsights'
-import { ContentPanel } from './ContentPanel'
-import { ChartContainer } from './ChartContainer'
+} from '../../utils/tournamentInsights'
+import { ContentPanel } from '../ui'
+import { ChartContainer } from '../ui'
 import { Trophy, TrendingUp, Target } from 'lucide-react'
 
 interface TournamentInsightsProps {

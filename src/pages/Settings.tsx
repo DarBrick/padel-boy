@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Globe } from 'lucide-react';
-import { LanguageSwitcher } from '../components/LanguageSwitcher';
+import { LanguageSwitcher } from '../components/layout';
 
 export function Settings() {
   const { t } = useTranslation();

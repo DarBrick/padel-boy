@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
-import { IconButton } from '../components/IconButton'
-import { ContentPanel } from '../components/ContentPanel'
-import { ContentWithInfoPanels } from '../components/ContentWithInfoPanels'
-import { Footer } from '../components/Footer'
+import { IconButton } from '../components/ui'
+import { ContentPanel } from '../components/ui'
+import { ContentWithInfoPanels } from '../components/content'
+import { Footer } from '../components/layout'
 import { ArrowUp, Languages, Trophy, Settings } from 'lucide-react'
 
 export function Privacy() {

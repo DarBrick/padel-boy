@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Shuffle, Dices, Users2 } from 'lucide-react'
-import type { TournamentStats } from '../utils/tournamentStats'
-import type { StoredTournament } from '../schemas/tournament'
-import { formatTournamentDate } from '../utils/tournamentState'
+import type { TournamentStats } from '../../utils/tournamentStats'
+import type { StoredTournament } from '../../schemas/tournament'
+import { formatTournamentDate } from '../../utils/tournamentState'
 
 interface TournamentHeaderProps {
   tournament: StoredTournament

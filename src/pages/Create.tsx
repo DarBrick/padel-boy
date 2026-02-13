@@ -9,14 +9,14 @@ import { createTournamentSchema, type CreateTournamentForm, type StoredTournamen
 import { generateTournamentName } from '../utils/tournament'
 import { generateTournamentId } from '../utils/tournamentId'
 import { useTournaments } from '../stores/tournaments'
-import { CollapsiblePanel } from '../components/CollapsiblePanel'
-import { SliderInput } from '../components/SliderInput'
-import { RadioCardGroup } from '../components/RadioCardGroup'
-import { GradientButton } from '../components/GradientButton'
-import { PlayersPanel } from '../components/PlayersPanel'
-import { ToggleSwitch } from '../components/ToggleSwitch'
-import { CourtChip } from '../components/CourtChip'
-import { ContentPanel } from '../components/ContentPanel'
+import { CollapsiblePanel } from '../components/ui'
+import { SliderInput } from '../components/ui'
+import { RadioCardGroup } from '../components/ui'
+import { GradientButton } from '../components/ui'
+import { PlayersPanel } from '../components/players'
+import { ToggleSwitch } from '../components/ui'
+import { CourtChip } from '../components/ui'
+import { ContentPanel } from '../components/ui'
 
 export function Create() {
   const { t } = useTranslation()

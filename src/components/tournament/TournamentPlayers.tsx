@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { StoredTournament } from '../schemas/tournament'
-import { getTournamentStats } from '../utils/tournamentStats'
-import { PlayerDetailCard } from './PlayerDetailCard'
+import type { StoredTournament } from '../../schemas/tournament'
+import { getTournamentStats } from '../../utils/tournamentStats'
+import { PlayerDetailCard } from '../players'
 
 interface TournamentPlayersProps {
   tournament: StoredTournament

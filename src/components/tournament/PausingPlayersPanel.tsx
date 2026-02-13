@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Coffee } from 'lucide-react'
-import type { StoredPlayer } from '../schemas/tournament'
+import type { StoredPlayer } from '../../schemas/tournament'
 
 interface PausingPlayersPanelProps {
   pausingPlayerIndices: number[]

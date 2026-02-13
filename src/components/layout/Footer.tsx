@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Github, Scale } from 'lucide-react'
-import { GITHUB_REPO_URL } from '../config'
+import { GITHUB_REPO_URL } from '../../config'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Footer() {

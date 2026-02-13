@@ -1,6 +1,6 @@
 import { MatchCard } from './MatchCard'
-import { toGlobalMatchIndex } from '../utils/tournamentState'
-import type { StoredTournament, StoredMatch } from '../schemas/tournament'
+import { toGlobalMatchIndex } from '../../utils/tournamentState'
+import type { StoredTournament, StoredMatch } from '../../schemas/tournament'
 
 interface MatchesGridProps {
   tournament: StoredTournament

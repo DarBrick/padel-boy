@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Coffee } from 'lucide-react'
-import type { StoredTournament } from '../schemas/tournament'
-import { getTotalRounds, getRoundMatches, getPausingPlayers } from '../utils/tournamentState'
-import { getTournamentStats } from '../utils/tournamentStats'
+import type { StoredTournament } from '../../schemas/tournament'
+import { getTotalRounds, getRoundMatches, getPausingPlayers } from '../../utils/tournamentState'
+import { getTournamentStats } from '../../utils/tournamentStats'
 
 interface RoundsHistoryProps {
   tournament: StoredTournament

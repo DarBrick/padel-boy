@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { GradientButton } from './GradientButton'
+import { GradientButton } from '../ui'
 
 interface TournamentActionsProps {
   isLastRound: boolean

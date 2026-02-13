@@ -24,10 +24,19 @@ npm run preview  # Preview production build
 ### File Structure
 ```
 src/
-├── components/     # Reusable UI components (e.g., PadelBallIcon.jsx)
-├── App.jsx         # Main app component with routing
-├── main.jsx        # Entry point
-└── index.css       # Global styles + custom animations
+├── components/         # Organized into 5 domain packages (see Component Organization)
+│   ├── ui/            # Generic reusable primitives (buttons, panels, inputs)
+│   ├── tournament/    # Tournament gameplay & display components
+│   ├── players/       # Player management components
+│   ├── layout/        # App-level layout components (navbar, footer)
+│   └── content/       # Rich content rendering for static pages
+├── pages/             # Route components
+├── utils/             # Business logic and helper functions
+├── stores/            # Zustand global state stores
+├── schemas/           # Zod schemas and TypeScript types
+├── App.tsx            # Main app component with routing
+├── main.tsx           # Entry point
+└── index.css          # Global styles + custom animations
 ```
 
 ### Styling Conventions

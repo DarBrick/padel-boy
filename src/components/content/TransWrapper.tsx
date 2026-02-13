@@ -1,6 +1,6 @@
 import { Trans } from 'react-i18next'
 
-import { InfoPanel } from './InfoPanel'
+import { InfoPanel } from '../ui'
 
 type TransWrapperProps = {
   i18nKey: string

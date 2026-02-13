@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { IconButton } from '../components/IconButton'
-import { ContentPanel } from '../components/ContentPanel'
-import { Footer } from '../components/Footer'
+import { IconButton } from '../components/ui'
+import { ContentPanel } from '../components/ui'
+import { Footer } from '../components/layout'
 import { CheckCircle2, Clock, Circle, ArrowUp } from 'lucide-react'
 
 export function Roadmap() {

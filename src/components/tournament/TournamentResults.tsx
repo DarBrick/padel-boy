@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import type { StoredTournament } from "../schemas/tournament";
-import { getTournamentStats } from "../utils/tournamentStats";
-import { formatTournamentDate } from "../utils/tournamentState";
-import { TabSelector } from "./TabSelector";
+import type { StoredTournament } from "../../schemas/tournament";
+import { getTournamentStats } from "../../utils/tournamentStats";
+import { formatTournamentDate } from "../../utils/tournamentState";
+import { TabSelector } from "../ui";
 import { StandingsTable } from "./StandingsTable";
 import { RoundsHistory } from "./RoundsHistory";
 import { TournamentInsights } from "./TournamentInsights";
 import { TournamentPlayers } from "./TournamentPlayers";
-import { ContentPanel } from "./ContentPanel";
-import { IconButton } from "./IconButton";
+import { ContentPanel } from "../ui";
+import { IconButton } from "../ui";
 import { Calendar, Users, Trophy, ArrowUp, Shuffle, Dices, Users2, Repeat2, Swords } from "lucide-react";
 
 type TabId = "standings" | "rounds" | "players" | "insights";

@@ -6,10 +6,10 @@ import { ArrowLeft, Share2 } from 'lucide-react'
 import { useTournaments } from '../stores/tournaments'
 import { isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
 import { shareTournament } from '../utils/shareHelper'
-import { ContentPanel } from '../components/ContentPanel'
-import { TournamentResults } from '../components/TournamentResults'
-import { ActiveTournament } from '../components/ActiveTournament'
-import { IconButton } from '../components/IconButton'
+import { ContentPanel } from '../components/ui'
+import { TournamentResults } from '../components/tournament'
+import { ActiveTournament } from '../components/tournament'
+import { IconButton } from '../components/ui'
 
 export function Tournament() {
   const { t } = useTranslation()

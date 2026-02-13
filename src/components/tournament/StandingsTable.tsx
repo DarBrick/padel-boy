@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, ChevronUp, Check } from 'lucide-react'
-import type { PlayerStanding } from '../utils/tournamentStats'
+import type { PlayerStanding } from '../../utils/tournamentStats'
 
 type SortField = 'rank' | 'pointsPerGame' | 'winRate' | 'totalPoints' | 'record'
 

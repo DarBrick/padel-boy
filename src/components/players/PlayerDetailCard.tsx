@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Line } from 'recharts'
 import { Link, Swords, CircleSlash2 } from 'lucide-react'
-import type { PlayerStanding } from '../utils/tournamentStats'
-import type { StoredTournament } from '../schemas/tournament'
-import { getPartnershipStats, getOpponentStats, getStandingsProgression, getPlayerConsistency } from '../utils/tournamentInsights'
-import { getTournamentStats } from '../utils/tournamentStats'
-import { ChartContainer } from './ChartContainer'
+import type { PlayerStanding } from '../../utils/tournamentStats'
+import type { StoredTournament } from '../../schemas/tournament'
+import { getPartnershipStats, getOpponentStats, getStandingsProgression, getPlayerConsistency } from '../../utils/tournamentInsights'
+import { getTournamentStats } from '../../utils/tournamentStats'
+import { ChartContainer } from '../ui'
 
 interface PlayerDetailCardProps {
   standing: PlayerStanding

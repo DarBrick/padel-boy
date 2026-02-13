@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { Globe, Swords, ChevronDown } from 'lucide-react'
 import { useState } from 'react'
-import { ContentPanel } from './ContentPanel'
+import { ContentPanel } from '../ui'
 
 export function FormatComparisonCard() {
   const { t } = useTranslation()
