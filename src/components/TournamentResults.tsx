@@ -40,7 +40,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
     { id: "standings" as TabId, label: t("results.tabs.standings") },
     { id: "rounds" as TabId, label: t("results.tabs.rounds") },
     { id: "players" as TabId, label: t("results.tabs.players") },
-    { id: "insights" as TabId, label: t("results.tabs.insights") },
+    { id: "insights" as TabId, label: t("results.tabs.insights"), disabled: true },
   ];
 
   // Format finished date
