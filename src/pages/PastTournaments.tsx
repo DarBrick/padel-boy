@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 import { Search, History, Inbox, ArrowUp, Download, X, CalendarArrowDown, CalendarArrowUp, ChevronDown, Filter } from 'lucide-react'
@@ -19,7 +19,10 @@ export function PastTournaments() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { tournaments, deleteTournament } = useTournaments()
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  
+  // Initialize filter states from URL params
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '')
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
   const [visibleCount, setVisibleCount] = useState(10)
   const [showScrollTop, setShowScrollTop] = useState(false)
@@ -28,11 +31,28 @@ export function PastTournaments() {
   const dateFromRef = useRef<HTMLInputElement>(null)
   const dateToRef = useRef<HTMLInputElement>(null)
   
-  // Filter states
-  const [selectedFormat, setSelectedFormat] = useState<'americano' | 'mexicano' | null>(null)
-  const [selectedStatus, setSelectedStatus] = useState<TournamentStatus | null>(null)
-  const [dateFrom, setDateFrom] = useState<string>('')
-  const [dateTo, setDateTo] = useState<string>('')
+  // Filter states - initialize from URL params
+  const [selectedFormat, setSelectedFormat] = useState<'americano' | 'mexicano' | null>(
+    (searchParams.get('format') as 'americano' | 'mexicano') || null
+  )
+  const [selectedStatus, setSelectedStatus] = useState<TournamentStatus | null>(
+    (searchParams.get('status') as TournamentStatus) || null
+  )
+  const [dateFrom, setDateFrom] = useState<string>(searchParams.get('dateFrom') || '')
+  const [dateTo, setDateTo] = useState<string>(searchParams.get('dateTo') || '')
+  
+  // Sync URL params when filters change
+  useEffect(() => {
+    const params = new URLSearchParams()
+    
+    if (searchQuery) params.set('q', searchQuery)
+    if (selectedFormat) params.set('format', selectedFormat)
+    if (selectedStatus) params.set('status', selectedStatus)
+    if (dateFrom) params.set('dateFrom', dateFrom)
+    if (dateTo) params.set('dateTo', dateTo)
+    
+    setSearchParams(params, { replace: true })
+  }, [searchQuery, selectedFormat, selectedStatus, dateFrom, dateTo, setSearchParams])
   
   // Reset visible count when search query or filters change
   useEffect(() => {
@@ -149,8 +169,18 @@ export function PastTournaments() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('pastTournaments.searchPlaceholder')}
-                className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+                className="w-full pl-12 pr-12 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
               />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="w-4 h-4 text-slate-400" />
+                </button>
+              )}
             </div>
             
             {/* Format, Status, and Date filters */}
