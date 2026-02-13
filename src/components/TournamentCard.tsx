@@ -81,7 +81,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
           <span className="text-slate-400">{t('pastTournaments.players')}: </span>
           <span className="text-slate-300">
             {topPlayers.map((player, index) => {
-              const medalEmoji = index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'
+              const medalEmoji = player.rank === 1 ? '🥇' : player.rank === 2 ? '🥈' : '🥉'
 
               return (
                 <span key={player.index}>
