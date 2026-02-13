@@ -1,109 +1,109 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'sonner'
-import type { StoredTournament } from '../schemas/tournament'
-import { getTournamentStats } from '../utils/tournamentStats'
-import { formatTournamentDate } from '../utils/tournamentState'
-import { shareTournament } from '../utils/shareHelper'
-import { TabSelector } from './TabSelector'
-import { StandingsTable } from './StandingsTable'
-import { RoundsHistory } from './RoundsHistory'
-import { TournamentInsights } from './TournamentInsights'
-import { TournamentPlayers } from './TournamentPlayers'
-import { ContentPanel } from './ContentPanel'
-import { IconButton } from './IconButton'
-import { Calendar, Users, Trophy, ArrowUp, Share2 } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import type { StoredTournament } from "../schemas/tournament";
+import { getTournamentStats } from "../utils/tournamentStats";
+import { formatTournamentDate } from "../utils/tournamentState";
+import { shareTournament } from "../utils/shareHelper";
+import { TabSelector } from "./TabSelector";
+import { StandingsTable } from "./StandingsTable";
+import { RoundsHistory } from "./RoundsHistory";
+import { TournamentInsights } from "./TournamentInsights";
+import { TournamentPlayers } from "./TournamentPlayers";
+import { ContentPanel } from "./ContentPanel";
+import { IconButton } from "./IconButton";
+import { Calendar, Users, Trophy, ArrowUp, Share2 } from "lucide-react";
 
-type TabId = 'standings' | 'rounds' | 'players' | 'insights'
+type TabId = "standings" | "rounds" | "players" | "insights";
 
 interface TournamentResultsProps {
-  tournament: StoredTournament
+  tournament: StoredTournament;
 }
 
 export function TournamentResults({ tournament }: TournamentResultsProps) {
-  const { t, i18n } = useTranslation()
-  const [activeTab, setActiveTab] = useState<TabId>('standings')
-  const [showScrollTop, setShowScrollTop] = useState(false)
-  const [isSharing, setIsSharing] = useState(false)
+  const { t, i18n } = useTranslation();
+  const [activeTab, setActiveTab] = useState<TabId>("standings");
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
 
-  const stats = getTournamentStats(tournament)
-  const formattedDate = formatTournamentDate(tournament, i18n.language)
+  const stats = getTournamentStats(tournament);
+  const formattedDate = formatTournamentDate(tournament, i18n.language);
 
   // Handle scroll-to-top button visibility
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300)
-    }
-    
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Handle share tournament
   const handleShare = async () => {
-    if (isSharing) return // Prevent multiple clicks
-    
-    setIsSharing(true)
+    if (isSharing) return; // Prevent multiple clicks
+
+    setIsSharing(true);
     try {
-      const result = await shareTournament(tournament, t)
-      if (result.success && result.method !== 'share') {
+      const result = await shareTournament(tournament, t);
+      if (result.success && result.method !== "share") {
         // Show success toast only for clipboard copy (not for native share)
-        toast.success(t('shared.copySuccess'))
+        toast.success(t("shared.copySuccess"));
       } else if (!result.success) {
         // Show error toast
-        toast.error(t('shared.shareError'))
+        toast.error(t("shared.shareError"));
       }
       // Native share API shows its own UI, so no toast needed
     } catch (error) {
-      toast.error(t('shared.shareError'))
+      toast.error(t("shared.shareError"));
     } finally {
-      setIsSharing(false)
+      setIsSharing(false);
     }
-  }
+  };
 
   const tabs = [
-    { id: 'standings' as TabId, label: t('results.tabs.standings') },
-    { id: 'rounds' as TabId, label: t('results.tabs.rounds') },
-    { id: 'players' as TabId, label: t('results.tabs.players') },
-    { id: 'insights' as TabId, label: t('results.tabs.insights') },
-  ]
+    { id: "standings" as TabId, label: t("results.tabs.standings") },
+    { id: "rounds" as TabId, label: t("results.tabs.rounds") },
+    { id: "players" as TabId, label: t("results.tabs.players") },
+    { id: "insights" as TabId, label: t("results.tabs.insights") },
+  ];
 
   // Format finished date
   const finishedDate = tournament.finishedAt
     ? new Date(tournament.finishedAt).toLocaleDateString(i18n.language, {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
       })
-    : ''
+    : "";
 
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
-      {/* Share button */}
-      {stats.status === 'finished' && (
-        <div>
-          <IconButton 
-            onClick={handleShare} 
-            icon={Share2} 
-            label={t('pastTournaments.actions.share')} 
-          />
-        </div>
-      )}
-      
       {/* Header */}
       <ContentPanel>
         <div className="space-y-4">
           {/* Tournament Name */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
-              {tournament.name || t('tournament.title')}
-            </h1>
+            <div className="flex items-center gap-3">
+              {/* Share button */}
+              {stats.status === 'finished' && (
+                <IconButton
+                  onClick={handleShare}
+                  icon={Share2}
+                  label={t("pastTournaments.actions.share")}
+                />
+              )}
+              
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                {tournament.name || t("tournament.title")}
+              </h1>
+            </div>
             {finishedDate && (
               <div className="text-sm text-slate-400 mt-1 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                {t('results.header.finishedAt')}: {finishedDate}
+                {t("results.header.finishedAt")}: {finishedDate}
               </div>
             )}
           </div>
@@ -114,9 +114,9 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
               <Trophy className="w-4 h-4 text-[var(--color-padel-yellow)]" />
               <span className="text-white font-medium">
-                {tournament.format === 'americano'
-                  ? t('tournament.format.americano')
-                  : t('tournament.format.mexicano')}
+                {tournament.format === "americano"
+                  ? t("tournament.format.americano")
+                  : t("tournament.format.mexicano")}
               </span>
             </div>
 
@@ -124,7 +124,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
               <Users className="w-4 h-4 text-slate-400" />
               <span className="text-slate-300">
-                {tournament.playerCount} {t('tournament.players')}
+                {tournament.playerCount} {t("tournament.players")}
               </span>
             </div>
 
@@ -139,54 +139,62 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
             {/* Rounds Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
               <span className="text-slate-400">Rounds:</span>
-              <span className="text-white font-medium">{stats.totalRounds}</span>
+              <span className="text-white font-medium">
+                {stats.totalRounds}
+              </span>
             </div>
 
             {/* Matches Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
               <span className="text-slate-400">Matches:</span>
-              <span className="text-white font-medium">{stats.finishedMatches}</span>
+              <span className="text-white font-medium">
+                {stats.finishedMatches}
+              </span>
             </div>
           </div>
         </div>
       </ContentPanel>
 
       {/* Tab Selector */}
-      <TabSelector tabs={tabs} activeTab={activeTab} onTabChange={(tabId) => setActiveTab(tabId as TabId)} />
+      <TabSelector
+        tabs={tabs}
+        activeTab={activeTab}
+        onTabChange={(tabId) => setActiveTab(tabId as TabId)}
+      />
 
       {/* Tab Content */}
-      {activeTab === 'standings' && (
+      {activeTab === "standings" && (
         <ContentPanel>
-          <StandingsTable
-            standings={stats.standings}
-          />
+          <StandingsTable standings={stats.standings} />
         </ContentPanel>
       )}
 
-      {activeTab === 'rounds' && (
+      {activeTab === "rounds" && (
         <ContentPanel>
           <RoundsHistory tournament={tournament} />
         </ContentPanel>
       )}
 
-      {activeTab === 'players' && (
+      {activeTab === "players" && (
         <ContentPanel>
           <TournamentPlayers tournament={tournament} />
         </ContentPanel>
       )}
 
-      {activeTab === 'insights' && <TournamentInsights tournament={tournament} />}
+      {activeTab === "insights" && (
+        <TournamentInsights tournament={tournament} />
+      )}
 
       {/* Scroll to Top Button */}
       {showScrollTop && (
         <div className="flex justify-center mt-12">
           <IconButton
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             icon={ArrowUp}
-            label={t('pastTournaments.scrollToTop')}
+            label={t("pastTournaments.scrollToTop")}
           />
         </div>
       )}
     </div>
-  )
+  );
 }
