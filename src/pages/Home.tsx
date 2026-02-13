@@ -66,14 +66,6 @@ export function Home() {
               <span>{t('home.cta.benefit3')}</span>
             </div>
           </div>
-
-          <button
-            onClick={() => navigate('/past')}
-            className="flex items-center gap-2 mx-auto px-5 py-2.5 text-sm font-semibold text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:border-[var(--color-padel-yellow)] hover:text-white hover:bg-slate-700 transition-all duration-200"
-          >
-            <History className="w-5 h-5" />
-            {t('home.viewPastTournaments')}
-          </button>
         </div>
       </ContentPanel>
 
