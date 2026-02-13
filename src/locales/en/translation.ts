@@ -267,6 +267,10 @@ const translation = {
       round: 'Round {{number}}',
       pausing: 'Pausing',
       emptyState: 'No rounds have been played yet.',
+      legend: {
+        label: 'Legend',
+        description: 'Numbers like (#1), (#2) show player rank from previous round',
+      },
     },
     insights: {
       title: 'Tournament Insights',

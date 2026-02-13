@@ -260,8 +260,10 @@ const translation = {
       title: 'Resultados',
       round: 'Ronda {{number}}',
       pausing: 'Descansando',
-      emptyState: 'Aún no se han jugado rondas.',
-    },
+      emptyState: 'Aún no se han jugado rondas.',      legend: {
+        label: 'Leyenda',
+        description: 'Los números como (#1), (#2) muestran el ranking del jugador de la ronda anterior',
+      },    },
     insights: {
       title: 'Análisis del Torneo',
       partnerships: {

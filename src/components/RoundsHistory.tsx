@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Coffee } from 'lucide-react'
 import type { StoredTournament } from '../schemas/tournament'
 import { getTotalRounds, getRoundMatches, getPausingPlayers } from '../utils/tournamentState'
+import { getTournamentStats } from '../utils/tournamentStats'
 
 interface RoundsHistoryProps {
   tournament: StoredTournament
@@ -44,9 +45,25 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
   return (
     <div ref={containerRef}>
+      {/* Legend */}
+      <div className="mb-6 sm:mb-7 md:mb-8 text-center">
+        <div className="inline-flex items-center gap-2 text-sm text-slate-400 bg-slate-800/30 rounded-lg px-4 py-2.5">
+          <span className="text-slate-500">{t('results.rounds.legend.label')}:</span>
+          <span>{t('results.rounds.legend.description')}</span>
+        </div>
+      </div>
+
       {Array.from({ length: totalRounds }, (_, i) => i + 1).map((roundNumber) => {
         const matches = getRoundMatches(tournament, roundNumber)
         const pausingPlayerIndices = getPausingPlayers(tournament, roundNumber)
+        
+        // Get standings from previous round to show player ranks
+        // Don't show ranks for the first round
+        const rankByName = new Map<string, number>()
+        if (roundNumber > 1) {
+          const stats = getTournamentStats(tournament, roundNumber - 1)
+          stats.standings.forEach(s => rankByName.set(s.name, s.rank))
+        }
 
         return (
           <div key={roundNumber}>
@@ -82,19 +99,23 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                   <div key={localIndex} className="flex items-center text-base text-slate-300 py-1 gap-3 sm:gap-4">
                     {/* Team 1 - flexible width, right-aligned */}
                     <div className="flex-1 text-right space-y-0.5 min-w-0">
-                      {team1Names.map((name, idx) => (
-                        <div 
-                          key={idx}
-                          onClick={(e) => handlePlayerClick(name, e)}
-                          className={`cursor-pointer transition-colors truncate ${
-                            selectedPlayer === name 
-                              ? 'text-[var(--color-padel-yellow)] font-semibold' 
-                              : 'hover:text-white'
-                          }`}
-                        >
-                          {name}
-                        </div>
-                      ))}
+                      {team1Names.map((name, idx) => {
+                        const rank = rankByName.get(name)
+                        const displayName = rank !== undefined ? `${name} (#${rank})` : name
+                        return (
+                          <div 
+                            key={idx}
+                            onClick={(e) => handlePlayerClick(name, e)}
+                            className={`cursor-pointer transition-colors truncate ${
+                              selectedPlayer === name 
+                                ? 'text-[var(--color-padel-yellow)] font-semibold' 
+                                : 'hover:text-white'
+                            }`}
+                          >
+                            {displayName}
+                          </div>
+                        )
+                      })}
                     </div>
 
                     {/* Score - fixed width, always centered */}
@@ -110,19 +131,23 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
                     {/* Team 2 - flexible width, left-aligned */}
                     <div className="flex-1 text-left space-y-0.5 min-w-0">
-                      {team2Names.map((name, idx) => (
-                        <div 
-                          key={idx}
-                          onClick={(e) => handlePlayerClick(name, e)}
-                          className={`cursor-pointer transition-colors truncate ${
-                            selectedPlayer === name 
-                              ? 'text-[var(--color-padel-yellow)] font-semibold' 
-                              : 'hover:text-white'
-                          }`}
-                        >
-                          {name}
-                        </div>
-                      ))}
+                      {team2Names.map((name, idx) => {
+                        const rank = rankByName.get(name)
+                        const displayName = rank !== undefined ? `${name} (#${rank})` : name
+                        return (
+                          <div 
+                            key={idx}
+                            onClick={(e) => handlePlayerClick(name, e)}
+                            className={`cursor-pointer transition-colors truncate ${
+                              selectedPlayer === name 
+                                ? 'text-[var(--color-padel-yellow)] font-semibold' 
+                                : 'hover:text-white'
+                            }`}
+                          >
+                            {displayName}
+                          </div>
+                        )
+                      })}
                     </div>
                   </div>
                 )
@@ -138,6 +163,8 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                   <span className="flex flex-wrap gap-x-1">
                     {pausingPlayerIndices.map((idx, i) => {
                       const name = tournament.players[idx].name
+                      const rank = rankByName.get(name)
+                      const displayName = rank !== undefined ? `${name} (#${rank})` : name
                       return (
                         <span key={idx}>
                           <span
@@ -148,7 +175,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                                 : 'hover:text-white'
                             }`}
                           >
-                            {name}
+                            {displayName}
                           </span>
                           {i < pausingPlayerIndices.length - 1 && ','}
                         </span>

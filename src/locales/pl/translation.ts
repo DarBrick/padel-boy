@@ -262,8 +262,10 @@ const translation = {
       title: 'Wyniki',
       round: 'Runda {{number}}',
       pausing: 'Pauzują',
-      emptyState: 'Nie rozegrano jeszcze żadnych rund.',
-    },
+      emptyState: 'Nie rozegrano jeszcze żadnych rund.',      legend: {
+        label: 'Legenda',
+        description: 'Liczby jak (#1), (#2) pokazują ranking gracza z poprzedniej rundy',
+      },    },
     insights: {
       title: 'Analizy Turnieju',
       partnerships: {
