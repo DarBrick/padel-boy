@@ -74,6 +74,96 @@ src/
 - Custom SVG icons as React components with `className` and custom props (see `PadelBallIcon.jsx`)
 - Props with sensible defaults: `{ className = "w-16 h-16", animate = true }`
 
+### Component Organization
+**CRITICAL**: Components are organized into 5 domain-aligned packages. Always place new components in the correct package based on their purpose.
+
+#### Package Definitions
+
+**`components/ui/`** - Generic, reusable UI primitives with NO domain logic
+- Zero business logic or tournament-specific knowledge
+- Used across multiple pages and contexts
+- Examples: `ContentPanel`, `GradientButton`, `IconButton`, `SliderInput`, `TabSelector`, `ToggleSwitch`, `CollapsiblePanel`, `RadioCardGroup`, `ChartContainer`, `InfoPanel`, `CourtChip`, `FilterChip`, `FormSection`
+- **When to use**: Creating buttons, inputs, panels, or other generic UI elements that could work in any React app
+
+**`components/tournament/`** - Tournament gameplay, display, and management
+- Contains tournament state logic, match interactions, and tournament-specific displays
+- Imports from `utils/tournamentState.ts`, `utils/tournamentStats.ts`, `schemas/tournament.ts`
+- Examples: `ActiveTournament`, `TournamentResults`, `TournamentCard`, `TournamentInsights`, `MatchCard`, `MatchesGrid`, `StandingsTable`, `RoundsHistory`, `TournamentHeader`, `TournamentActions`, `StatsBanner`, `CorruptionBanner`
+- **When to use**: Building components that show tournament data, handle matches, display standings, or manage tournament lifecycle
+
+**`components/players/`** - Player creation, editing, and detailed stats
+- Player input forms, player lists during creation, and individual player analytics
+- Examples: `PlayersPanel`, `PlayerChip`, `PlayerInput`, `PlayerDetailCard`
+- **When to use**: Creating components for adding/editing players or showing detailed player statistics
+
+**`components/layout/`** - App-level chrome and global UI elements
+- Navigation, footers, global banners, and brand elements used across the entire app
+- Examples: `Navbar`, `Footer`, `CookieBanner`, `PadelBallIcon`, `LanguageSwitcher`
+- **When to use**: Building navigation, global overlays, or app-wide UI that appears on every page
+
+**`components/content/`** - Rich content rendering for informational pages
+- i18n-aware content wrappers for static/legal pages (Help, Privacy, Terms)
+- Examples: `ContentWithInfoPanels`, `TransWrapper`, `FormatComparisonCard`
+- **When to use**: Creating components that render localized rich-text content for documentation or marketing pages
+
+#### Decision Tree for New Components
+
+Ask yourself these questions in order:
+
+1. **Is this a generic UI primitive with no domain knowledge?**
+   - ✅ Can it be used in any context without knowing about tournaments/players?
+   - ✅ Is it purely presentational (buttons, inputs, containers)?
+   - → Place in `components/ui/`
+
+2. **Does it display or interact with tournament data?**
+   - ✅ Does it show matches, rounds, standings, or tournament state?
+   - ✅ Does it import from `tournamentState`, `tournamentStats`, or `tournament` schema?
+   - → Place in `components/tournament/`
+
+3. **Is it specifically for player input or player analytics?**
+   - ✅ Is it used during player creation/editing?
+   - ✅ Does it show detailed individual player statistics?
+   - → Place in `components/players/`
+
+4. **Is it part of the app's global layout?**
+   - ✅ Does it appear on every page (nav, footer)?
+   - ✅ Is it a global overlay or banner?
+   - → Place in `components/layout/`
+
+5. **Does it render rich i18n content for info pages?**
+   - ✅ Is it used only on Help, Privacy, Terms, or similar pages?
+   - ✅ Does it wrap translated content with special formatting?
+   - → Place in `components/content/`
+
+#### Import Patterns
+
+**Barrel exports** - Each package has an `index.ts` that re-exports all components:
+```tsx
+// ✅ Correct: Import from package barrel
+import { ContentPanel, GradientButton, IconButton } from '../components/ui'
+import { TournamentCard, ActiveTournament } from '../components/tournament'
+import { PlayerDetailCard } from '../components/players'
+
+// ❌ Wrong: Direct file imports
+import { ContentPanel } from '../components/ui/ContentPanel'
+import { TournamentCard } from '../components/tournament/TournamentCard'
+```
+
+**Cross-package dependencies**:
+- `ui/` components should NEVER import from other packages (they're primitives)
+- `tournament/` can import from `ui/` and `players/`
+- `players/` can import from `ui/`
+- `layout/` can import from `ui/`
+- `content/` can import from `ui/`
+
+**Adding new components**:
+1. Create the component file in the appropriate package directory
+2. Add the export to that package's `index.ts`:
+   ```tsx
+   export { YourNewComponent } from './YourNewComponent'
+   ```
+3. Import from the barrel in consuming files
+
 ### Page Structure
 **CRITICAL**: App.tsx already provides `container mx-auto px-4 py-8 max-w-4xl` wrapper for all routes. Pages MUST NOT add additional container wrappers.
 
