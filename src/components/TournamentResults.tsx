@@ -12,7 +12,7 @@ import { TournamentInsights } from "./TournamentInsights";
 import { TournamentPlayers } from "./TournamentPlayers";
 import { ContentPanel } from "./ContentPanel";
 import { IconButton } from "./IconButton";
-import { Calendar, Users, Trophy, ArrowUp, Share2 } from "lucide-react";
+import { Calendar, Users, Trophy, ArrowUp, Share2, Shuffle, Dices, Users2, Repeat2, Swords } from "lucide-react";
 
 type TabId = "standings" | "rounds" | "players" | "insights";
 
@@ -138,7 +138,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
             {/* Rounds Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <span className="text-slate-400">Rounds:</span>
+              <Repeat2 className="w-4 h-4 text-slate-400" />
               <span className="text-white font-medium">
                 {stats.totalRounds}
               </span>
@@ -146,11 +146,41 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
             {/* Matches Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <span className="text-slate-400">Matches:</span>
+              <Swords className="w-4 h-4 text-slate-400" />
               <span className="text-white font-medium">
                 {stats.finishedMatches}
               </span>
             </div>
+
+            {/* Mexicano pairing style */}
+            {tournament.format === 'mexicano' && tournament.mexicanoMatchupStyle && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
+                <Shuffle className="w-4 h-4 text-slate-400" />
+                <span className="text-white font-medium">
+                  {tournament.mexicanoMatchupStyle}
+                </span>
+              </div>
+            )}
+
+            {/* Mexicano random rounds */}
+            {tournament.format === 'mexicano' && tournament.mexicanoRandomRounds && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
+                <Dices className="w-4 h-4 text-slate-400" />
+                <span className="text-white font-medium">
+                  {tournament.mexicanoRandomRounds}
+                </span>
+              </div>
+            )}
+
+            {/* Fixed pairs */}
+            {tournament.isFixedPairs && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
+                <Users2 className="w-4 h-4 text-slate-400" />
+                <span className="text-white font-medium">
+                  {t('create.fixedPairs.label')}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </ContentPanel>

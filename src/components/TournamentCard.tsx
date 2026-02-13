@@ -56,7 +56,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
       </div>
       
       {/* Meta info */}
-      <div className="flex items-center gap-4 mb-3 text-sm text-slate-300">
+      <div className="flex items-center gap-2 mb-3 text-sm text-slate-300 flex-wrap">
         {/* Format badge */}
         <span className={`px-2.5 py-1 rounded border ${formatBadgeColor} font-medium`}>
           {tournament.format === 'americano' ? 'Americano' : 'Mexicano'}

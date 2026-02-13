@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { Shuffle, Dices, Users2 } from 'lucide-react'
 import type { TournamentStats } from '../utils/tournamentStats'
 import type { StoredTournament } from '../schemas/tournament'
 import { formatTournamentDate } from '../utils/tournamentState'
@@ -37,8 +38,23 @@ export function TournamentHeader({ tournament, stats }: TournamentHeaderProps) {
         </span>
 
         {tournament.format === 'mexicano' && tournament.mexicanoMatchupStyle && (
-          <span className="px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
-            {t('tournament.pairingStyle')}: {tournament.mexicanoMatchupStyle}
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+            <Shuffle className="w-4 h-4" />
+            {tournament.mexicanoMatchupStyle}
+          </span>
+        )}
+
+        {tournament.format === 'mexicano' && tournament.mexicanoRandomRounds && (
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+            <Dices className="w-4 h-4" />
+            {tournament.mexicanoRandomRounds}
+          </span>
+        )}
+
+        {tournament.isFixedPairs && (
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+            <Users2 className="w-4 h-4" />
+            {t('create.fixedPairs.label')}
           </span>
         )}
 
