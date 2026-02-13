@@ -413,6 +413,7 @@ const translation = {
     resultCount_many: 'Znaleziono {{count}} turniejów',
     resultCount_other: 'Znaleziono {{count}} turniejów',
     filters: {
+      title: 'Filtry',
       format: 'Format',
       allFormats: 'Wszystkie formaty',
       status: 'Status',

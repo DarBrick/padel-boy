@@ -411,6 +411,7 @@ const translation = {
     resultCount_many: '{{count}} torneos encontrados',
     resultCount_other: '{{count}} torneos encontrados',
     filters: {
+      title: 'Filtros',
       format: 'Formato',
       allFormats: 'Todos los formatos',
       status: 'Estado',

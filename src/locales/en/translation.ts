@@ -419,6 +419,7 @@ const translation = {
     resultCount_many: '{{count}} tournaments found',
     resultCount_other: '{{count}} tournaments found',
     filters: {
+      title: 'Filters',
       format: 'Format',
       allFormats: 'All Formats',
       status: 'Status',

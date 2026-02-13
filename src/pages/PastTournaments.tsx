@@ -2,11 +2,12 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
-import { Search, History, Inbox, ArrowUp, Download, X, CalendarArrowDown, CalendarArrowUp, ChevronDown } from 'lucide-react'
+import { Search, History, Inbox, ArrowUp, Download, X, CalendarArrowDown, CalendarArrowUp, ChevronDown, Filter } from 'lucide-react'
 import { IconButton } from '../components/IconButton'
 import { TournamentCard } from '../components/TournamentCard'
 import { GradientButton } from '../components/GradientButton'
 import { CorruptionBanner } from '../components/CorruptionBanner'
+import { ContentPanel } from '../components/ContentPanel'
 import { useTournaments } from '../stores/tournaments'
 import { groupTournamentsByDate } from '../utils/dateGrouping'
 import { shareTournament } from '../utils/shareHelper'
@@ -132,24 +133,30 @@ export function PastTournaments() {
           {t('pastTournaments.subtitle')}
         </p>
         
-        {/* Search input */}
-        <div className="relative mb-6">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t('pastTournaments.searchPlaceholder')}
-            className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
-          />
-        </div>
-        
         {/* Filters */}
-        <div className="space-y-2">
-          {/* Format and Status in first row */}
-          <div className="grid grid-cols-2 gap-2">
-            {/* Format dropdown with clear button */}
+        <ContentPanel>
+          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <Filter className="w-5 h-5" />
+            {t('pastTournaments.filters.title')}
+          </h2>
+          
+          <div className="space-y-3">
+            {/* Search input */}
             <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t('pastTournaments.searchPlaceholder')}
+                className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+              />
+            </div>
+            
+            {/* Format, Status, and Date filters */}
+            <div className="flex flex-wrap gap-2">
+            {/* Format dropdown with clear button */}
+            <div className="relative min-w-[140px]">
             <select
               value={selectedFormat || ''}
               onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
@@ -177,7 +184,7 @@ export function PastTournaments() {
             </div>
             
             {/* Status dropdown with clear button */}
-            <div className="relative">
+            <div className="relative min-w-[140px]">
             <select
               value={selectedStatus || ''}
               onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
@@ -204,10 +211,9 @@ export function PastTournaments() {
               </button>
             )}
             </div>
-          </div>
           
           {/* Unified date range bar */}
-          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-[var(--color-padel-yellow)] transition-colors">
+          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-[var(--color-padel-yellow)] transition-colors min-w-[240px]">
             {/* From date section */}
             <button
               type="button"
@@ -267,7 +273,9 @@ export function PastTournaments() {
               <X className="w-3.5 h-3.5 text-slate-400" />
             </button>
           </div>
-        </div>
+          </div>
+          </div>
+        </ContentPanel>
       </div>
       
       {/* Content */}
