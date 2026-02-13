@@ -184,6 +184,7 @@ const translation = {
   },
   tournament: {
     title: 'Tournament',
+    back: 'Back to Past Tournaments',
     notFound: 'Tournament not found',
     notFoundDesc: 'The tournament you\'re looking for doesn\'t exist or has been deleted.',
     backToHome: 'Back to Home',

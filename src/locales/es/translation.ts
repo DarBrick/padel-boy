@@ -182,6 +182,7 @@ const translation = {
   },
   tournament: {
     title: 'Torneo',
+    back: 'Volver a Torneos Pasados',
     notFound: 'Torneo no encontrado',
     notFoundDesc: 'El torneo que buscas no existe o ha sido eliminado.',
     backToHome: 'Volver al inicio',

@@ -101,7 +101,12 @@ export function PastTournaments() {
   
   // Handle view tournament
   const handleView = (id: string) => {
-    navigate(`/tournament/${id}`)
+    // Include current search params in the tournament URL for potential back navigation
+    const currentParams = searchParams.toString()
+    const path = currentParams 
+      ? `/tournament/${id}?${currentParams}` 
+      : `/tournament/${id}`
+    navigate(path)
   }
   
   // Handle share tournament

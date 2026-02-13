@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import type { StoredTournament } from "../schemas/tournament";
 import { getTournamentStats } from "../utils/tournamentStats";
 import { formatTournamentDate } from "../utils/tournamentState";
-import { shareTournament } from "../utils/shareHelper";
 import { TabSelector } from "./TabSelector";
 import { StandingsTable } from "./StandingsTable";
 import { RoundsHistory } from "./RoundsHistory";
@@ -12,7 +10,7 @@ import { TournamentInsights } from "./TournamentInsights";
 import { TournamentPlayers } from "./TournamentPlayers";
 import { ContentPanel } from "./ContentPanel";
 import { IconButton } from "./IconButton";
-import { Calendar, Users, Trophy, ArrowUp, Share2, Shuffle, Dices, Users2, Repeat2, Swords } from "lucide-react";
+import { Calendar, Users, Trophy, ArrowUp, Shuffle, Dices, Users2, Repeat2, Swords } from "lucide-react";
 
 type TabId = "standings" | "rounds" | "players" | "insights";
 
@@ -24,7 +22,6 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabId>("standings");
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
 
   const stats = getTournamentStats(tournament);
   const formattedDate = formatTournamentDate(tournament, i18n.language);
@@ -38,28 +35,6 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  // Handle share tournament
-  const handleShare = async () => {
-    if (isSharing) return; // Prevent multiple clicks
-
-    setIsSharing(true);
-    try {
-      const result = await shareTournament(tournament, t);
-      if (result.success && result.method !== "share") {
-        // Show success toast only for clipboard copy (not for native share)
-        toast.success(t("shared.copySuccess"));
-      } else if (!result.success) {
-        // Show error toast
-        toast.error(t("shared.shareError"));
-      }
-      // Native share API shows its own UI, so no toast needed
-    } catch (error) {
-      toast.error(t("shared.shareError"));
-    } finally {
-      setIsSharing(false);
-    }
-  };
 
   const tabs = [
     { id: "standings" as TabId, label: t("results.tabs.standings") },
@@ -86,20 +61,9 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
         <div className="space-y-4">
           {/* Tournament Name */}
           <div>
-            <div className="flex items-center gap-3">
-              {/* Share button */}
-              {stats.status === 'finished' && (
-                <IconButton
-                  onClick={handleShare}
-                  icon={Share2}
-                  label={t("pastTournaments.actions.share")}
-                />
-              )}
-              
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                {tournament.name || t("tournament.title")}
-              </h1>
-            </div>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              {tournament.name || t("tournament.title")}
+            </h1>
             {finishedDate && (
               <div className="text-sm text-slate-400 mt-1 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
