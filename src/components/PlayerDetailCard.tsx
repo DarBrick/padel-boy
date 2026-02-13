@@ -4,7 +4,7 @@ import { Line } from 'recharts'
 import { Link, Swords, CircleSlash2 } from 'lucide-react'
 import type { PlayerStanding } from '../utils/tournamentStats'
 import type { StoredTournament } from '../schemas/tournament'
-import { getPartnershipStats, getOpponentStats, getStandingsProgression } from '../utils/tournamentInsights'
+import { getPartnershipStats, getOpponentStats, getStandingsProgression, getPlayerConsistency } from '../utils/tournamentInsights'
 import { getTournamentStats } from '../utils/tournamentStats'
 import { ChartContainer } from './ChartContainer'
 
@@ -27,6 +27,10 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   // Get opponent stats for this player
   const opponentStats = getOpponentStats(tournament, standing.index)
 
+  // Get consistency metrics for this player
+  const allConsistencies = getPlayerConsistency(tournament)
+  const consistency = allConsistencies.find(c => c.playerIndex === standing.index)
+
   // Get score progression data
   const progression = getStandingsProgression(tournament)
   const playerProgression = progression.playerProgressions.get(standing.index) || []
@@ -42,31 +46,6 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const stats = getTournamentStats(tournament)
   const chartMaxScore = stats.standings.length > 0 ? stats.standings[0].totalPointsWithSitting : 100
   const totalPlayers = tournament.players.length
-
-  // Calculate consistency metrics
-  const scores: number[] = []
-  tournament.matches.forEach(match => {
-    if (!match.isFinished || match.winner === undefined || match.scoreDelta === undefined) return
-    
-    const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
-    const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
-    
-    if (match.team1.includes(standing.index)) {
-      const score = match.winner === 0 ? winningScore : losingScore
-      scores.push(score)
-    } else if (match.team2.includes(standing.index)) {
-      const score = match.winner === 1 ? winningScore : losingScore
-      scores.push(score)
-    }
-  })
-
-  const avgScore = scores.length > 0 ? scores.reduce((a, b) => a + b, 0) / scores.length : 0
-  const minScore = scores.length > 0 ? Math.min(...scores) : 0
-  const maxScore = scores.length > 0 ? Math.max(...scores) : 0
-  const variance = scores.length > 0
-    ? scores.reduce((acc, score) => acc + Math.pow(score - avgScore, 2), 0) / scores.length
-    : 0
-  const stdDev = Math.sqrt(variance)
 
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -304,7 +283,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
       )}
 
       {/* Consistency */}
-      {scores.length > 0 && (
+      {consistency && (
         <div className="bg-slate-800/50 rounded-lg p-4">
           <h4 className="text-sm font-medium text-slate-300 mb-3">
             {t('results.playerDetail.consistency')}
@@ -312,22 +291,22 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             <StatCard
               label={t('results.playerDetail.avgScore')}
-              value={avgScore.toFixed(1)}
+              value={consistency.averageScore.toFixed(1)}
               small
             />
             <StatCard
               label={t('results.playerDetail.scoreRange')}
-              value={`${minScore}-${maxScore}`}
+              value={`${consistency.minScore}-${consistency.maxScore}`}
               small
             />
             <StatCard
               label={t('results.playerDetail.stdDev')}
-              value={stdDev.toFixed(1)}
+              value={consistency.scoreStdDev.toFixed(1)}
               small
             />
             <StatCard
               label="Variance"
-              value={variance.toFixed(1)}
+              value={consistency.scoreVariance.toFixed(1)}
               small
             />
           </div>
