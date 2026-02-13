@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useParams } from 'react-router-dom'
+import { useParams, useLocation } from 'react-router-dom'
+import { toast } from 'sonner'
 import { useTournaments } from '../stores/tournaments'
 import { isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
 import { ContentPanel } from '../components/ContentPanel'
@@ -9,9 +11,24 @@ import { ActiveTournament } from '../components/ActiveTournament'
 export function Tournament() {
   const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
+  const location = useLocation()
   const { getTournament } = useTournaments()
   
   const tournament = getTournament(id!)
+
+  // Show toast notification if arriving from shared link
+  useEffect(() => {
+    const state = location.state as { fromSharedLink?: boolean; isNew?: boolean } | null
+    if (state?.fromSharedLink) {
+      toast.success(
+        state.isNew 
+          ? t('shared.savedNotification')
+          : t('shared.alreadySaved')
+      )
+      // Clear state to prevent showing toast on refresh
+      window.history.replaceState({}, document.title)
+    }
+  }, [location, t])
 
   // Handle tournament not found
   if (!tournament) {
