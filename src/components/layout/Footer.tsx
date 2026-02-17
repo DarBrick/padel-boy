@@ -63,8 +63,20 @@ export function Footer() {
       </div>
 
       {/* Creator Credit */}
-      <div className="text-slate-400">
-        {t('footer.createdBy')}
+      <div className="flex items-center justify-center text-slate-400">
+        <a
+          href="https://darikcube.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 hover:text-[var(--color-padel-yellow)] transition-colors"
+        >
+          <img
+            src={`${import.meta.env.BASE_URL}darikcube.svg`}
+            alt="Darik Cube"
+            className="w-16 h-16"
+          />
+          <b>DARIK</b>CUBE
+        </a>
       </div>
     </footer>
   )
