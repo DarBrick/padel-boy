@@ -4,15 +4,24 @@
     <meta charset="utf-8">
     <title>Padel Boy</title>
     <script>
-      // Smart redirect: detect if we're on github.io subdirectory or custom domain
-      const isGitHubPagesSubdir = window.location.hostname.includes('github.io');
-      const redirectBase = isGitHubPagesSubdir ? '/padel-boy/' : '/';
+      // Check if this is a static file request (sitemap.xml, robots.txt, etc.)
+      const path = window.location.pathname;
+      const isStaticFile = /\.(xml|txt|json|ico|png|jpg|jpeg|svg|pdf)$/i.test(path);
       
-      sessionStorage.setItem(
-        'redirectPath',
-        window.location.pathname + window.location.search + window.location.hash
-      );
-      window.location.replace(redirectBase);
+      // Don't redirect static files - let them 404 naturally so the server can handle them
+      if (isStaticFile) {
+        document.write('<h1>404 Not Found</h1>');
+      } else {
+        // Smart redirect for SPA routes: detect if we're on github.io subdirectory or custom domain
+        const isGitHubPagesSubdir = window.location.hostname.includes('github.io');
+        const redirectBase = isGitHubPagesSubdir ? '/padel-boy/' : '/';
+        
+        sessionStorage.setItem(
+          'redirectPath',
+          window.location.pathname + window.location.search + window.location.hash
+        );
+        window.location.replace(redirectBase);
+      }
     </script>
   </head>
   <body>
