@@ -2,28 +2,108 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Padel Boy</title>
+    <title>404 - Page Not Found | Padel Boy</title>
+    <meta name="description" content="The page you're looking for could not be found. This page does not exist on Padel Boy.">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(to bottom right, #0f172a, #1e293b);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+      }
+      .container {
+        max-width: 600px;
+      }
+      h1 {
+        font-size: 6rem;
+        margin: 0;
+        font-weight: bold;
+        background: linear-gradient(to right, #D4FF00, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      h2 {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+        color: #e2e8f0;
+      }
+      p {
+        color: #94a3b8;
+        margin: 1rem 0 2rem;
+        line-height: 1.6;
+      }
+      .redirect-message {
+        color: #D4FF00;
+        font-size: 0.9rem;
+        margin-top: 2rem;
+      }
+      a {
+        display: inline-block;
+        padding: 12px 24px;
+        background: linear-gradient(to right, #D4FF00, #a8cc00);
+        color: #0f172a;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: transform 0.2s;
+      }
+      a:hover {
+        transform: translateY(-2px);
+      }
+    </style>
     <script>
       // Check if this is a static file request (sitemap.xml, robots.txt, etc.)
       const path = window.location.pathname;
       const isStaticFile = /\.(xml|txt|json|ico|png|jpg|jpeg|svg|pdf)$/i.test(path);
       
-      // Don't redirect static files - let them 404 naturally so the server can handle them
-      if (isStaticFile) {
-        document.write('<h1>404 Not Found</h1>');
-      } else {
+      // Don't redirect static files - let them 404 naturally
+      if (!isStaticFile) {
         // Smart redirect for SPA routes: detect if we're on github.io subdirectory or custom domain
         const isGitHubPagesSubdir = window.location.hostname.includes('github.io');
         const redirectBase = isGitHubPagesSubdir ? '/padel-boy/' : '/';
         
+        // Store the original path for the SPA to handle
         sessionStorage.setItem(
           'redirectPath',
           window.location.pathname + window.location.search + window.location.hash
         );
-        window.location.replace(redirectBase);
+        
+        // Delay redirect slightly to allow crawlers to see the 404 content
+        setTimeout(function() {
+          window.location.replace(redirectBase);
+        }, 100);
       }
     </script>
   </head>
   <body>
+    <div class="container">
+      <h1>404</h1>
+      <h2>Page Not Found</h2>
+      <p>The page you're looking for doesn't exist or has been moved.</p>
+      <a href="/" id="homeLink">Go to Homepage</a>
+      <p class="redirect-message" id="redirectMessage">Redirecting automatically...</p>
+    </div>
+    <script>
+      // Hide redirect message for static files
+      const path = window.location.pathname;
+      const isStaticFile = /\.(xml|txt|json|ico|png|jpg|jpeg|svg|pdf)$/i.test(path);
+      if (isStaticFile) {
+        document.getElementById('redirectMessage').style.display = 'none';
+      }
+      
+      // Update home link href based on deployment
+      const isGitHubPagesSubdir = window.location.hostname.includes('github.io');
+      const redirectBase = isGitHubPagesSubdir ? '/padel-boy/' : '/';
+      document.getElementById('homeLink').href = redirectBase;
+    </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import { Navbar } from './components/layout'
 import { CookieBanner } from './components/layout'
@@ -14,6 +14,7 @@ import { Help } from './pages/Help'
 import { Roadmap } from './pages/Roadmap'
 import { Settings } from './pages/Settings'
 import { Players } from './pages/Players'
+import { NotFound } from './pages/NotFound'
 
 // Smart detection: Use /padel-boy only for github.io subdirectory deployment
 const isGitHubPagesSubdirectory = window.location.hostname.includes('github.io') && 
@@ -42,7 +43,7 @@ export function App() {
             <Route path="/roadmap" element={<Roadmap />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/players" element={<Players />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
 
