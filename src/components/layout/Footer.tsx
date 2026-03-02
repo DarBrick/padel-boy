@@ -29,12 +29,6 @@ export function Footer() {
         >
           {t('terms.title')}
         </button>
-        <button
-          onClick={() => navigate('/roadmap')}
-          className="text-foreground-muted hover:text-padel-500 underline transition-colors"
-        >
-          {t('footer.roadmap')}
-        </button>
       </div>
 
       {/* Secondary Info: Version, GitHub, License */}

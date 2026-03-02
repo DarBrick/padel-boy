@@ -5,7 +5,6 @@ import { GradientButton } from '../components/ui'
 import { IconButton } from '../components/ui'
 import { ContentPanel } from '../components/ui'
 import { FormatComparisonCard } from '../components/content'
-import { StatsBanner } from '../components/tournament'
 import { Footer } from '../components/layout'
 import { LanguageSwitcher } from '../components/layout'
 import { Trophy, Users, Calendar, Zap, ArrowUp, Lightbulb, History, FolderOpen, CheckCircle } from 'lucide-react'
@@ -68,9 +67,6 @@ export function Home() {
           </div>
         </div>
       </ContentPanel>
-
-      {/* Stats Banner */}
-      <StatsBanner />
 
       {/* Format Comparison */}
       <FormatComparisonCard />

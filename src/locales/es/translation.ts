@@ -37,7 +37,6 @@ const translation = {
     subtitle: 'Organiza y gestiona juegos de Padel con facilidad. Gratis, sin pagos.',
     underDevelopment:
       'Este producto está actualmente en desarrollo activo. Se añaden nuevas funcionalidades regularmente.',
-    viewRoadmap: 'Ver Hoja de Ruta',
     startTournament: 'Iniciar Nuevo Torneo',
     viewPastTournaments: 'Ver Torneos Anteriores',
     keyFeaturesTitle: 'Características Clave',
@@ -102,8 +101,6 @@ const translation = {
       activeDevelopmentDesc: 'En desarrollo activo',
       featuresCount: '8+ Funciones',
       featuresCountDesc: 'Disponibles ahora mismo',
-      moreComing: 'Más Próximamente',
-      viewRoadmap: 'Ver Hoja de Ruta',
     },
     cta: {
       subtitle: 'Crea tu primer torneo en menos de 2 minutos',
@@ -111,28 +108,6 @@ const translation = {
       benefit2: 'Funciona sin conexión en tu navegador',
       benefit3: 'Comparte resultados al instante',
     },
-  },
-  roadmap: {
-    title: 'Hoja de Ruta',
-    subtitle: 'Mira en qué estamos trabajando y qué viene a continuación',
-    back: 'Volver',
-    completed: 'Completado',
-    inProgress: 'En Progreso',
-    planned: 'Planificado',
-    features: [
-      '¡Inicio del proyecto!',
-      'Posibilidad de organizar Americano para jugadores individuales',
-      'Posibilidad de organizar Mexicano para jugadores individuales',
-      'Exportar/importar datos de uno o varios torneos',
-      'Estadísticas de jugadores en múltiples torneos',
-      'Diccionario local de jugadores, jugadores conocidos',
-      'Almacenar y compartir resultados de torneos mediante enlace único',
-      'Reabrir torneos',
-      'Retroceder a la última ronda',
-      'Estadísticas de torneo extendidas disponibles',
-      'Código QR para compartir torneos',
-      'Añadir soporte para jugar torneos en parejas fijas',
-    ],
   },
   create: {
     title: 'Crear Torneo',
@@ -324,7 +299,6 @@ const translation = {
   },
   footer: {
     home: 'Inicio',
-    roadmap: 'Hoja de Ruta',
     createdBy: 'Creado por Dariusz W.',
     github: 'GitHub',
     license: 'CC BY-NC-SA 4.0',

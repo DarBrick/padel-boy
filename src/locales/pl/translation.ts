@@ -37,7 +37,6 @@ const translation = {
     subtitle: 'Organizuj i zarządzaj grami w Padel z łatwością. Bezpłatnie, bez opłat.',
     underDevelopment:
       'Ten produkt jest aktualnie w fazie aktywnego rozwoju. Nowe funkcje są regularnie dodawane.',
-    viewRoadmap: 'Zobacz Plan Rozwoju',
     startTournament: 'Rozpocznij Nowy Turniej',
     viewPastTournaments: 'Zobacz Poprzednie Turnieje',
     keyFeaturesTitle: 'Kluczowe Funkcje',
@@ -102,8 +101,6 @@ const translation = {
       activeDevelopmentDesc: 'W aktywnym rozwoju',
       featuresCount: '8+ Funkcji',
       featuresCountDesc: 'Dostępne już teraz',
-      moreComing: 'Więcej Wkrótce',
-      viewRoadmap: 'Zobacz Plan Rozwoju',
     },
     cta: {
       subtitle: 'Stwórz swój pierwszy turniej w niecałe 2 minuty',
@@ -111,28 +108,6 @@ const translation = {
       benefit2: 'Działa offline w Twojej przeglądarce',
       benefit3: 'Udostępnij wyniki natychmiast',
     },
-  },
-  roadmap: {
-    title: 'Plan Rozwoju',
-    subtitle: 'Zobacz, nad czym pracujemy i co nadchodzi',
-    back: 'Wróć',
-    completed: 'Ukończone',
-    inProgress: 'W Trakcie',
-    planned: 'Zaplanowane',
-    features: [
-      'Start projektu!',
-      'Możliwość organizacji Americano dla indywidualnych graczy',
-      'Możliwość organizacji Mexicano dla indywidualnych graczy',
-      'Eksport/import danych pojedynczego lub wielu turniejów',
-      'Statystyki graczy w wielu turniejach',
-      'Lokalny słownik graczy, znani gracze',
-      'Przechowywanie i udostępnianie wyników turnieju przez unikalny link',
-      'Ponowne otwieranie turniejów',
-      'Cofnięcie do ostatniej rundy',
-      'Rozszerzone dostępne statystyki turnieju',
-      'Kod QR do udostępniania turniejów',
-      'Dodanie wsparcia dla gry w turnieju w stałych parach',
-    ],
   },
   create: {
     title: 'Stwórz Turniej',
@@ -324,7 +299,6 @@ const translation = {
   },
   footer: {
     home: 'Strona główna',
-    roadmap: 'Plan Rozwoju',
     createdBy: 'Stworzono przez Dariusz W.',
     github: 'GitHub',
     license: 'CC BY-NC-SA 4.0',

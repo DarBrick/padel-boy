@@ -11,7 +11,6 @@ import { SharedTournament } from './pages/SharedTournament'
 import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
 import { Help } from './pages/Help'
-import { Roadmap } from './pages/Roadmap'
 import { Settings } from './pages/Settings'
 import { Players } from './pages/Players'
 import { NotFound } from './pages/NotFound'
@@ -40,7 +39,6 @@ export function App() {
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/help" element={<Help />} />
-            <Route path="/roadmap" element={<Roadmap />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/players" element={<Players />} />
             <Route path="*" element={<NotFound />} />

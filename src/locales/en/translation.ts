@@ -37,7 +37,6 @@ const translation = {
     subtitle: 'Organize and manage Padel games with ease. Free, no payments required.',
     underDevelopment:
       'This product is currently under active development. New features are being added regularly.',
-    viewRoadmap: 'View Product Roadmap',
     startTournament: 'Start New Tournament',
     viewPastTournaments: 'View Past Tournaments',
     keyFeaturesTitle: 'Key Features',
@@ -102,8 +101,6 @@ const translation = {
       activeDevelopmentDesc: 'Under active development',
       featuresCount: '8+ Features',
       featuresCountDesc: 'Available right now',
-      moreComing: 'More Coming Soon',
-      viewRoadmap: 'View Roadmap',
     },
     cta: {
       subtitle: 'Create your first tournament in under 2 minutes',
@@ -111,28 +108,6 @@ const translation = {
       benefit2: 'Works offline in your browser',
       benefit3: 'Share results instantly',
     },
-  },
-  roadmap: {
-    title: 'Product Roadmap',
-    subtitle: "See what we're working on and what's coming next",
-    back: 'Back',
-    completed: 'Completed',
-    inProgress: 'In Progress',
-    planned: 'Planned',
-    features: [
-      'Project start!',
-      'Possibility to organize Americano for individual players',
-      'Possibility to organize Mexicano for individual players',
-      'Export/import single or multiple tournament data',
-      'Player statistics across multiple tournaments',
-      'Local player dictionary, known players',
-      'Store and share tournament results via unique link',
-      'Reopen tournaments',
-      'Roll back to last round',
-      'Extended available tournament statistics',
-      'QR code to share tournaments',
-      'Add support for playing tournament in fixed pairs',
-    ],
   },
   create: {
     title: 'Create Tournament',
@@ -330,7 +305,6 @@ const translation = {
   },
   footer: {
     home: 'Home',
-    roadmap: 'Roadmap',
     createdBy: 'Created by Dariusz W.',
     github: 'GitHub',
     license: 'CC BY-NC-SA 4.0',
