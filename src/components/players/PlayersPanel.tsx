@@ -88,7 +88,7 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
               type="button"
               onClick={handleAddPlayer}
               disabled={isDuplicate || !newPlayerName.trim()}
-              className="p-2.5 sm:p-2.5 md:p-3 bg-padel-500 text-slate-900 rounded-lg hover:bg-padel-400 transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-padel-500"
+              className="p-2.5 sm:p-2.5 md:p-3 bg-padel-500 text-background rounded-lg hover:bg-padel-400 transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-padel-500"
               aria-label={t('create.players.add')}
             >
               <Plus className="w-6 h-6" />
@@ -98,14 +98,14 @@ export function PlayersPanel({ players, onPlayersChange, suggestions = [] }: Pla
           <button
             type="button"
             onClick={() => setIsAdding(true)}
-            className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-padel-500 border border-dashed border-slate-600 hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+            className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-foreground-muted hover:text-padel-500 border border-dashed border-border hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
           >
             <Plus className="w-5 h-5" />
             {t('create.players.add')}
           </button>
         )}
 
-        <p className="text-slate-400 text-sm">
+        <p className="text-foreground-muted text-sm">
           {t('create.players.hint')}
         </p>
       </div>

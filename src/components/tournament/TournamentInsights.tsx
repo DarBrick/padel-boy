@@ -58,14 +58,14 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
 
   // Player colors for progression chart
   const playerColors = [
-    '#D4FF00', // padel yellow
-    '#22c55e', // green
-    '#3b82f6', // blue
-    '#f59e0b', // amber
-    '#ec4899', // pink
-    '#8b5cf6', // purple
-    '#14b8a6', // teal
-    '#f97316', // orange
+    'var(--color-chart-1)',
+    'var(--color-chart-2)',
+    'var(--color-chart-3)',
+    'var(--color-chart-4)',
+    'var(--color-chart-5)',
+    'var(--color-chart-6)',
+    'var(--color-chart-7)',
+    'var(--color-chart-8)',
   ]
 
   const togglePlayerSelection = (playerIndex: number) => {
@@ -83,7 +83,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
       {/* Partnership Stats */}
       <ContentPanel icon={Trophy} title={t('results.insights.partnerships.title')}>
         {topPartnerships.length === 0 ? (
-          <div className="text-center py-8 text-slate-400">
+          <div className="text-center py-8 text-foreground-muted">
             {t('results.insights.partnerships.emptyState')}
           </div>
         ) : (
@@ -93,7 +93,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
               data={partnershipChartData}
               height={250}
               xAxisDataKey="name"
-              xAxisConfig={{ tick: { fill: '#94a3b8', fontSize: 12 } }}
+              xAxisConfig={{ tick: { fill: 'var(--color-foreground-muted)', fontSize: 12 } }}
               yAxisLabel={t('results.insights.partnerships.winRate') + ' (%)'}
             >
               <Bar dataKey="winRate" fill="var(--color-padel-yellow)" radius={[8, 8, 0, 0]} />
@@ -103,17 +103,17 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
               {topPartnerships.map((partnership, idx) => (
                 <div
                   key={`${partnership.player1Index}-${partnership.player2Index}`}
-                  className="flex justify-between items-center bg-slate-800/50 rounded-lg p-3"
+                  className="flex justify-between items-center bg-surface/60 rounded-lg p-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="text-2xl font-bold text-slate-600">
+                    <div className="text-2xl font-bold text-foreground-muted">
                       #{idx + 1}
                     </div>
                     <div>
-                      <div className="text-sm font-medium text-white">
+                      <div className="text-sm font-medium text-foreground">
                         {partnership.player1Name} & {partnership.player2Name}
                       </div>
-                      <div className="text-xs text-slate-400">
+                      <div className="text-xs text-foreground-muted">
                         {partnership.gamesPlayed} {partnership.gamesPlayed === 1 ? 'game' : 'games'}
                       </div>
                     </div>
@@ -131,7 +131,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
       {/* Match Superlatives */}
       <ContentPanel icon={Target} title={t('results.insights.superlatives.title')}>
         {!superlatives.closestMatch && !superlatives.biggestBlowout && !superlatives.highestScoring ? (
-          <div className="text-center py-8 text-slate-400">
+          <div className="text-center py-8 text-foreground-muted">
             {t('results.insights.superlatives.emptyState')}
           </div>
         ) : (
@@ -164,14 +164,14 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
       {/* Standings Progression */}
       <ContentPanel icon={TrendingUp} title={t('results.insights.progression.title')}>
         {progression.rounds.length < 2 ? (
-          <div className="text-center py-8 text-slate-400">
+          <div className="text-center py-8 text-foreground-muted">
             {t('results.insights.progression.emptyState')}
           </div>
         ) : (
           <div className="space-y-4">
             {/* Player selection */}
             <div>
-              <div className="text-sm text-slate-400 mb-2">
+              <div className="text-sm text-foreground-muted mb-2">
                 {t('results.insights.progression.selectPlayers')}
               </div>
               <div className="flex flex-wrap gap-2">
@@ -182,8 +182,8 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                     className={`px-3 py-1.5 rounded-lg text-sm transition-all
                       ${
                         selectedPlayers.has(idx)
-                          ? 'bg-padel-500 text-slate-900 font-medium'
-                          : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700'
+                          ? 'bg-padel-500 text-background font-medium'
+                          : 'bg-surface/60 text-foreground-muted hover:bg-surface-muted'
                       }
                     `}
                   >
@@ -223,24 +223,24 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
       {/* Player Consistency */}
       <ContentPanel title={t('results.insights.consistency.title')}>
         {consistency.length === 0 ? (
-          <div className="text-center py-8 text-slate-400">
+          <div className="text-center py-8 text-foreground-muted">
             {t('results.insights.consistency.emptyState')}
           </div>
         ) : (
           <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
             {/* Most Consistent */}
-            <div className="bg-slate-800/50 rounded-lg p-4">
+            <div className="bg-surface/60 rounded-lg p-4">
               <h4 className="text-sm font-medium text-green-400 mb-3">
                 {t('results.insights.consistency.mostConsistent')}
               </h4>
               {consistency.slice(0, 3).map((player) => (
                 <div
                   key={player.playerIndex}
-                  className="flex justify-between items-center py-2 border-b border-slate-700 last:border-0"
+                  className="flex justify-between items-center py-2 border-b border-border last:border-0"
                 >
                   <div>
-                    <div className="text-sm font-medium text-white">{player.playerName}</div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-sm font-medium text-foreground">{player.playerName}</div>
+                    <div className="text-xs text-foreground-muted">
                       {t('results.insights.consistency.avgScore')}: {player.averageScore.toFixed(1)}
                     </div>
                   </div>
@@ -248,7 +248,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                     <div className="text-sm text-padel-500 font-bold">
                       σ: {player.scoreStdDev.toFixed(1)}
                     </div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-xs text-foreground-muted">
                       {t('results.insights.consistency.range')}: {player.scoreRange}
                     </div>
                   </div>
@@ -257,18 +257,18 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
             </div>
 
             {/* Least Consistent */}
-            <div className="bg-slate-800/50 rounded-lg p-4">
+            <div className="bg-surface/60 rounded-lg p-4">
               <h4 className="text-sm font-medium text-amber-400 mb-3">
                 {t('results.insights.consistency.leastConsistent')}
               </h4>
               {consistency.slice(-3).reverse().map((player) => (
                 <div
                   key={player.playerIndex}
-                  className="flex justify-between items-center py-2 border-b border-slate-700 last:border-0"
+                  className="flex justify-between items-center py-2 border-b border-border last:border-0"
                 >
                   <div>
-                    <div className="text-sm font-medium text-white">{player.playerName}</div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-sm font-medium text-foreground">{player.playerName}</div>
+                    <div className="text-xs text-foreground-muted">
                       {t('results.insights.consistency.avgScore')}: {player.averageScore.toFixed(1)}
                     </div>
                   </div>
@@ -276,7 +276,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                     <div className="text-sm text-amber-400 font-bold">
                       σ: {player.scoreStdDev.toFixed(1)}
                     </div>
-                    <div className="text-xs text-slate-400">
+                    <div className="text-xs text-foreground-muted">
                       {t('results.insights.consistency.range')}: {player.scoreRange}
                     </div>
                   </div>
@@ -306,21 +306,21 @@ function SuperlativeCard({ title, match, color }: SuperlativeCardProps) {
   const { t } = useTranslation()
 
   return (
-    <div className="bg-slate-800/50 rounded-lg p-4">
+    <div className="bg-surface/60 rounded-lg p-4">
       <h4 className={`text-sm font-medium ${color} mb-3`}>{title}</h4>
       <div className="space-y-2">
-        <div className="text-xs text-slate-400">
+        <div className="text-xs text-foreground-muted">
           {t('results.insights.superlatives.round', { number: match.roundNumber })}
         </div>
         <div className="space-y-1">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-white">{match.team1Names.join(' & ')}</span>
-            <span className="text-lg font-bold text-white">{match.score1}</span>
+            <span className="text-sm text-foreground">{match.team1Names.join(' & ')}</span>
+            <span className="text-lg font-bold text-foreground">{match.score1}</span>
           </div>
-          <div className="text-center text-xs text-slate-500">VS</div>
+          <div className="text-center text-xs text-foreground-muted">VS</div>
           <div className="flex justify-between items-center">
-            <span className="text-sm text-white">{match.team2Names.join(' & ')}</span>
-            <span className="text-lg font-bold text-white">{match.score2}</span>
+            <span className="text-sm text-foreground">{match.team2Names.join(' & ')}</span>
+            <span className="text-lg font-bold text-foreground">{match.score2}</span>
           </div>
         </div>
         <div className={`text-center text-lg font-bold ${color} mt-2`}>

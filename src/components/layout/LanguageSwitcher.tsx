@@ -43,11 +43,11 @@ export function LanguageSwitcher() {
       <button
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-700/50 hover:bg-slate-700 transition-colors"
+        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface/70 hover:bg-surface-muted transition-colors"
         aria-label="Change language"
       >
-        <Languages className="w-5 h-5 text-white" />
-        <span className="text-white text-sm font-medium">{currentLang.flag}</span>
+        <Languages className="w-5 h-5 text-foreground" />
+        <span className="text-foreground text-sm font-medium">{currentLang.flag}</span>
       </button>
       
       {/* Dropdown */}
@@ -59,19 +59,19 @@ export function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
           />
           
-          <div className={`absolute right-0 w-48 bg-slate-800 rounded-lg shadow-xl z-20 ${
+          <div className={`absolute right-0 w-48 bg-background-elevated border border-border/70 rounded-lg shadow-xl z-20 ${
             openUpward ? 'bottom-full mb-2' : 'top-full mt-2'
           }`}>
             {languages.map((lang) => (
               <button
                 key={lang.code}
                 onClick={() => handleLanguageChange(lang.code)}
-                className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-700 transition-colors first:rounded-t-lg last:rounded-b-lg ${
-                  i18n.language === lang.code ? 'bg-slate-700/50' : ''
+                className={`w-full flex items-center gap-3 px-4 py-3 hover:bg-surface/70 transition-colors first:rounded-t-lg last:rounded-b-lg ${
+                  i18n.language === lang.code ? 'bg-surface-muted/70' : ''
                 }`}
               >
                 <span className="text-xl">{lang.flag}</span>
-                <span className="text-white text-sm font-medium">{lang.name}</span>
+                <span className="text-foreground text-sm font-medium">{lang.name}</span>
               </button>
             ))}
           </div>

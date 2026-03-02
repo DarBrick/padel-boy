@@ -19,17 +19,17 @@ export function CollapsiblePanel({
   children,
 }: CollapsiblePanelProps) {
   return (
-    <div className="bg-slate-800/50 rounded-lg border border-padel-500/20 overflow-hidden">
+    <div className="bg-surface/60 rounded-lg border border-border/70 overflow-hidden">
       <button
         type="button"
         onClick={onToggle}
-        className="w-full p-4 sm:p-5 md:p-6 flex items-center justify-between hover:bg-slate-700/30 transition-colors"
+        className="w-full p-4 sm:p-5 md:p-6 flex items-center justify-between hover:bg-surface-muted/70 transition-colors"
       >
         <span className="text-lg font-semibold">
           {icon}
-          {label} <span className="text-slate-400">({value})</span>
+          {label} <span className="text-foreground-muted">({value})</span>
         </span>
-        <span className="text-slate-400">
+        <span className="text-foreground-muted">
           {isExpanded ? <ChevronUp /> : <ChevronDown />}
         </span>
       </button>

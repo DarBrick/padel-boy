@@ -12,10 +12,10 @@ export function Terms() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
           {t('terms.title')}
         </h1>
-        <p className="text-slate-300 text-lg max-w-3xl">
+        <p className="text-foreground-muted text-lg max-w-3xl">
           {t('terms.intro')}
         </p>
       </div>

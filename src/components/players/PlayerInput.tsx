@@ -103,29 +103,29 @@ export function PlayerInput({
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         maxLength={16}
-        className={`w-full px-4 py-2 sm:py-2.5 md:py-3 bg-slate-700 rounded-lg text-base focus:outline-none transition-colors ${
+        className={`w-full px-4 py-2 sm:py-2.5 md:py-3 bg-surface rounded-lg text-base focus:outline-none transition-colors ${
           hasError 
             ? 'border-2 border-red-500 focus:border-red-500' 
-            : 'border border-slate-600 focus:border-padel-500'
+            : 'border border-border focus:border-padel-500'
         }`}
       />
       
       {/* Suggestions dropdown (future use) */}
       {showSuggestions && filteredSuggestions.length > 0 && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-slate-700 border border-slate-600 rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 mt-1 bg-surface border border-border rounded-lg shadow-lg z-10 max-h-40 overflow-y-auto">
           {filteredSuggestions.map((suggestion, index) => (
             <button
               key={suggestion}
               type="button"
               onClick={() => handleSuggestionClick(suggestion)}
               className={`
-                w-full px-4 py-2 sm:py-2.5 md:py-3 text-left text-base hover:bg-slate-600 transition-colors
-                ${index === selectedIndex ? 'bg-slate-600' : ''}
+                w-full px-4 py-2 sm:py-2.5 md:py-3 text-left text-base hover:bg-surface-muted transition-colors
+                ${index === selectedIndex ? 'bg-surface-muted' : ''}
                 ${index === 0 ? 'rounded-t-lg' : ''}
                 ${index === filteredSuggestions.length - 1 ? 'rounded-b-lg' : ''}
               `}
             >
-              <span className="text-slate-400 mr-2">🕐</span>
+              <span className="text-foreground-muted mr-2">🕐</span>
               {suggestion}
             </button>
           ))}

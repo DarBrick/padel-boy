@@ -30,7 +30,7 @@ export function Home() {
           </h1>
         </div>
         
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto px-4">
+        <p className="text-lg md:text-xl text-foreground-muted max-w-2xl mx-auto px-4">
           {t('home.subtitle')}
         </p>
       </div>
@@ -39,7 +39,7 @@ export function Home() {
       <ContentPanel className="text-center">
         <div className="space-y-5 sm:space-y-6 md:space-y-7">
           <div>
-            <p className="text-slate-300 text-base md:text-lg mb-6">
+            <p className="text-foreground-muted text-base md:text-lg mb-6">
               {t('home.cta.subtitle')}
             </p>
             <GradientButton 
@@ -50,17 +50,17 @@ export function Home() {
             </GradientButton>
           </div>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-slate-400">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 text-sm text-foreground-muted">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-padel-500" />
               <span>{t('home.cta.benefit1')}</span>
             </div>
-            <div className="hidden sm:block text-slate-600">•</div>
+            <div className="hidden sm:block text-foreground-muted">•</div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-padel-500" />
               <span>{t('home.cta.benefit2')}</span>
             </div>
-            <div className="hidden sm:block text-slate-600">•</div>
+            <div className="hidden sm:block text-foreground-muted">•</div>
             <div className="flex items-center gap-2">
               <CheckCircle className="w-5 h-5 text-padel-500" />
               <span>{t('home.cta.benefit3')}</span>
@@ -77,7 +77,7 @@ export function Home() {
 
       {/* Featured Highlights - Top 3 Most Important Features */}
       <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-white text-center mb-2">
+        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-2">
           {t('home.keyFeaturesTitle')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5 md:gap-4">
@@ -86,21 +86,21 @@ export function Home() {
               <Trophy className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-semibold mb-2">{t('home.features.formats.title')}</h3>
-            <p className="text-slate-400">{t('home.features.formats.description')}</p>
+            <p className="text-foreground-muted">{t('home.features.formats.description')}</p>
           </ContentPanel>
           <ContentPanel>
             <div className="text-padel-500 mb-3">
               <Users className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-semibold mb-2">{t('home.features.players.title')}</h3>
-            <p className="text-slate-400">{t('home.features.players.description')}</p>
+            <p className="text-foreground-muted">{t('home.features.players.description')}</p>
           </ContentPanel>
           <ContentPanel>
             <div className="text-padel-500 mb-3">
               <Calendar className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-semibold mb-2">{t('home.features.rounds.title')}</h3>
-            <p className="text-slate-400">{t('home.features.rounds.description')}</p>
+            <p className="text-foreground-muted">{t('home.features.rounds.description')}</p>
           </ContentPanel>
         </div>
       </div>
@@ -112,21 +112,21 @@ export function Home() {
             <Zap className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold mb-2">{t('home.features.realtime.title')}</h3>
-          <p className="text-slate-400">{t('home.features.realtime.description')}</p>
+          <p className="text-foreground-muted">{t('home.features.realtime.description')}</p>
         </ContentPanel>
         <ContentPanel>
           <div className="text-padel-500 mb-3">
             <FolderOpen className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold mb-2">{t('home.features.library.title')}</h3>
-          <p className="text-slate-400">{t('home.features.library.description')}</p>
+          <p className="text-foreground-muted">{t('home.features.library.description')}</p>
         </ContentPanel>
         <ContentPanel>
           <div className="text-padel-500 mb-3">
             <History className="w-8 h-8" />
           </div>
           <h3 className="text-xl font-semibold mb-2">{t('home.features.stats.title')}</h3>
-          <p className="text-slate-400">{t('home.features.stats.description')}</p>
+          <p className="text-foreground-muted">{t('home.features.stats.description')}</p>
         </ContentPanel>
       </div>
 
@@ -136,7 +136,7 @@ export function Home() {
           <Lightbulb className="w-8 h-8" />
         </div>
         <h3 className="text-2xl font-bold mb-4">{t('home.howItWorks.title')}</h3>
-        <ol className="space-y-2 sm:space-y-2.5 md:space-y-3 text-slate-300">
+        <ol className="space-y-2 sm:space-y-2.5 md:space-y-3 text-foreground-muted">
           <li className="flex gap-3">
             <span className="text-padel-500 font-bold">1.</span>
             <span>{t('home.howItWorks.step1')}</span>

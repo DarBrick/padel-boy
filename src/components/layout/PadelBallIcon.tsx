@@ -16,7 +16,7 @@ export function PadelBallIcon({ className = "w-16 h-16", animate = true }: Padel
         <g>
           <path
             d="M 0 50 L 25 50 L 30 38 L 35 62 L 40 42 L 45 50 L 70 50"
-            stroke="#FF0066"
+            stroke="var(--color-pulse-accent)"
             strokeWidth="4"
             fill="none"
             strokeLinecap="round"
@@ -25,7 +25,7 @@ export function PadelBallIcon({ className = "w-16 h-16", animate = true }: Padel
           {/* Glow effect */}
           <path
             d="M 0 50 L 25 50 L 30 38 L 35 62 L 40 42 L 45 50 L 70 50"
-            stroke="#FF0066"
+            stroke="var(--color-pulse-accent)"
             strokeWidth="8"
             fill="none"
             strokeLinecap="round"
@@ -34,7 +34,7 @@ export function PadelBallIcon({ className = "w-16 h-16", animate = true }: Padel
           />
           {/* Animated pulse dot */}
           {animate && (
-            <circle r="3" fill="#FFFFFF">
+            <circle r="3" fill="var(--color-foreground)">
               <animateMotion
                 dur="2s"
                 repeatCount="indefinite"

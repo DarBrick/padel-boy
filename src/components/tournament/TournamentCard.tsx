@@ -33,17 +33,17 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
     ? 'bg-green-500/20 text-green-300 border-green-500/30'
     : status === 'playing'
     ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-    : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
+    : 'bg-surface/70 text-foreground-muted border-border'
   
   return (
     <ContentPanel className="p-4 md:p-4 transition-all">
       {/* Header with name and date */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-white truncate">
+          <h3 className="text-lg font-semibold text-foreground truncate">
             {tournament.name || t('pastTournaments.defaultName', { date: dateStr })}
           </h3>
-          <div className="flex items-center gap-1.5 text-sm text-slate-400 mt-1">
+          <div className="flex items-center gap-1.5 text-sm text-foreground-muted mt-1">
             <Calendar className="w-4 h-4" />
             <span>{dateStr}</span>
           </div>
@@ -56,7 +56,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
       </div>
       
       {/* Meta info */}
-      <div className="flex items-center gap-2 mb-3 text-sm text-slate-300 flex-wrap">
+      <div className="flex items-center gap-2 mb-3 text-sm text-foreground-muted flex-wrap">
         {/* Format badge */}
         <span className={`px-2.5 py-1 rounded border ${formatBadgeColor} font-medium`}>
           {tournament.format === 'americano' ? 'Americano' : 'Mexicano'}
@@ -78,8 +78,8 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
       {/* Top players */}
       {topPlayers.length > 0 && (
         <div className="mb-4 text-sm">
-          <span className="text-slate-400">{t('pastTournaments.players')}: </span>
-          <span className="text-slate-300">
+          <span className="text-foreground-muted">{t('pastTournaments.players')}: </span>
+          <span className="text-foreground-muted">
             {topPlayers.map((player, index) => {
               const medalEmoji = player.rank === 1 ? '🥇' : player.rank === 2 ? '🥈' : '🥉'
 
@@ -94,7 +94,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
               )
             })}
             {remainingPlayers > 0 && (
-              <span className="text-slate-400"> +{remainingPlayers}</span>
+              <span className="text-foreground-muted"> +{remainingPlayers}</span>
             )}
           </span>
         </div>
@@ -104,7 +104,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
       <div className="flex items-center gap-2">
         <button
           onClick={() => onView(tournament.id)}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-slate-200 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px]"
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-foreground bg-surface hover:bg-surface-muted rounded-lg transition-colors min-h-[44px]"
         >
           <Eye className="w-4 h-4" />
           {status === 'finished' 
@@ -117,7 +117,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
         <button
           onClick={() => onShare(tournament)}
           disabled={status !== 'finished'}
-          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-padel-500 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:bg-slate-700"
+          className="flex items-center justify-center px-3 py-2 text-sm text-foreground-muted hover:text-padel-500 bg-surface hover:bg-surface-muted rounded-lg transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-foreground-muted disabled:hover:bg-surface"
           title={t('pastTournaments.actions.share')}
         >
           <Share2 className="w-5 h-5" />
@@ -125,7 +125,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
         
         <button
           onClick={() => onDelete(tournament.id)}
-          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-red-400 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px]"
+          className="flex items-center justify-center px-3 py-2 text-sm text-foreground-muted hover:text-danger bg-surface hover:bg-surface-muted rounded-lg transition-colors min-h-[44px]"
           title={t('pastTournaments.actions.delete')}
         >
           <Trash2 className="w-5 h-5" />

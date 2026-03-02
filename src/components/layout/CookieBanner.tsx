@@ -19,12 +19,12 @@ export function CookieBanner() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 animate-slide-up">
-      <div className="bg-slate-800/95 backdrop-blur-sm border-t border-slate-700 shadow-2xl">
+      <div className="bg-background-elevated/95 backdrop-blur-sm border-t border-border shadow-2xl">
         <div className="container mx-auto px-4 py-3 sm:py-3.5 md:py-4">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             {/* Message */}
             <div className="flex-1 pr-8">
-              <p className="text-slate-300 text-sm md:text-base flex items-start gap-2">
+              <p className="text-foreground-muted text-sm md:text-base flex items-start gap-2">
                 <Cookie className="w-5 h-5 flex-shrink-0 mt-0.5 text-padel-500" />
                 <span>
                   {t('cookieBanner.message')}{' '}
@@ -42,13 +42,13 @@ export function CookieBanner() {
             <div className="flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
               <button
                 onClick={dismissBanner}
-                className="max-w-[200px] flex-1 md:flex-none px-6 py-2.5 bg-gradient-to-r from-blue-600 to-padel-500 hover:from-blue-500 hover:to-padel-400 rounded-lg text-white text-sm font-semibold transition-all min-h-[44px]"
+                className="max-w-[200px] flex-1 md:flex-none px-6 py-2.5 bg-gradient-to-r from-court-blue to-padel-500 hover:from-court-teal hover:to-padel-400 rounded-lg text-foreground text-sm font-semibold transition-all min-h-[44px]"
               >
                 {t('cookieBanner.accept')}
               </button>
               <button
                 onClick={dismissBanner}
-                className="p-2.5 text-slate-400 hover:text-white transition-colors"
+                className="p-2.5 text-foreground-muted hover:text-foreground transition-colors"
                 aria-label={t('cookieBanner.close')}
               >
                 <X className="w-5 h-5" />

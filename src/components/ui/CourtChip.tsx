@@ -46,7 +46,7 @@ export function CourtChip({ name, index, onRename, onDelete, canRemove = true }:
 
   if (isEditing) {
     return (
-      <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-padel-500 rounded-lg">
+      <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-surface border border-padel-500 rounded-lg">
         <input
           ref={inputRef}
           type="text"
@@ -56,14 +56,14 @@ export function CourtChip({ name, index, onRename, onDelete, canRemove = true }:
           onKeyDown={handleKeyDown}
           placeholder={t('create.courts.placeholder', { number: index + 1 })}
           maxLength={40}
-          className="flex-1 bg-transparent border-none outline-none text-base min-h-[24px] placeholder:text-slate-500"
+          className="flex-1 bg-transparent border-none outline-none text-base min-h-[24px] placeholder:text-foreground-muted"
         />
       </div>
     )
   }
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-padel-500/50 transition-colors">
+    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-surface border border-border rounded-lg group hover:border-padel-500/50 transition-colors">
       <button
         type="button"
         onClick={() => {
@@ -72,18 +72,18 @@ export function CourtChip({ name, index, onRename, onDelete, canRemove = true }:
         }}
         className="text-base hover:text-padel-500 transition-colors min-h-[24px] flex-1 text-left truncate"
       >
-        <span className="text-slate-400 mr-1.5">#{index + 1}</span>
+        <span className="text-foreground-muted mr-1.5">#{index + 1}</span>
         {name ? (
           <span className="truncate">{name}</span>
         ) : (
-          <span className="text-slate-400 truncate">{t('create.courts.placeholder', { number: index + 1 })}</span>
+          <span className="text-foreground-muted truncate">{t('create.courts.placeholder', { number: index + 1 })}</span>
         )}
       </button>
       {canRemove && (
         <button
           type="button"
           onClick={onDelete}
-          className="p-1 text-slate-400 hover:text-red-400 transition-colors opacity-70 group-hover:opacity-100 flex-shrink-0"
+          className="p-1 text-foreground-muted hover:text-danger transition-colors opacity-70 group-hover:opacity-100 flex-shrink-0"
           aria-label={`Remove court ${index + 1}`}
         >
           <X className="w-6 h-6" />

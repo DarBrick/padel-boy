@@ -20,10 +20,10 @@ export function TabSelector({ tabs, activeTab, onTabChange }: TabSelectorProps) 
               min-h-[44px] sm:min-h-[46px] md:min-h-[48px]
               ${
                 tab.disabled
-                  ? 'bg-slate-800/30 text-slate-600 border-2 border-slate-800 cursor-not-allowed opacity-50'
+                  ? 'bg-surface/40 text-foreground-muted border-2 border-border/60 cursor-not-allowed opacity-50'
                   : activeTab === tab.id
-                  ? 'bg-slate-800 text-padel-500 border-2 border-padel-500 shadow-[0_0_10px_rgba(212,255,0,0.3)]'
-                  : 'bg-slate-800/50 text-slate-300 border-2 border-slate-700 hover:border-slate-600 hover:text-white'
+                  ? 'bg-surface-muted text-padel-500 border-2 border-padel-500 shadow-[0_0_10px_rgba(212,255,0,0.3)]'
+                  : 'bg-surface/60 text-foreground-muted border-2 border-border hover:border-foreground-muted hover:text-foreground hover:bg-surface-muted'
               }
             `}
           >

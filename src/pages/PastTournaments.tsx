@@ -151,16 +151,16 @@ export function PastTournaments() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
           {t('pastTournaments.title')}
         </h1>
-        <p className="text-slate-300 text-base md:text-lg mb-6">
+        <p className="text-foreground-muted text-base md:text-lg mb-6">
           {t('pastTournaments.subtitle')}
         </p>
         
         {/* Filters */}
         <ContentPanel>
-          <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
             <Filter className="w-5 h-5" />
             {t('pastTournaments.filters.title')}
           </h2>
@@ -168,22 +168,22 @@ export function PastTournaments() {
           <div className="space-y-3">
             {/* Search input */}
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-foreground-muted pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('pastTournaments.searchPlaceholder')}
-                className="w-full pl-12 pr-12 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-padel-500 focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+                className="w-full pl-12 pr-12 py-3 bg-surface border border-border rounded-lg text-base text-foreground placeholder:text-foreground-muted focus:border-padel-500 focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
               />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-muted rounded transition-colors"
                   aria-label="Clear search"
                 >
-                  <X className="w-4 h-4 text-slate-400" />
+                  <X className="w-4 h-4 text-foreground-muted" />
                 </button>
               )}
             </div>
@@ -195,14 +195,14 @@ export function PastTournaments() {
             <select
               value={selectedFormat || ''}
               onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
-              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+              className="w-full px-3 py-2 pr-10 bg-surface border border-border rounded-lg text-foreground text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
             >
               <option value="">{t('pastTournaments.filters.allFormats')}</option>
               <option value="americano">Americano</option>
               <option value="mexicano">Mexicano</option>
             </select>
             {!selectedFormat && (
-              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted pointer-events-none" />
             )}
             {selectedFormat && (
               <button
@@ -210,10 +210,10 @@ export function PastTournaments() {
                   e.stopPropagation()
                   setSelectedFormat(null)
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-muted rounded transition-colors"
                 aria-label="Clear format filter"
               >
-                <X className="w-4 h-4 text-slate-400" />
+                <X className="w-4 h-4 text-foreground-muted" />
               </button>
             )}
             </div>
@@ -223,7 +223,7 @@ export function PastTournaments() {
             <select
               value={selectedStatus || ''}
               onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
-              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+              className="w-full px-3 py-2 pr-10 bg-surface border border-border rounded-lg text-foreground text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
             >
               <option value="">{t('pastTournaments.filters.allStatus')}</option>
               <option value="setup">{t('pastTournaments.filters.setup')}</option>
@@ -231,7 +231,7 @@ export function PastTournaments() {
               <option value="finished">{t('pastTournaments.filters.finished')}</option>
             </select>
             {!selectedStatus && (
-              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted pointer-events-none" />
             )}
             {selectedStatus && (
               <button
@@ -239,24 +239,24 @@ export function PastTournaments() {
                   e.stopPropagation()
                   setSelectedStatus(null)
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-slate-700 rounded transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 hover:bg-surface-muted rounded transition-colors"
                 aria-label="Clear status filter"
               >
-                <X className="w-4 h-4 text-slate-400" />
+                <X className="w-4 h-4 text-foreground-muted" />
               </button>
             )}
             </div>
           
           {/* Unified date range bar */}
-          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors min-w-[240px]">
+          <div className="relative flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors min-w-[240px]">
             {/* From date section */}
             <button
               type="button"
               onClick={() => dateFromRef.current?.showPicker?.() || dateFromRef.current?.focus()}
-              className="p-1 hover:bg-slate-700 rounded transition-colors"
+              className="p-1 hover:bg-surface-muted rounded transition-colors"
               aria-label="Select from date"
             >
-              <CalendarArrowDown className="w-4 h-4 text-slate-400" />
+              <CalendarArrowDown className="w-4 h-4 text-foreground-muted" />
             </button>
             
             <input
@@ -265,29 +265,29 @@ export function PastTournaments() {
               value={dateFrom}
               onChange={(e) => setDateFrom(e.target.value)}
               max={dateTo || undefined}
-              className="bg-transparent border-none outline-none text-white text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-white [&::-webkit-datetime-edit-fields-wrapper]:text-white"
+              className="bg-transparent border-none outline-none text-foreground text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
             />
             
             <button
               type="button"
               onClick={() => setDateFrom('')}
-              className={`p-0.5 hover:bg-slate-700 rounded transition-colors ${!dateFrom ? 'invisible pointer-events-none' : ''}`}
+              className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateFrom ? 'invisible pointer-events-none' : ''}`}
               aria-label="Clear from date"
             >
-              <X className="w-3.5 h-3.5 text-slate-400" />
+              <X className="w-3.5 h-3.5 text-foreground-muted" />
             </button>
             
             {/* Separator */}
-            <span className="text-slate-500 text-sm px-1">-</span>
+            <span className="text-foreground-muted text-sm px-1">-</span>
             
             {/* To date section */}
             <button
               type="button"
               onClick={() => dateToRef.current?.showPicker?.() || dateToRef.current?.focus()}
-              className="p-1 hover:bg-slate-700 rounded transition-colors"
+              className="p-1 hover:bg-surface-muted rounded transition-colors"
               aria-label="Select to date"
             >
-              <CalendarArrowUp className="w-4 h-4 text-slate-400" />
+              <CalendarArrowUp className="w-4 h-4 text-foreground-muted" />
             </button>
             
             <input
@@ -296,16 +296,16 @@ export function PastTournaments() {
               value={dateTo}
               onChange={(e) => setDateTo(e.target.value)}
               min={dateFrom || undefined}
-              className="bg-transparent border-none outline-none text-white text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-white [&::-webkit-datetime-edit-fields-wrapper]:text-white"
+              className="bg-transparent border-none outline-none text-foreground text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
             />
             
             <button
               type="button"
               onClick={() => setDateTo('')}
-              className={`p-0.5 hover:bg-slate-700 rounded transition-colors ${!dateTo ? 'invisible pointer-events-none' : ''}`}
+              className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateTo ? 'invisible pointer-events-none' : ''}`}
               aria-label="Clear to date"
             >
-              <X className="w-3.5 h-3.5 text-slate-400" />
+              <X className="w-3.5 h-3.5 text-foreground-muted" />
             </button>
           </div>
           </div>
@@ -317,7 +317,7 @@ export function PastTournaments() {
       <div>
         {/* Result count */}
         {hasResults && (
-          <div className="mb-4 text-sm text-slate-400">
+          <div className="mb-4 text-sm text-foreground-muted">
             {t('pastTournaments.resultCount', { count: filteredTournaments.length })}
           </div>
         )}
@@ -328,13 +328,13 @@ export function PastTournaments() {
         {!hasResults && !hasSearch && (
           // Empty state - no tournaments
           <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-800 mb-4">
-              <History className="w-10 h-10 text-slate-500" />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-surface mb-4">
+              <History className="w-10 h-10 text-foreground-muted" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
               {t('pastTournaments.emptyState.title')}
             </h2>
-            <p className="text-slate-400 text-lg mb-6 max-w-md mx-auto">
+            <p className="text-foreground-muted text-lg mb-6 max-w-md mx-auto">
               {t('pastTournaments.emptyState.description')}
             </p>
             <GradientButton onClick={() => navigate('/create')}>
@@ -346,13 +346,13 @@ export function PastTournaments() {
         {!hasResults && hasSearch && (
           // Empty state - no search results
           <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-800 mb-4">
-              <Inbox className="w-10 h-10 text-slate-500" />
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-surface mb-4">
+              <Inbox className="w-10 h-10 text-foreground-muted" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
               {t('pastTournaments.noResults.title')}
             </h2>
-            <p className="text-slate-400 text-lg max-w-md mx-auto">
+            <p className="text-foreground-muted text-lg max-w-md mx-auto">
               {t('pastTournaments.noResults.description', { query: searchQuery })}
             </p>
           </div>
@@ -364,7 +364,7 @@ export function PastTournaments() {
             <div className="space-y-8">
               {groupedTournaments.map((group) => (
                 <div key={group.label}>
-                  <h2 className="text-xl font-semibold text-slate-300 mb-4 flex items-center gap-2">
+                  <h2 className="text-xl font-semibold text-foreground-muted mb-4 flex items-center gap-2">
                     <History className="w-5 h-5" />
                     {group.label}
                   </h2>
@@ -386,7 +386,7 @@ export function PastTournaments() {
             {/* Load More button */}
             {hasMore && (
               <div className="mt-8 text-center space-y-4">
-                <p className="text-slate-400 text-sm">
+                <p className="text-foreground-muted text-sm">
                   {t('pastTournaments.showing', { 
                     count: paginatedTournaments.length, 
                     total: filteredTournaments.length 
@@ -394,7 +394,7 @@ export function PastTournaments() {
                 </p>
                 <button
                   onClick={handleLoadMore}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-padel-500 border border-dashed border-slate-600 hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-foreground-muted hover:text-padel-500 border border-dashed border-border hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
                 >
                   <Download className="w-5 h-5" />
                   {t('pastTournaments.loadMore')}
@@ -419,23 +419,23 @@ export function PastTournaments() {
       {/* Delete Confirmation Modal */}
       {deleteConfirmId && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-bold text-white mb-2">
+          <div className="bg-background-elevated border border-border rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-xl font-bold text-foreground mb-2">
               {t('pastTournaments.deleteConfirm.title')}
             </h3>
-            <p className="text-slate-300 mb-6">
+            <p className="text-foreground-muted mb-6">
               {t('pastTournaments.deleteConfirm.description')}
             </p>
             <div className="flex gap-3">
               <button
                 onClick={handleDeleteCancel}
-                className="flex-1 px-4 py-2.5 text-base font-medium text-slate-300 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px]"
+                className="flex-1 px-4 py-2.5 text-base font-medium text-foreground-muted bg-surface hover:bg-surface-muted rounded-lg transition-colors min-h-[44px]"
               >
                 {t('pastTournaments.deleteConfirm.cancel')}
               </button>
               <button
                 onClick={() => handleDeleteConfirm(deleteConfirmId)}
-                className="flex-1 px-4 py-2.5 text-base font-medium text-white bg-red-600 hover:bg-red-700 rounded-lg transition-colors min-h-[44px]"
+                className="flex-1 px-4 py-2.5 text-base font-medium text-foreground bg-danger hover:bg-rose-500 rounded-lg transition-colors min-h-[44px]"
               >
                 {t('pastTournaments.deleteConfirm.confirm')}
               </button>

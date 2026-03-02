@@ -9,7 +9,7 @@ export function Footer() {
   const navigate = useNavigate()
 
   return (
-    <footer className="mt-16 pt-8 pb-4 border-t border-slate-700/50 text-center text-slate-400 text-sm space-y-4">
+    <footer className="mt-16 pt-8 pb-4 border-t border-border/60 text-center text-foreground-muted text-sm space-y-4">
       {/* Language Switcher */}
       <div className="flex justify-center">
         <LanguageSwitcher />
@@ -19,26 +19,26 @@ export function Footer() {
       <div className="flex flex-wrap justify-center gap-4 md:gap-6">
         <button
           onClick={() => navigate('/privacy')}
-          className="text-slate-400 hover:text-padel-500 underline transition-colors"
+          className="text-foreground-muted hover:text-padel-500 underline transition-colors"
         >
           {t('privacy.title')}
         </button>
         <button
           onClick={() => navigate('/terms')}
-          className="text-slate-400 hover:text-padel-500 underline transition-colors"
+          className="text-foreground-muted hover:text-padel-500 underline transition-colors"
         >
           {t('terms.title')}
         </button>
         <button
           onClick={() => navigate('/roadmap')}
-          className="text-slate-400 hover:text-padel-500 underline transition-colors"
+          className="text-foreground-muted hover:text-padel-500 underline transition-colors"
         >
           {t('footer.roadmap')}
         </button>
       </div>
 
       {/* Secondary Info: Version, GitHub, License */}
-      <div className="flex flex-wrap justify-center items-center gap-3 text-xs text-slate-500">
+      <div className="flex flex-wrap justify-center items-center gap-3 text-xs text-foreground-muted">
         <span>{t('footer.version')} 0.0.1</span>
         <span>•</span>
         <a
@@ -63,7 +63,7 @@ export function Footer() {
       </div>
 
       {/* Creator Credit */}
-      <div className="flex items-center justify-center text-slate-400">
+      <div className="flex items-center justify-center text-foreground-muted">
         <a
           href="https://darikcube.com"
           target="_blank"

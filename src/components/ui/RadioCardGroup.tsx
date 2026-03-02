@@ -21,7 +21,7 @@ export function RadioCardGroup({ name, options, value, onChange }: RadioCardGrou
             flex flex-col items-center p-3 sm:p-3.5 md:p-4 rounded-lg border-2 cursor-pointer transition-all
             ${value === option.value 
               ? 'border-padel-500 bg-padel-500/10' 
-              : 'border-slate-600 hover:border-slate-500'}
+              : 'border-border hover:border-foreground-muted'}
           `}
         >
           <input
@@ -34,7 +34,7 @@ export function RadioCardGroup({ name, options, value, onChange }: RadioCardGrou
           />
           <span className="text-xl font-bold mb-1">{option.label}</span>
           {option.description && (
-            <span className="text-sm text-slate-400 text-center">
+            <span className="text-sm text-foreground-muted text-center">
               {option.description}
             </span>
           )}

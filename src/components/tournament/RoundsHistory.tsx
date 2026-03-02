@@ -37,7 +37,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
   if (totalRounds === 0) {
     return (
-      <div className="text-center py-8 text-slate-400">
+      <div className="text-center py-8 text-foreground-muted">
         {t('results.rounds.emptyState')}
       </div>
     )
@@ -47,8 +47,8 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
     <div ref={containerRef}>
       {/* Legend */}
       <div className="mb-6 sm:mb-7 md:mb-8 text-center">
-        <div className="inline-flex items-center gap-2 text-sm text-slate-400 bg-slate-800/30 rounded-lg px-4 py-2.5">
-          <span className="text-slate-500">{t('results.rounds.legend.label')}:</span>
+        <div className="inline-flex items-center gap-2 text-sm text-foreground-muted bg-surface/40 rounded-lg px-4 py-2.5">
+          <span className="text-foreground-muted">{t('results.rounds.legend.label')}:</span>
           <span>{t('results.rounds.legend.description')}</span>
         </div>
       </div>
@@ -68,7 +68,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
         return (
           <div key={roundNumber}>
             {/* Round header */}
-            <h3 className="text-lg font-semibold text-white mb-3 sm:mb-3.5 md:mb-4 text-center">
+            <h3 className="text-lg font-semibold text-foreground mb-3 sm:mb-3.5 md:mb-4 text-center">
               {t('results.rounds.round', { number: roundNumber })}
             </h3>
 
@@ -96,7 +96,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                 const isTeam2Winner = match.isFinished && match.winner === 1 && !isDraw
 
                 return (
-                  <div key={localIndex} className="flex items-center text-base text-slate-300 py-1 gap-3 sm:gap-4">
+                  <div key={localIndex} className="flex items-center text-base text-foreground-muted py-1 gap-3 sm:gap-4">
                     {/* Team 1 - flexible width, right-aligned */}
                     <div className="flex-1 text-right space-y-0.5 min-w-0">
                       {team1Names.map((name, idx) => {
@@ -109,7 +109,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             className={`cursor-pointer transition-colors truncate ${
                               selectedPlayer === name 
                                 ? 'text-padel-500 font-semibold' 
-                                : 'hover:text-white'
+                                : 'hover:text-foreground'
                             }`}
                           >
                             {displayName}
@@ -120,11 +120,11 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
                     {/* Score - fixed width, always centered */}
                     <span className="flex-shrink-0 w-12 sm:w-14 flex items-center gap-1 justify-center">
-                      <span className={isTeam1Winner ? 'text-padel-500 font-semibold' : 'text-slate-500'}>
+                      <span className={isTeam1Winner ? 'text-padel-500 font-semibold' : 'text-foreground-muted'}>
                         {score1}
                       </span>
-                      <span className="text-slate-500">:</span>
-                      <span className={isTeam2Winner ? 'text-padel-500 font-semibold' : 'text-slate-500'}>
+                      <span className="text-foreground-muted">:</span>
+                      <span className={isTeam2Winner ? 'text-padel-500 font-semibold' : 'text-foreground-muted'}>
                         {score2}
                       </span>
                     </span>
@@ -141,7 +141,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             className={`cursor-pointer transition-colors truncate ${
                               selectedPlayer === name 
                                 ? 'text-padel-500 font-semibold' 
-                                : 'hover:text-white'
+                                : 'hover:text-foreground'
                             }`}
                           >
                             {displayName}
@@ -157,9 +157,9 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
             {/* Pausing players */}
             {pausingPlayerIndices.length > 0 && (
               <div className="flex justify-center mt-3">
-                <div className="inline-flex items-center gap-2 text-sm text-slate-300 bg-slate-800/30 rounded-lg p-3">
-                  <Coffee className="w-4 h-4 text-slate-400" />
-                  <span className="text-slate-400">{t('results.rounds.pausing')}:</span>
+                <div className="inline-flex items-center gap-2 text-sm text-foreground-muted bg-surface/40 rounded-lg p-3">
+                  <Coffee className="w-4 h-4 text-foreground-muted" />
+                  <span className="text-foreground-muted">{t('results.rounds.pausing')}:</span>
                   <span className="flex flex-wrap gap-x-1">
                     {pausingPlayerIndices.map((idx, i) => {
                       const name = tournament.players[idx].name
@@ -172,7 +172,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             className={`cursor-pointer transition-colors ${
                               selectedPlayer === name 
                                 ? 'text-padel-500 font-semibold' 
-                                : 'hover:text-white'
+                                : 'hover:text-foreground'
                             }`}
                           >
                             {displayName}
@@ -188,7 +188,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
             {/* Divider between rounds */}
             {roundNumber < totalRounds && (
-              <hr className="my-6 sm:my-7 md:my-8 border-t border-slate-700" />
+              <hr className="my-6 sm:my-7 md:my-8 border-t border-border" />
             )}
           </div>
         )

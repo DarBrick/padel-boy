@@ -16,7 +16,7 @@ export function TournamentPlayers({ tournament }: TournamentPlayersProps) {
 
   if (stats.standings.length === 0) {
     return (
-      <div className="text-center py-8 text-slate-400">
+      <div className="text-center py-8 text-foreground-muted">
         {t('results.standings.emptyState')}
       </div>
     )
@@ -26,14 +26,14 @@ export function TournamentPlayers({ tournament }: TournamentPlayersProps) {
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
       {/* Player Selection */}
       <div>
-        <label htmlFor="player-select" className="block text-sm text-slate-400 mb-2">
+        <label htmlFor="player-select" className="block text-sm text-foreground-muted mb-2">
           {t('results.playerDetail.selectPlayer')}
         </label>
         <select
           id="player-select"
           value={selectedPlayerIndex}
           onChange={(e) => setSelectedPlayerIndex(Number(e.target.value))}
-          className="w-full pl-4 pr-10 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white text-base focus:outline-none focus:ring-2 focus:ring-padel-500 focus:border-transparent transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+          className="w-full pl-4 pr-10 py-3 bg-surface border border-border rounded-lg text-foreground text-base focus:outline-none focus:ring-2 focus:ring-padel-500 focus:border-transparent transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
         >
           {stats.standings.map((standing, idx) => (
             <option key={standing.index} value={idx}>

@@ -34,7 +34,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700/50">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border/60">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center justify-between h-16">
             {/* Left: Logo + Title */}
@@ -61,7 +61,7 @@ export function Navbar() {
                     <button
                       key={item.path}
                       disabled
-                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm text-slate-500 cursor-not-allowed opacity-50"
+                      className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm text-foreground-muted cursor-not-allowed opacity-50"
                     >
                       <Icon className="w-4 h-4" />
                       <span className="font-medium">{t(item.label)}</span>
@@ -75,8 +75,8 @@ export function Navbar() {
                     to={item.path}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm transition-colors ${
                       active
-                        ? 'text-padel-500 bg-slate-800/50'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+                        ? 'text-padel-500 bg-surface/70'
+                        : 'text-foreground-muted hover:text-foreground hover:bg-surface/50'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -89,7 +89,7 @@ export function Navbar() {
             {/* Mobile: Hamburger Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-slate-800/50 transition-colors"
+              className="md:hidden p-2 rounded-lg hover:bg-surface/70 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
@@ -102,7 +102,7 @@ export function Navbar() {
 
           {/* Mobile: Dropdown Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-1 border-t border-slate-700/50 bg-slate-900/95 backdrop-blur-sm">
+            <div className="md:hidden py-4 space-y-1 border-t border-border/60 bg-background/95 backdrop-blur-sm">
               {/* Primary Nav Items */}
               {primaryNavItems.map((item) => {
                 const Icon = item.icon;
@@ -114,7 +114,7 @@ export function Navbar() {
                     <button
                       key={item.path}
                       disabled
-                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-500 cursor-not-allowed opacity-50 w-full"
+                      className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground-muted cursor-not-allowed opacity-50 w-full"
                     >
                       <Icon className="w-5 h-5" />
                       <span className="font-medium">{t(item.label)}</span>
@@ -129,8 +129,8 @@ export function Navbar() {
                     onClick={handleNavClick}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       active
-                        ? 'text-padel-500 bg-slate-800/50'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+                        ? 'text-padel-500 bg-surface/70'
+                        : 'text-foreground-muted hover:text-foreground hover:bg-surface/50'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -140,7 +140,7 @@ export function Navbar() {
               })}
 
               {/* Divider */}
-              <div className="border-t border-slate-700/50 my-2" />
+              <div className="border-t border-border/60 my-2" />
 
               {/* Secondary Nav Items */}
               {secondaryNavItems.map((item) => {
@@ -153,8 +153,8 @@ export function Navbar() {
                     onClick={handleNavClick}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       active
-                        ? 'text-padel-500 bg-slate-800/50'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
+                        ? 'text-padel-500 bg-surface/70'
+                        : 'text-foreground-muted hover:text-foreground hover:bg-surface/50'
                     }`}
                   >
                     <Icon className="w-5 h-5" />

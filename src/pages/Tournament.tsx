@@ -81,7 +81,7 @@ export function Tournament() {
           <h1 className="text-3xl font-bold">{t('tournament.notFound')}</h1>
         </div>
         <ContentPanel>
-          <p className="text-slate-400">{t('tournament.notFoundDesc')}</p>
+          <p className="text-foreground-muted">{t('tournament.notFoundDesc')}</p>
         </ContentPanel>
       </div>
     )

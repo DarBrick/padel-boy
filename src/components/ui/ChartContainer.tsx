@@ -54,17 +54,17 @@ interface ChartContainerProps {
 }
 
 const TOOLTIP_CONTENT_STYLE = {
-  backgroundColor: '#1e293b',
-  border: '1px solid #475569',
+  backgroundColor: 'var(--color-background-elevated)',
+  border: '1px solid var(--color-border)',
   borderRadius: '0.5rem',
-  color: '#f1f5f9',
+  color: 'var(--color-foreground)',
 }
 
-const TOOLTIP_LABEL_STYLE = { color: '#cbd5e1' }
+const TOOLTIP_LABEL_STYLE = { color: 'var(--color-foreground-muted)' }
 
-const AXIS_STROKE = '#94a3b8'
-const AXIS_TICK_FILL = { fill: '#94a3b8' }
-const GRID_STROKE = '#334155'
+const AXIS_STROKE = 'var(--color-foreground-muted)'
+const AXIS_TICK_FILL = { fill: 'var(--color-foreground-muted)' }
+const GRID_STROKE = 'var(--color-border)'
 
 export function ChartContainer({
   chartType,
@@ -140,9 +140,9 @@ export function ChartContainer({
   }
 
   return (
-    <div className={`bg-slate-800/50 rounded-lg p-4 ${className}`}>
+    <div className={`bg-surface/60 rounded-lg p-4 ${className}`}>
       {title && (
-        <h4 className="text-sm font-medium text-slate-300 mb-3">{title}</h4>
+        <h4 className="text-sm font-medium text-foreground-muted mb-3">{title}</h4>
       )}
       <div className="[&_*]:!outline-none">
         <ResponsiveContainer width="100%" height={height}>

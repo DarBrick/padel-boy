@@ -24,7 +24,7 @@ const basename = isGitHubPagesSubdirectory ? '/padel-boy' : '/'
 export function App() {
   return (
     <BrowserRouter basename={basename}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+      <div className="min-h-screen bg-gradient-to-br from-background to-background-elevated text-foreground">
         {/* Navigation Bar */}
         <Navbar />
         

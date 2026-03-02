@@ -14,9 +14,9 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
         onClick={onClick}
         className="
           p-3 
-          bg-slate-800 
-          hover:bg-slate-700 
-          border border-slate-600 
+          bg-surface 
+          hover:bg-surface-muted 
+          border border-border 
           hover:border-padel-500
           rounded-full 
           transition-all duration-200
@@ -25,7 +25,7 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
         "
         aria-label={label}
       >
-        <ArrowLeft className="w-6 h-6 text-slate-400 group-hover:text-padel-500 transition-colors" />
+        <ArrowLeft className="w-6 h-6 text-foreground-muted group-hover:text-padel-500 transition-colors" />
       </button>
     )
   }
@@ -35,9 +35,9 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
       onClick={onClick}
       className="
         p-3 
-        bg-slate-800 
-        hover:bg-slate-700 
-        border border-slate-600 
+        bg-surface 
+        hover:bg-surface-muted 
+        border border-border 
         hover:border-padel-500
         rounded-full 
         transition-all duration-200
@@ -52,7 +52,7 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
         (() => {
           const IconComponent: LucideIcon = icon
           return (
-            <IconComponent className="w-6 h-6 text-slate-400 group-hover:text-padel-500 transition-colors" />
+            <IconComponent className="w-6 h-6 text-foreground-muted group-hover:text-padel-500 transition-colors" />
           )
         })()
       )}

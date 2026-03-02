@@ -36,13 +36,13 @@ export function NotFound() {
           <h1 className="text-8xl sm:text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-padel-500 to-white bg-clip-text text-transparent">
             404
           </h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-200">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
             Page Not Found
           </h2>
         </div>
 
         {/* Description */}
-        <p className="text-slate-400 text-base sm:text-lg max-w-md px-4">
+        <p className="text-foreground-muted text-base sm:text-lg max-w-md px-4">
           The page you're looking for doesn't exist or has been moved. Let's get you back on the court!
         </p>
 

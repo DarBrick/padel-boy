@@ -15,7 +15,7 @@ export function TournamentHeader({ tournament, stats }: TournamentHeaderProps) {
 
   return (
     <div>
-      <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+      <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
         {tournament.name || t('tournament.title')}
       </h1>
 
@@ -28,38 +28,38 @@ export function TournamentHeader({ tournament, stats }: TournamentHeaderProps) {
         <span className={`px-3 py-1 rounded-full text-sm font-semibold border ${
           stats.status === 'playing'
             ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-            : 'bg-slate-500/20 text-slate-300 border-slate-500/30'
+            : 'bg-surface/70 text-foreground-muted border-border'
         }`}>
           {t(`pastTournaments.status.${stats.status}`)}
         </span>
 
-        <span className="px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+        <span className="px-3 py-1 bg-surface/70 text-foreground-muted rounded-full text-sm font-medium">
           {tournament.playerCount} {t('tournament.players')}
         </span>
 
         {tournament.format === 'mexicano' && tournament.mexicanoMatchupStyle && (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface/70 text-foreground-muted rounded-full text-sm font-medium">
             <Shuffle className="w-4 h-4" />
             {tournament.mexicanoMatchupStyle}
           </span>
         )}
 
         {tournament.format === 'mexicano' && tournament.mexicanoRandomRounds && (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface/70 text-foreground-muted rounded-full text-sm font-medium">
             <Dices className="w-4 h-4" />
             {tournament.mexicanoRandomRounds}
           </span>
         )}
 
         {tournament.isFixedPairs && (
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm font-medium">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-surface/70 text-foreground-muted rounded-full text-sm font-medium">
             <Users2 className="w-4 h-4" />
             {t('create.fixedPairs.label')}
           </span>
         )}
 
         {tournamentDate && (
-          <span className="px-3 py-1 bg-slate-700/50 text-slate-400 rounded-full text-sm font-medium">
+          <span className="px-3 py-1 bg-surface/70 text-foreground-muted rounded-full text-sm font-medium">
             {tournamentDate}
           </span>
         )}

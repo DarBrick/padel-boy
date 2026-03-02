@@ -201,7 +201,7 @@ export function Create() {
           <input
             type="text"
             {...register('tournamentName')}
-            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-padel-500 focus:outline-none transition-colors"
+            className="w-full px-4 py-3 bg-surface border border-border rounded-lg text-lg focus:border-padel-500 focus:outline-none transition-colors"
             placeholder={generateTournamentName(eventType, t)}
             maxLength={40}
           />
@@ -225,7 +225,7 @@ export function Create() {
           onToggle={() => setIsCourtsExpanded(!isCourtsExpanded)}
         >
           {players.length < 4 ? (
-            <p className="text-slate-400 text-sm">
+            <p className="text-foreground-muted text-sm">
               {t('create.courts.emptyState')}
             </p>
           ) : (
@@ -246,7 +246,7 @@ export function Create() {
                 type="button"
                 onClick={handleAddCourt}
                 disabled={numberOfCourts >= maxCourts}
-                className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-padel-500 border border-dashed border-slate-600 hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+                className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-foreground-muted hover:text-padel-500 border border-dashed border-border hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-foreground-muted disabled:hover:border-border"
               >
                 <Grid2X2Plus className="w-5 h-5" />
                 {t('create.courts.addButton')}
@@ -274,7 +274,7 @@ export function Create() {
             value={pointsPerMatch}
             onChange={(value) => setValue('pointsPerMatch', value as CreateTournamentForm['pointsPerMatch'])}
           />
-          <p className="text-slate-400 text-sm mt-2">
+          <p className="text-foreground-muted text-sm mt-2">
             {t('create.points.desc')}
           </p>
         </CollapsiblePanel>
@@ -287,7 +287,7 @@ export function Create() {
               <div className="flex items-center gap-2">
                 <span className="text-lg font-semibold">{t('create.fixedPairs.label')}</span>
               </div>
-              <p className="text-slate-400 text-sm mt-1">
+              <p className="text-foreground-muted text-sm mt-1">
                 {t('create.fixedPairs.desc')}
               </p>
               <p className="text-amber-400 text-sm mt-2 italic">
@@ -339,7 +339,7 @@ export function Create() {
                 value={randomRounds || 2}
                 onChange={(value) => setValue('randomRounds', value, { shouldValidate: true })}
               />
-              <p className="text-slate-400 text-sm mt-2">
+              <p className="text-foreground-muted text-sm mt-2">
                 {t('create.mexicano.randomRounds.desc')}
               </p>
             </CollapsiblePanel>
@@ -360,7 +360,7 @@ export function Create() {
             type="submit"
             disabled={players.length < 4}
             onClick={() => setPrepareForLater(true)}
-            className="w-full px-6 py-3 text-base font-medium text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:bg-slate-700 hover:text-padel-500 hover:border-padel-500/50 transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-700/50 disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+            className="w-full px-6 py-3 text-base font-medium text-foreground-muted bg-surface/70 border border-border rounded-lg hover:bg-surface-muted hover:text-padel-500 hover:border-padel-500/50 transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-surface/70 disabled:hover:text-foreground-muted disabled:hover:border-border"
           >
             {t('create.submitPrepare')}
           </button>

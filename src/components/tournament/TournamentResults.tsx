@@ -61,11 +61,11 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
         <div className="space-y-4">
           {/* Tournament Name */}
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground">
               {tournament.name || t("tournament.title")}
             </h1>
             {finishedDate && (
-              <div className="text-sm text-slate-400 mt-1 flex items-center gap-2">
+              <div className="text-sm text-foreground-muted mt-1 flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {t("results.header.finishedAt")}: {finishedDate}
               </div>
@@ -75,9 +75,9 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
           {/* Info Badges */}
           <div className="flex flex-wrap gap-2">
             {/* Format Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
               <Trophy className="w-4 h-4 text-padel-500" />
-              <span className="text-white font-medium">
+              <span className="text-foreground font-medium">
                 {tournament.format === "americano"
                   ? t("tournament.format.americano")
                   : t("tournament.format.mexicano")}
@@ -85,42 +85,42 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
             </div>
 
             {/* Players Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <Users className="w-4 h-4 text-slate-400" />
-              <span className="text-slate-300">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+              <Users className="w-4 h-4 text-foreground-muted" />
+              <span className="text-foreground-muted">
                 {tournament.playerCount} {t("tournament.players")}
               </span>
             </div>
 
             {/* Date Badge */}
             {formattedDate && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-                <Calendar className="w-4 h-4 text-slate-400" />
-                <span className="text-slate-300">{formattedDate}</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+                <Calendar className="w-4 h-4 text-foreground-muted" />
+                <span className="text-foreground-muted">{formattedDate}</span>
               </div>
             )}
 
             {/* Rounds Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <Repeat2 className="w-4 h-4 text-slate-400" />
-              <span className="text-white font-medium">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+              <Repeat2 className="w-4 h-4 text-foreground-muted" />
+              <span className="text-foreground font-medium">
                 {stats.totalRounds}
               </span>
             </div>
 
             {/* Matches Badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <Swords className="w-4 h-4 text-slate-400" />
-              <span className="text-white font-medium">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+              <Swords className="w-4 h-4 text-foreground-muted" />
+              <span className="text-foreground font-medium">
                 {stats.finishedMatches}
               </span>
             </div>
 
             {/* Mexicano pairing style */}
             {tournament.format === 'mexicano' && tournament.mexicanoMatchupStyle && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-                <Shuffle className="w-4 h-4 text-slate-400" />
-                <span className="text-white font-medium">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+                <Shuffle className="w-4 h-4 text-foreground-muted" />
+                <span className="text-foreground font-medium">
                   {tournament.mexicanoMatchupStyle}
                 </span>
               </div>
@@ -128,9 +128,9 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
             {/* Mexicano random rounds */}
             {tournament.format === 'mexicano' && tournament.mexicanoRandomRounds && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-                <Dices className="w-4 h-4 text-slate-400" />
-                <span className="text-white font-medium">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+                <Dices className="w-4 h-4 text-foreground-muted" />
+                <span className="text-foreground font-medium">
                   {tournament.mexicanoRandomRounds}
                 </span>
               </div>
@@ -138,9 +138,9 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
 
             {/* Fixed pairs */}
             {tournament.isFixedPairs && (
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-                <Users2 className="w-4 h-4 text-slate-400" />
-                <span className="text-white font-medium">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-surface/70 rounded-lg text-sm">
+                <Users2 className="w-4 h-4 text-foreground-muted" />
+                <span className="text-foreground font-medium">
                   {t('create.fixedPairs.label')}
                 </span>
               </div>

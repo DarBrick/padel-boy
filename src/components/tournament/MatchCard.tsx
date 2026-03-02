@@ -97,7 +97,7 @@ export function MatchCard({
       <ContentPanel className="relative">
         {/* Court Label */}
         <div className="text-center mb-3">
-          <h3 className="text-base font-semibold text-slate-400">
+          <h3 className="text-base font-semibold text-foreground-muted">
             {courtName || t('tournament.courtLabel', { number: courtNumber })}
           </h3>
         </div>
@@ -109,7 +109,7 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(0)}
             disabled={readonly}
-            className="flex items-center gap-1 text-left py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 text-left py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-foreground-muted"
           >
             <div className="space-y-1 flex-1">
               {team1Players.map((name, idx) => (
@@ -118,12 +118,12 @@ export function MatchCard({
                 </div>
               ))}
             </div>
-            <ChevronLeft className="w-4 h-4 text-slate-500 flex-shrink-0" />
+            <ChevronLeft className="w-4 h-4 text-foreground-muted flex-shrink-0" />
           </button>
 
           {/* VS Divider */}
           <div className="flex items-center justify-center px-1 pt-1">
-            <div className="text-sm text-slate-500 font-semibold">
+            <div className="text-sm text-foreground-muted font-semibold">
               {t('tournament.match.vs')}
             </div>
           </div>
@@ -133,9 +133,9 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(1)}
             disabled={readonly}
-            className="flex items-center gap-1 justify-end text-right py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 justify-end text-right py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-foreground-muted"
           >
-            <ChevronRight className="w-4 h-4 text-slate-500 flex-shrink-0" />
+            <ChevronRight className="w-4 h-4 text-foreground-muted flex-shrink-0" />
             <div className="space-y-1 flex-1">
               {team2Players.map((name, idx) => (
                 <div key={idx} className="text-base font-medium truncate">
@@ -148,25 +148,25 @@ export function MatchCard({
 
         {/* Score Display */}
         {match.isFinished && team1Score !== null && team2Score !== null ? (
-          <div className="mt-4 pt-4 border-t border-slate-700">
+          <div className="mt-4 pt-4 border-t border-border">
             <div className="flex items-center justify-center gap-3">
               <button
                 type="button"
                 onClick={() => handleOpenScorePicker(0)}
                 disabled={readonly}
-                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-surface/70 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
                 <span>{team1Score}</span>
-                <ChevronLeft className="w-5 h-5 text-slate-500" />
+                <ChevronLeft className="w-5 h-5 text-foreground-muted" />
               </button>
-              <div className="text-2xl font-bold text-slate-600">-</div>
+              <div className="text-2xl font-bold text-foreground-muted">-</div>
               <button
                 type="button"
                 onClick={() => handleOpenScorePicker(1)}
                 disabled={readonly}
-                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-surface/70 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
-                <ChevronRight className="w-5 h-5 text-slate-500" />
+                <ChevronRight className="w-5 h-5 text-foreground-muted" />
                 <span>{team2Score}</span>
               </button>
             </div>
@@ -179,8 +179,8 @@ export function MatchCard({
             )}
           </div>
         ) : (
-          <div className="mt-4 pt-4 border-t border-slate-700">
-            <div className="text-center text-slate-500 text-sm">
+          <div className="mt-4 pt-4 border-t border-border">
+            <div className="text-center text-foreground-muted text-sm">
               {t('tournament.match.incomplete')}
             </div>
           </div>
@@ -197,7 +197,7 @@ export function MatchCard({
           />
           
           {/* Modal Content */}
-          <div className="relative bg-slate-800 rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-700 shadow-2xl">
+          <div className="relative bg-background-elevated rounded-xl p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border shadow-2xl">
             <div className="mb-6">
               <h3 className="text-xl font-bold text-center mb-2">
                 {t('tournament.match.selectScore')}
@@ -218,10 +218,10 @@ export function MatchCard({
                       handleScoreSelect(selectedTeam, score)
                       handleCloseScorePicker()
                     }}
-                    className="flex flex-col items-center justify-center p-4 bg-slate-700 hover:bg-padel-500 hover:text-slate-900 rounded-lg transition-all min-h-[80px] group"
+                    className="flex flex-col items-center justify-center p-4 bg-surface hover:bg-padel-500 hover:text-background rounded-lg transition-all min-h-[80px] group"
                   >
                     <div className="text-2xl font-bold mb-1">{score}</div>
-                    <div className="text-xs text-slate-400 group-hover:text-slate-700">
+                    <div className="text-xs text-foreground-muted group-hover:text-background/80">
                       vs {opponentScore}
                     </div>
                   </button>
@@ -242,7 +242,7 @@ export function MatchCard({
               <button
                 type="button"
                 onClick={handleCloseScorePicker}
-                className="flex-1 px-6 py-3 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors text-base font-medium"
+                className="flex-1 px-6 py-3 bg-surface hover:bg-surface-muted rounded-lg transition-colors text-base font-medium"
               >
                 {t('common.cancel')}
               </button>

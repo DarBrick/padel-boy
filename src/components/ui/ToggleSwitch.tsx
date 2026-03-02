@@ -13,8 +13,8 @@ export function ToggleSwitch({ checked, onChange, label, disabled = false }: Tog
       disabled={disabled}
       className={`relative w-20 h-10 rounded-full transition-all duration-300 flex-shrink-0 border-2 flex items-center ${
         checked 
-          ? 'bg-gradient-to-r from-slate-600 to-slate-500 shadow-[0_0_20px_rgba(212,255,0,0.2)] border-slate-500' 
-          : 'border-slate-600'
+          ? 'bg-gradient-to-r from-surface-muted to-surface shadow-[0_0_20px_rgba(212,255,0,0.2)] border-border' 
+          : 'border-border'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
       aria-label={label}
       aria-checked={checked}

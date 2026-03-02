@@ -10,15 +10,15 @@ interface ContentPanelProps {
 
 export function ContentPanel({ children, icon: Icon, title, className = '' }: ContentPanelProps) {
   return (
-    <section className={`bg-slate-800/50 border border-padel-500/20 rounded-lg p-3 md:p-6 transition-all duration-200 hover:shadow-xl hover:border-padel-500/60 ${className}`}>
+    <section className={`bg-surface/60 border border-border/70 rounded-lg p-3 md:p-6 transition-all duration-200 hover:shadow-xl hover:border-padel-500/60 ${className}`}>
       {(Icon || title) && (
-        <h2 className="text-2xl font-bold text-white mb-4 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-foreground mb-4 flex items-center gap-2">
           {Icon && <Icon className="w-6 h-6 text-padel-500" />}
           {title}
         </h2>
       )}
       {(Icon || title) ? (
-        <div className="text-slate-300 leading-relaxed whitespace-pre-line">
+        <div className="text-foreground-muted leading-relaxed whitespace-pre-line">
           {children}
         </div>
       ) : (

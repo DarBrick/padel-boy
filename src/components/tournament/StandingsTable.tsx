@@ -17,7 +17,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
 
   if (standings.length === 0) {
     return (
-      <div className="text-center py-8 text-slate-400">
+      <div className="text-center py-8 text-foreground-muted">
         {t('results.standings.emptyState')}
       </div>
     )
@@ -82,52 +82,52 @@ export function StandingsTable({ standings }: StandingsTableProps) {
   return (
     <div className="overflow-x-auto -mx-4 sm:-mx-5 md:-mx-6">
       <div className="inline-block min-w-full align-middle">
-        <table className="min-w-full divide-y divide-slate-700">
-          <thead className="bg-slate-800/50">
+        <table className="min-w-full divide-y divide-border">
+          <thead className="bg-surface/60">
             <tr>
               <th className="px-3 py-3 w-10" aria-label="Selection">
               </th>
               <th
                 onClick={() => handleSort('rank')}
-                className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+                className="px-3 py-3 text-left text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.rank')}
                 <SortIcon field="rank" />
               </th>
-              <th className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider whitespace-nowrap">
+              <th className="px-3 py-3 text-left text-xs font-medium text-foreground-muted uppercase tracking-wider whitespace-nowrap">
                 {t('results.standings.player')}
               </th>
               <th
                 onClick={() => handleSort('record')}
-                className="px-3 py-3 text-center text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+                className="px-3 py-3 text-center text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.record')}
                 <SortIcon field="record" />
               </th>
               <th
                 onClick={() => handleSort('winRate')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.winRate')}
                 <SortIcon field="winRate" />
               </th>
               <th
                 onClick={() => handleSort('totalPoints')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.totalPoints')}
                 <SortIcon field="totalPoints" />
               </th>
               <th
                 onClick={() => handleSort('pointsPerGame')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.pointsPerGame')}
                 <SortIcon field="pointsPerGame" />
               </th>
             </tr>
           </thead>
-          <tbody className="bg-slate-800/30 divide-y divide-slate-700">
+          <tbody className="bg-surface/40 divide-y divide-border">
             {sortedStandings.map((standing) => (
               <tr 
                 key={standing.index}
@@ -135,7 +135,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                 className={`cursor-pointer transition-colors ${
                   selectedIndex === standing.index 
                     ? 'bg-padel-500/10 ring-2 ring-padel-500/30 ring-inset' 
-                    : 'hover:bg-slate-700/30'
+                    : 'hover:bg-surface/70'
                 }`}
               >
                     <td className="px-3 py-4 whitespace-nowrap">
@@ -143,7 +143,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                         <Check className="w-5 h-5 text-padel-500" />
                       )}
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-white">
+                    <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                       <div className="flex items-center gap-2">
                         <span>{standing.rank}</span>
                         {getMedalEmoji(standing.rank) && (
@@ -151,20 +151,20 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                         )}
                       </div>
                     </td>
-                    <td className="px-3 py-4 text-sm text-white font-medium">
+                    <td className="px-3 py-4 text-sm text-foreground font-medium">
                       {standing.name}
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-center text-slate-300">
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-center text-foreground-muted">
                       <span className="text-green-400">{standing.wins}</span>
-                      <span className="text-slate-500 mx-1">/</span>
+                      <span className="text-foreground-muted mx-1">/</span>
                       <span className="text-yellow-400">{standing.draws}</span>
-                      <span className="text-slate-500 mx-1">/</span>
+                      <span className="text-foreground-muted mx-1">/</span>
                       <span className="text-red-400">{standing.losses}</span>
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-slate-300">
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-foreground-muted">
                       {(standing.winRate * 100).toFixed(0)}%
                     </td>
-                    <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-slate-300">
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-foreground-muted">
                       {standing.totalPointsWithSitting}
                     </td>
                 <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-padel-500 font-bold">

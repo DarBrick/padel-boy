@@ -8,6 +8,10 @@ import { getPartnershipStats, getOpponentStats, getStandingsProgression, getPlay
 import { getTournamentStats } from '../../utils/tournamentStats'
 import { ChartContainer } from '../ui'
 
+const NEUTRAL_STROKE = 'var(--color-foreground-muted)'
+const PAUSED_STROKE = 'var(--color-court-blue)'
+const LABEL_COLOR = 'var(--color-foreground-muted)'
+
 interface PlayerDetailCardProps {
   standing: PlayerStanding
   tournament: StoredTournament
@@ -56,13 +60,13 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           value={standing.totalPointsWithSitting}
           color="text-padel-500"
         />
-        <div className="bg-slate-700/50 rounded-lg p-3">
-          <div className="text-sm text-slate-400 mb-1">{t('results.standings.record')}</div>
+        <div className="bg-surface/70 rounded-lg p-3">
+          <div className="text-sm text-foreground-muted mb-1">{t('results.standings.record')}</div>
           <div className="text-2xl font-bold whitespace-nowrap">
             <span className="text-green-400">{standing.wins}</span>
-            <span className="text-slate-500 mx-1">/</span>
+            <span className="text-foreground-muted mx-1">/</span>
             <span className="text-yellow-400">{standing.draws}</span>
-            <span className="text-slate-500 mx-1">/</span>
+            <span className="text-foreground-muted mx-1">/</span>
             <span className="text-red-400">{standing.losses}</span>
           </div>
         </div>
@@ -78,20 +82,20 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
 
       {/* Legend */}
       {chartData.length > 0 && (
-        <div className="bg-slate-800/50 rounded-lg p-3">
-          <h4 className="text-xs font-medium text-slate-400 mb-2">{t('results.playerDetail.legend')}</h4>
+        <div className="bg-surface/60 rounded-lg p-3">
+          <h4 className="text-xs font-medium text-foreground-muted mb-2">{t('results.playerDetail.legend')}</h4>
           <div className="flex flex-wrap gap-4">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--color-padel-yellow)' }} />
-              <span className="text-xs text-slate-300">{t('results.playerDetail.legendWon')}</span>
+              <span className="text-xs text-foreground-muted">{t('results.playerDetail.legendWon')}</span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-slate-500" />
-              <span className="text-xs text-slate-300">{t('results.playerDetail.legendLostDrew')}</span>
+              <div className="w-3 h-3 rounded-full bg-foreground-muted" />
+              <span className="text-xs text-foreground-muted">{t('results.playerDetail.legendLostDrew')}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-blue-500" />
-              <span className="text-xs text-slate-300">{t('results.playerDetail.legendPaused')}</span>
+              <span className="text-xs text-foreground-muted">{t('results.playerDetail.legendPaused')}</span>
             </div>
           </div>
         </div>
@@ -126,15 +130,15 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           <Line
             type="monotone"
             dataKey="points"
-            stroke="#64748b"
+            stroke={NEUTRAL_STROKE}
             strokeWidth={2}
             isAnimationActive={false}
             dot={(props: any) => {
               const { cx, cy, payload, index } = props
               const outcome = payload.outcome
-              let fill = '#64748b'
+              let fill = NEUTRAL_STROKE
               if (outcome === 'won') fill = 'var(--color-padel-yellow)'
-              else if (outcome === 'paused') fill = '#3b82f6'
+              else if (outcome === 'paused') fill = PAUSED_STROKE
               const isActive = activeScoreIndex === index
               return (
                 <circle 
@@ -148,7 +152,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
               )
             }}
             activeDot={false}
-            label={(props: any) => <text x={props.x} y={props.y - 12} fill="#cbd5e1" fontSize="11" fontWeight="500" textAnchor="middle">{props.value}</text>}
+            label={(props: any) => <text x={props.x} y={props.y - 12} fill={LABEL_COLOR} fontSize="11" fontWeight="500" textAnchor="middle">{props.value}</text>}
           />
         </ChartContainer>
       )}
@@ -183,15 +187,15 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           <Line
             type="monotone"
             dataKey="rank"
-            stroke="#64748b"
+            stroke={NEUTRAL_STROKE}
             strokeWidth={2}
             isAnimationActive={false}
             dot={(props: any) => {
               const { cx, cy, payload, index } = props
               const outcome = payload.outcome
-              let fill = '#64748b'
+              let fill = NEUTRAL_STROKE
               if (outcome === 'won') fill = 'var(--color-padel-yellow)'
-              else if (outcome === 'paused') fill = '#3b82f6'
+              else if (outcome === 'paused') fill = PAUSED_STROKE
               const isActive = activeRankIndex === index
               return (
                 <circle 
@@ -205,15 +209,15 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
               )
             }}
             activeDot={false}
-            label={(props: any) => <text x={props.x} y={props.y - 12} fill="#cbd5e1" fontSize="11" fontWeight="500" textAnchor="middle">#{props.value}</text>}
+            label={(props: any) => <text x={props.x} y={props.y - 12} fill={LABEL_COLOR} fontSize="11" fontWeight="500" textAnchor="middle">#{props.value}</text>}
           />
         </ChartContainer>
       )}
 
       {/* Partnerships */}
       {playerPartnerships.length > 0 && (
-        <div className="bg-slate-800/50 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-slate-300 mb-3">
+        <div className="bg-surface/60 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-foreground-muted mb-3">
             {t('results.playerDetail.partnerships')}
           </h4>
           <div className="space-y-2">
@@ -229,13 +233,13 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
                     key={`${partnership.player1Index}-${partnership.player2Index}`}
                     className="flex justify-between items-center text-sm"
                   >
-                    <span className="text-white">{partnerName}</span>
+                    <span className="text-foreground">{partnerName}</span>
                     <div className="flex items-center gap-4">
-                      <span className="text-slate-400 flex items-center gap-1">
+                      <span className="text-foreground-muted flex items-center gap-1">
                         <Link className="w-3.5 h-3.5" />
                         {partnership.gamesPlayed}
                       </span>
-                      <span className="text-slate-400">
+                      <span className="text-foreground-muted">
                         {partnership.pointsGained}p
                       </span>
                       <span className="text-padel-500 font-medium flex items-center gap-1">
@@ -252,8 +256,8 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
 
       {/* Opponents */}
       {opponentStats.length > 0 && (
-        <div className="bg-slate-800/50 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-slate-300 mb-3">
+        <div className="bg-surface/60 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-foreground-muted mb-3">
             {t('results.playerDetail.opponents')}
           </h4>
           <div className="space-y-2">
@@ -262,13 +266,13 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
                 key={opponent.opponentIndex}
                 className="flex justify-between items-center text-sm"
               >
-                <span className="text-white">{opponent.opponentName}</span>
+                <span className="text-foreground">{opponent.opponentName}</span>
                 <div className="flex items-center gap-4">
-                  <span className="text-slate-400 flex items-center gap-1">
+                  <span className="text-foreground-muted flex items-center gap-1">
                     <Swords className="w-3.5 h-3.5" />
                     {opponent.gamesPlayed}
                   </span>
-                  <span className="text-slate-400">
+                  <span className="text-foreground-muted">
                     {opponent.pointsScored}p
                   </span>
                   <span className="text-padel-500 font-medium flex items-center gap-1">
@@ -284,8 +288,8 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
 
       {/* Consistency */}
       {consistency && (
-        <div className="bg-slate-800/50 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-slate-300 mb-3">
+        <div className="bg-surface/60 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-foreground-muted mb-3">
             {t('results.playerDetail.consistency')}
           </h4>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -325,8 +329,8 @@ interface StatCardProps {
 
 function StatCard({ label, value, color = 'text-white', small = false }: StatCardProps) {
   return (
-    <div className="bg-slate-700/50 rounded-lg p-3">
-      <div className={`${small ? 'text-xs' : 'text-sm'} text-slate-400 mb-1`}>{label}</div>
+    <div className="bg-surface/70 rounded-lg p-3">
+      <div className={`${small ? 'text-xs' : 'text-sm'} text-foreground-muted mb-1`}>{label}</div>
       <div className={`${small ? 'text-lg' : 'text-2xl'} font-bold ${color}`}>{value}</div>
     </div>
   )

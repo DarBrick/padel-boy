@@ -18,12 +18,12 @@ export function CorruptionBanner() {
           <h3 className="text-lg font-semibold text-amber-500 mb-1">
             {t('pastTournaments.corruption.title')}
           </h3>
-          <p className="text-slate-300 text-sm mb-3">
+          <p className="text-foreground-muted text-sm mb-3">
             {t('pastTournaments.corruption.description', { count: corruptedIds.length })}
           </p>
           <button
             onClick={removeCorruptedTournaments}
-            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium rounded-lg transition-colors text-sm min-h-[44px]"
+            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-background font-medium rounded-lg transition-colors text-sm min-h-[44px]"
           >
             {t('pastTournaments.corruption.removeButton')}
           </button>

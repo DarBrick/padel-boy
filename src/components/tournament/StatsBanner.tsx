@@ -7,7 +7,7 @@ export function StatsBanner() {
   const navigate = useNavigate()
 
   return (
-    <div className="bg-gradient-to-r from-slate-800/50 to-slate-700/50 border border-padel-500/30 rounded-lg p-5 sm:p-6 md:p-7">
+    <div className="bg-gradient-to-r from-surface/70 to-surface-muted/70 border border-padel-500/30 rounded-lg p-5 sm:p-6 md:p-7">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
         {/* Active Development */}
         <div className="flex items-start gap-3">
@@ -15,10 +15,10 @@ export function StatsBanner() {
             <Rocket className="w-5 h-5 text-padel-500" />
           </div>
           <div>
-            <div className="text-2xl font-bold text-white mb-1">
+            <div className="text-2xl font-bold text-foreground mb-1">
               {t('home.stats.activelyDeveloped')}
             </div>
-            <div className="text-sm text-slate-400">
+            <div className="text-sm text-foreground-muted">
               {t('home.stats.activeDevelopmentDesc')}
             </div>
           </div>
@@ -30,10 +30,10 @@ export function StatsBanner() {
             <CheckCircle2 className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <div className="text-2xl font-bold text-white mb-1">
+            <div className="text-2xl font-bold text-foreground mb-1">
               {t('home.stats.featuresCount')}
             </div>
-            <div className="text-sm text-slate-400">
+            <div className="text-sm text-foreground-muted">
               {t('home.stats.featuresCountDesc')}
             </div>
           </div>
@@ -45,7 +45,7 @@ export function StatsBanner() {
             <Sparkles className="w-5 h-5 text-purple-400" />
           </div>
           <div>
-            <div className="text-lg font-semibold text-white mb-1">
+            <div className="text-lg font-semibold text-foreground mb-1">
               {t('home.stats.moreComing')}
             </div>
             <button

@@ -45,7 +45,7 @@ export function TournamentActions({
         )}
         <button
           onClick={onFinishTournament}
-          className="w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded-lg transition-colors text-base font-medium min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+          className="w-full px-6 py-3 bg-surface hover:bg-surface-muted text-foreground-muted hover:text-foreground rounded-lg transition-colors text-base font-medium min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
         >
           {t('tournament.finishTournament')}
         </button>
@@ -56,7 +56,7 @@ export function TournamentActions({
   // Show remaining matches info if not able to finish
   return (
     <div className="text-center">
-      <span className="text-sm text-slate-400">
+      <span className="text-sm text-foreground-muted">
         {t('tournament.matchesRemaining', { count: remainingMatches })}
       </span>
     </div>
