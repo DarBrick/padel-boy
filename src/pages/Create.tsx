@@ -3,12 +3,13 @@ import { useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LayoutGrid, PencilLine, Shuffle, Dices, Trophy, Handshake, Grid2X2Plus, Sparkles } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { createTournamentSchema, type CreateTournamentForm, type StoredTournament } from '../schemas/tournament'
 import { generateTournamentName } from '../utils/tournament'
 import { generateTournamentId } from '../utils/tournamentId'
 import { useTournaments } from '../stores/tournaments'
+import { useCreateDefaults } from '../stores/createDefaults'
 import { CollapsiblePanel } from '../components/ui'
 import { SliderInput } from '../components/ui'
 import { RadioCardGroup } from '../components/ui'
@@ -22,6 +23,14 @@ export function Create() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { addTournament } = useTournaments()
+  const createDefaultsRef = useRef(useCreateDefaults.getState())
+  const {
+    defaultEventType,
+    defaultPointsPerMatch,
+    defaultMexicanoMatchupStyle,
+    defaultMexicanoRandomRounds,
+    defaultCourtNames,
+  } = createDefaultsRef.current
 
   const {
     register,
@@ -32,13 +41,13 @@ export function Create() {
   } = useForm<CreateTournamentForm>({
     resolver: zodResolver(createTournamentSchema),
     defaultValues: {
-      eventType: 'americano',
+      eventType: defaultEventType,
       tournamentName: '',
       numberOfPlayers: 0,
       numberOfCourts: 0,
-      pointsPerMatch: '21',
-      matchupStyle: '1&4vs2&3',
-      randomRounds: 2,
+      pointsPerMatch: defaultPointsPerMatch,
+      matchupStyle: defaultMexicanoMatchupStyle,
+      randomRounds: defaultMexicanoRandomRounds,
     },
   })
 
@@ -56,7 +65,7 @@ export function Create() {
   const [isFixedPairs, setIsFixedPairs] = useState(false)
   
   const [players, setPlayers] = useState<string[]>([])
-  const [courtNames, setCourtNames] = useState<string[]>([])
+  const [courtNames, setCourtNames] = useState<string[]>(() => defaultCourtNames.map((name) => name.slice(0, 16)))
   const [prepareForLater, setPrepareForLater] = useState(false)
 
   const maxCourts = Math.floor(numberOfPlayers / 4)
@@ -69,15 +78,18 @@ export function Create() {
     // Sync courtNames array with new courts count
     setCourtNames(prev => {
       if (newCourts > prev.length) {
-        // Add empty strings for new courts
-        return [...prev, ...Array(newCourts - prev.length).fill('')]
+        const namesToAdd = Array.from({ length: newCourts - prev.length }, (_, offset) => {
+          const templateIndex = prev.length + offset
+          return defaultCourtNames[templateIndex] || ''
+        })
+        return [...prev, ...namesToAdd]
       } else if (newCourts < prev.length) {
         // Trim array if courts decreased
         return prev.slice(0, newCourts)
       }
       return prev
     })
-  }, [players.length, setValue])
+  }, [players.length, setValue, defaultCourtNames])
 
   // Sync numberOfPlayers with players array length
   useEffect(() => {
@@ -103,7 +115,7 @@ export function Create() {
     if (numberOfCourts < maxCourts) {
       const newCount = numberOfCourts + 1
       setValue('numberOfCourts', newCount, { shouldValidate: true })
-      setCourtNames(prev => [...prev, ''])
+      setCourtNames(prev => [...prev, defaultCourtNames[prev.length] || ''])
     }
   }
 
@@ -320,7 +332,7 @@ export function Create() {
                   { value: '1&4vs2&3', label: t('create.mexicano.matchup.desc1') },
                   { value: '1&3vs2&4', label: t('create.mexicano.matchup.desc2') },
                 ]}
-                value={matchupStyle || '1&4vs2&3'}
+                value={matchupStyle || defaultMexicanoMatchupStyle}
                 onChange={(value) => setValue('matchupStyle', value as '1&4vs2&3' | '1&3vs2&4')}
               />
             </CollapsiblePanel>
@@ -329,14 +341,14 @@ export function Create() {
             <CollapsiblePanel
               icon={<Dices className="w-5 h-5 inline-block mr-2" />}
               label={t('create.mexicano.randomRounds.label')}
-              value={randomRounds || 2}
+              value={randomRounds || defaultMexicanoRandomRounds}
               isExpanded={isRandomRoundsExpanded}
               onToggle={() => setIsRandomRoundsExpanded(!isRandomRoundsExpanded)}
             >
               <SliderInput
                 min={1}
                 max={5}
-                value={randomRounds || 2}
+                value={randomRounds || defaultMexicanoRandomRounds}
                 onChange={(value) => setValue('randomRounds', value, { shouldValidate: true })}
               />
               <p className="text-foreground-muted text-sm mt-2">

@@ -15,6 +15,17 @@ const translation = {
   settings: {
     description: 'Customize your Padel Boy experience',
     language: 'Language',
+    createDefaults: {
+      title: 'Tournament Creation Defaults',
+      description: 'These values are used to prefill newly opened Create forms.',
+      points: 'Default Points Per Match',
+      matchupStyle: 'Default Mexicano Pairing',
+      randomRounds: 'Default Mexicano Random Rounds',
+      courtNames: 'Default Court Names',
+      courtNamesHint: 'Optional names used to prefill courts in new tournaments.',
+      courtNamesEmpty: 'No default court names configured yet.',
+      addCourtName: 'Add Court Name',
+    },
   },
   language: {
     switch: 'Switch language',

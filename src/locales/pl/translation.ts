@@ -15,6 +15,17 @@ const translation = {
   settings: {
     description: 'Dostosuj swoje doświadczenie z Padel Boy',
     language: 'Język',
+    createDefaults: {
+      title: 'Domyślne Ustawienia Tworzenia Turnieju',
+      description: 'Te wartości służą do wstępnego wypełniania nowo otwieranych formularzy tworzenia.',
+      points: 'Domyślna Liczba Punktów na Mecz',
+      matchupStyle: 'Domyślne Parowanie Mexicano',
+      randomRounds: 'Domyślne Losowe Rundy Mexicano',
+      courtNames: 'Domyślne Nazwy Kortów',
+      courtNamesHint: 'Opcjonalne nazwy używane do wypełniania kortów w nowych turniejach.',
+      courtNamesEmpty: 'Nie skonfigurowano jeszcze domyślnych nazw kortów.',
+      addCourtName: 'Dodaj Nazwę Kortu',
+    },
   },
   language: {
     switch: 'Zmień język',

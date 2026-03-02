@@ -15,6 +15,17 @@ const translation = {
   settings: {
     description: 'Personaliza tu experiencia con Padel Boy',
     language: 'Idioma',
+    createDefaults: {
+      title: 'Valores Predeterminados de Creación de Torneos',
+      description: 'Estos valores se usan para rellenar nuevos formularios de creación.',
+      points: 'Puntos Predeterminados por Partido',
+      matchupStyle: 'Emparejamiento Predeterminado de Mexicano',
+      randomRounds: 'Rondas Aleatorias Predeterminadas de Mexicano',
+      courtNames: 'Nombres Predeterminados de Pistas',
+      courtNamesHint: 'Nombres opcionales para rellenar pistas en torneos nuevos.',
+      courtNamesEmpty: 'Aún no hay nombres predeterminados de pistas configurados.',
+      addCourtName: 'Añadir Nombre de Pista',
+    },
   },
   language: {
     switch: 'Cambiar idioma',
