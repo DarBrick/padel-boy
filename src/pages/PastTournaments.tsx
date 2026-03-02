@@ -12,6 +12,7 @@ import { useTournaments } from '../stores/tournaments'
 import { groupTournamentsByDate } from '../utils/dateGrouping'
 import { shareTournament } from '../utils/shareHelper'
 import { filterTournamentsBySearch } from '../utils/tournamentSearch'
+import { extractTimestampFromId } from '../utils/tournamentId'
 import type { StoredTournament } from '../schemas/tournament'
 import type { TournamentStatus } from '../utils/tournamentSearch'
 
@@ -84,6 +85,10 @@ export function PastTournaments() {
       status: selectedStatus || undefined,
       dateFrom: dateRange.dateFrom,
       dateTo: dateRange.dateTo,
+    }).sort((a, b) => {
+      const dateA = extractTimestampFromId(a.id)
+      const dateB = extractTimestampFromId(b.id)
+      return dateB.getTime() - dateA.getTime()
     })
   }, [tournaments, searchQuery, selectedFormat, selectedStatus, dateRange])
   
