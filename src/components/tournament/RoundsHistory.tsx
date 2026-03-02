@@ -106,9 +106,9 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                           <div 
                             key={idx}
                             onClick={(e) => handlePlayerClick(name, e)}
-                            className={`cursor-pointer transition-colors truncate ${
+                            className={`cursor-pointer transition-colors truncate rounded-md px-1.5 py-0.5 ${
                               selectedPlayer === name 
-                                ? 'text-padel-500 font-semibold' 
+                                ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}
                           >
@@ -138,9 +138,9 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                           <div 
                             key={idx}
                             onClick={(e) => handlePlayerClick(name, e)}
-                            className={`cursor-pointer transition-colors truncate ${
+                            className={`cursor-pointer transition-colors truncate rounded-md px-1.5 py-0.5 ${
                               selectedPlayer === name 
-                                ? 'text-padel-500 font-semibold' 
+                                ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}
                           >
@@ -169,9 +169,9 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                         <span key={idx}>
                           <span
                             onClick={(e) => handlePlayerClick(name, e)}
-                            className={`cursor-pointer transition-colors ${
+                            className={`inline-block cursor-pointer transition-colors rounded-md px-1.5 py-0.5 ${
                               selectedPlayer === name 
-                                ? 'text-padel-500 font-semibold' 
+                                ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}
                           >
