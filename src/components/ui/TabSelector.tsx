@@ -22,7 +22,7 @@ export function TabSelector({ tabs, activeTab, onTabChange }: TabSelectorProps) 
                 tab.disabled
                   ? 'bg-slate-800/30 text-slate-600 border-2 border-slate-800 cursor-not-allowed opacity-50'
                   : activeTab === tab.id
-                  ? 'bg-slate-800 text-[var(--color-padel-yellow)] border-2 border-[var(--color-padel-yellow)] shadow-[0_0_10px_rgba(212,255,0,0.3)]'
+                  ? 'bg-slate-800 text-padel-500 border-2 border-padel-500 shadow-[0_0_10px_rgba(212,255,0,0.3)]'
                   : 'bg-slate-800/50 text-slate-300 border-2 border-slate-700 hover:border-slate-600 hover:text-white'
               }
             `}

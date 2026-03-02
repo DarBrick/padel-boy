@@ -108,7 +108,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             onClick={(e) => handlePlayerClick(name, e)}
                             className={`cursor-pointer transition-colors truncate ${
                               selectedPlayer === name 
-                                ? 'text-[var(--color-padel-yellow)] font-semibold' 
+                                ? 'text-padel-500 font-semibold' 
                                 : 'hover:text-white'
                             }`}
                           >
@@ -120,11 +120,11 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
                     {/* Score - fixed width, always centered */}
                     <span className="flex-shrink-0 w-12 sm:w-14 flex items-center gap-1 justify-center">
-                      <span className={isTeam1Winner ? 'text-[var(--color-padel-yellow)] font-semibold' : 'text-slate-500'}>
+                      <span className={isTeam1Winner ? 'text-padel-500 font-semibold' : 'text-slate-500'}>
                         {score1}
                       </span>
                       <span className="text-slate-500">:</span>
-                      <span className={isTeam2Winner ? 'text-[var(--color-padel-yellow)] font-semibold' : 'text-slate-500'}>
+                      <span className={isTeam2Winner ? 'text-padel-500 font-semibold' : 'text-slate-500'}>
                         {score2}
                       </span>
                     </span>
@@ -140,7 +140,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             onClick={(e) => handlePlayerClick(name, e)}
                             className={`cursor-pointer transition-colors truncate ${
                               selectedPlayer === name 
-                                ? 'text-[var(--color-padel-yellow)] font-semibold' 
+                                ? 'text-padel-500 font-semibold' 
                                 : 'hover:text-white'
                             }`}
                           >
@@ -171,7 +171,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                             onClick={(e) => handlePlayerClick(name, e)}
                             className={`cursor-pointer transition-colors ${
                               selectedPlayer === name 
-                                ? 'text-[var(--color-padel-yellow)] font-semibold' 
+                                ? 'text-padel-500 font-semibold' 
                                 : 'hover:text-white'
                             }`}
                           >

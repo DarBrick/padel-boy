@@ -174,7 +174,7 @@ export function PastTournaments() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('pastTournaments.searchPlaceholder')}
-                className="w-full pl-12 pr-12 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+                className="w-full pl-12 pr-12 py-3 bg-slate-800 border border-slate-700 rounded-lg text-base text-white placeholder:text-slate-400 focus:border-padel-500 focus:outline-none transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
               />
               {searchQuery && (
                 <button
@@ -195,7 +195,7 @@ export function PastTournaments() {
             <select
               value={selectedFormat || ''}
               onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
-              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
             >
               <option value="">{t('pastTournaments.filters.allFormats')}</option>
               <option value="americano">Americano</option>
@@ -223,7 +223,7 @@ export function PastTournaments() {
             <select
               value={selectedStatus || ''}
               onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
-              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+              className="w-full px-3 py-2 pr-10 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:border-padel-500 focus:outline-none transition-colors appearance-none min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
             >
               <option value="">{t('pastTournaments.filters.allStatus')}</option>
               <option value="setup">{t('pastTournaments.filters.setup')}</option>
@@ -248,7 +248,7 @@ export function PastTournaments() {
             </div>
           
           {/* Unified date range bar */}
-          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-[var(--color-padel-yellow)] transition-colors min-w-[240px]">
+          <div className="relative flex items-center gap-2 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors min-w-[240px]">
             {/* From date section */}
             <button
               type="button"
@@ -394,7 +394,7 @@ export function PastTournaments() {
                 </p>
                 <button
                   onClick={handleLoadMore}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-[var(--color-padel-yellow)] border border-dashed border-slate-600 hover:border-[var(--color-padel-yellow)]/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-padel-500 border border-dashed border-slate-600 hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
                 >
                   <Download className="w-5 h-5" />
                   {t('pastTournaments.loadMore')}

@@ -54,7 +54,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
         <StatCard
           label={t('results.playerDetail.totalPointsWithSitting')}
           value={standing.totalPointsWithSitting}
-          color="text-[var(--color-padel-yellow)]"
+          color="text-padel-500"
         />
         <div className="bg-slate-700/50 rounded-lg p-3">
           <div className="text-sm text-slate-400 mb-1">{t('results.standings.record')}</div>
@@ -238,7 +238,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
                       <span className="text-slate-400">
                         {partnership.pointsGained}p
                       </span>
-                      <span className="text-[var(--color-padel-yellow)] font-medium flex items-center gap-1">
+                      <span className="text-padel-500 font-medium flex items-center gap-1">
                         <CircleSlash2 className="w-3.5 h-3.5" />
                         {partnership.avgPointsPerGame.toFixed(1)}
                       </span>
@@ -271,7 +271,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
                   <span className="text-slate-400">
                     {opponent.pointsScored}p
                   </span>
-                  <span className="text-[var(--color-padel-yellow)] font-medium flex items-center gap-1">
+                  <span className="text-padel-500 font-medium flex items-center gap-1">
                     <CircleSlash2 className="w-3.5 h-3.5" />
                     {opponent.avgPointsPerGame.toFixed(1)}
                   </span>

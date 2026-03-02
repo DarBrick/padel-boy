@@ -25,12 +25,12 @@ export function CookieBanner() {
             {/* Message */}
             <div className="flex-1 pr-8">
               <p className="text-slate-300 text-sm md:text-base flex items-start gap-2">
-                <Cookie className="w-5 h-5 flex-shrink-0 mt-0.5 text-[var(--color-padel-yellow)]" />
+                <Cookie className="w-5 h-5 flex-shrink-0 mt-0.5 text-padel-500" />
                 <span>
                   {t('cookieBanner.message')}{' '}
                   <button
                     onClick={handlePrivacyClick}
-                    className="text-[var(--color-padel-yellow)] underline hover:text-[#C5F000] transition-colors"
+                    className="text-padel-500 underline hover:text-padel-400 transition-colors"
                   >
                     {t('privacy.title')}
                   </button>
@@ -42,7 +42,7 @@ export function CookieBanner() {
             <div className="flex items-center justify-center md:justify-end gap-3 w-full md:w-auto">
               <button
                 onClick={dismissBanner}
-                className="max-w-[200px] flex-1 md:flex-none px-6 py-2.5 bg-gradient-to-r from-blue-600 to-[var(--color-padel-yellow)] hover:from-blue-500 hover:to-[#C5F000] rounded-lg text-white text-sm font-semibold transition-all min-h-[44px]"
+                className="max-w-[200px] flex-1 md:flex-none px-6 py-2.5 bg-gradient-to-r from-blue-600 to-padel-500 hover:from-blue-500 hover:to-padel-400 rounded-lg text-white text-sm font-semibold transition-all min-h-[44px]"
               >
                 {t('cookieBanner.accept')}
               </button>

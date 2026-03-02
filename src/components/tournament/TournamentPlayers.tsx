@@ -33,7 +33,7 @@ export function TournamentPlayers({ tournament }: TournamentPlayersProps) {
           id="player-select"
           value={selectedPlayerIndex}
           onChange={(e) => setSelectedPlayerIndex(Number(e.target.value))}
-          className="w-full pl-4 pr-10 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white text-base focus:outline-none focus:ring-2 focus:ring-[var(--color-padel-yellow)] focus:border-transparent transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+          className="w-full pl-4 pr-10 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white text-base focus:outline-none focus:ring-2 focus:ring-padel-500 focus:border-transparent transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
         >
           {stats.standings.map((standing, idx) => (
             <option key={standing.index} value={idx}>

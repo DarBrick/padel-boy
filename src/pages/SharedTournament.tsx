@@ -57,7 +57,7 @@ export function SharedTournament() {
       <ContentPanel>
         <div className="text-center py-16">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-800 mb-4">
-            <div className="w-8 h-8 border-4 border-slate-600 border-t-[var(--color-padel-yellow)] rounded-full animate-spin" />
+            <div className="w-8 h-8 border-4 border-slate-600 border-t-padel-500 rounded-full animate-spin" />
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">
             {t('shared.loading')}

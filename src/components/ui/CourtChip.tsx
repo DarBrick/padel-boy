@@ -46,7 +46,7 @@ export function CourtChip({ name, index, onRename, onDelete, canRemove = true }:
 
   if (isEditing) {
     return (
-      <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-[var(--color-padel-yellow)] rounded-lg">
+      <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-padel-500 rounded-lg">
         <input
           ref={inputRef}
           type="text"
@@ -63,14 +63,14 @@ export function CourtChip({ name, index, onRename, onDelete, canRemove = true }:
   }
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-padel-500/50 transition-colors">
       <button
         type="button"
         onClick={() => {
           setEditValue(name)
           setIsEditing(true)
         }}
-        className="text-base hover:text-[var(--color-padel-yellow)] transition-colors min-h-[24px] flex-1 text-left truncate"
+        className="text-base hover:text-padel-500 transition-colors min-h-[24px] flex-1 text-left truncate"
       >
         <span className="text-slate-400 mr-1.5">#{index + 1}</span>
         {name ? (

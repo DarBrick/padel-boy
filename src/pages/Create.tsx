@@ -201,7 +201,7 @@ export function Create() {
           <input
             type="text"
             {...register('tournamentName')}
-            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
+            className="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg text-lg focus:border-padel-500 focus:outline-none transition-colors"
             placeholder={generateTournamentName(eventType, t)}
             maxLength={40}
           />
@@ -246,7 +246,7 @@ export function Create() {
                 type="button"
                 onClick={handleAddCourt}
                 disabled={numberOfCourts >= maxCourts}
-                className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-[var(--color-padel-yellow)] border border-dashed border-slate-600 hover:border-[var(--color-padel-yellow)]/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+                className="flex items-center gap-2 px-5 py-2.5 sm:py-2.5 md:py-3 text-base text-slate-300 hover:text-padel-500 border border-dashed border-slate-600 hover:border-padel-500/50 rounded-lg transition-colors min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:border-slate-600"
               >
                 <Grid2X2Plus className="w-5 h-5" />
                 {t('create.courts.addButton')}
@@ -360,7 +360,7 @@ export function Create() {
             type="submit"
             disabled={players.length < 4}
             onClick={() => setPrepareForLater(true)}
-            className="w-full px-6 py-3 text-base font-medium text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:bg-slate-700 hover:text-[var(--color-padel-yellow)] hover:border-[var(--color-padel-yellow)]/50 transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-700/50 disabled:hover:text-slate-300 disabled:hover:border-slate-600"
+            className="w-full px-6 py-3 text-base font-medium text-slate-300 bg-slate-700/50 border border-slate-600 rounded-lg hover:bg-slate-700 hover:text-padel-500 hover:border-padel-500/50 transition-all min-h-[44px] sm:min-h-[46px] md:min-h-[48px] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-700/50 disabled:hover:text-slate-300 disabled:hover:border-slate-600"
           >
             {t('create.submitPrepare')}
           </button>

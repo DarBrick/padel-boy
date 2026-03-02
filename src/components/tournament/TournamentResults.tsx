@@ -76,7 +76,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
           <div className="flex flex-wrap gap-2">
             {/* Format Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-700/50 rounded-lg text-sm">
-              <Trophy className="w-4 h-4 text-[var(--color-padel-yellow)]" />
+              <Trophy className="w-4 h-4 text-padel-500" />
               <span className="text-white font-medium">
                 {tournament.format === "americano"
                   ? t("tournament.format.americano")

@@ -118,7 +118,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                       </div>
                     </div>
                   </div>
-                  <div className="text-xl font-bold text-[var(--color-padel-yellow)]">
+                  <div className="text-xl font-bold text-padel-500">
                     {(partnership.winRate * 100).toFixed(0)}%
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
               <SuperlativeCard
                 title={t('results.insights.superlatives.highestScoring')}
                 match={superlatives.highestScoring}
-                color="text-[var(--color-padel-yellow)]"
+                color="text-padel-500"
               />
             )}
           </div>
@@ -182,7 +182,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                     className={`px-3 py-1.5 rounded-lg text-sm transition-all
                       ${
                         selectedPlayers.has(idx)
-                          ? 'bg-[var(--color-padel-yellow)] text-slate-900 font-medium'
+                          ? 'bg-padel-500 text-slate-900 font-medium'
                           : 'bg-slate-800/50 text-slate-400 hover:bg-slate-700'
                       }
                     `}
@@ -245,7 +245,7 @@ export function TournamentInsights({ tournament }: TournamentInsightsProps) {
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-sm text-[var(--color-padel-yellow)] font-bold">
+                    <div className="text-sm text-padel-500 font-bold">
                       σ: {player.scoreStdDev.toFixed(1)}
                     </div>
                     <div className="text-xs text-slate-400">

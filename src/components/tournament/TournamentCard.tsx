@@ -117,7 +117,7 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
         <button
           onClick={() => onShare(tournament)}
           disabled={status !== 'finished'}
-          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-[var(--color-padel-yellow)] bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:bg-slate-700"
+          className="flex items-center justify-center px-3 py-2 text-sm text-slate-300 hover:text-padel-500 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors min-h-[44px] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:text-slate-300 disabled:hover:bg-slate-700"
           title={t('pastTournaments.actions.share')}
         >
           <Share2 className="w-5 h-5" />

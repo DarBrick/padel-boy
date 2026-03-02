@@ -44,7 +44,7 @@ export function Roadmap() {
         {/* In Progress */}
         <ContentPanel>
           <div className="flex items-center gap-2 mb-4">
-            <Clock className="w-6 h-6 text-[var(--color-padel-yellow)]" />
+            <Clock className="w-6 h-6 text-padel-500" />
             <h2 className="text-2xl font-bold text-white">
               {t('roadmap.inProgress')}
             </h2>
@@ -52,7 +52,7 @@ export function Roadmap() {
           <ul className="space-y-2 sm:space-y-2.5 md:space-y-3">
             {features.slice(1, 5).map((feature, index) => (
               <li key={index} className="flex items-start gap-3 p-3 bg-slate-700/50 rounded-lg">
-                <Clock className="w-5 h-5 text-[var(--color-padel-yellow)] mt-0.5 flex-shrink-0" />
+                <Clock className="w-5 h-5 text-padel-500 mt-0.5 flex-shrink-0" />
                 <span className="text-white text-sm md:text-base">
                   {feature}
                 </span>

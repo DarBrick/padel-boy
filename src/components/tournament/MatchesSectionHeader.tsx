@@ -15,7 +15,7 @@ export function MatchesSectionHeader({ isLastRound, isTournamentFinished }: Matc
         {t('tournament.matches')}
       </h2>
       {isLastRound && !isTournamentFinished ? (
-        <span className="flex items-center gap-1.5 text-sm font-medium text-[var(--color-padel-yellow)]">
+        <span className="flex items-center gap-1.5 text-sm font-medium text-padel-500">
           <Play className="w-4 h-4" />
           {t('tournament.activeRound')}
         </span>

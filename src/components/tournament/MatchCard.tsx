@@ -109,7 +109,7 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(0)}
             disabled={readonly}
-            className="flex items-center gap-1 text-left py-2 cursor-pointer hover:text-[var(--color-padel-yellow)] active:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 text-left py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
           >
             <div className="space-y-1 flex-1">
               {team1Players.map((name, idx) => (
@@ -133,7 +133,7 @@ export function MatchCard({
             type="button"
             onClick={() => handleOpenScorePicker(1)}
             disabled={readonly}
-            className="flex items-center gap-1 justify-end text-right py-2 cursor-pointer hover:text-[var(--color-padel-yellow)] active:text-[var(--color-padel-yellow)] transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
+            className="flex items-center gap-1 justify-end text-right py-2 cursor-pointer hover:text-padel-500 active:text-padel-500 transition-colors group disabled:cursor-not-allowed disabled:hover:text-slate-300"
           >
             <ChevronRight className="w-4 h-4 text-slate-500 flex-shrink-0" />
             <div className="space-y-1 flex-1">
@@ -154,7 +154,7 @@ export function MatchCard({
                 type="button"
                 onClick={() => handleOpenScorePicker(0)}
                 disabled={readonly}
-                className="flex items-center gap-1 text-4xl font-bold text-[var(--color-padel-yellow)] cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
                 <span>{team1Score}</span>
                 <ChevronLeft className="w-5 h-5 text-slate-500" />
@@ -164,7 +164,7 @@ export function MatchCard({
                 type="button"
                 onClick={() => handleOpenScorePicker(1)}
                 disabled={readonly}
-                className="flex items-center gap-1 text-4xl font-bold text-[var(--color-padel-yellow)] cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
+                className="flex items-center gap-1 text-4xl font-bold text-padel-500 cursor-pointer hover:opacity-80 active:scale-95 transition-all px-4 py-2 rounded-lg hover:bg-slate-700/50 disabled:cursor-not-allowed disabled:hover:opacity-100 disabled:hover:bg-transparent"
               >
                 <ChevronRight className="w-5 h-5 text-slate-500" />
                 <span>{team2Score}</span>
@@ -202,7 +202,7 @@ export function MatchCard({
               <h3 className="text-xl font-bold text-center mb-2">
                 {t('tournament.match.selectScore')}
               </h3>
-              <p className="text-2xl font-bold text-[var(--color-padel-yellow)] text-center">
+              <p className="text-2xl font-bold text-padel-500 text-center">
                 {selectedTeam === 0 ? team1Players.join(' & ') : team2Players.join(' & ')}
               </p>
             </div>
@@ -218,7 +218,7 @@ export function MatchCard({
                       handleScoreSelect(selectedTeam, score)
                       handleCloseScorePicker()
                     }}
-                    className="flex flex-col items-center justify-center p-4 bg-slate-700 hover:bg-[var(--color-padel-yellow)] hover:text-slate-900 rounded-lg transition-all min-h-[80px] group"
+                    className="flex flex-col items-center justify-center p-4 bg-slate-700 hover:bg-padel-500 hover:text-slate-900 rounded-lg transition-all min-h-[80px] group"
                   >
                     <div className="text-2xl font-bold mb-1">{score}</div>
                     <div className="text-xs text-slate-400 group-hover:text-slate-700">

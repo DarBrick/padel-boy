@@ -33,7 +33,7 @@ export function NotFound() {
       <div className="flex flex-col items-center justify-center text-center space-y-6 sm:space-y-7 md:space-y-8 py-12 sm:py-16 md:py-20">
         {/* 404 Hero */}
         <div className="space-y-4">
-          <h1 className="text-8xl sm:text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-[var(--color-padel-yellow)] to-white bg-clip-text text-transparent">
+          <h1 className="text-8xl sm:text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-padel-500 to-white bg-clip-text text-transparent">
             404
           </h1>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-200">

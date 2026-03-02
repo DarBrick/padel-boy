@@ -27,7 +27,7 @@ export function SliderInput({ min, max, value, onChange }: SliderInputProps) {
         max={max}
         value={value}
         onChange={handleChange}
-        className="w-20 px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-center text-lg font-bold focus:border-[var(--color-padel-yellow)] focus:outline-none transition-colors"
+        className="w-20 px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-center text-lg font-bold focus:border-padel-500 focus:outline-none transition-colors"
       />
     </div>
   )

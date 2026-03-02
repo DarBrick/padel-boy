@@ -19,19 +19,19 @@ export function Footer() {
       <div className="flex flex-wrap justify-center gap-4 md:gap-6">
         <button
           onClick={() => navigate('/privacy')}
-          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
+          className="text-slate-400 hover:text-padel-500 underline transition-colors"
         >
           {t('privacy.title')}
         </button>
         <button
           onClick={() => navigate('/terms')}
-          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
+          className="text-slate-400 hover:text-padel-500 underline transition-colors"
         >
           {t('terms.title')}
         </button>
         <button
           onClick={() => navigate('/roadmap')}
-          className="text-slate-400 hover:text-[var(--color-padel-yellow)] underline transition-colors"
+          className="text-slate-400 hover:text-padel-500 underline transition-colors"
         >
           {t('footer.roadmap')}
         </button>
@@ -45,7 +45,7 @@ export function Footer() {
           href={GITHUB_REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-[var(--color-padel-yellow)] transition-colors"
+          className="flex items-center gap-1 hover:text-padel-500 transition-colors"
         >
           <Github className="w-4 h-4" />
           {t('footer.github')}
@@ -55,7 +55,7 @@ export function Footer() {
           href={`${GITHUB_REPO_URL}/blob/main/LICENSE`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1 hover:text-[var(--color-padel-yellow)] transition-colors"
+          className="flex items-center gap-1 hover:text-padel-500 transition-colors"
         >
           <Scale className="w-4 h-4" />
           {t('footer.license')}
@@ -68,7 +68,7 @@ export function Footer() {
           href="https://darikcube.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:text-[var(--color-padel-yellow)] transition-colors"
+          className="flex items-center gap-2 hover:text-padel-500 transition-colors"
         >
           <img
             src={`${import.meta.env.BASE_URL}darikcube.svg`}

@@ -21,7 +21,7 @@ export function TournamentHeader({ tournament, stats }: TournamentHeaderProps) {
 
       {/* Tournament Info Badges */}
       <div className="flex items-center gap-3 flex-wrap">
-        <span className="px-3 py-1 bg-[var(--color-padel-yellow)]/20 text-[var(--color-padel-yellow)] rounded-full text-sm font-semibold border border-[var(--color-padel-yellow)]/30">
+        <span className="px-3 py-1 bg-padel-500/20 text-padel-500 rounded-full text-sm font-semibold border border-padel-500/30">
           {t(`tournament.format.${tournament.format}`)}
         </span>
         

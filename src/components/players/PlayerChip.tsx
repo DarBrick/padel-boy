@@ -43,14 +43,14 @@ export function PlayerChip({ name, index, onRename, onDelete, suggestions = [] }
   }
 
   return (
-    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-[var(--color-padel-yellow)]/50 transition-colors">
+    <div className="flex items-center gap-2 px-3 py-2 sm:px-3.5 sm:py-2 md:px-4 md:py-2.5 bg-slate-700 border border-slate-600 rounded-lg group hover:border-padel-500/50 transition-colors">
       <button
         type="button"
         onClick={() => {
           setEditValue(name)
           setIsEditing(true)
         }}
-        className="text-base hover:text-[var(--color-padel-yellow)] transition-colors min-h-[24px] flex-1 text-left"
+        className="text-base hover:text-padel-500 transition-colors min-h-[24px] flex-1 text-left"
       >
         <span className="text-slate-400 mr-1.5">#{index + 1}</span>
         {name}

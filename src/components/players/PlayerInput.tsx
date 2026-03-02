@@ -106,7 +106,7 @@ export function PlayerInput({
         className={`w-full px-4 py-2 sm:py-2.5 md:py-3 bg-slate-700 rounded-lg text-base focus:outline-none transition-colors ${
           hasError 
             ? 'border-2 border-red-500 focus:border-red-500' 
-            : 'border border-slate-600 focus:border-[var(--color-padel-yellow)]'
+            : 'border border-slate-600 focus:border-padel-500'
         }`}
       />
       

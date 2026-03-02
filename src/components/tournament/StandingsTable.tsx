@@ -89,7 +89,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
               </th>
               <th
                 onClick={() => handleSort('rank')}
-                className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
+                className="px-3 py-3 text-left text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.rank')}
                 <SortIcon field="rank" />
@@ -99,28 +99,28 @@ export function StandingsTable({ standings }: StandingsTableProps) {
               </th>
               <th
                 onClick={() => handleSort('record')}
-                className="px-3 py-3 text-center text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
+                className="px-3 py-3 text-center text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.record')}
                 <SortIcon field="record" />
               </th>
               <th
                 onClick={() => handleSort('winRate')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.winRate')}
                 <SortIcon field="winRate" />
               </th>
               <th
                 onClick={() => handleSort('totalPoints')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.totalPoints')}
                 <SortIcon field="totalPoints" />
               </th>
               <th
                 onClick={() => handleSort('pointsPerGame')}
-                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-[var(--color-padel-yellow)] whitespace-nowrap"
+                className="px-3 py-3 text-right text-xs font-medium text-slate-300 uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
                 {t('results.standings.pointsPerGame')}
                 <SortIcon field="pointsPerGame" />
@@ -134,13 +134,13 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                 onClick={() => setSelectedIndex(selectedIndex === standing.index ? null : standing.index)}
                 className={`cursor-pointer transition-colors ${
                   selectedIndex === standing.index 
-                    ? 'bg-[var(--color-padel-yellow)]/10 ring-2 ring-[var(--color-padel-yellow)]/30 ring-inset' 
+                    ? 'bg-padel-500/10 ring-2 ring-padel-500/30 ring-inset' 
                     : 'hover:bg-slate-700/30'
                 }`}
               >
                     <td className="px-3 py-4 whitespace-nowrap">
                       {selectedIndex === standing.index && (
-                        <Check className="w-5 h-5 text-[var(--color-padel-yellow)]" />
+                        <Check className="w-5 h-5 text-padel-500" />
                       )}
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-white">
@@ -167,7 +167,7 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-slate-300">
                       {standing.totalPointsWithSitting}
                     </td>
-                <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-[var(--color-padel-yellow)] font-bold">
+                <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-padel-500 font-bold">
                   {standing.pointsPerGame.toFixed(1)}
                 </td>
               </tr>

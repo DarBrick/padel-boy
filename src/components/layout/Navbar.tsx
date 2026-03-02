@@ -75,7 +75,7 @@ export function Navbar() {
                     to={item.path}
                     className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm transition-colors ${
                       active
-                        ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
+                        ? 'text-padel-500 bg-slate-800/50'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
                     }`}
                   >
@@ -129,7 +129,7 @@ export function Navbar() {
                     onClick={handleNavClick}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       active
-                        ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
+                        ? 'text-padel-500 bg-slate-800/50'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
                     }`}
                   >
@@ -153,7 +153,7 @@ export function Navbar() {
                     onClick={handleNavClick}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
                       active
-                        ? 'text-[var(--color-padel-yellow)] bg-slate-800/50'
+                        ? 'text-padel-500 bg-slate-800/50'
                         : 'text-slate-300 hover:text-white hover:bg-slate-800/30'
                     }`}
                   >

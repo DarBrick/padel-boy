@@ -22,7 +22,7 @@ export function TransWrapper({ i18nKey, className = 'content-section' }: TransWr
               href={githubIssuesHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--color-padel-yellow)] hover:underline"
+              className="text-padel-500 hover:underline"
             />
           ),
         }}
