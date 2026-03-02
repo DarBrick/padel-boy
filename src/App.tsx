@@ -14,11 +14,9 @@ import { Help } from './pages/Help'
 import { Settings } from './pages/Settings'
 import { Players } from './pages/Players'
 import { NotFound } from './pages/NotFound'
+import { getAppBasename } from './utils/routing'
 
-// Smart detection: Use /padel-boy only for github.io subdirectory deployment
-const isGitHubPagesSubdirectory = window.location.hostname.includes('github.io') && 
-                                   window.location.pathname.startsWith('/padel-boy')
-const basename = isGitHubPagesSubdirectory ? '/padel-boy' : '/'
+const basename = getAppBasename()
 
 export function App() {
   return (

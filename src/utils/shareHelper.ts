@@ -1,6 +1,7 @@
 import type { TFunction } from 'i18next'
 import type { StoredTournament } from '../schemas/tournament'
 import { encodeTournament, encodeBase64Url } from './binaryFormat'
+import { getAppBasename } from './routing'
 
 export type ShareResult = {
   success: boolean
@@ -27,10 +28,11 @@ export async function shareTournament(tournament: StoredTournament, t: TFunction
   try {
     const encoded = encodeTournament(tournament)
     const base64url = encodeBase64Url(encoded)
-    
-    // Build hash-based share URL to avoid GitHub Pages 404 fallback on deep links
-    const baseUrl = window.location.origin + window.location.pathname.replace(/\/(tournament|shared|past)\/.*$/, '')
-    const url = `${baseUrl}/#/shared/${base64url}`
+
+    // Build canonical share URL independent of current page path
+    const appBasename = getAppBasename()
+    const normalizedBasename = appBasename === '/' ? '' : appBasename
+    const url = `${window.location.origin}${normalizedBasename}/#/shared/${base64url}`
     
     // Try native share API only on mobile devices
     if (isMobileDevice() && navigator.share) {

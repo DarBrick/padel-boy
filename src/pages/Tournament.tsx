@@ -31,12 +31,14 @@ export function Tournament() {
       toast.success(
         state.isNew 
           ? t('shared.savedNotification')
-          : t('shared.alreadySaved')
+          : t('shared.alreadySaved'),
+        { id: 'shared-link-import-result' }
       )
-      // Clear state to prevent showing toast on refresh
-      window.history.replaceState({}, document.title)
+
+      // Clear navigation state to prevent re-showing on refresh/navigation
+      navigate(`${location.pathname}${location.search}`, { replace: true, state: null })
     }
-  }, [location, t])
+  }, [location.pathname, location.search, location.state, navigate, t])
 
   // Handle back navigation
   const handleBack = () => {
