@@ -240,6 +240,7 @@ const translation = {
       winRate: 'Win Rate',
       record: 'W/D/L',
       totalPoints: 'Total Pts',
+      balance: 'Balance',
       gamesPlayed: 'Games',
       sortBy: 'Sort by',
       emptyState: 'No matches have been completed yet.',

@@ -7,6 +7,7 @@ export interface PlayerStanding {
   index: number
   rank: number
   points: number
+  balance: number
   wins: number
   draws: number
   losses: number
@@ -94,6 +95,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
 
   // Calculate player points and match results from finished matches
   const pointsByPlayerIndex = new Array(tournament.players.length).fill(0)
+  const balanceByPlayerIndex = new Array(tournament.players.length).fill(0)
   const winsByPlayerIndex = new Array(tournament.players.length).fill(0)
   const drawsByPlayerIndex = new Array(tournament.players.length).fill(0)
   const lossesByPlayerIndex = new Array(tournament.players.length).fill(0)
@@ -109,6 +111,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
 
     for (const playerIndex of match.team1) {
       pointsByPlayerIndex[playerIndex] += team1Score
+      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 0 ? match.scoreDelta : -match.scoreDelta
       if (isDraw) {
         drawsByPlayerIndex[playerIndex]++
       } else if (match.winner === 0) {
@@ -119,6 +122,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
     }
     for (const playerIndex of match.team2) {
       pointsByPlayerIndex[playerIndex] += team2Score
+      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 1 ? match.scoreDelta : -match.scoreDelta
       if (isDraw) {
         drawsByPlayerIndex[playerIndex]++
       } else if (match.winner === 1) {
@@ -138,6 +142,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
       const draws = drawsByPlayerIndex[index]
       const losses = lossesByPlayerIndex[index]
       const points = pointsByPlayerIndex[index]
+      const balance = balanceByPlayerIndex[index]
       const gamesPlayed = wins + draws + losses
       const gamesSitting = completedRounds - gamesPlayed
       const pointsPerGame = gamesPlayed > 0 ? points / gamesPlayed : 0
@@ -150,6 +155,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
         index,
         rank: 0, // Will be set after sorting
         points,
+        balance,
         wins,
         draws,
         losses,

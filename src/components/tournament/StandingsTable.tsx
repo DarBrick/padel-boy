@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, Check } from 'lucide-react'
 import type { PlayerStanding } from '../../utils/tournamentStats'
 
 type SortField = 'rank' | 'pointsPerGame' | 'winRate' | 'totalPoints' | 'record'
+  | 'balance'
 
 interface StandingsTableProps {
   standings: PlayerStanding[]
@@ -48,6 +49,9 @@ export function StandingsTable({ standings }: StandingsTableProps) {
       case 'totalPoints':
         compareValue = b.totalPointsWithSitting - a.totalPointsWithSitting
         break
+      case 'balance':
+        compareValue = b.balance - a.balance
+        break
       case 'record':
         // Sort by: 1) wins (more is better), 2) losses (less is better), 3) draws (more is better)
         compareValue = b.wins - a.wins
@@ -62,6 +66,11 @@ export function StandingsTable({ standings }: StandingsTableProps) {
 
     return sortDirection === 'asc' ? compareValue : -compareValue
   })
+
+  const formatSignedBalance = (value: number) => {
+    if (value > 0) return `+${value}`
+    return `${value}`
+  }
 
   const SortIcon = ({ field }: { field: SortField }) => {
     if (sortField !== field) return null
@@ -119,6 +128,13 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                 <SortIcon field="totalPoints" />
               </th>
               <th
+                onClick={() => handleSort('balance')}
+                className="px-3 py-3 text-right text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
+              >
+                {t('results.standings.balance')}
+                <SortIcon field="balance" />
+              </th>
+              <th
                 onClick={() => handleSort('pointsPerGame')}
                 className="px-3 py-3 text-right text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
               >
@@ -166,6 +182,9 @@ export function StandingsTable({ standings }: StandingsTableProps) {
                     </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-foreground-muted">
                       {standing.totalPointsWithSitting}
+                    </td>
+                    <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-foreground-muted font-medium">
+                      {formatSignedBalance(standing.balance)}
                     </td>
                 <td className="px-3 py-4 whitespace-nowrap text-sm text-right text-padel-500 font-bold">
                   {standing.pointsPerGame.toFixed(1)}

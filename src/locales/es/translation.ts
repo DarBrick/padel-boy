@@ -236,6 +236,7 @@ const translation = {
       winRate: '% Victoria',
       record: 'V/E/D',
       totalPoints: 'Puntos Tot',
+      balance: 'Balance',
       gamesPlayed: 'Partidos',
       sortBy: 'Ordenar por',
       emptyState: 'Aún no se han completado partidos.',

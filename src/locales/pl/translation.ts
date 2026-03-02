@@ -236,6 +236,7 @@ const translation = {
       winRate: '% Wygranych',
       record: 'W/R/P',
       totalPoints: 'Pkt Całk',
+      balance: 'Bilans',
       gamesPlayed: 'Mecze',
       sortBy: 'Sortuj wg',
       emptyState: 'Nie zakończono jeszcze żadnych meczów.',

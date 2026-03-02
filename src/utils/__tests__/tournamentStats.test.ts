@@ -201,6 +201,7 @@ describe('getTournamentStats', () => {
       expect(stats.standings.every(p => p.winRate === 0)).toBe(true)
       expect(stats.standings.every(p => p.pointsFromSitting === 0)).toBe(true)
       expect(stats.standings.every(p => p.totalPointsWithSitting === 0)).toBe(true)
+      expect(stats.standings.every(p => p.balance === 0)).toBe(true)
     })
 
     it('calculates winning team points correctly', () => {
@@ -454,6 +455,7 @@ describe('getTournamentStats', () => {
         winRate: 0,
         pointsFromSitting: 0,
         totalPointsWithSitting: 0,
+        balance: 0,
       })
       expect(stats.standings[1]).toMatchObject({ name: 'Bob', index: 1 })
       expect(stats.standings[2]).toMatchObject({ name: 'Charlie', index: 2 })
@@ -714,6 +716,23 @@ describe('getTournamentStats', () => {
       expect(stats.standings.find(p => p.name === 'Charlie')?.pointsPerGame).toBe(9.5)
       // Diana: 25 points / 2 games = 12.5 PPG
       expect(stats.standings.find(p => p.name === 'Diana')?.pointsPerGame).toBe(12.5)
+    })
+
+    it('calculates balance from score delta for wins, losses, draws and odd-point results', () => {
+      const tournament = createBaseTournament({
+        pointsPerGame: 21,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 6),  // Alice & Bob +6, Charlie & Diana -6
+          createMatch([0, 2], [1, 3], true, 0, 0),  // Draw: everyone 0
+          createMatch([0, 3], [1, 2], true, 1, 1),  // Bob & Charlie +1, Alice & Diana -1
+        ],
+      })
+      const stats = getTournamentStats(tournament)
+
+      expect(stats.standings.find(p => p.name === 'Alice')?.balance).toBe(5)
+      expect(stats.standings.find(p => p.name === 'Bob')?.balance).toBe(7)
+      expect(stats.standings.find(p => p.name === 'Charlie')?.balance).toBe(-5)
+      expect(stats.standings.find(p => p.name === 'Diana')?.balance).toBe(-7)
     })
 
     it('calculates winRate correctly', () => {
@@ -1194,6 +1213,23 @@ describe('getTournamentStats', () => {
       expect(frankStanding?.pointsFromSitting).toBe(12)
     })
 
+    it('limits balance calculations to selected rounds', () => {
+      const tournament = createBaseTournament({
+        numberOfCourts: 1,
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 4), // Round 1
+          createMatch([0, 2], [1, 3], true, 1, 6), // Round 2
+        ],
+      })
+
+      const statsRound1 = getTournamentStats(tournament, 1)
+
+      expect(statsRound1.standings.find(p => p.name === 'Alice')?.balance).toBe(4)
+      expect(statsRound1.standings.find(p => p.name === 'Bob')?.balance).toBe(4)
+      expect(statsRound1.standings.find(p => p.name === 'Charlie')?.balance).toBe(-4)
+      expect(statsRound1.standings.find(p => p.name === 'Diana')?.balance).toBe(-4)
+    })
+
     it('returns full stats when upToRound is undefined', () => {
       const tournament = createBaseTournament({
         numberOfCourts: 1,
@@ -1227,6 +1263,7 @@ describe('comparePlayerStandings', () => {
     winRate: 0,
     pointsFromSitting: 0,
     totalPointsWithSitting: 0,
+    balance: 0,
     ...overrides,
   })
 
