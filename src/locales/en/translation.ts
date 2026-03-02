@@ -255,6 +255,7 @@ const translation = {
       totalPointsWithSitting: 'Total Points',
       scoreProgression: 'Score Progression',
       rankProgression: 'Rank Progression',
+      balanceProgression: 'Balance Progression',
       partnerships: 'Partnerships',
       partnershipEmpty: 'No partnership data available.',
       opponents: 'Opponents',

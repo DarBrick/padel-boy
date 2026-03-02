@@ -21,6 +21,16 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const { t } = useTranslation()
   const [activeScoreIndex, setActiveScoreIndex] = useState<number | null>(null)
   const [activeRankIndex, setActiveRankIndex] = useState<number | null>(null)
+  const [activeBalanceIndex, setActiveBalanceIndex] = useState<number | null>(null)
+
+  const formatSignedValue = (value: number) => (value > 0 ? `+${value}` : `${value}`)
+
+  const formattedBalance = formatSignedValue(standing.balance)
+  const balanceColor = standing.balance > 0
+    ? 'text-green-400'
+    : standing.balance < 0
+      ? 'text-red-400'
+      : 'text-foreground'
 
   // Get partnerships for this player
   const allPartnerships = getPartnershipStats(tournament)
@@ -43,6 +53,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
     round: progression.rounds[idx],
     points: round.totalPointsWithSitting,
     rank: round.rank,
+    balance: round.balance,
     outcome: round.outcome,
   }))
 
@@ -50,6 +61,11 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const stats = getTournamentStats(tournament)
   const chartMaxScore = stats.standings.length > 0 ? stats.standings[0].totalPointsWithSitting : 100
   const totalPlayers = tournament.players.length
+  const balanceValues = chartData.map(point => point.balance)
+  const balanceMin = Math.min(0, ...balanceValues)
+  const balanceMax = Math.max(0, ...balanceValues)
+  const balancePadding = balanceMin === balanceMax ? 1 : 0
+  const balanceChartDomain: [number, number] = [balanceMin - balancePadding, balanceMax + balancePadding]
 
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -73,6 +89,11 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
         <StatCard
           label={t('results.playerDetail.gamesPlayed')}
           value={`${standing.gamesPlayed}/${standing.gamesPlayed + standing.gamesSitting}`}
+        />
+        <StatCard
+          label={t('results.standings.balance')}
+          value={formattedBalance}
+          color={balanceColor}
         />
         <StatCard
           label={t('results.playerDetail.pointsFromPausing')}
@@ -210,6 +231,73 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
             }}
             activeDot={false}
             label={(props: any) => <text x={props.x} y={props.y - 12} fill={LABEL_COLOR} fontSize="11" fontWeight="500" textAnchor="middle">#{props.value}</text>}
+          />
+        </ChartContainer>
+      )}
+
+      {/* Balance Progression Chart */}
+      {chartData.length > 0 && (
+        <ChartContainer
+          chartType="line"
+          data={chartData}
+          height={220}
+          title={t('results.playerDetail.balanceProgression')}
+          xAxisDataKey="round"
+          xAxisLabel="Round"
+          yAxisDomain={balanceChartDomain}
+          hideTicks
+          tooltipActive={activeBalanceIndex !== null}
+          tooltipFormatter={(value: number | undefined) =>
+            value !== undefined ? [`${formatSignedValue(value)}`, t('results.standings.balance')] : ['', '']
+          }
+          chartProps={{
+            onClick: (data) => {
+              if (data?.activeTooltipIndex !== undefined) {
+                setActiveBalanceIndex(
+                  activeBalanceIndex === data.activeTooltipIndex ? null : data.activeTooltipIndex,
+                )
+              }
+            },
+            style: { cursor: 'pointer', outline: 'none' },
+          }}
+        >
+          <Line
+            type="monotone"
+            dataKey="balance"
+            stroke={NEUTRAL_STROKE}
+            strokeWidth={2}
+            isAnimationActive={false}
+            dot={(props: any) => {
+              const { cx, cy, payload, index } = props
+              const outcome = payload.outcome
+              let fill = NEUTRAL_STROKE
+              if (outcome === 'won') fill = 'var(--color-padel-yellow)'
+              else if (outcome === 'paused') fill = PAUSED_STROKE
+              const isActive = activeBalanceIndex === index
+              return (
+                <circle
+                  cx={cx}
+                  cy={cy}
+                  r={isActive ? 9 : 7}
+                  fill={fill}
+                  stroke={fill}
+                  strokeWidth={isActive ? 2 : 1}
+                />
+              )
+            }}
+            activeDot={false}
+            label={(props: any) => (
+              <text
+                x={props.x}
+                y={props.y - 12}
+                fill={LABEL_COLOR}
+                fontSize="11"
+                fontWeight="500"
+                textAnchor="middle"
+              >
+                {formatSignedValue(props.value)}
+              </text>
+            )}
           />
         </ChartContainer>
       )}

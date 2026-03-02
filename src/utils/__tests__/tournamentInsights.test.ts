@@ -236,6 +236,7 @@ describe('getStandingsProgression', () => {
     expect(aliceProgression).toHaveLength(1)
     expect(aliceProgression?.[0].gamesPlayed).toBe(2)
     expect(aliceProgression?.[0].points).toBe(27) // 14 + 13
+    expect(aliceProgression?.[0].balance).toBe(6) // +4 +2
   })
 
   it('stops at first incomplete round', () => {
@@ -274,10 +275,12 @@ describe('getStandingsProgression', () => {
     // After round 1, Alice should be ranked higher (more points)
     const aliceRound1 = progression.playerProgressions.get(0)?.[0]
     expect(aliceRound1?.points).toBe(16)
+    expect(aliceRound1?.balance).toBe(8)
 
     // After round 2, Alice gets fewer points
     const aliceRound2 = progression.playerProgressions.get(0)?.[1]
     expect(aliceRound2?.points).toBe(24) // 16 + 8
+    expect(aliceRound2?.balance).toBe(0) // +8 then -8
   })
 })
 

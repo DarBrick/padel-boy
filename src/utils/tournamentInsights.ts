@@ -55,6 +55,7 @@ export interface RoundStanding {
   playerName: string
   rank: number
   points: number
+  balance: number
   pointsPerGame: number
   gamesPlayed: number
   totalPointsWithSitting: number
@@ -390,6 +391,7 @@ export function getStandingsProgression(tournament: StoredTournament): Standings
         playerName: standing.name,
         rank: rank + 1, // 1-indexed rank
         points: standing.points,
+        balance: standing.balance,
         pointsPerGame: standing.pointsPerGame,
         gamesPlayed: standing.gamesPlayed,
         totalPointsWithSitting: standing.totalPointsWithSitting,
