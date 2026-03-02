@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { type MouseEvent as ReactMouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Coffee } from 'lucide-react'
 import type { StoredTournament } from '../../schemas/tournament'
@@ -7,33 +7,22 @@ import { getTournamentStats } from '../../utils/tournamentStats'
 
 interface RoundsHistoryProps {
   tournament: StoredTournament
+  selectedPlayerIndex: number | null
+  onSelectPlayerIndex: (playerIndex: number | null) => void
 }
 
-export function RoundsHistory({ tournament }: RoundsHistoryProps) {
+export function RoundsHistory({
+  tournament,
+  selectedPlayerIndex,
+  onSelectPlayerIndex,
+}: RoundsHistoryProps) {
   const { t } = useTranslation()
-  const [selectedPlayer, setSelectedPlayer] = useState<string | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   const totalRounds = getTotalRounds(tournament)
 
-  const handlePlayerClick = (playerName: string, e: React.MouseEvent) => {
+  const handlePlayerClick = (playerIndex: number, e: ReactMouseEvent) => {
     e.stopPropagation()
-    setSelectedPlayer(prev => prev === playerName ? null : playerName)
+    onSelectPlayerIndex(selectedPlayerIndex === playerIndex ? null : playerIndex)
   }
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setSelectedPlayer(null)
-      }
-    }
-
-    if (selectedPlayer) {
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => {
-        document.removeEventListener('mousedown', handleClickOutside)
-      }
-    }
-  }, [selectedPlayer])
 
   if (totalRounds === 0) {
     return (
@@ -44,7 +33,7 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
   }
 
   return (
-    <div ref={containerRef}>
+    <div>
       {/* Legend */}
       <div className="mb-6 sm:mb-7 md:mb-8 text-center">
         <div className="inline-flex items-center gap-2 text-sm text-foreground-muted bg-surface/40 rounded-lg px-4 py-2.5">
@@ -59,10 +48,10 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
         
         // Get standings from previous round to show player ranks
         // Don't show ranks for the first round
-        const rankByName = new Map<string, number>()
+        const rankByIndex = new Map<number, number>()
         if (roundNumber > 1) {
           const stats = getTournamentStats(tournament, roundNumber - 1)
-          stats.standings.forEach(s => rankByName.set(s.name, s.rank))
+          stats.standings.forEach(s => rankByIndex.set(s.index, s.rank))
         }
 
         return (
@@ -75,8 +64,14 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
             {/* Matches */}
             <div className="space-y-1">
               {matches.map((match, localIndex) => {
-                const team1Names = match.team1.map(idx => tournament.players[idx].name)
-                const team2Names = match.team2.map(idx => tournament.players[idx].name)
+                const team1Players = match.team1.map(playerIndex => ({
+                  playerIndex,
+                  name: tournament.players[playerIndex].name,
+                }))
+                const team2Players = match.team2.map(playerIndex => ({
+                  playerIndex,
+                  name: tournament.players[playerIndex].name,
+                }))
 
                 let score1: string
                 let score2: string
@@ -99,15 +94,15 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                   <div key={localIndex} className="flex items-center text-base text-foreground-muted py-1 gap-3 sm:gap-4">
                     {/* Team 1 - flexible width, right-aligned */}
                     <div className="flex-1 text-right space-y-0.5 min-w-0">
-                      {team1Names.map((name, idx) => {
-                        const rank = rankByName.get(name)
+                      {team1Players.map(({ playerIndex, name }) => {
+                        const rank = rankByIndex.get(playerIndex)
                         const displayName = rank !== undefined ? `${name} (#${rank})` : name
                         return (
                           <div 
-                            key={idx}
-                            onClick={(e) => handlePlayerClick(name, e)}
+                            key={playerIndex}
+                            onClick={(e) => handlePlayerClick(playerIndex, e)}
                             className={`cursor-pointer transition-colors truncate rounded-md px-1.5 py-0.5 ${
-                              selectedPlayer === name 
+                              selectedPlayerIndex === playerIndex
                                 ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}
@@ -131,15 +126,15 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
 
                     {/* Team 2 - flexible width, left-aligned */}
                     <div className="flex-1 text-left space-y-0.5 min-w-0">
-                      {team2Names.map((name, idx) => {
-                        const rank = rankByName.get(name)
+                      {team2Players.map(({ playerIndex, name }) => {
+                        const rank = rankByIndex.get(playerIndex)
                         const displayName = rank !== undefined ? `${name} (#${rank})` : name
                         return (
                           <div 
-                            key={idx}
-                            onClick={(e) => handlePlayerClick(name, e)}
+                            key={playerIndex}
+                            onClick={(e) => handlePlayerClick(playerIndex, e)}
                             className={`cursor-pointer transition-colors truncate rounded-md px-1.5 py-0.5 ${
-                              selectedPlayer === name 
+                              selectedPlayerIndex === playerIndex
                                 ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}
@@ -163,14 +158,14 @@ export function RoundsHistory({ tournament }: RoundsHistoryProps) {
                   <span className="flex flex-wrap gap-x-1">
                     {pausingPlayerIndices.map((idx, i) => {
                       const name = tournament.players[idx].name
-                      const rank = rankByName.get(name)
+                      const rank = rankByIndex.get(idx)
                       const displayName = rank !== undefined ? `${name} (#${rank})` : name
                       return (
                         <span key={idx}>
                           <span
-                            onClick={(e) => handlePlayerClick(name, e)}
+                            onClick={(e) => handlePlayerClick(idx, e)}
                             className={`inline-block cursor-pointer transition-colors rounded-md px-1.5 py-0.5 ${
-                              selectedPlayer === name 
+                              selectedPlayerIndex === idx
                                 ? 'bg-padel-500/20 text-foreground font-semibold' 
                                 : 'hover:text-foreground'
                             }`}

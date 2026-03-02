@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ChevronDown, ChevronUp, Check } from 'lucide-react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
 import type { PlayerStanding } from '../../utils/tournamentStats'
 
 type SortField = 'rank' | 'pointsPerGame' | 'winRate' | 'totalPoints' | 'record'
@@ -8,13 +8,18 @@ type SortField = 'rank' | 'pointsPerGame' | 'winRate' | 'totalPoints' | 'record'
 
 interface StandingsTableProps {
   standings: PlayerStanding[]
+  selectedPlayerIndex: number | null
+  onSelectPlayerIndex: (playerIndex: number | null) => void
 }
 
-export function StandingsTable({ standings }: StandingsTableProps) {
+export function StandingsTable({
+  standings,
+  selectedPlayerIndex,
+  onSelectPlayerIndex,
+}: StandingsTableProps) {
   const { t } = useTranslation()
   const [sortField, setSortField] = useState<SortField>('rank')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc')
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   if (standings.length === 0) {
     return (
@@ -94,8 +99,6 @@ export function StandingsTable({ standings }: StandingsTableProps) {
         <table className="min-w-full divide-y divide-border">
           <thead className="bg-surface/60">
             <tr>
-              <th className="px-3 py-3 w-10" aria-label="Selection">
-              </th>
               <th
                 onClick={() => handleSort('rank')}
                 className="px-3 py-3 text-left text-xs font-medium text-foreground-muted uppercase tracking-wider cursor-pointer hover:text-padel-500 whitespace-nowrap"
@@ -147,18 +150,13 @@ export function StandingsTable({ standings }: StandingsTableProps) {
             {sortedStandings.map((standing) => (
               <tr 
                 key={standing.index}
-                onClick={() => setSelectedIndex(selectedIndex === standing.index ? null : standing.index)}
+                onClick={() => onSelectPlayerIndex(selectedPlayerIndex === standing.index ? null : standing.index)}
                 className={`cursor-pointer transition-colors ${
-                  selectedIndex === standing.index 
+                  selectedPlayerIndex === standing.index 
                     ? 'bg-padel-500/10 ring-2 ring-padel-500/30 ring-inset' 
                     : 'hover:bg-surface/70'
                 }`}
               >
-                    <td className="px-3 py-4 whitespace-nowrap">
-                      {selectedIndex === standing.index && (
-                        <Check className="w-5 h-5 text-padel-500" />
-                      )}
-                    </td>
                     <td className="px-3 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                       <div className="flex items-center gap-2">
                         <span>{standing.rank}</span>

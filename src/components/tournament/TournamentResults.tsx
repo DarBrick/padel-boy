@@ -22,6 +22,7 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
   const { t, i18n } = useTranslation();
   const [activeTab, setActiveTab] = useState<TabId>("standings");
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [selectedPlayerIndex, setSelectedPlayerIndex] = useState<number | null>(null);
 
   const stats = getTournamentStats(tournament);
   const formattedDate = formatTournamentDate(tournament, i18n.language);
@@ -159,19 +160,31 @@ export function TournamentResults({ tournament }: TournamentResultsProps) {
       {/* Tab Content */}
       {activeTab === "standings" && (
         <ContentPanel>
-          <StandingsTable standings={stats.standings} />
+          <StandingsTable
+            standings={stats.standings}
+            selectedPlayerIndex={selectedPlayerIndex}
+            onSelectPlayerIndex={setSelectedPlayerIndex}
+          />
         </ContentPanel>
       )}
 
       {activeTab === "rounds" && (
         <ContentPanel>
-          <RoundsHistory tournament={tournament} />
+          <RoundsHistory
+            tournament={tournament}
+            selectedPlayerIndex={selectedPlayerIndex}
+            onSelectPlayerIndex={setSelectedPlayerIndex}
+          />
         </ContentPanel>
       )}
 
       {activeTab === "players" && (
         <ContentPanel>
-          <TournamentPlayers tournament={tournament} />
+          <TournamentPlayers
+            tournament={tournament}
+            selectedPlayerIndex={selectedPlayerIndex}
+            onSelectPlayerIndex={setSelectedPlayerIndex}
+          />
         </ContentPanel>
       )}
 
