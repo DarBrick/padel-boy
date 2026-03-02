@@ -37,7 +37,7 @@ npm run lint
 
 Automatically deployed to GitHub Pages on push to `main` branch.
 
-**Live site:** `https://padelboy.darikcube.com/`
+**Live site:** [https://padelboy.darikcube.com/]
 
 ## License
 
