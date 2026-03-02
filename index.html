@@ -4,15 +4,32 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/padel-icon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Create and manage padel tournaments in seconds. Generate rounds, track standings, and share results." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Padel Boy" />
+    <meta property="og:title" content="Padel Boy" />
+    <meta property="og:description" content="Create and manage padel tournaments in seconds. Generate rounds, track standings, and share results." />
+    <meta property="og:image" content="/padel-icon.svg" />
+    <meta property="og:image:alt" content="Padel Boy logo" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Padel Boy" />
+    <meta name="twitter:description" content="Create and manage padel tournaments in seconds. Generate rounds, track standings, and share results." />
+    <meta name="twitter:image" content="/padel-icon.svg" />
     <title>Padel Boy</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Handle SPA redirects from 404.html for GitHub Pages -->
+    <!-- Normalize incoming shared hash links and handle SPA redirects from 404.html -->
     <script>
       (function() {
+        const hash = window.location.hash || '';
+        if (hash.startsWith('#/')) {
+          const nextPath = hash.slice(1);
+          if (window.location.pathname !== nextPath) {
+            history.replaceState(null, '', nextPath + window.location.search);
+          }
+        }
+
         const redirectPath = sessionStorage.getItem('redirectPath');
         if (redirectPath) {
           sessionStorage.removeItem('redirectPath');
@@ -20,4 +37,7 @@
         }
       })();
     </script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
+
+</html>

@@ -28,9 +28,9 @@ export async function shareTournament(tournament: StoredTournament, t: TFunction
     const encoded = encodeTournament(tournament)
     const base64url = encodeBase64Url(encoded)
     
-    // Get base URL from current location (handles both local and GitHub Pages)
+    // Build hash-based share URL to avoid GitHub Pages 404 fallback on deep links
     const baseUrl = window.location.origin + window.location.pathname.replace(/\/(tournament|shared|past)\/.*$/, '')
-    const url = `${baseUrl}/shared/${base64url}`
+    const url = `${baseUrl}/#/shared/${base64url}`
     
     // Try native share API only on mobile devices
     if (isMobileDevice() && navigator.share) {
