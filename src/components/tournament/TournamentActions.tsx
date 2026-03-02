@@ -9,8 +9,10 @@ interface TournamentActionsProps {
   remainingMatches: number
   isGenerating: boolean
   canFinish: boolean
+  canDiscardRound: boolean
   onFinishTournament: () => void
   onGenerateNextRound: () => void
+  onDiscardCurrentRound: () => void
 }
 
 export function TournamentActions({
@@ -21,8 +23,10 @@ export function TournamentActions({
   remainingMatches,
   isGenerating,
   canFinish,
+  canDiscardRound,
   onFinishTournament,
   onGenerateNextRound,
+  onDiscardCurrentRound,
 }: TournamentActionsProps) {
   const { t } = useTranslation()
 
@@ -42,6 +46,19 @@ export function TournamentActions({
           >
             {t('tournament.generateNextRound')}
           </GradientButton>
+        )}
+        {canDiscardRound && (
+          <div className="space-y-2">
+            <button
+              onClick={onDiscardCurrentRound}
+              className="w-full px-6 py-3 bg-surface hover:bg-surface-muted text-foreground-muted hover:text-foreground rounded-lg transition-colors text-base font-medium min-h-[44px] sm:min-h-[46px] md:min-h-[48px]"
+            >
+              {t('tournament.discardRound')}
+            </button>
+            <p className="text-center text-sm text-foreground-muted">
+              {t('tournament.discardRoundHelper')}
+            </p>
+          </div>
         )}
         <button
           onClick={onFinishTournament}

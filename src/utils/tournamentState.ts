@@ -127,6 +127,39 @@ export function canFinishTournament(tournament: StoredTournament, currentRound: 
   return false
 }
 
+/** Check if current round can be discarded (last round, round >= 2, no scored matches) */
+export function canDiscardCurrentRound(tournament: StoredTournament, currentRound: number): boolean {
+  if (!isLastRound(tournament, currentRound)) return false
+  if (currentRound < 2) return false
+  return hasNoScoredMatches(tournament, currentRound)
+}
+
+function removeLastRoundIfUnscored(tournament: StoredTournament): StoredMatch[] {
+  const totalRounds = getTotalRounds(tournament)
+  if (totalRounds === 0 || !hasNoScoredMatches(tournament, totalRounds)) {
+    return tournament.matches
+  }
+
+  const matchesPerRound = tournament.numberOfCourts
+  const keepUntilIndex = (totalRounds - 1) * matchesPerRound
+  return tournament.matches.slice(0, keepUntilIndex)
+}
+
+/** Discard current round when eligible. Returns unchanged tournament otherwise. */
+export function discardCurrentRound(
+  tournament: StoredTournament,
+  currentRound: number,
+): StoredTournament {
+  if (!canDiscardCurrentRound(tournament, currentRound)) {
+    return tournament
+  }
+
+  return {
+    ...tournament,
+    matches: removeLastRoundIfUnscored(tournament),
+  }
+}
+
 /**
  * Mark a tournament as finished. Returns a new tournament object.
  * If removeIncompleteRound is true, removes the last round's matches if they're all incomplete.
@@ -135,17 +168,9 @@ export function finishTournament(
   tournament: StoredTournament,
   removeIncompleteRound: boolean = false
 ): StoredTournament {
-  let finalMatches = tournament.matches
-  
-  // Remove incomplete matches from the last round if requested
-  if (removeIncompleteRound) {
-    const totalRounds = getTotalRounds(tournament)
-    if (totalRounds > 0 && hasNoScoredMatches(tournament, totalRounds)) {
-      const matchesPerRound = tournament.numberOfCourts
-      const keepUntilIndex = (totalRounds - 1) * matchesPerRound
-      finalMatches = tournament.matches.slice(0, keepUntilIndex)
-    }
-  }
+  const finalMatches = removeIncompleteRound
+    ? removeLastRoundIfUnscored(tournament)
+    : tournament.matches
   
   return {
     ...tournament,

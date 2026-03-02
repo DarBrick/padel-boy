@@ -12,9 +12,11 @@ import {
   isTournamentFinished as checkIsTournamentFinished,
   canGenerateNextRound,
   canFinishTournament,
+  canDiscardCurrentRound,
   hasNoScoredMatches,
   updateMatch,
   appendRoundMatches,
+  discardCurrentRound,
   finishTournament,
   parseRoundParam,
   getPausingPlayers,
@@ -84,6 +86,7 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
   const isTournamentFinished = checkIsTournamentFinished(tournament)
   const pausingPlayerIndices = getPausingPlayers(tournament, currentRound)
   const canFinish = canFinishTournament(tournament, currentRound)
+  const canDiscardRound = canDiscardCurrentRound(tournament, currentRound)
 
   // Handle round navigation
   function handleRoundChange(newRound: number) {
@@ -158,6 +161,16 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
     setSearchParams({}, { replace: true })
   }
 
+  function handleDiscardCurrentRound() {
+    if (!canDiscardRound) return
+
+    const updatedTournament = discardCurrentRound(tournament, currentRound)
+    updateTournament(updatedTournament)
+    setTournament(updatedTournament)
+
+    setSearchParams({ round: (currentRound - 1).toString() }, { replace: true })
+  }
+
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Tournament Header and Round Navigation */}
@@ -214,8 +227,10 @@ export function ActiveTournament({ initialTournament }: ActiveTournamentProps) {
         remainingMatches={remainingMatches}
         isGenerating={isGenerating}
         canFinish={canFinish}
+        canDiscardRound={canDiscardRound}
         onFinishTournament={handleFinishTournament}
         onGenerateNextRound={handleGenerateNextRound}
+        onDiscardCurrentRound={handleDiscardCurrentRound}
       />
     </div>
   )

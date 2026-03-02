@@ -194,6 +194,8 @@ const translation = {
     roundOf: 'Runda {{current}} z {{total}}',
     generateNextRound: 'Generuj następną rundę',
     finishTournament: 'Zakończ Turniej',
+    discardRound: 'Odrzuć tę rundę',
+    discardRoundHelper: 'Użyj tej opcji, gdy ta runda została wygenerowana na podstawie błędnych wyników z poprzedniej rundy.',
     previousRound: 'Poprzednia runda',
     nextRound: 'Następna runda',
     lastRound: 'Przejdź do ostatniej rundy',
