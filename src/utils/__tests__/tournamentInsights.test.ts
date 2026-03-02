@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   getPartnershipStats,
+  getOpponentStats,
   getMatchSuperlatives,
   getStandingsProgression,
   getPlayerConsistency,
@@ -74,23 +75,38 @@ describe('getPartnershipStats', () => {
     expect(aliceBob?.winRate).toBe(1.0)
   })
 
-  it('sorts partnerships by win rate then games played', () => {
+  it('sorts partnerships by balance then games played', () => {
     const tournament = createBaseTournament({
       matches: [
-        createMatch([0, 1], [2, 3], true, 0, 4), // Alice & Bob: 1 win
-        createMatch([0, 2], [1, 3], true, 0, 2), // Alice & Charlie: 1 win
-        createMatch([0, 2], [1, 3], true, 0, 2), // Alice & Charlie: 2 wins
-        createMatch([0, 1], [2, 3], true, 1, 6), // Charlie & Diana: 1 win
+        createMatch([0, 1], [2, 3], true, 0, 6), // Alice & Bob: +6
+        createMatch([0, 1], [2, 3], true, 0, 4), // Alice & Bob: +4 => +10 total
+        createMatch([0, 2], [1, 3], true, 0, 2), // Alice & Charlie: +2
+        createMatch([0, 2], [1, 3], true, 1, 2), // Alice & Charlie: -2 => 0 total
       ],
     })
 
     const partnerships = getPartnershipStats(tournament)
 
-    // Alice & Charlie should be first (2 games, 100% win rate)
+    // Alice & Bob should be first (+5 balance)
     expect(partnerships[0].player1Index).toBe(0)
-    expect(partnerships[0].player2Index).toBe(2)
+    expect(partnerships[0].player2Index).toBe(1)
+    expect(partnerships[0].balance).toBe(5)
     expect(partnerships[0].gamesPlayed).toBe(2)
-    expect(partnerships[0].winRate).toBe(1.0)
+  })
+
+  it('tracks partnership balance as delta-from-draw impact', () => {
+    const tournament = createBaseTournament({
+      matches: [
+        createMatch([0, 1], [2, 3], true, 0, 7), // 0-1: +4 (odd delta rounds up)
+        createMatch([0, 1], [2, 3], true, 1, 2), // 0-1: -1
+        createMatch([0, 1], [2, 3], true, 0, 0), // draw: +0
+      ],
+    })
+
+    const partnerships = getPartnershipStats(tournament)
+    const aliceBob = partnerships.find(p => p.player1Index === 0 && p.player2Index === 1)
+
+    expect(aliceBob?.balance).toBe(3)
   })
 
   it('handles draws correctly', () => {
@@ -121,6 +137,73 @@ describe('getPartnershipStats', () => {
 
     const aliceBob = partnerships.find(p => p.player1Index === 0 && p.player2Index === 1)
     expect(aliceBob?.gamesPlayed).toBe(1) // Only counts finished match
+  })
+})
+
+describe('getOpponentStats', () => {
+  it('returns empty array when player has no finished matches', () => {
+    const tournament = createBaseTournament()
+    const opponents = getOpponentStats(tournament, 0)
+
+    expect(opponents).toEqual([])
+  })
+
+  it('calculates opponent balance from the selected player perspective', () => {
+    const tournament = createBaseTournament({
+      numberOfCourts: 1,
+      matches: [
+        createMatch([0, 1], [2, 3], true, 0, 6), // vs 2,3: +6
+        createMatch([2, 3], [0, 1], true, 0, 4), // vs 2,3: -4
+        createMatch([0, 2], [1, 3], true, 0, 0), // vs 1,3: 0
+      ],
+    })
+
+    const opponents = getOpponentStats(tournament, 0)
+    const vsCharlie = opponents.find(o => o.opponentIndex === 2)
+    const vsDiana = opponents.find(o => o.opponentIndex === 3)
+    const vsBob = opponents.find(o => o.opponentIndex === 1)
+
+    expect(vsCharlie?.balance).toBe(1)
+    expect(vsDiana?.balance).toBe(1)
+    expect(vsBob?.balance).toBe(0)
+    expect(vsCharlie?.wins).toBe(1)
+    expect(vsCharlie?.draws).toBe(0)
+    expect(vsCharlie?.losses).toBe(1)
+    expect(vsBob?.wins).toBe(0)
+    expect(vsBob?.draws).toBe(1)
+    expect(vsBob?.losses).toBe(0)
+  })
+
+  it('sorts opponents by balance ascending then games played', () => {
+    const tournament = createBaseTournament({
+      numberOfCourts: 1,
+      matches: [
+        createMatch([0, 1], [2, 3], true, 0, 6), // vs 2,3: +6
+        createMatch([2, 3], [0, 1], true, 0, 4), // vs 2,3: -4 => +2 net
+        createMatch([1, 2], [0, 3], true, 0, 8), // vs 1,2: -8
+      ],
+    })
+
+    const opponents = getOpponentStats(tournament, 0)
+
+    expect(opponents.map(o => o.opponentIndex)).toEqual([1, 2, 3])
+    expect(opponents[0].balance).toBe(-4)
+    expect(opponents[1].balance).toBe(-3)
+    expect(opponents[2].balance).toBe(1)
+  })
+
+  it('applies non-zero balance impact for one-point matches', () => {
+    const tournament = createBaseTournament({
+      numberOfCourts: 1,
+      matches: [
+        createMatch([1, 2], [0, 3], true, 0, 1), // player 0 loses 10:11 equivalent
+      ],
+    })
+
+    const opponents = getOpponentStats(tournament, 0)
+    const vsBob = opponents.find(o => o.opponentIndex === 1)
+
+    expect(vsBob?.balance).toBe(-1)
   })
 })
 
@@ -236,7 +319,7 @@ describe('getStandingsProgression', () => {
     expect(aliceProgression).toHaveLength(1)
     expect(aliceProgression?.[0].gamesPlayed).toBe(2)
     expect(aliceProgression?.[0].points).toBe(27) // 14 + 13
-    expect(aliceProgression?.[0].balance).toBe(6) // +4 +2
+    expect(aliceProgression?.[0].balance).toBe(3) // +2 +1
   })
 
   it('stops at first incomplete round', () => {
@@ -275,12 +358,12 @@ describe('getStandingsProgression', () => {
     // After round 1, Alice should be ranked higher (more points)
     const aliceRound1 = progression.playerProgressions.get(0)?.[0]
     expect(aliceRound1?.points).toBe(16)
-    expect(aliceRound1?.balance).toBe(8)
+    expect(aliceRound1?.balance).toBe(4)
 
     // After round 2, Alice gets fewer points
     const aliceRound2 = progression.playerProgressions.get(0)?.[1]
     expect(aliceRound2?.points).toBe(24) // 16 + 8
-    expect(aliceRound2?.balance).toBe(0) // +8 then -8
+    expect(aliceRound2?.balance).toBe(0) // +4 then -4
   })
 })
 

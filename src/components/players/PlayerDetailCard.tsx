@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Line } from 'recharts'
-import { Link, Swords, CircleSlash2 } from 'lucide-react'
+import { CircleSlash2, Scale } from 'lucide-react'
 import type { PlayerStanding } from '../../utils/tournamentStats'
 import type { StoredTournament } from '../../schemas/tournament'
 import { getPartnershipStats, getOpponentStats, getStandingsProgression, getPlayerConsistency } from '../../utils/tournamentInsights'
@@ -24,13 +24,12 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const [activeBalanceIndex, setActiveBalanceIndex] = useState<number | null>(null)
 
   const formatSignedValue = (value: number) => (value > 0 ? `+${value}` : `${value}`)
+  const getBalanceColorClass = (value: number) =>
+    value > 0 ? 'text-green-400' : value < 0 ? 'text-red-400' : 'text-foreground'
 
   const formattedBalance = formatSignedValue(standing.balance)
-  const balanceColor = standing.balance > 0
-    ? 'text-green-400'
-    : standing.balance < 0
-      ? 'text-red-400'
-      : 'text-foreground'
+  const balanceColor = getBalanceColorClass(standing.balance)
+  const matchupStatsColumnsClass = 'grid grid-cols-[4.5rem_4rem_4.5rem] items-center gap-3 text-right'
 
   // Get partnerships for this player
   const allPartnerships = getPartnershipStats(tournament)
@@ -59,6 +58,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
 
   // Calculate chart axis ranges
   const stats = getTournamentStats(tournament)
+  const standingsByPlayerIndex = new Map(stats.standings.map(playerStanding => [playerStanding.index, playerStanding.rank]))
   const chartMaxScore = stats.standings.length > 0 ? stats.standings[0].totalPointsWithSitting : 100
   const totalPlayers = tournament.players.length
   const balanceValues = chartData.map(point => point.balance)
@@ -309,30 +309,47 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
             {t('results.playerDetail.partnerships')}
           </h4>
           <div className="space-y-2">
-            {playerPartnerships
-              .sort((a, b) => b.pointsGained - a.pointsGained)
-              .map((partnership) => {
+            <div className="flex justify-between items-center text-[11px] text-foreground-muted px-0.5">
+              <span>&nbsp;</span>
+              <div className={matchupStatsColumnsClass}>
+                <span>{t('results.standings.record')}</span>
+                <span>{t('results.playerDetail.avgScore')}</span>
+                <span>{t('results.standings.balance')}</span>
+              </div>
+            </div>
+            {playerPartnerships.map((partnership) => {
+                const partnerIndex = partnership.player1Index === standing.index
+                  ? partnership.player2Index
+                  : partnership.player1Index
                 const partnerName = partnership.player1Index === standing.index
                   ? partnership.player2Name
                   : partnership.player1Name
+                const partnerRank = standingsByPlayerIndex.get(partnerIndex)
 
                 return (
                   <div
                     key={`${partnership.player1Index}-${partnership.player2Index}`}
                     className="flex justify-between items-center text-sm"
                   >
-                    <span className="text-foreground">{partnerName}</span>
-                    <div className="flex items-center gap-4">
-                      <span className="text-foreground-muted flex items-center gap-1">
-                        <Link className="w-3.5 h-3.5" />
-                        {partnership.gamesPlayed}
+                    <span className="text-foreground">
+                      {partnerName}
+                      {partnerRank !== undefined ? <span className="text-foreground-muted"> (#{partnerRank})</span> : null}
+                    </span>
+                    <div className={matchupStatsColumnsClass}>
+                      <span className="font-medium whitespace-nowrap">
+                        <span className="text-green-400">{partnership.wins}</span>
+                        <span className="text-foreground-muted mx-1">/</span>
+                        <span className="text-yellow-400">{partnership.draws}</span>
+                        <span className="text-foreground-muted mx-1">/</span>
+                        <span className="text-red-400">{partnership.losses}</span>
                       </span>
-                      <span className="text-foreground-muted">
-                        {partnership.pointsGained}p
-                      </span>
-                      <span className="text-padel-500 font-medium flex items-center gap-1">
+                      <span className="text-foreground font-medium flex items-center justify-end gap-1">
                         <CircleSlash2 className="w-3.5 h-3.5" />
                         {partnership.avgPointsPerGame.toFixed(1)}
+                      </span>
+                      <span className={`${getBalanceColorClass(partnership.balance)} font-medium flex items-center justify-end gap-1`}>
+                        <Scale className="w-3.5 h-3.5" />
+                        {formatSignedValue(partnership.balance)}
                       </span>
                     </div>
                   </div>
@@ -349,23 +366,40 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
             {t('results.playerDetail.opponents')}
           </h4>
           <div className="space-y-2">
+            <div className="flex justify-between items-center text-[11px] text-foreground-muted px-0.5">
+              <span>&nbsp;</span>
+              <div className={matchupStatsColumnsClass}>
+                <span>{t('results.standings.record')}</span>
+                <span>{t('results.playerDetail.avgScore')}</span>
+                <span>{t('results.standings.balance')}</span>
+              </div>
+            </div>
             {opponentStats.map((opponent) => (
               <div
                 key={opponent.opponentIndex}
                 className="flex justify-between items-center text-sm"
               >
-                <span className="text-foreground">{opponent.opponentName}</span>
-                <div className="flex items-center gap-4">
-                  <span className="text-foreground-muted flex items-center gap-1">
-                    <Swords className="w-3.5 h-3.5" />
-                    {opponent.gamesPlayed}
+                <span className="text-foreground">
+                  {opponent.opponentName}
+                  {standingsByPlayerIndex.get(opponent.opponentIndex) !== undefined
+                    ? <span className="text-foreground-muted"> (#{standingsByPlayerIndex.get(opponent.opponentIndex)})</span>
+                    : null}
+                </span>
+                <div className={matchupStatsColumnsClass}>
+                  <span className="font-medium whitespace-nowrap">
+                    <span className="text-green-400">{opponent.wins}</span>
+                    <span className="text-foreground-muted mx-1">/</span>
+                    <span className="text-yellow-400">{opponent.draws}</span>
+                    <span className="text-foreground-muted mx-1">/</span>
+                    <span className="text-red-400">{opponent.losses}</span>
                   </span>
-                  <span className="text-foreground-muted">
-                    {opponent.pointsScored}p
-                  </span>
-                  <span className="text-padel-500 font-medium flex items-center gap-1">
+                  <span className="text-foreground font-medium flex items-center justify-end gap-1">
                     <CircleSlash2 className="w-3.5 h-3.5" />
                     {opponent.avgPointsPerGame.toFixed(1)}
+                  </span>
+                  <span className={`${getBalanceColorClass(opponent.balance)} font-medium flex items-center justify-end gap-1`}>
+                    <Scale className="w-3.5 h-3.5" />
+                    {formatSignedValue(opponent.balance)}
                   </span>
                 </div>
               </div>

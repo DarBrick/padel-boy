@@ -1,5 +1,5 @@
 import type { StoredTournament, StoredMatch } from '../schemas/tournament'
-import { getTournamentStats } from './tournamentStats'
+import { getTournamentStats, getBalanceImpactFromScoreDelta } from './tournamentStats'
 import { getRoundMatches, getTotalRounds, getPlayerMatchOutcome } from './tournamentState'
 
 // ── Partnership Types ──────────────────────────────────────────────
@@ -16,6 +16,7 @@ export interface PartnershipStats {
   winRate: number
   pointsGained: number
   avgPointsPerGame: number
+  balance: number
 }
 
 // ── Opponent Types ─────────────────────────────────────────────────
@@ -24,8 +25,12 @@ export interface OpponentStats {
   opponentIndex: number
   opponentName: string
   gamesPlayed: number
+  wins: number
+  draws: number
+  losses: number
   pointsScored: number
   avgPointsPerGame: number
+  balance: number
 }
 
 // ── Match Superlative Types ────────────────────────────────────────
@@ -85,7 +90,7 @@ export interface PlayerConsistency {
 
 /**
  * Calculate statistics for all player partnerships (pairs who played together)
- * Returns sorted by win rate (descending), then games played (descending)
+ * Returns sorted by balance (descending), then games played (descending)
  */
 export function getPartnershipStats(tournament: StoredTournament): PartnershipStats[] {
   // Map: "index1-index2" -> stats
@@ -97,6 +102,7 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
     if (match.winner === undefined || match.scoreDelta === undefined) return
 
     const isDraw = match.scoreDelta === 0
+    const balanceImpact = getBalanceImpactFromScoreDelta(match.scoreDelta)
     const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
     const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
 
@@ -116,6 +122,7 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
         winRate: 0,
         pointsGained: 0,
         avgPointsPerGame: 0,
+        balance: 0,
       })
     }
     const stats1 = partnershipMap.get(key1)!
@@ -126,9 +133,11 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
     } else if (match.winner === 0) {
       stats1.wins++
       stats1.pointsGained += winningScore
+      stats1.balance += balanceImpact
     } else {
       stats1.losses++
       stats1.pointsGained += losingScore
+      stats1.balance -= balanceImpact
     }
 
     // Process team2
@@ -147,6 +156,7 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
         winRate: 0,
         pointsGained: 0,
         avgPointsPerGame: 0,
+        balance: 0,
       })
     }
     const stats2 = partnershipMap.get(key2)!
@@ -157,9 +167,11 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
     } else if (match.winner === 1) {
       stats2.wins++
       stats2.pointsGained += winningScore
+      stats2.balance += balanceImpact
     } else {
       stats2.losses++
       stats2.pointsGained += losingScore
+      stats2.balance -= balanceImpact
     }
   })
 
@@ -170,10 +182,10 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
     avgPointsPerGame: stats.gamesPlayed > 0 ? stats.pointsGained / stats.gamesPlayed : 0,
   }))
 
-  // Sort by points gained (desc), then games played (desc)
+  // Sort by balance (desc), then games played (desc)
   partnerships.sort((a, b) => {
-    if (b.pointsGained !== a.pointsGained) {
-      return b.pointsGained - a.pointsGained
+    if (b.balance !== a.balance) {
+      return b.balance - a.balance
     }
     return b.gamesPlayed - a.gamesPlayed
   })
@@ -185,7 +197,7 @@ export function getPartnershipStats(tournament: StoredTournament): PartnershipSt
 
 /**
  * Calculate statistics for opponents a specific player has faced
- * Returns sorted by points scored (descending), then games played (descending)
+ * Returns sorted by balance (ascending), then games played (descending)
  */
 export function getOpponentStats(tournament: StoredTournament, playerIndex: number): OpponentStats[] {
   // Map: opponentIndex -> stats
@@ -196,6 +208,9 @@ export function getOpponentStats(tournament: StoredTournament, playerIndex: numb
   finishedMatches.forEach(match => {
     if (match.winner === undefined || match.scoreDelta === undefined) return
 
+    const scoreDelta = match.scoreDelta
+    const isDraw = scoreDelta === 0
+    const balanceImpact = getBalanceImpactFromScoreDelta(scoreDelta)
     const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
     const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
 
@@ -210,13 +225,25 @@ export function getOpponentStats(tournament: StoredTournament, playerIndex: numb
             opponentIndex,
             opponentName: tournament.players[opponentIndex].name,
             gamesPlayed: 0,
+            wins: 0,
+            draws: 0,
+            losses: 0,
             pointsScored: 0,
             avgPointsPerGame: 0,
+            balance: 0,
           })
         }
         const stats = opponentMap.get(opponentIndex)!
         stats.gamesPlayed++
         stats.pointsScored += playerScore
+        if (isDraw) {
+          stats.draws++
+        } else if (match.winner === 0) {
+          stats.wins++
+        } else {
+          stats.losses++
+        }
+        stats.balance += scoreDelta === 0 ? 0 : match.winner === 0 ? balanceImpact : -balanceImpact
       })
     }
     // Check if player is on team2
@@ -230,13 +257,25 @@ export function getOpponentStats(tournament: StoredTournament, playerIndex: numb
             opponentIndex,
             opponentName: tournament.players[opponentIndex].name,
             gamesPlayed: 0,
+            wins: 0,
+            draws: 0,
+            losses: 0,
             pointsScored: 0,
             avgPointsPerGame: 0,
+            balance: 0,
           })
         }
         const stats = opponentMap.get(opponentIndex)!
         stats.gamesPlayed++
         stats.pointsScored += playerScore
+        if (isDraw) {
+          stats.draws++
+        } else if (match.winner === 1) {
+          stats.wins++
+        } else {
+          stats.losses++
+        }
+        stats.balance += scoreDelta === 0 ? 0 : match.winner === 1 ? balanceImpact : -balanceImpact
       })
     }
   })
@@ -247,10 +286,10 @@ export function getOpponentStats(tournament: StoredTournament, playerIndex: numb
     avgPointsPerGame: stats.gamesPlayed > 0 ? stats.pointsScored / stats.gamesPlayed : 0,
   }))
 
-  // Sort by points scored (desc), then games played (desc)
+  // Sort by balance (asc), then games played (desc)
   opponents.sort((a, b) => {
-    if (b.pointsScored !== a.pointsScored) {
-      return b.pointsScored - a.pointsScored
+    if (a.balance !== b.balance) {
+      return a.balance - b.balance
     }
     return b.gamesPlayed - a.gamesPlayed
   })

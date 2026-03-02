@@ -29,6 +29,11 @@ export interface TournamentStats {
   topPlayers: PlayerStanding[]
 }
 
+export function getBalanceImpactFromScoreDelta(scoreDelta: number): number {
+  if (scoreDelta <= 0) return 0
+  return Math.ceil(scoreDelta / 2)
+}
+
 /**
  * Compares two player standings for ranking purposes.
  * Returns negative if 'a' should rank higher, positive if 'b' should rank higher, 0 if equal.
@@ -104,6 +109,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
     if (!match.isFinished || match.winner === undefined || match.scoreDelta === undefined) continue
 
     const isDraw = match.scoreDelta === 0
+    const balanceImpact = getBalanceImpactFromScoreDelta(match.scoreDelta)
     const winningScore = Math.floor((tournament.pointsPerGame + match.scoreDelta) / 2)
     const losingScore = Math.floor((tournament.pointsPerGame - match.scoreDelta) / 2)
     const team1Score = match.winner === 0 ? winningScore : losingScore
@@ -111,7 +117,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
 
     for (const playerIndex of match.team1) {
       pointsByPlayerIndex[playerIndex] += team1Score
-      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 0 ? match.scoreDelta : -match.scoreDelta
+      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 0 ? balanceImpact : -balanceImpact
       if (isDraw) {
         drawsByPlayerIndex[playerIndex]++
       } else if (match.winner === 0) {
@@ -122,7 +128,7 @@ export function getTournamentStats(tournament: StoredTournament, upToRound?: num
     }
     for (const playerIndex of match.team2) {
       pointsByPlayerIndex[playerIndex] += team2Score
-      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 1 ? match.scoreDelta : -match.scoreDelta
+      balanceByPlayerIndex[playerIndex] += isDraw ? 0 : match.winner === 1 ? balanceImpact : -balanceImpact
       if (isDraw) {
         drawsByPlayerIndex[playerIndex]++
       } else if (match.winner === 1) {
