@@ -24,7 +24,7 @@ export function Home() {
       <div className="text-center space-y-4 sm:space-y-5 md:space-y-6 max-w-3xl mx-auto">
         <div className="flex flex-col items-center justify-center gap-4">
           <PadelBallIcon className="w-20 h-20 md:w-24 md:h-24" />
-          <h1 className="text-4xl md:text-6xl font-bold">
+          <h1 className="text-4xl font-bold text-foreground sm:text-5xl md:text-6xl">
             {t('appName')}
           </h1>
         </div>
@@ -73,7 +73,7 @@ export function Home() {
 
       {/* Featured Highlights - Top 3 Most Important Features */}
       <div className="space-y-3 sm:space-y-3.5 md:space-y-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-2">
+        <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl md:text-3xl text-center">
           {t('home.keyFeaturesTitle')}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-3.5 md:gap-4">
@@ -81,21 +81,21 @@ export function Home() {
             <div className="text-padel-500 mb-3">
               <Trophy className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">{t('home.features.formats.title')}</h3>
+            <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.formats.title')}</h3>
             <p className="text-foreground-muted">{t('home.features.formats.description')}</p>
           </ContentPanel>
           <ContentPanel>
             <div className="text-padel-500 mb-3">
               <Users className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">{t('home.features.players.title')}</h3>
+            <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.players.title')}</h3>
             <p className="text-foreground-muted">{t('home.features.players.description')}</p>
           </ContentPanel>
           <ContentPanel>
             <div className="text-padel-500 mb-3">
               <Calendar className="w-8 h-8" />
             </div>
-            <h3 className="text-xl font-semibold mb-2">{t('home.features.rounds.title')}</h3>
+            <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.rounds.title')}</h3>
             <p className="text-foreground-muted">{t('home.features.rounds.description')}</p>
           </ContentPanel>
         </div>
@@ -107,21 +107,21 @@ export function Home() {
           <div className="text-padel-500 mb-3">
             <Zap className="w-8 h-8" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.realtime.title')}</h3>
+          <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.realtime.title')}</h3>
           <p className="text-foreground-muted">{t('home.features.realtime.description')}</p>
         </ContentPanel>
         <ContentPanel>
           <div className="text-padel-500 mb-3">
             <FolderOpen className="w-8 h-8" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.library.title')}</h3>
+          <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.library.title')}</h3>
           <p className="text-foreground-muted">{t('home.features.library.description')}</p>
         </ContentPanel>
         <ContentPanel>
           <div className="text-padel-500 mb-3">
             <History className="w-8 h-8" />
           </div>
-          <h3 className="text-xl font-semibold mb-2">{t('home.features.stats.title')}</h3>
+          <h3 className="mb-2 text-lg font-semibold text-foreground sm:text-xl">{t('home.features.stats.title')}</h3>
           <p className="text-foreground-muted">{t('home.features.stats.description')}</p>
         </ContentPanel>
       </div>
@@ -131,7 +131,7 @@ export function Home() {
         <div className="text-padel-500 mb-3">
           <Lightbulb className="w-8 h-8" />
         </div>
-        <h3 className="text-2xl font-bold mb-4">{t('home.howItWorks.title')}</h3>
+        <h2 className="mb-4 text-xl font-semibold text-foreground sm:text-2xl">{t('home.howItWorks.title')}</h2>
         <ol className="space-y-2 sm:space-y-2.5 md:space-y-3 text-foreground-muted">
           <li className="flex gap-3">
             <span className="text-padel-500 font-bold">1.</span>

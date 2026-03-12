@@ -181,7 +181,7 @@ export function Create() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold">{t('create.title')}</h1>
+        <h1 className="text-3xl font-bold text-foreground sm:text-4xl">{t('create.title')}</h1>
       </div>
 
       {/* Form */}
@@ -189,7 +189,7 @@ export function Create() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 sm:space-y-5 md:space-y-6">
         {/* Event Type */}
         <ContentPanel>
-          <label className="block text-lg font-semibold mb-4">
+          <label className="mb-4 block text-base font-semibold text-foreground sm:text-lg">
             <Sparkles className="w-5 h-5 inline-block mr-2" />
             {t('create.eventType.label')}
           </label>
@@ -206,7 +206,7 @@ export function Create() {
 
         {/* Tournament Name */}
         <ContentPanel>
-          <label className="block text-lg font-semibold mb-4">
+          <label className="mb-4 block text-base font-semibold text-foreground sm:text-lg">
             <PencilLine className="w-5 h-5 inline-block mr-2" />
             {t('create.name.label')}
           </label>
@@ -297,7 +297,7 @@ export function Create() {
             <Handshake className="w-5 h-5 mt-1 flex-shrink-0" />
             <div className="flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold">{t('create.fixedPairs.label')}</span>
+                <span className="text-base font-semibold text-foreground sm:text-lg">{t('create.fixedPairs.label')}</span>
               </div>
               <p className="text-foreground-muted text-sm mt-1">
                 {t('create.fixedPairs.desc')}

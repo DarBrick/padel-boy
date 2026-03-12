@@ -11,19 +11,20 @@ export function CorruptionBanner() {
   }
   
   return (
-    <div className="bg-amber-500/10 border border-amber-500/50 rounded-lg p-4 mb-6">
+    <div className="mb-6 rounded-lg border border-amber-500/50 bg-amber-500/10 p-4 sm:p-5 md:p-6" role="alert">
       <div className="flex items-start gap-3">
         <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
         <div className="flex-1">
-          <h3 className="text-lg font-semibold text-amber-500 mb-1">
+          <h3 className="mb-1 text-base font-semibold text-amber-500 sm:text-lg">
             {t('pastTournaments.corruption.title')}
           </h3>
           <p className="text-foreground-muted text-sm mb-3">
             {t('pastTournaments.corruption.description', { count: corruptedIds.length })}
           </p>
           <button
+            type="button"
             onClick={removeCorruptedTournaments}
-            className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-background font-medium rounded-lg transition-colors text-sm min-h-[44px]"
+            className="min-h-[44px] rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-amber-600 sm:min-h-[46px] md:min-h-[48px]"
           >
             {t('pastTournaments.corruption.removeButton')}
           </button>

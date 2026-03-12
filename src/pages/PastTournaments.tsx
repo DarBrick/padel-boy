@@ -156,7 +156,7 @@ export function PastTournaments() {
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+        <h1 className="mb-2 text-3xl font-bold text-foreground sm:text-4xl">
           {t('pastTournaments.title')}
         </h1>
         <p className="text-foreground-muted text-base md:text-lg mb-6">
@@ -165,7 +165,7 @@ export function PastTournaments() {
         
         {/* Filters */}
         <ContentPanel>
-          <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+          <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold text-foreground sm:text-2xl">
             <Filter className="w-5 h-5" />
             {t('pastTournaments.filters.title')}
           </h2>
@@ -336,7 +336,7 @@ export function PastTournaments() {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-surface mb-4">
               <History className="w-10 h-10 text-foreground-muted" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+            <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
               {t('pastTournaments.emptyState.title')}
             </h2>
             <p className="text-foreground-muted text-lg mb-6 max-w-md mx-auto">
@@ -354,7 +354,7 @@ export function PastTournaments() {
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-surface mb-4">
               <Inbox className="w-10 h-10 text-foreground-muted" />
             </div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+            <h2 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
               {t('pastTournaments.noResults.title')}
             </h2>
             <p className="text-foreground-muted text-lg max-w-md mx-auto">
@@ -369,7 +369,7 @@ export function PastTournaments() {
             <div className="space-y-8">
               {groupedTournaments.map((group) => (
                 <div key={group.label}>
-                  <h2 className="text-xl font-semibold text-foreground-muted mb-4 flex items-center gap-2">
+                  <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold text-foreground-muted sm:text-xl">
                     <History className="w-5 h-5" />
                     {group.label}
                   </h2>
@@ -425,7 +425,7 @@ export function PastTournaments() {
       {deleteConfirmId && (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
           <div className="bg-background-elevated border border-border rounded-lg p-6 max-w-md w-full">
-            <h3 className="text-xl font-bold text-foreground mb-2">
+            <h3 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
               {t('pastTournaments.deleteConfirm.title')}
             </h3>
             <p className="text-foreground-muted mb-6">

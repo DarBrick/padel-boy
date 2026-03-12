@@ -36,7 +36,7 @@ export function NotFound() {
           <h1 className="text-8xl sm:text-9xl md:text-[12rem] font-bold bg-gradient-to-r from-padel-500 to-white bg-clip-text text-transparent">
             404
           </h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
             Page Not Found
           </h2>
         </div>

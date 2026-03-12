@@ -57,7 +57,7 @@ export function RoundsHistory({
         return (
           <div key={roundNumber}>
             {/* Round header */}
-            <h3 className="text-lg font-semibold text-foreground mb-3 sm:mb-3.5 md:mb-4 text-center">
+            <h3 className="mb-3 text-center text-lg font-semibold text-foreground sm:mb-3.5 sm:text-xl md:mb-4">
               {t('results.rounds.round', { number: roundNumber })}
             </h3>
 

@@ -36,11 +36,11 @@ export function TournamentCard({ tournament, onView, onShare, onDelete }: Tourna
     : 'bg-surface/70 text-foreground-muted border-border'
   
   return (
-    <ContentPanel className="p-4 md:p-4 transition-all">
+    <ContentPanel className="transition-all">
       {/* Header with name and date */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-foreground truncate">
+          <h3 className="truncate text-base font-semibold text-foreground sm:text-lg">
             {tournament.name || t('pastTournaments.defaultName', { date: dateStr })}
           </h3>
           <div className="flex items-center gap-1.5 text-sm text-foreground-muted mt-1">

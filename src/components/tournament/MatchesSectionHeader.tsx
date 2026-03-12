@@ -11,7 +11,7 @@ export function MatchesSectionHeader({ isLastRound, isTournamentFinished }: Matc
 
   return (
     <div className="flex items-center justify-between">
-      <h2 className="text-xl sm:text-2xl font-bold text-foreground">
+      <h2 className="text-xl font-semibold text-foreground sm:text-2xl">
         {t('tournament.matches')}
       </h2>
       {isLastRound && !isTournamentFinished ? (

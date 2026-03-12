@@ -4,9 +4,9 @@ export function Standings() {
   const { t } = useTranslation()
   
   return (
-    <div className="text-center py-12">
-      <h1 className="text-3xl font-bold mb-4">{t('standings.title')}</h1>
-      <p className="text-foreground-muted">Coming soon...</p>
+    <div className="py-12 text-center sm:py-16 md:py-20">
+      <h1 className="mb-4 text-3xl font-bold text-foreground sm:text-4xl">{t('standings.title')}</h1>
+      <p className="text-foreground-muted text-base sm:text-lg">Coming soon...</p>
     </div>
   )
 }

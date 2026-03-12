@@ -24,7 +24,7 @@ export function Settings() {
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       <div>
-        <h1 className="text-3xl font-bold mb-2">{t('nav.settings')}</h1>
+        <h1 className="mb-2 text-3xl font-bold text-foreground sm:text-4xl">{t('nav.settings')}</h1>
         <p className="text-foreground-muted">{t('settings.description')}</p>
       </div>
 
@@ -32,7 +32,7 @@ export function Settings() {
       <div className="bg-surface/60 rounded-lg p-4 sm:p-5 md:p-6 border border-border/70">
         <div className="flex items-center gap-3 mb-4">
           <Globe className="w-5 h-5 text-padel-500" />
-          <h2 className="text-xl font-semibold">{t('settings.language')}</h2>
+          <h2 className="text-xl font-semibold text-foreground sm:text-2xl">{t('settings.language')}</h2>
         </div>
         <LanguageSwitcher />
       </div>
@@ -40,13 +40,13 @@ export function Settings() {
       <ContentPanel>
         <div className="flex items-center gap-3 mb-2">
           <SlidersHorizontal className="w-5 h-5 text-padel-500" />
-          <h2 className="text-xl font-semibold">{t('settings.createDefaults.title')}</h2>
+          <h2 className="text-xl font-semibold text-foreground sm:text-2xl">{t('settings.createDefaults.title')}</h2>
         </div>
         <p className="text-foreground-muted text-sm mb-4">{t('settings.createDefaults.description')}</p>
 
         <div className="space-y-4 sm:space-y-5 md:space-y-6">
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="mb-3 block text-base font-semibold text-foreground sm:text-lg">
               <Sparkles className="w-5 h-5 inline-block mr-2" />
               {t('create.eventType.label')}
             </label>
@@ -62,7 +62,7 @@ export function Settings() {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="mb-3 block text-base font-semibold text-foreground sm:text-lg">
               <Trophy className="w-5 h-5 inline-block mr-2" />
               {t('settings.createDefaults.points')}
             </label>
@@ -80,7 +80,7 @@ export function Settings() {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="mb-3 block text-base font-semibold text-foreground sm:text-lg">
               <Shuffle className="w-5 h-5 inline-block mr-2" />
               {t('settings.createDefaults.matchupStyle')}
             </label>
@@ -96,7 +96,7 @@ export function Settings() {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="mb-3 block text-base font-semibold text-foreground sm:text-lg">
               <Dices className="w-5 h-5 inline-block mr-2" />
               {t('settings.createDefaults.randomRounds')}
             </label>
@@ -109,7 +109,7 @@ export function Settings() {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="mb-3 block text-base font-semibold text-foreground sm:text-lg">
               <LayoutGrid className="w-5 h-5 inline-block mr-2" />
               {t('settings.createDefaults.courtNames')}
             </label>

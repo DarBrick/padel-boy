@@ -18,10 +18,10 @@ export function RadioCardGroup({ name, options, value, onChange }: RadioCardGrou
         <label
           key={option.value}
           className={`
-            flex flex-col items-center p-3 sm:p-3.5 md:p-4 rounded-lg border-2 cursor-pointer transition-all
+            flex min-h-[44px] cursor-pointer flex-col items-center rounded-lg border border-border/70 p-3 sm:min-h-[46px] sm:p-3.5 md:min-h-[48px] md:p-4 transition-all
             ${value === option.value 
-              ? 'border-padel-500 bg-padel-500/10' 
-              : 'border-border hover:border-foreground-muted'}
+              ? 'border-padel-500 bg-padel-500/10 shadow-[0_0_10px_rgba(212,255,0,0.22)]' 
+              : 'hover:border-foreground-muted hover:bg-surface/70'}
           `}
         >
           <input

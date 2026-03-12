@@ -12,6 +12,7 @@ export function TabSelector({ tabs, activeTab, onTabChange }: TabSelectorProps) 
         {tabs.map((tab) => (
           <button
             key={tab.id}
+            type="button"
             onClick={() => !tab.disabled && onTabChange(tab.id)}
             disabled={tab.disabled}
             className={`
@@ -20,10 +21,10 @@ export function TabSelector({ tabs, activeTab, onTabChange }: TabSelectorProps) 
               min-h-[44px] sm:min-h-[46px] md:min-h-[48px]
               ${
                 tab.disabled
-                  ? 'bg-surface/40 text-foreground-muted border-2 border-border/60 cursor-not-allowed opacity-50'
+                  ? 'cursor-not-allowed border border-border/60 bg-surface/40 text-foreground-muted opacity-50'
                   : activeTab === tab.id
-                  ? 'bg-surface-muted text-padel-500 border-2 border-padel-500 shadow-[0_0_10px_rgba(212,255,0,0.3)]'
-                  : 'bg-surface/60 text-foreground-muted border-2 border-border hover:border-foreground-muted hover:text-foreground hover:bg-surface-muted'
+                  ? 'border border-padel-500 bg-surface-muted text-padel-500 shadow-[0_0_10px_rgba(212,255,0,0.3)]'
+                  : 'border border-border/70 bg-surface/60 text-foreground-muted hover:border-foreground-muted hover:bg-surface-muted hover:text-foreground'
               }
             `}
           >

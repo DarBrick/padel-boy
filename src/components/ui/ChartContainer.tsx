@@ -140,7 +140,7 @@ export function ChartContainer({
   }
 
   return (
-    <div className={`bg-surface/60 rounded-lg p-4 ${className}`}>
+    <div className={`rounded-lg border border-border/70 bg-surface/60 p-4 sm:p-5 md:p-6 ${className}`}>
       {title && (
         <h4 className="text-sm font-medium text-foreground-muted mb-3">{title}</h4>
       )}
