@@ -3,6 +3,7 @@ const translation = {
   appName: 'Padel Boy',
   common: {
     cancel: 'Cancelar',
+    yes: 'Sí',
   },
   nav: {
     home: 'Inicio',
@@ -210,6 +211,36 @@ const translation = {
   },
   results: {
     back: 'Atrás',
+    export: {
+      label: 'Exportar PDF',
+      loading: 'Exportando PDF',
+      success: 'PDF exportado correctamente.',
+      error: 'No se pudo exportar el PDF.',
+      fileNameFallback: 'resultados-del-torneo',
+      documentSubject: 'Exportación de resultados del torneo',
+      generatedWithDate: 'Finalizado el {{date}}',
+      sections: {
+        summary: 'Resumen del Torneo',
+      },
+      summary: {
+        format: 'Formato',
+        players: 'Jugadores',
+        finishedAt: 'Finalizado',
+        rounds: 'Rondas',
+        matches: 'Partidos',
+        pairingStyle: 'Emparejamiento',
+        randomRounds: 'Rondas Aleatorias',
+        fixedPairs: 'Parejas Fijas',
+      },
+      columns: {
+        label: 'Etiqueta',
+        value: 'Valor',
+        court: 'Pista',
+        team1: 'Equipo 1',
+        score: 'Marcador',
+        team2: 'Equipo 2',
+      },
+    },
     tabs: {
       standings: 'Tabla',
       rounds: 'Resultados',

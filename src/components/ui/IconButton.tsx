@@ -5,13 +5,15 @@ interface IconButtonProps {
   onClick: () => void
   label?: string
   icon?: LucideIcon | ReactElement
+  disabled?: boolean
 }
 
-export function IconButton({ onClick, label, icon }: IconButtonProps) {
+export function IconButton({ onClick, label, icon, disabled = false }: IconButtonProps) {
   if (!icon) {
     return (
       <button
         onClick={onClick}
+        disabled={disabled}
         className="
           p-3 
           bg-surface 
@@ -22,6 +24,10 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
           transition-all duration-200
           shadow-lg hover:shadow-xl
           group
+          disabled:cursor-not-allowed
+          disabled:opacity-60
+          disabled:hover:bg-surface
+          disabled:hover:border-border
         "
         aria-label={label}
       >
@@ -33,6 +39,7 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
   return (
     <button
       onClick={onClick}
+      disabled={disabled}
       className="
         p-3 
         bg-surface 
@@ -43,6 +50,10 @@ export function IconButton({ onClick, label, icon }: IconButtonProps) {
         transition-all duration-200
         shadow-lg hover:shadow-xl
         group
+        disabled:cursor-not-allowed
+        disabled:opacity-60
+        disabled:hover:bg-surface
+        disabled:hover:border-border
       "
       aria-label={label}
     >

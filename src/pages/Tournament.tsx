@@ -2,22 +2,24 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { ArrowLeft, Share2 } from 'lucide-react'
+import { ArrowLeft, Share2, Download, LoaderCircle } from 'lucide-react'
 import { useTournaments } from '../stores/tournaments'
 import { isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
 import { shareTournament } from '../utils/shareHelper'
+import { exportTournamentResultsPdf } from '../utils/pdfExport'
 import { ContentPanel } from '../components/ui'
 import { TournamentResults } from '../components/tournament'
 import { ActiveTournament } from '../components/tournament'
 import { IconButton } from '../components/ui'
 
 export function Tournament() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
   const navigate = useNavigate()
   const { getTournament } = useTournaments()
   const [isSharing, setIsSharing] = useState(false)
+  const [isExportingPdf, setIsExportingPdf] = useState(false)
   
   const tournament = getTournament(id!)
   
@@ -91,6 +93,24 @@ export function Tournament() {
 
   const isTournamentFinished = checkIsTournamentFinished(tournament)
 
+  const handleExportPdf = async () => {
+    if (!tournament || !isTournamentFinished || isExportingPdf) return
+
+    setIsExportingPdf(true)
+    try {
+      await exportTournamentResultsPdf({
+        tournament,
+        locale: i18n.language,
+        t,
+      })
+      toast.success(t('results.export.success'))
+    } catch (error) {
+      toast.error(t('results.export.error'))
+    } finally {
+      setIsExportingPdf(false)
+    }
+  }
+
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Navigation buttons */}
@@ -104,9 +124,18 @@ export function Tournament() {
         )}
         <IconButton
           onClick={handleShare}
+          disabled={isSharing}
           icon={Share2}
           label={t('pastTournaments.actions.share')}
         />
+        {isTournamentFinished && (
+          <IconButton
+            onClick={handleExportPdf}
+            disabled={isExportingPdf}
+            icon={isExportingPdf ? <LoaderCircle className="w-6 h-6 text-foreground-muted animate-spin" /> : Download}
+            label={isExportingPdf ? t('results.export.loading') : t('results.export.label')}
+          />
+        )}
       </div>
 
       {/* Tournament content */}
