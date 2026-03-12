@@ -3,6 +3,7 @@ const translation = {
   appName: 'Padel Boy',
   common: {
     cancel: 'Anuluj',
+    close: 'Zamknij',
     yes: 'Tak',
   },
   nav: {
@@ -221,7 +222,9 @@ const translation = {
       generatedWithDate: 'Zakończono {{date}}',
       sections: {
         summary: 'Podsumowanie Turnieju',
+        shareQr: 'Kod QR turnieju',
       },
+      qrDescription: 'Zeskanuj ten kod, aby otworzyć udostępniony link do turnieju na innym urządzeniu.',
       summary: {
         format: 'Format',
         players: 'Gracze',
@@ -421,6 +424,17 @@ const translation = {
       title: 'Nieprawidłowe Dane Turnieju',
       description: 'Udostępniony link wydaje się być uszkodzony lub nieprawidłowy. Nie udało się zdekodować danych turnieju.',
       goHome: 'Przejdź do Strony Głównej',
+    },
+    qr: {
+      button: 'Pokaż QR',
+      title: 'Udostępnij przez kod QR',
+      description: 'Zeskanuj ten kod na innym urządzeniu, aby od razu zaimportować turniej.',
+      loading: 'Generowanie kodu QR...',
+      error: 'Nie udało się wygenerować kodu QR. Spróbuj ponownie później.',
+      exportImage: 'Eksportuj obraz QR',
+      exportSuccess: 'Obraz QR został wyeksportowany.',
+      exportError: 'Nie udało się wyeksportować obrazu QR.',
+      imageAlt: 'Kod QR dla {{tournamentName}}',
     },
   },
   pastTournaments: {

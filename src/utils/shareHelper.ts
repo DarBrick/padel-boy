@@ -9,6 +9,23 @@ export type ShareResult = {
   error?: Error
 }
 
+export function buildTournamentShareUrl(origin: string, appBasename: string, base64url: string): string {
+  const normalizedBasename = appBasename === '/' ? '' : appBasename
+
+  return `${origin}${normalizedBasename}/#/shared/${base64url}`
+}
+
+export function getTournamentShareUrl(tournament: StoredTournament): string {
+  const encoded = encodeTournament(tournament)
+  const base64url = encodeBase64Url(encoded)
+
+  return getTournamentShareUrlFromBase64Url(base64url)
+}
+
+export function getTournamentShareUrlFromBase64Url(base64url: string): string {
+  return buildTournamentShareUrl(window.location.origin, getAppBasename(), base64url)
+}
+
 /**
  * Detects if the device is mobile based on touch support and screen size
  */
@@ -26,13 +43,7 @@ function isMobileDevice(): boolean {
  */
 export async function shareTournament(tournament: StoredTournament, t: TFunction): Promise<ShareResult> {
   try {
-    const encoded = encodeTournament(tournament)
-    const base64url = encodeBase64Url(encoded)
-
-    // Build canonical share URL independent of current page path
-    const appBasename = getAppBasename()
-    const normalizedBasename = appBasename === '/' ? '' : appBasename
-    const url = `${window.location.origin}${normalizedBasename}/#/shared/${base64url}`
+    const url = getTournamentShareUrl(tournament)
     
     // Try native share API only on mobile devices
     if (isMobileDevice() && navigator.share) {

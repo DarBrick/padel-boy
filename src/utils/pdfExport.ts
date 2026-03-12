@@ -1,8 +1,15 @@
 import type { TFunction } from 'i18next'
 import type { UserOptions } from 'jspdf-autotable'
 import type { StoredMatch, StoredTournament } from '../schemas/tournament'
+import dejavuSansBoldFontUrl from 'dejavu-fonts-ttf/ttf/DejaVuSans-Bold.ttf?url'
+import dejavuSansFontUrl from 'dejavu-fonts-ttf/ttf/DejaVuSans.ttf?url'
+import { generateTournamentQrDataUrl, getTournamentQrAvailability } from './qrExport'
 import { getPausingPlayers, getRoundMatches, getTotalRounds } from './tournamentState'
 import { getTournamentStats } from './tournamentStats'
+
+const PDF_FONT_FAMILY = 'DejaVuSans'
+const PDF_FONT_REGULAR_FILE = 'DejaVuSans.ttf'
+const PDF_FONT_BOLD_FILE = 'DejaVuSans-Bold.ttf'
 
 interface JsPdfDocument {
   internal: {
@@ -18,6 +25,9 @@ interface JsPdfDocument {
   text: (text: string | string[], x: number, y: number, options?: { align?: 'left' | 'center' | 'right' }) => void
   splitTextToSize: (text: string, maxWidth: number) => string[]
   addPage: () => void
+  addImage: (imageData: string, format: string, x: number, y: number, width: number, height: number) => void
+  addFileToVFS: (filename: string, data: string) => void
+  addFont: (postScriptName: string, id: string, fontStyle: string, fontWeight?: string | number) => void
   save: (filename: string) => void
   lastAutoTable?: {
     finalY: number
@@ -55,6 +65,53 @@ interface BuildTournamentResultsPdfDataOptions {
 
 interface ExportTournamentResultsPdfOptions extends BuildTournamentResultsPdfDataOptions {
   tournament: StoredTournament
+}
+
+let pdfFontDataPromise: Promise<{ regular: string; bold: string }> | null = null
+
+function uint8ArrayToBase64(bytes: Uint8Array): string {
+  let binary = ''
+
+  for (let index = 0; index < bytes.length; index += 0x8000) {
+    const chunk = bytes.subarray(index, index + 0x8000)
+    binary += String.fromCharCode(...chunk)
+  }
+
+  return btoa(binary)
+}
+
+async function loadPdfFontData(): Promise<{ regular: string; bold: string }> {
+  if (!pdfFontDataPromise) {
+    pdfFontDataPromise = Promise.all([
+      fetch(dejavuSansFontUrl),
+      fetch(dejavuSansBoldFontUrl),
+    ]).then(async ([regularResponse, boldResponse]) => {
+      if (!regularResponse.ok || !boldResponse.ok) {
+        throw new Error('Failed to load PDF font assets')
+      }
+
+      const [regularBuffer, boldBuffer] = await Promise.all([
+        regularResponse.arrayBuffer(),
+        boldResponse.arrayBuffer(),
+      ])
+
+      return {
+        regular: uint8ArrayToBase64(new Uint8Array(regularBuffer)),
+        bold: uint8ArrayToBase64(new Uint8Array(boldBuffer)),
+      }
+    })
+  }
+
+  return pdfFontDataPromise
+}
+
+async function registerPdfFonts(doc: JsPdfDocument): Promise<void> {
+  const { regular, bold } = await loadPdfFontData()
+
+  doc.addFileToVFS(PDF_FONT_REGULAR_FILE, regular)
+  doc.addFont(PDF_FONT_REGULAR_FILE, PDF_FONT_FAMILY, 'normal')
+  doc.addFileToVFS(PDF_FONT_BOLD_FILE, bold)
+  doc.addFont(PDF_FONT_BOLD_FILE, PDF_FONT_FAMILY, 'bold')
 }
 
 function getFinishedDate(tournament: StoredTournament, locale: string): string {
@@ -183,7 +240,7 @@ export function buildTournamentResultsPdfData(
 }
 
 function addSectionHeading(doc: JsPdfDocument, title: string, y: number): number {
-  doc.setFont('helvetica', 'bold')
+  doc.setFont(PDF_FONT_FAMILY, 'bold')
   doc.setFontSize(13)
   doc.setTextColor(20, 24, 38)
   doc.text(title, 40, y)
@@ -206,6 +263,7 @@ export async function exportTournamentResultsPdf({
   t,
 }: ExportTournamentResultsPdfOptions): Promise<string> {
   const pdfData = buildTournamentResultsPdfData(tournament, { locale, t })
+  const qrAvailability = getTournamentQrAvailability(tournament)
   const [{ jsPDF }, autoTableModule] = await Promise.all([
     import('jspdf'),
     import('jspdf-autotable') as Promise<AutoTableModule>,
@@ -213,6 +271,7 @@ export async function exportTournamentResultsPdf({
 
   const autoTable = autoTableModule.default
   const doc = new jsPDF({ unit: 'pt', format: 'a4' }) as JsPdfDocument
+  await registerPdfFonts(doc)
   const pageWidth = doc.internal.pageSize.getWidth()
   let cursorY = 40
 
@@ -222,13 +281,13 @@ export async function exportTournamentResultsPdf({
     creator: 'Padel Boy',
   })
 
-  doc.setFont('helvetica', 'bold')
+  doc.setFont(PDF_FONT_FAMILY, 'bold')
   doc.setFontSize(22)
   doc.setTextColor(20, 24, 38)
   doc.text(pdfData.title, pageWidth / 2, cursorY, { align: 'center' })
   cursorY += 22
 
-  doc.setFont('helvetica', 'normal')
+  doc.setFont(PDF_FONT_FAMILY, 'normal')
   doc.setFontSize(10)
   doc.setTextColor(91, 102, 121)
   const subtitleLines = doc.splitTextToSize(t('results.export.generatedWithDate', { date: getFinishedDate(tournament, locale) }), pageWidth - 80)
@@ -242,7 +301,7 @@ export async function exportTournamentResultsPdf({
     head: [[t('results.export.columns.label'), t('results.export.columns.value')]],
     body: pdfData.summaryRows,
     styles: {
-      font: 'helvetica',
+      font: PDF_FONT_FAMILY,
       fontSize: 10,
       cellPadding: 6,
       textColor: [20, 24, 38],
@@ -277,7 +336,7 @@ export async function exportTournamentResultsPdf({
     ]],
     body: pdfData.standingsRows,
     styles: {
-      font: 'helvetica',
+      font: PDF_FONT_FAMILY,
       fontSize: 9,
       cellPadding: 5,
       textColor: [20, 24, 38],
@@ -315,7 +374,7 @@ export async function exportTournamentResultsPdf({
       ]],
       body: round.matches.map((match) => [match.team1, match.score, match.team2]),
       styles: {
-        font: 'helvetica',
+        font: PDF_FONT_FAMILY,
         fontSize: 9,
         cellPadding: 5,
         textColor: [20, 24, 38],
@@ -338,7 +397,7 @@ export async function exportTournamentResultsPdf({
 
     if (round.pausingPlayers.length > 0) {
       cursorY = ensurePageSpace(doc, cursorY, 28)
-      doc.setFont('helvetica', 'normal')
+      doc.setFont(PDF_FONT_FAMILY, 'normal')
       doc.setFontSize(10)
       doc.setTextColor(91, 102, 121)
       doc.text(
@@ -350,6 +409,22 @@ export async function exportTournamentResultsPdf({
     }
 
     cursorY += 10
+  }
+
+  if (qrAvailability.isAvailable) {
+    try {
+      const qrDataUrl = await generateTournamentQrDataUrl(qrAvailability.shareUrl)
+      const qrSize = 220
+      const qrX = (pageWidth - qrSize) / 2
+
+      doc.addPage()
+      cursorY = 40
+      cursorY = addSectionHeading(doc, t('results.export.sections.shareQr'), cursorY)
+
+      doc.addImage(qrDataUrl, 'PNG', qrX, cursorY, qrSize, qrSize)
+    } catch (error) {
+      console.error('Failed to add tournament QR code to PDF export:', error)
+    }
   }
 
   doc.save(pdfData.filename)

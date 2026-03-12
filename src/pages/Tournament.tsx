@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { ArrowLeft, Share2, Download, LoaderCircle } from 'lucide-react'
+import { ArrowLeft, Share2, Download, LoaderCircle, QrCode } from 'lucide-react'
 import { useTournaments } from '../stores/tournaments'
 import { isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
 import { shareTournament } from '../utils/shareHelper'
 import { exportTournamentResultsPdf } from '../utils/pdfExport'
+import { getTournamentQrAvailability } from '../utils/qrExport'
 import { ContentPanel } from '../components/ui'
-import { TournamentResults } from '../components/tournament'
-import { ActiveTournament } from '../components/tournament'
+import { TournamentResults, ActiveTournament, TournamentQrModal } from '../components/tournament'
 import { IconButton } from '../components/ui'
 
 export function Tournament() {
@@ -19,6 +19,7 @@ export function Tournament() {
   const navigate = useNavigate()
   const { getTournament } = useTournaments()
   const [isSharing, setIsSharing] = useState(false)
+  const [isQrModalOpen, setIsQrModalOpen] = useState(false)
   const [isExportingPdf, setIsExportingPdf] = useState(false)
   
   const tournament = getTournament(id!)
@@ -92,6 +93,7 @@ export function Tournament() {
   }
 
   const isTournamentFinished = checkIsTournamentFinished(tournament)
+  const qrAvailability = getTournamentQrAvailability(tournament)
 
   const handleExportPdf = async () => {
     if (!tournament || !isTournamentFinished || isExportingPdf) return
@@ -128,6 +130,13 @@ export function Tournament() {
           icon={Share2}
           label={t('pastTournaments.actions.share')}
         />
+        {qrAvailability.isAvailable && (
+          <IconButton
+            onClick={() => setIsQrModalOpen(true)}
+            icon={QrCode}
+            label={t('shared.qr.button')}
+          />
+        )}
         {isTournamentFinished && (
           <IconButton
             onClick={handleExportPdf}
@@ -143,6 +152,13 @@ export function Tournament() {
         <TournamentResults tournament={tournament} />
       ) : (
         <ActiveTournament initialTournament={tournament} />
+      )}
+
+      {isQrModalOpen && (
+        <TournamentQrModal
+          tournament={tournament}
+          onClose={() => setIsQrModalOpen(false)}
+        />
       )}
     </div>
   )

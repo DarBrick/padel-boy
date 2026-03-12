@@ -3,6 +3,7 @@ const translation = {
   appName: 'Padel Boy',
   common: {
     cancel: 'Cancel',
+    close: 'Close',
     yes: 'Yes',
   },
   nav: {
@@ -225,7 +226,9 @@ const translation = {
       generatedWithDate: 'Finished on {{date}}',
       sections: {
         summary: 'Tournament Summary',
+        shareQr: 'Tournament QR Code',
       },
+      qrDescription: 'Scan this code to open the shared tournament link on another device.',
       summary: {
         format: 'Format',
         players: 'Players',
@@ -427,6 +430,17 @@ const translation = {
       title: 'Invalid Tournament Data',
       description: 'The shared link appears to be corrupted or invalid. The tournament data could not be decoded.',
       goHome: 'Go to Home',
+    },
+    qr: {
+      button: 'Show QR',
+      title: 'Share via QR Code',
+      description: 'Scan this code on another device to import the tournament instantly.',
+      loading: 'Generating QR code...',
+      error: 'The QR code could not be generated. Please try again later.',
+      exportImage: 'Export QR Image',
+      exportSuccess: 'QR image exported successfully.',
+      exportError: 'Failed to export the QR image.',
+      imageAlt: 'QR code for {{tournamentName}}',
     },
   },
   pastTournaments: {
