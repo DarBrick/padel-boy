@@ -11,6 +11,7 @@ const translation = {
     players: 'Players',
     settings: 'Settings',
     help: 'Help',
+    offline: 'Offline',
   },
   settings: {
     description: 'Customize your Padel Boy experience',

@@ -1,13 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Plus, History, Users, Settings, HelpCircle, Menu, X } from 'lucide-react';
+import { Home, Plus, History, Users, Settings, HelpCircle, Menu, X, WifiOff } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { PadelBallIcon } from './PadelBallIcon';
+import { useNetworkStatus } from '../../utils/networkStatus';
 
 export function Navbar() {
   const location = useLocation();
   const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isOnline = useNetworkStatus();
 
   const primaryNavItems = [
     { path: '/', label: 'nav.home' as const, icon: Home, exact: true },
@@ -31,6 +33,8 @@ export function Navbar() {
   const handleNavClick = () => {
     setMobileMenuOpen(false);
   };
+
+  const offlineLabel = t('nav.offline');
 
   return (
     <>
@@ -84,20 +88,43 @@ export function Navbar() {
                   </Link>
                 );
               })}
+
+              {!isOnline && (
+                <span
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-sm text-rose-400 bg-rose-500/10"
+                  aria-label={offlineLabel}
+                  title={offlineLabel}
+                >
+                  <WifiOff className="w-4 h-4" />
+                  <span className="font-medium">{offlineLabel}</span>
+                </span>
+              )}
             </div>
 
-            {/* Mobile: Hamburger Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-surface/70 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
+            <div className="md:hidden flex items-center gap-1.5">
+              {!isOnline && (
+                <span
+                  className="inline-flex items-center justify-center p-2 rounded-lg text-rose-400 bg-rose-500/10"
+                  aria-label={offlineLabel}
+                  title={offlineLabel}
+                >
+                  <WifiOff className="w-5 h-5" />
+                </span>
               )}
-            </button>
+
+              {/* Mobile: Hamburger Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-lg hover:bg-surface/70 transition-colors"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
+              </button>
+            </div>
           </div>
 
           {/* Mobile: Dropdown Menu */}
