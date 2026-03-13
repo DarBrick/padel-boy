@@ -112,6 +112,30 @@ describe('roundGenerator', () => {
       expect(allPlayers.size).toBe(8)
     })
 
+    it('uses diversity strategy for mexicano rounds after first round within random phase', () => {
+      const tournament = createBaseTournament({
+        format: 'mexicano',
+        mexicanoRandomRounds: 3,
+        matches: [
+          createMatch([0, 1], [2, 3], true),
+          createMatch([4, 5], [6, 7], true),
+        ],
+      })
+
+      const matches = generateNextRound(tournament)
+      expect(matches).toHaveLength(2)
+
+      const partnerships = [
+        `${Math.min(matches[0].team1[0], matches[0].team1[1])}-${Math.max(matches[0].team1[0], matches[0].team1[1])}`,
+        `${Math.min(matches[0].team2[0], matches[0].team2[1])}-${Math.max(matches[0].team2[0], matches[0].team2[1])}`,
+        `${Math.min(matches[1].team1[0], matches[1].team1[1])}-${Math.max(matches[1].team1[0], matches[1].team1[1])}`,
+        `${Math.min(matches[1].team2[0], matches[1].team2[1])}-${Math.max(matches[1].team2[0], matches[1].team2[1])}`,
+      ]
+
+      const repeatedFromFirstRound = partnerships.some(p => ['0-1', '2-3', '4-5', '6-7'].includes(p))
+      expect(repeatedFromFirstRound).toBe(false)
+    })
+
     it('generates ranking-based pairings after random phase completes', () => {
       // Create tournament with 2 completed rounds (reaching ranking phase)
       const matches = [
@@ -255,36 +279,32 @@ describe('roundGenerator', () => {
       expect(sitting).toEqual([])
     })
 
-    it('selects players with minimum sit-out count', () => {
-      const tournament = createBaseTournament({
-        playerCount: 10,
-        players: Array.from({ length: 10 }, (_, i) => ({ name: `Player ${i + 1}` })),
-      })
-      const sitOutCounts = [1, 1, 0, 0, 1, 1, 1, 1, 0, 0]
-      // Players 2, 3, 8, 9 have min count (0)
-      
-      const sitting = selectSittingPlayers(tournament, sitOutCounts)
-      
-      // Should select 2 players from those with count 0
-      expect(sitting).toHaveLength(2)
-      sitting.forEach(index => {
-        expect([2, 3, 8, 9]).toContain(index)
-      })
-    })
-
-    it('handles case where more players need to sit than minimum count', () => {
+    it('uses deterministic cyclic rotation for first round', () => {
       const tournament = createBaseTournament({
         playerCount: 10,
         players: Array.from({ length: 10 }, (_, i) => ({ name: `Player ${i + 1}` })),
       })
       const sitOutCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      // All players have same count, need to randomly select 2
       
       const sitting = selectSittingPlayers(tournament, sitOutCounts)
       
-      expect(sitting).toHaveLength(2)
-      // Should be 2 different players
-      expect(new Set(sitting).size).toBe(2)
+      expect(sitting).toEqual([0, 1])
+    })
+
+    it('advances sitters by one block each round', () => {
+      const tournament = createBaseTournament({
+        playerCount: 10,
+        players: Array.from({ length: 10 }, (_, i) => ({ name: `Player ${i + 1}` })),
+        matches: [
+          createMatch([0, 1], [2, 3], true),
+          createMatch([4, 5], [6, 7], true),
+        ],
+      })
+      const sitOutCounts = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      
+      const sitting = selectSittingPlayers(tournament, sitOutCounts)
+      
+      expect(sitting).toEqual([2, 3])
     })
   })
 
@@ -540,6 +560,23 @@ describe('roundGenerator', () => {
         expect(history.get('2-3')).toBe(1)
         expect(history.get('1-0')).toBeUndefined()
       })
+
+      it('ignores unfinished matches in history', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], false),
+            createMatch([4, 5], [6, 7], true),
+          ],
+        })
+
+        const history = calculatePartnershipHistory(tournament)
+
+        expect(history.get('0-1')).toBeUndefined()
+        expect(history.get('2-3')).toBeUndefined()
+        expect(history.get('4-5')).toBe(1)
+        expect(history.get('6-7')).toBe(1)
+      })
     })
 
     describe('calculateMatchupHistory', () => {
@@ -581,6 +618,22 @@ describe('roundGenerator', () => {
         expect(history.get('0-3')).toBe(1)
         expect(history.get('0-5')).toBe(1)
       })
+
+      it('ignores unfinished matches in matchup history', () => {
+        const tournament = createBaseTournament({
+          format: 'americano',
+          matches: [
+            createMatch([0, 1], [2, 3], false),
+            createMatch([0, 4], [2, 5], true),
+          ],
+        })
+
+        const history = calculateMatchupHistory(tournament)
+
+        expect(history.get('0-3')).toBeUndefined()
+        expect(history.get('1-2')).toBeUndefined()
+        expect(history.get('0-2')).toBe(1)
+      })
     })
 
     describe('generateAllMatchConfigurations', () => {
@@ -593,7 +646,7 @@ describe('roundGenerator', () => {
       it('generates configurations for exactly 4 players', () => {
         const configs = generateAllMatchConfigurations([0, 1, 2, 3], 1)
         
-        expect(configs.length).toBeGreaterThan(0)
+        expect(configs).toHaveLength(3)
         configs.forEach(config => {
           expect(config).toHaveLength(1)
           expect(config[0].team1).toHaveLength(2)
@@ -640,6 +693,51 @@ describe('roundGenerator', () => {
         const allSame = configs.every(config => JSON.stringify(config) === firstConfig)
         expect(allSame).toBe(false)
       })
+
+      it('uses exact enumeration for small spaces and bounded sampling for larger spaces', () => {
+        const configs8 = generateAllMatchConfigurations([0, 1, 2, 3, 4, 5, 6, 7], 2)
+        const configs16 = generateAllMatchConfigurations(
+          Array.from({ length: 16 }, (_, i) => i),
+          2
+        )
+
+        // 8 players on 2 courts can be enumerated exactly.
+        expect(configs8).toHaveLength(315)
+
+        // Larger spaces should use bounded sampled generation.
+        expect(configs16.length).toBeGreaterThanOrEqual(24)
+        expect(configs16.length).toBeLessThanOrEqual(800)
+      })
+
+      it('explores multiple pairings for same group of 4', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3], 1)
+        const uniqueTeamPairs = new Set<string>()
+
+        configs.forEach(config => {
+          const match = config[0]
+          const key = `${Math.min(match.team1[0], match.team1[1])}-${Math.max(match.team1[0], match.team1[1])}|${Math.min(match.team2[0], match.team2[1])}-${Math.max(match.team2[0], match.team2[1])}`
+          uniqueTeamPairs.add(key)
+        })
+
+        expect(uniqueTeamPairs.size).toBeGreaterThanOrEqual(3)
+      })
+
+      it('returns unique configurations only (no duplicate fingerprints)', () => {
+        const configs = generateAllMatchConfigurations([0, 1, 2, 3, 4, 5, 6, 7], 2)
+        const fingerprints = new Set<string>()
+
+        configs.forEach(config => {
+          const matchKeys = config.map(match => {
+            const team1 = `${Math.min(match.team1[0], match.team1[1])}-${Math.max(match.team1[0], match.team1[1])}`
+            const team2 = `${Math.min(match.team2[0], match.team2[1])}-${Math.max(match.team2[0], match.team2[1])}`
+            return team1 < team2 ? `${team1}|${team2}` : `${team2}|${team1}`
+          })
+          matchKeys.sort()
+          fingerprints.add(matchKeys.join(';'))
+        })
+
+        expect(fingerprints.size).toBe(configs.length)
+      })
     })
 
     describe('scoreMatchConfiguration', () => {
@@ -679,8 +777,8 @@ describe('roundGenerator', () => {
         
         const score = scoreMatchConfiguration(config, partnerHistory, matchupHistory)
         
-        // Should have opponent penalty: 1^2 * 3 = 3
-        expect(score).toBe(3)
+        // Should have opponent penalty: 1^2 * 6 = 6
+        expect(score).toBe(6)
       })
 
       it('uses exponential penalty for multiple repeats', () => {
@@ -772,6 +870,21 @@ describe('roundGenerator', () => {
         const selected = selectBestConfiguration(configurations, partnerHistory, matchupHistory)
         
         expect([config1, config2]).toContainEqual(selected)
+      })
+
+      it('prefers configurations not repeated in recent rounds when other penalties are tied', () => {
+        const repeatedConfig: StoredMatch[] = [createMatch([0, 1], [2, 3], false)]
+        const freshConfig: StoredMatch[] = [createMatch([0, 2], [1, 3], false)]
+        const roundHistory = new Map<string, number>([['0-1|2-3', 2]])
+
+        const selected = selectBestConfiguration(
+          [repeatedConfig, freshConfig],
+          new Map(),
+          new Map(),
+          roundHistory
+        )
+
+        expect(selected).toEqual(freshConfig)
       })
     })
 
@@ -947,6 +1060,42 @@ describe('roundGenerator', () => {
           expect(count).toBe(1)
         })
       })
+    })
+
+    it('keeps sit-out delta at most one for 11 players', () => {
+      const tournament = createBaseTournament({
+        format: 'americano',
+        playerCount: 11,
+        players: Array.from({ length: 11 }, (_, i) => ({ name: `Player ${i + 1}` })),
+        numberOfCourts: 2,
+        matches: [],
+      })
+
+      const sitOutHistory = Array.from({ length: 11 }, () => 0)
+
+      for (let round = 0; round < 11; round++) {
+        const newMatches = generateNextRound(tournament)
+
+        const playingInRound = new Set<number>()
+        newMatches.forEach(m => {
+          playingInRound.add(m.team1[0])
+          playingInRound.add(m.team1[1])
+          playingInRound.add(m.team2[0])
+          playingInRound.add(m.team2[1])
+        })
+
+        for (let i = 0; i < 11; i++) {
+          if (!playingInRound.has(i)) {
+            sitOutHistory[i]++
+          }
+        }
+
+        tournament.matches.push(...newMatches.map(m => ({ ...m, isFinished: true })))
+      }
+
+      const minSitOuts = Math.min(...sitOutHistory)
+      const maxSitOuts = Math.max(...sitOutHistory)
+      expect(maxSitOuts - minSitOuts).toBeLessThanOrEqual(1)
     })
   })
 })

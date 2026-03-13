@@ -1,11 +1,22 @@
 import type { StoredTournament, StoredMatch } from '../schemas/tournament'
 import { getTournamentStats } from './tournamentStats'
 
+const PARTNER_WEIGHT = 10
+const OPPONENT_WEIGHT = 6
+const ROUND_REPEAT_WEIGHT = 2
+const EXACT_ENUMERATION_LIMIT = 2000
+const MIN_SAMPLED_CONFIG_TARGET = 24
+const MAX_SAMPLED_CONFIG_TARGET = 800
+const MAX_SAMPLE_ATTEMPTS_MULTIPLIER = 8
+const RECENT_ROUNDS_WINDOW = 4
+
 /**
  * Generates the next round of matches for a tournament.
  * 
  * Mexicano format:
- * - Random pairings for initial rounds (based on mexicanoRandomRounds config)
+ * - Fully random pairing for the first round only
+ * - Diversity-optimized pairings (Americano strategy) for additional pre-ranking rounds
+ *   when mexicanoRandomRounds > 1
  * - Ranking-based pairings after random phase completes
  * - Fair player rotation when player count not divisible by 4
  * - Two matchup styles: '1&4vs2&3' and '1&3vs2&4'
@@ -54,7 +65,9 @@ export function generateNextRound(tournament: StoredTournament): StoredMatch[] {
 
     // Generate matches based on strategy
     if (useRandomPairing) {
-      return generateRandomPairings(activePlayerIndices, tournament.numberOfCourts)
+      // First round is handled above with fully random pairing.
+      // Remaining pre-ranking rounds use diversity optimization.
+      return generateAmericanoPairings(tournament, activePlayerIndices)
     } else {
       return generateRankingBasedPairings(tournament, activePlayerIndices)
     }
@@ -109,34 +122,30 @@ export function calculateSitOutCounts(tournament: StoredTournament): number[] {
 
 /**
  * Selects which players should sit out this round based on fairness.
- * Players with fewest sit-outs are prioritized, then randomized.
+ * Uses deterministic cyclic rotation for predictable and balanced distribution.
  * 
  * @param tournament - The tournament configuration
- * @param sitOutCounts - Current sit-out counts per player
+ * @param sitOutCounts - Current sit-out counts per player (kept for API compatibility)
  * @returns Array of player indices who should sit out this round
  */
 export function selectSittingPlayers(
   tournament: StoredTournament,
-  sitOutCounts: number[]
+  _sitOutCounts: number[]
 ): number[] {
-  const playersNeeded = Math.floor(tournament.playerCount / 4) * 4
-  const sittersThisRound = tournament.playerCount - playersNeeded
+  const sittersThisRound = tournament.playerCount % 4
 
   // If everyone plays, no one sits
   if (sittersThisRound === 0) {
     return []
   }
 
-  // Find players with minimum sit-out count
-  const minSitOutCount = Math.min(...sitOutCounts)
-  const candidates = sitOutCounts
-    .map((count, index) => ({ index, count }))
-    .filter(({ count }) => count === minSitOutCount)
-    .map(({ index }) => index)
+  // Cyclic rotation guarantees the sit-out distribution differs by at most 1.
+  const roundIndex = Math.ceil(tournament.matches.length / Math.max(1, tournament.numberOfCourts))
+  const startIndex = (roundIndex * sittersThisRound) % tournament.playerCount
 
-  // Shuffle candidates and take the required number
-  const shuffled = shuffleArray([...candidates])
-  return shuffled.slice(0, sittersThisRound)
+  return Array.from({ length: sittersThisRound }, (_, offset) => {
+    return (startIndex + offset) % tournament.playerCount
+  })
 }
 
 /**
@@ -262,6 +271,10 @@ export function generateAmericanoPairings(
     activePlayerIndices,
     tournament.numberOfCourts
   )
+  const recentRoundFingerprintHistory = calculateRecentRoundFingerprintHistory(
+    tournament,
+    RECENT_ROUNDS_WINDOW
+  )
 
   // If no configurations possible, return empty
   if (configurations.length === 0) {
@@ -269,7 +282,12 @@ export function generateAmericanoPairings(
   }
 
   // Score each configuration and select the best
-  return selectBestConfiguration(configurations, partnershipHistory, matchupHistory)
+  return selectBestConfiguration(
+    configurations,
+    partnershipHistory,
+    matchupHistory,
+    recentRoundFingerprintHistory
+  )
 }
 
 /**
@@ -284,8 +302,12 @@ export function calculatePartnershipHistory(
 ): Map<string, number> {
   const history = new Map<string, number>()
 
-  // Iterate through all matches
+  // Only finished matches should influence future diversity scoring.
   for (const match of tournament.matches) {
+    if (!match.isFinished) {
+      continue
+    }
+
     // Record team1 partnership
     const team1Key = makePartnerKey(match.team1[0], match.team1[1])
     history.set(team1Key, (history.get(team1Key) ?? 0) + 1)
@@ -310,8 +332,12 @@ export function calculateMatchupHistory(
 ): Map<string, number> {
   const history = new Map<string, number>()
 
-  // Iterate through all matches
+  // Only finished matches should influence future diversity scoring.
   for (const match of tournament.matches) {
+    if (!match.isFinished) {
+      continue
+    }
+
     // Each player in team1 played against each player in team2
     for (const team1Player of match.team1) {
       for (const team2Player of match.team2) {
@@ -357,28 +383,169 @@ export function generateAllMatchConfigurations(
     return []
   }
 
-  // For small groups, generate multiple random configurations
-  // For larger groups, generate fewer to keep it performant
-  const configCount = activePlayerIndices.length <= 12 ? 100 : 50
+  const exactConfigurations = tryGenerateExactConfigurations(
+    activePlayerIndices,
+    maxMatches,
+    EXACT_ENUMERATION_LIMIT
+  )
+
+  if (exactConfigurations !== null) {
+    return exactConfigurations
+  }
+
+  const targetCount = calculateConfigurationSampleCount(activePlayerIndices.length, maxMatches)
+  const variantCountPerShuffle = Math.min(9, Math.pow(3, maxMatches))
+  const maxAttempts = targetCount * MAX_SAMPLE_ATTEMPTS_MULTIPLIER
+  const seen = new Set<string>()
   const configurations: StoredMatch[][] = []
+  let attempts = 0
 
-  for (let i = 0; i < configCount; i++) {
+  while (configurations.length < targetCount && attempts < maxAttempts) {
     const shuffled = shuffleArray([...activePlayerIndices])
-    const matches: StoredMatch[] = []
-
+    const groups: [number, number, number, number][] = []
     for (let m = 0; m < maxMatches; m++) {
       const baseIndex = m * 4
-      matches.push({
-        team1: [shuffled[baseIndex], shuffled[baseIndex + 1]],
-        team2: [shuffled[baseIndex + 2], shuffled[baseIndex + 3]],
-        isFinished: false,
-      })
+      groups.push([
+        shuffled[baseIndex],
+        shuffled[baseIndex + 1],
+        shuffled[baseIndex + 2],
+        shuffled[baseIndex + 3],
+      ])
     }
 
-    configurations.push(matches)
+    const groupVariantSpace = Math.pow(3, maxMatches)
+    const baseVariant = Math.floor(Math.random() * groupVariantSpace)
+
+    for (let variantOffset = 0; variantOffset < variantCountPerShuffle; variantOffset++) {
+      if (configurations.length >= targetCount || attempts >= maxAttempts) {
+        break
+      }
+
+      attempts++
+
+      const variantId = (baseVariant + variantOffset) % groupVariantSpace
+      const configuration = buildConfigurationFromGroups(groups, variantId)
+      const fingerprint = fingerprintConfiguration(configuration)
+      if (seen.has(fingerprint)) {
+        continue
+      }
+
+      seen.add(fingerprint)
+      configurations.push(configuration)
+    }
   }
 
   return configurations
+}
+
+function calculateConfigurationSampleCount(activePlayerCount: number, maxMatches: number): number {
+  const totalPossiblePartnerships = (activePlayerCount * (activePlayerCount - 1)) / 2
+  const scalingFactor = Math.max(1, maxMatches)
+  const estimated = Math.ceil((Math.sqrt(totalPossiblePartnerships) * 6) / Math.sqrt(scalingFactor))
+  return Math.min(MAX_SAMPLED_CONFIG_TARGET, Math.max(MIN_SAMPLED_CONFIG_TARGET, estimated))
+}
+
+function tryGenerateExactConfigurations(
+  activePlayerIndices: number[],
+  maxMatches: number,
+  limit: number
+): StoredMatch[][] | null {
+  const playersNeeded = maxMatches * 4
+
+  // Exact enumeration is only feasible when the round uses all active players.
+  if (activePlayerIndices.length !== playersNeeded) {
+    return null
+  }
+
+  const sortedPlayers = [...activePlayerIndices].sort((a, b) => a - b)
+  const configurations: StoredMatch[][] = []
+  const current: StoredMatch[] = []
+
+  const backtrack = (remaining: number[]) => {
+    if (configurations.length > limit) {
+      return
+    }
+
+    if (current.length === maxMatches) {
+      configurations.push(current.map(match => ({ ...match })))
+      return
+    }
+
+    const anchor = remaining[0]
+
+    for (let i = 1; i < remaining.length - 2; i++) {
+      for (let j = i + 1; j < remaining.length - 1; j++) {
+        for (let k = j + 1; k < remaining.length; k++) {
+          const group: [number, number, number, number] = [anchor, remaining[i], remaining[j], remaining[k]]
+          const groupSet = new Set(group)
+          const nextRemaining = remaining.filter(player => !groupSet.has(player))
+
+          for (let pairingOption = 0; pairingOption < 3; pairingOption++) {
+            current.push(createMatchFromGroup(group, pairingOption))
+            backtrack(nextRemaining)
+            current.pop()
+
+            if (configurations.length > limit) {
+              return
+            }
+          }
+        }
+      }
+    }
+  }
+
+  backtrack(sortedPlayers)
+
+  if (configurations.length > limit) {
+    return null
+  }
+
+  return configurations
+}
+
+function buildConfigurationFromGroups(
+  groups: [number, number, number, number][],
+  variantId: number
+): StoredMatch[] {
+  let selector = variantId
+  const matches: StoredMatch[] = []
+
+  for (const group of groups) {
+    const pairingOption = selector % 3
+    selector = Math.floor(selector / 3)
+    matches.push(createMatchFromGroup(group, pairingOption))
+  }
+
+  return matches
+}
+
+function createMatchFromGroup(
+  group: [number, number, number, number],
+  pairingOption: number
+): StoredMatch {
+  const [a, b, c, d] = group
+
+  if (pairingOption === 0) {
+    return {
+      team1: [a, b],
+      team2: [c, d],
+      isFinished: false,
+    }
+  }
+
+  if (pairingOption === 1) {
+    return {
+      team1: [a, c],
+      team2: [b, d],
+      isFinished: false,
+    }
+  }
+
+  return {
+    team1: [a, d],
+    team2: [b, c],
+    isFinished: false,
+  }
 }
 
 /**
@@ -397,10 +564,9 @@ export function generateAllMatchConfigurations(
 export function scoreMatchConfiguration(
   configuration: StoredMatch[],
   partnershipHistory: Map<string, number>,
-  matchupHistory: Map<string, number>
+  matchupHistory: Map<string, number>,
+  roundFingerprintHistory?: Map<string, number>
 ): number {
-  const PARTNER_WEIGHT = 10
-  const OPPONENT_WEIGHT = 3
   let totalPenalty = 0
 
   for (const match of configuration) {
@@ -423,6 +589,12 @@ export function scoreMatchConfiguration(
     }
   }
 
+  if (roundFingerprintHistory) {
+    const roundFingerprint = fingerprintConfiguration(configuration)
+    const roundRepeats = roundFingerprintHistory.get(roundFingerprint) ?? 0
+    totalPenalty += Math.pow(roundRepeats, 2) * ROUND_REPEAT_WEIGHT
+  }
+
   return totalPenalty
 }
 
@@ -439,14 +611,20 @@ export function scoreMatchConfiguration(
 export function selectBestConfiguration(
   configurations: StoredMatch[][],
   partnershipHistory: Map<string, number>,
-  matchupHistory: Map<string, number>
+  matchupHistory: Map<string, number>,
+  roundFingerprintHistory?: Map<string, number>
 ): StoredMatch[] {
   let bestScore = Infinity
   let bestConfigurations: StoredMatch[][] = []
 
   // Score all configurations and track best
   for (const config of configurations) {
-    const score = scoreMatchConfiguration(config, partnershipHistory, matchupHistory)
+    const score = scoreMatchConfiguration(
+      config,
+      partnershipHistory,
+      matchupHistory,
+      roundFingerprintHistory
+    )
     
     if (score < bestScore) {
       bestScore = score
@@ -463,4 +641,44 @@ export function selectBestConfiguration(
 
   const randomIndex = Math.floor(Math.random() * bestConfigurations.length)
   return bestConfigurations[randomIndex]
+}
+
+function fingerprintConfiguration(configuration: StoredMatch[]): string {
+  const matchFingerprints = configuration.map(match => fingerprintMatch(match))
+  matchFingerprints.sort()
+  return matchFingerprints.join(';')
+}
+
+function fingerprintMatch(match: StoredMatch): string {
+  const team1 = [Math.min(match.team1[0], match.team1[1]), Math.max(match.team1[0], match.team1[1])]
+  const team2 = [Math.min(match.team2[0], match.team2[1]), Math.max(match.team2[0], match.team2[1])]
+  const team1Key = `${team1[0]}-${team1[1]}`
+  const team2Key = `${team2[0]}-${team2[1]}`
+  return team1Key < team2Key ? `${team1Key}|${team2Key}` : `${team2Key}|${team1Key}`
+}
+
+function calculateRecentRoundFingerprintHistory(
+  tournament: StoredTournament,
+  windowSize: number
+): Map<string, number> {
+  const history = new Map<string, number>()
+  const finishedMatches = tournament.matches.filter(match => match.isFinished)
+  const matchesPerRound = Math.max(1, tournament.numberOfCourts)
+  const completedRounds = Math.floor(finishedMatches.length / matchesPerRound)
+
+  if (completedRounds === 0) {
+    return history
+  }
+
+  const startRound = Math.max(0, completedRounds - windowSize)
+
+  for (let roundIndex = startRound; roundIndex < completedRounds; roundIndex++) {
+    const start = roundIndex * matchesPerRound
+    const end = start + matchesPerRound
+    const roundMatches = finishedMatches.slice(start, end)
+    const fingerprint = fingerprintConfiguration(roundMatches)
+    history.set(fingerprint, (history.get(fingerprint) ?? 0) + 1)
+  }
+
+  return history
 }

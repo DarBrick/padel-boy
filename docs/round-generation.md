@@ -1,8 +1,8 @@
-# Mexicano Round Generation
+# Tournament Round Generation
 
 ## Overview
 
-The `roundGenerator` utility generates consecutive rounds for Mexicano tournaments with automatic fair player rotation when the number of players cannot be divided by 4.
+The `roundGenerator` utility generates consecutive rounds for both Mexicano and Americano tournaments with automatic fair player rotation when the number of players cannot be divided by 4.
 
 ## Usage Example
 
@@ -25,19 +25,49 @@ useTournaments().updateTournament(tournament)
 
 ### Fair Player Rotation
 When player count is not divisible by 4, the algorithm:
-1. Tracks how many times each player has sat out
-2. Selects players with fewest sit-outs
-3. Randomizes selection among those with equal sit-out counts
-4. Ensures everyone gets equal rest over multiple rounds
+1. Computes required sitters per round (`playerCount % 4`)
+2. Uses deterministic cyclic sit-out rotation by round index
+3. Keeps sit-out distribution balanced over time (difference between max and min sits is at most 1)
 
 **Example**: With 10 players over 5 rounds, each player sits out exactly once.
 
+## Americano Pairing Strategy
+
+Americano pairing maximizes diversity while staying performant:
+1. Builds partnership and opponent history from finished matches
+2. Uses exact configuration enumeration for small search spaces and adaptive sampled generation for large spaces
+3. Explores multiple valid team splits for each 4-player group (`ab/cd`, `ac/bd`, `ad/bc`)
+4. Deduplicates candidate rounds using a canonical round fingerprint
+5. Scores each candidate and selects the best one
+
+Scoring priorities:
+- Repeat partner penalty is higher than repeat opponent penalty
+- Repeated pairings are penalized quadratically to avoid recurring combinations
+- Recently repeated full-round setups get a light additional penalty to reduce recurring whole-round patterns
+
+### Mathematical Limits
+
+Perfectly unique pairings are not always possible.
+
+For `n` active players, the number of unique partner pairs is:
+
+$$
+\binom{n}{2} = \frac{n(n-1)}{2}
+$$
+
+If the tournament requires more partnership slots than this value across rounds, repeats are unavoidable.
+
+### Counting Configurations Correctly
+
+For 4 active players on 1 court, there are 24 player permutations but only 3 unique team-vs-team configurations.
+The generator optimizes over unique configurations, not raw permutations.
+
 ### Two Pairing Strategies
 
-#### Random Pairing (Initial Rounds)
-- Used for first N rounds (configurable via `mexicanoRandomRounds`, default: 2)
-- Shuffles all active players randomly
-- Groups them into teams of 2
+#### Pre-Ranking Phase (Mexicano)
+- Round 1 is fully random
+- If `mexicanoRandomRounds > 1`, rounds 2..N in the pre-ranking phase use Americano diversity optimization
+- This improves early-round partner and opponent variety before switching to ranking-based pairings
 
 #### Ranking-Based Pairing (After Random Phase)
 - Uses current tournament standings
@@ -91,7 +121,7 @@ function TournamentPage() {
 ## Validation
 
 The generator validates:
-- ✅ Tournament format must be 'mexicano'
+- ✅ Tournament format must be supported (`mexicano` or `americano`)
 - ✅ Minimum 4 players required
 - ✅ Returns empty array on validation failure
 
@@ -100,6 +130,8 @@ The generator validates:
 Comprehensive test suite covers:
 - Random and ranking-based pairing
 - Fair sit-out rotation over multiple rounds
+- Americano diversity optimization and history scoring
+- Finished-match-only history behavior in Americano
 - Both matchup styles ('1&4vs2&3' and '1&3vs2&4')
 - Edge cases (4 players, 10+ players, partial rounds)
 - Court limit enforcement
@@ -109,9 +141,8 @@ Run tests:
 npm test roundGenerator
 ```
 
-## Future: Americano Support
+## Notes
 
-The utility currently only supports Mexicano format. Americano generation will be added in a future iteration with different pairing constraints:
-- Avoid same partners across rounds
-- Avoid same opponents across rounds
-- Pure random rotation without ranking phase
+Mexicano and Americano both use the same deterministic sit-out rotation, but they differ in matchup generation:
+- Mexicano can switch from random rounds to ranking-based rounds
+- Americano always optimizes partner/opponent diversity from historical results
