@@ -194,9 +194,9 @@ export function PastTournaments() {
             </div>
             
             {/* Format, Status, and Date filters */}
-            <div className="flex flex-wrap gap-2">
+              <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
             {/* Format dropdown with clear button */}
-            <div className="relative min-w-[140px]">
+              <div className="relative min-w-0">
             <select
               value={selectedFormat || ''}
               onChange={(e) => setSelectedFormat(e.target.value as 'americano' | 'mexicano' || null)}
@@ -224,7 +224,7 @@ export function PastTournaments() {
             </div>
             
             {/* Status dropdown with clear button */}
-            <div className="relative min-w-[140px]">
+            <div className="relative min-w-0">
             <select
               value={selectedStatus || ''}
               onChange={(e) => setSelectedStatus(e.target.value as TournamentStatus || null)}
@@ -252,66 +252,68 @@ export function PastTournaments() {
             )}
             </div>
           
-          {/* Unified date range bar */}
-          <div className="relative flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors min-w-[240px]">
-            {/* From date section */}
-            <button
-              type="button"
-              onClick={() => dateFromRef.current?.showPicker?.() || dateFromRef.current?.focus()}
-              className="p-1 hover:bg-surface-muted rounded transition-colors"
-              aria-label="Select from date"
-            >
-              <CalendarArrowDown className="w-4 h-4 text-foreground-muted" />
-            </button>
-            
-            <input
-              ref={dateFromRef}
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              max={dateTo || undefined}
-              className="bg-transparent border-none outline-none text-foreground text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
-            />
-            
-            <button
-              type="button"
-              onClick={() => setDateFrom('')}
-              className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateFrom ? 'invisible pointer-events-none' : ''}`}
-              aria-label="Clear from date"
-            >
-              <X className="w-3.5 h-3.5 text-foreground-muted" />
-            </button>
-            
-            {/* Separator */}
-            <span className="text-foreground-muted text-sm px-1">-</span>
-            
-            {/* To date section */}
-            <button
-              type="button"
-              onClick={() => dateToRef.current?.showPicker?.() || dateToRef.current?.focus()}
-              className="p-1 hover:bg-surface-muted rounded transition-colors"
-              aria-label="Select to date"
-            >
-              <CalendarArrowUp className="w-4 h-4 text-foreground-muted" />
-            </button>
-            
-            <input
-              ref={dateToRef}
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              min={dateFrom || undefined}
-              className="bg-transparent border-none outline-none text-foreground text-sm w-auto min-w-0 [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
-            />
-            
-            <button
-              type="button"
-              onClick={() => setDateTo('')}
-              className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateTo ? 'invisible pointer-events-none' : ''}`}
-              aria-label="Clear to date"
-            >
-              <X className="w-3.5 h-3.5 text-foreground-muted" />
-            </button>
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors">
+              <button
+                type="button"
+                onClick={() => dateFromRef.current?.showPicker?.() || dateFromRef.current?.focus()}
+                className="p-1 hover:bg-surface-muted rounded transition-colors"
+                aria-label={t('pastTournaments.filters.from')}
+              >
+                <CalendarArrowDown className="w-4 h-4 text-foreground-muted" />
+              </button>
+
+              <input
+                ref={dateFromRef}
+                type="date"
+                value={dateFrom}
+                onChange={(e) => setDateFrom(e.target.value)}
+                max={dateTo || undefined}
+                aria-label={t('pastTournaments.filters.from')}
+                className="min-w-0 flex-1 bg-transparent border-none outline-none text-foreground text-sm [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
+              />
+
+              <button
+                type="button"
+                onClick={() => setDateFrom('')}
+                className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateFrom ? 'invisible pointer-events-none' : ''}`}
+                aria-label={t('pastTournaments.filters.clearFrom')}
+              >
+                <X className="w-3.5 h-3.5 text-foreground-muted" />
+              </button>
+            </div>
+          </div>
+
+          <div className="min-w-0">
+            <div className="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded-lg min-h-[44px] sm:min-h-[46px] md:min-h-[48px] focus-within:border-padel-500 transition-colors">
+              <button
+                type="button"
+                onClick={() => dateToRef.current?.showPicker?.() || dateToRef.current?.focus()}
+                className="p-1 hover:bg-surface-muted rounded transition-colors"
+                aria-label={t('pastTournaments.filters.to')}
+              >
+                <CalendarArrowUp className="w-4 h-4 text-foreground-muted" />
+              </button>
+
+              <input
+                ref={dateToRef}
+                type="date"
+                value={dateTo}
+                onChange={(e) => setDateTo(e.target.value)}
+                min={dateFrom || undefined}
+                aria-label={t('pastTournaments.filters.to')}
+                className="min-w-0 flex-1 bg-transparent border-none outline-none text-foreground text-sm [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-datetime-edit]:text-foreground [&::-webkit-datetime-edit-fields-wrapper]:text-foreground"
+              />
+
+              <button
+                type="button"
+                onClick={() => setDateTo('')}
+                className={`p-0.5 hover:bg-surface-muted rounded transition-colors ${!dateTo ? 'invisible pointer-events-none' : ''}`}
+                aria-label={t('pastTournaments.filters.clearTo')}
+              >
+                <X className="w-3.5 h-3.5 text-foreground-muted" />
+              </button>
+            </div>
           </div>
           </div>
           </div>
