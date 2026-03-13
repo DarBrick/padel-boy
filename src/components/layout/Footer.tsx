@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { Github, Scale } from 'lucide-react'
-import { GITHUB_REPO_URL } from '../../config'
+import { APP_VERSION, GITHUB_REPO_URL } from '../../config'
 import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Footer() {
@@ -33,7 +33,7 @@ export function Footer() {
 
       {/* Secondary Info: Version, GitHub, License */}
       <div className="flex flex-wrap justify-center items-center gap-3 text-xs text-foreground-muted">
-        <span>{t('footer.version')} 0.0.1</span>
+        <span>{t('footer.version')} {APP_VERSION}</span>
         <span>•</span>
         <a
           href={GITHUB_REPO_URL}
