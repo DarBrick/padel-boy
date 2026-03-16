@@ -397,18 +397,47 @@ const translation = {
   help: {
     title: 'Help & FAQ',
     back: 'Back',
-    intro: 'Learn how to use Padel Boy and understand tournament formats.',
+    intro: 'Learn how to run tournaments, read standings, and understand exactly how scoring and lineup rules work.',
+    toc: {
+      title: 'Table of Contents',
+      gettingStarted: 'Getting Started',
+      scoring: 'How Points Are Assigned',
+      ranking: 'How Player Rank Is Calculated',
+      nextRoundLineup: 'How Rank Affects Next Round Lineup',
+      sitOuts: 'Sit-Outs and Fairness',
+      americano: 'Americano Format',
+      mexicano: 'Mexicano Format',
+      players: 'Managing Players',
+      troubleshooting: 'Troubleshooting',
+      faq: 'FAQ and Edge Cases',
+    },
     gettingStarted: {
       title: 'Getting Started',
-      desc: '<ol><li>Choose your tournament format (Americano or Mexicano)</li><li>Enter a tournament name or use the auto-generated one</li><li>Add players by clicking "Add Player" - you need at least 4 players</li><li>Adjust the number of courts (automatically calculated based on players)</li><li>Choose points per match (16, 21, 24, or 32) - standard is 21 points</li><li>Click "Start Tournament" to begin</li></ol><infoPanel><p><strong>Data storage:</strong> Your tournament data is saved locally in your browser.</p></infoPanel><h3>Points Per Match Explained</h3><p>This setting determines the TOTAL combined points scored by both teams in each match. The match ends when the sum of both teams\' scores reaches this number.</p><h3>Available Options</h3><ul><li><strong>16 points</strong> - Quick matches (~9 min), ideal for large tournaments or time constraints</li><li><strong>21 points</strong> - Standard format (~12 min), balanced between speed and competition</li><li><strong>24 points</strong> - Extended matches (~14 min), more time to develop strategies</li><li><strong>32 points</strong> - Full-length matches (~18 min), professional tournament style</li></ul><h3>Example with 21 points</h3><ul><li>Match starts 0-0</li><li>Score progresses: 1-0, 2-1, 3-2, 5-3, 7-5, 9-7...</li><li>Match ends when combined score = 21 (e.g., 12-9, 11-10, or 15-6)</li><li>The team with more points wins that match</li><li>Both teams\' points count toward tournament rankings</li></ul><infoPanel><p><strong>Why this system?</strong> All matches take similar time to complete, reducing wait times between rounds. Players on different courts finish at roughly the same time, keeping the tournament flowing smoothly.</p></infoPanel><h3>Final Rankings</h3><p>At the end of the tournament, players are ranked by their total points scored across all matches. The player with the most points wins.</p>',
+      desc: '<ol><li>Choose your format: Americano or Mexicano</li><li>Set a tournament name (or use the auto-generated one)</li><li>Add at least 4 players</li><li>Set court count (the app suggests a valid default)</li><li>Set points per match (16, 21, 24, or 32)</li><li>Start the tournament and enter results after each match</li></ol><h3>Before You Start</h3><ul><li>More players than available court slots means some players sit out each round</li><li>Standings update only from finished matches</li><li>In Mexicano, lineup behavior changes after the configured random rounds</li></ul><infoPanel><p><strong>Data storage:</strong> Tournament data is saved locally in your browser and stays on your device.</p></infoPanel>',
+    },
+    scoring: {
+      title: 'How Points Are Assigned',
+      desc: '<p>Each player earns the number of points their team scored in the match. Points are tracked individually, even though you play in teams of two.</p><h3>Example</h3><p>If your team wins a match 12–9, both you and your partner receive <strong>12 points</strong>. The two players on the losing side each receive <strong>9 points</strong>.</p><h3>Draws</h3><p>If both teams finish with the same score (e.g. 11–11 in a 22-point match), all four players receive the same points and the match counts as a draw.</p><h3>Points Per Match Setting</h3><p>Before the tournament starts you choose a total points-per-match value (16, 21, 24, or 32). This is the combined score both teams play to. The match ends when the total reaches that number, so every match takes roughly the same time.</p><infoPanel><p><strong>Key takeaway:</strong> Every point you score on court counts directly toward your individual tournament standing.</p></infoPanel>',
+    },
+    ranking: {
+      title: 'How Player Rank Is Calculated',
+      desc: '<p>Players are ranked by comparing several metrics in a fixed order. The app goes down the list and uses the first metric where two players differ.</p><h3>Ranking Criteria (in order)</h3><ol><li><strong>Average points per game</strong> — how many points you earn per match on average</li><li><strong>Win rate</strong> — percentage of matches won</li><li><strong>Total points</strong> — sum of all points earned, including sit-out bonus points</li><li><strong>Number of wins</strong></li><li><strong>Number of draws</strong></li></ol><p>If all five metrics are equal, both players receive the <strong>same rank</strong>. Names are only used to sort the display order within tied positions — they never change the rank number.</p><h3>In Practice</h3><ul><li>Consistent scorers rank higher, even if someone else has more total points from playing more games</li><li>Two players can share the same rank when their metrics match exactly</li><li>Sit-out bonus points count toward totals, so sitting out does not hurt your ranking</li></ul><infoPanel><p><strong>Tip:</strong> When reading standings, focus on average points per game first — it is the single most important factor.</p></infoPanel>',
+    },
+    nextRoundLineup: {
+      title: 'How Rank Affects Next Round Lineup',
+      desc: '<p>The way teams are formed for the next round depends on which format you chose.</p><h3>Mexicano</h3><p>Mexicano starts with a few random rounds so everyone gets a chance to play. After that warm-up phase, pairings become ranking-based:</p><ul><li>Players are sorted by current standings and grouped into sets of four</li><li>Within each group, teams are formed using the pairing style you selected at setup</li></ul><p>Two pairing styles are available:</p><ul><li><strong>1st & 4th vs 2nd & 3rd</strong> — the top player partners with the lowest in the group</li><li><strong>1st & 3rd vs 2nd & 4th</strong> — a slightly more balanced split</li></ul><p>The same pattern repeats for every group of four (5th–8th, 9th–12th, etc.).</p><h3>Americano</h3><p>Americano never uses rankings to form teams. Instead, each round maximizes variety — the app avoids repeating the same partners and opponents you have already played with.</p><infoPanel><p><strong>Good to know:</strong> Lineups for the next round are always based on completed matches only. Results you have not submitted yet do not affect pairings.</p></infoPanel>',
+    },
+    sitOuts: {
+      title: 'Sit-Outs and Fairness',
+      desc: '<p>When the number of players does not fill every court exactly, some players will sit out each round. The app handles this automatically.</p><h3>Who Sits Out?</h3><ul><li>The app keeps track of how many rounds each player has already sat out</li><li>Players who have sat out the least are chosen to play, so everyone gets roughly equal playing time</li><li>This check happens before every new round</li></ul><h3>Do I Lose Points by Sitting Out?</h3><p>No. When you sit out a round you receive bonus points based on your current scoring pace, so your standings are not penalized.</p><infoPanel><p><strong>Bottom line:</strong> You will never fall behind just because the player count is uneven — the app keeps it fair.</p></infoPanel>',
     },
     americano: {
       title: 'Americano Format',
-      desc: '<p>In Americano, all players compete against all other players over multiple rounds.</p><h3>How it works</h3><ul><li>Players are paired randomly</li><li>Each player partners with different teammates</li><li>Each player faces different opponents</li><li>Points are tracked individually</li><li>Perfect for social games where everyone plays together</li></ul><infoPanel><p><strong>Ideal for:</strong> Casual games, social events, player development</p></infoPanel>',
+      desc: '<p>Americano is designed around variety and social balance.</p><h3>How it works</h3><ul><li>Each new round tries to avoid repeated partner combinations</li><li>It also tries to reduce repeated opponent matchups</li><li>Standings are still individual, based on your own results</li></ul><h3>Best Use Case</h3><p>Choose Americano when your goal is broad player interaction rather than strict rank-vs-rank competition each round.</p><infoPanel><p><strong>Ideal for:</strong> Social events, club nights, and mixed-skill groups.</p></infoPanel>',
     },
     mexicano: {
       title: 'Mexicano Format',
-      desc: '<p>In Mexicano, players are paired dynamically based on current rankings.</p><h3>How it works</h3><ul><li>First rounds use random pairing</li><li>After initial rounds, top-ranked players face each other</li><li>Lower-ranked players also face similar-ranked opponents</li><li>Creates competitive, balanced matches</li><li>Rankings update after each round</li></ul><h3>Settings</h3><ul><li><strong>Pairing style:</strong> How partners are assigned (1st & 4th vs 2nd & 3rd, or 1st & 3rd vs 2nd & 4th)</li><li><strong>Random rounds:</strong> Number of initial rounds before ranking-based pairing</li></ul><infoPanel><p><strong>Ideal for:</strong> Competitive tournaments, skill-based matchmaking</p></infoPanel>',
+      desc: '<p>Mexicano is designed for competitive progression.</p><h3>How it works</h3><ul><li>It begins with a configurable number of random rounds</li><li>After that, pairings use current rankings</li><li>Players are grouped by current position and matched using the selected pairing style</li></ul><h3>Settings</h3><ul><li><strong>Pairing style:</strong> 1st & 4th vs 2nd & 3rd, or 1st & 3rd vs 2nd & 4th</li><li><strong>Random rounds:</strong> Number of rounds before ranking-based logic takes over</li></ul><infoPanel><p><strong>Ideal for:</strong> Competitive sessions where you want round quality to tighten as rankings stabilize.</p></infoPanel>',
     },
     players: {
       title: 'Managing Players',
@@ -417,6 +446,10 @@ const translation = {
     troubleshooting: {
       title: 'Troubleshooting',
       desc: '<h3>My tournament disappeared</h3><ul><li>Data is stored in browser localStorage</li><li>Clearing browser data will delete tournaments</li><li>Use incognito/private mode carefully - data is deleted when closed</li><li>If you have the link to a completed tournament, you can recreate its data (including player names and detailed results) by opening it</li></ul><h3>Can\'t add players</h3><ul><li>Maximum 40 players allowed</li><li>Check if "Start Tournament" button is enabled (needs 4+ players)</li></ul><h3>Language changed unexpectedly</h3><ul><li>Your language preference is saved automatically</li><li>Use the language switcher (top-right) to change it back</li></ul><infoPanel><p><strong>Need help or found a bug?</strong><br>Report issues on our <githubIssuesLink>GitHub project</githubIssuesLink></p></infoPanel>',
+    },
+    faq: {
+      title: 'FAQ and Edge Cases',
+      desc: '<h3>Do unfinished matches affect standings?</h3><p>No. Only matches you have fully submitted count toward points, rankings, and future pairings.</p><h3>Why do two players have the same rank?</h3><p>When every ranking metric is identical for two players, they share the same position. This is intentional.</p><h3>Why did someone gain points while sitting out?</h3><p>The app awards bonus points during sit-out rounds so that players are not penalized for uneven numbers. See the Sit-Outs section above for details.</p><h3>Why did the lineup style change after a few rounds?</h3><p>In Mexicano, the first rounds use random pairings on purpose. Once that warm-up phase is over, the app switches to ranking-based teams. You can configure how many random rounds to play during tournament setup.</p><h3>How do I read the standings table?</h3><ul><li><strong>Avg pts</strong> — average points per game, the most important ranking factor</li><li><strong>Win %</strong> — share of matches won</li><li><strong>Total pts</strong> — all points earned, including sit-out bonuses</li><li><strong>W / D</strong> — wins and draws</li></ul>',
     },
   },
   shared: {
