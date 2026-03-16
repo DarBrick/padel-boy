@@ -130,12 +130,12 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           height={220}
           title={t('results.playerDetail.scoreProgression')}
           xAxisDataKey="round"
-          xAxisLabel="Round"
+          xAxisLabel={t('results.insights.progression.round')}
           yAxisDomain={[0, chartMaxScore]}
           hideTicks
           tooltipActive={activeScoreIndex !== null}
           tooltipFormatter={(value: number | undefined) => 
-            value !== undefined ? [`${value} pts`, 'Total Points'] : ['', '']
+            value !== undefined ? [`${value} ${t('results.playerDetail.pointsShort')}`, t('results.standings.totalPoints')] : ['', '']
           }
           chartProps={{
             onClick: (data) => {
@@ -186,13 +186,13 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           height={220}
           title={t('results.playerDetail.rankProgression')}
           xAxisDataKey="round"
-          xAxisLabel="Round"
+          xAxisLabel={t('results.insights.progression.round')}
           yAxisDomain={[1, totalPlayers]}
           yAxisReversed
           hideTicks
           tooltipActive={activeRankIndex !== null}
           tooltipFormatter={(value: number | undefined) => 
-            value !== undefined ? [`#${value}`, 'Rank'] : ['', '']
+            value !== undefined ? [`#${value}`, t('results.standings.rank')] : ['', '']
           }
           chartProps={{
             onClick: (data) => {
@@ -243,7 +243,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           height={220}
           title={t('results.playerDetail.balanceProgression')}
           xAxisDataKey="round"
-          xAxisLabel="Round"
+          xAxisLabel={t('results.insights.progression.round')}
           yAxisDomain={balanceChartDomain}
           hideTicks
           tooltipActive={activeBalanceIndex !== null}
