@@ -285,6 +285,7 @@ const translation = {
       avgScore: 'Average Score',
       scoreRange: 'Score Range',
       stdDev: 'Std Deviation',
+      variance: 'Variance',
       legend: 'Legend',
       legendWon: 'Won',
       legendLostDrew: 'Lost/Drew',

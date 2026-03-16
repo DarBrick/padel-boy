@@ -422,7 +422,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
               small
             />
             <StatCard
-              label="Variance"
+              label={t('results.playerDetail.variance')}
               value={consistency.scoreVariance.toFixed(1)}
               small
             />

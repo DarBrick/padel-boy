@@ -281,6 +281,7 @@ const translation = {
       avgScore: 'Puntuación Media',
       scoreRange: 'Rango de Puntuación',
       stdDev: 'Desviación Estándar',
+      variance: 'Varianza',
       legend: 'Leyenda',
       legendWon: 'Ganó',
       legendLostDrew: 'Perdió/Empató',
