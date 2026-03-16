@@ -48,6 +48,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const playerProgression = progression.playerProgressions.get(standing.index) || []
   
   const chartData = playerProgression.map((round, idx) => ({
+    roundIndex: idx + 1,
     round: progression.rounds[idx],
     points: round.totalPointsWithSitting,
     roundPoints: round.totalPointsWithSitting - (idx > 0 ? playerProgression[idx - 1].totalPointsWithSitting : 0),
@@ -66,6 +67,13 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const balanceMax = Math.max(0, ...balanceValues)
   const balancePadding = balanceMin === balanceMax ? 1 : 0
   const balanceChartDomain: [number, number] = [balanceMin - balancePadding, balanceMax + balancePadding]
+  const roundAxisPadding = 0.36
+  const sharedRoundXAxisConfig = {
+    type: 'number' as const,
+    domain: [1 - roundAxisPadding, chartData.length + roundAxisPadding],
+    ticks: chartData.map(point => point.roundIndex),
+    allowDecimals: false,
+  }
 
   return (
     <div className="space-y-4 sm:space-y-5 md:space-y-6">
@@ -129,8 +137,9 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           data={chartData}
           height={220}
           title={t('results.playerDetail.scoreProgression')}
-          xAxisDataKey="round"
+          xAxisDataKey="roundIndex"
           xAxisLabel={t('results.insights.progression.round')}
+          xAxisConfig={sharedRoundXAxisConfig}
           yAxisDomain={[0, Math.max(5, maxRoundPoints + 1)]}
           hideTicks
           tooltipActive={false}
@@ -171,8 +180,9 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           data={chartData}
           height={220}
           title={t('results.playerDetail.rankProgression')}
-          xAxisDataKey="round"
+          xAxisDataKey="roundIndex"
           xAxisLabel={t('results.insights.progression.round')}
+          xAxisConfig={sharedRoundXAxisConfig}
           yAxisDomain={[1, totalPlayers]}
           yAxisReversed
           hideTicks
@@ -225,8 +235,9 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           data={chartData}
           height={220}
           title={t('results.playerDetail.balanceProgression')}
-          xAxisDataKey="round"
+          xAxisDataKey="roundIndex"
           xAxisLabel={t('results.insights.progression.round')}
+          xAxisConfig={sharedRoundXAxisConfig}
           yAxisDomain={balanceChartDomain}
           hideTicks
           tooltipActive={false}
