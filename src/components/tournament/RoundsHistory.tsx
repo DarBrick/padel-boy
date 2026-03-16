@@ -1,6 +1,6 @@
 import { type MouseEvent as ReactMouseEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Coffee } from 'lucide-react'
+import { CircleAlert, Coffee } from 'lucide-react'
 import type { StoredTournament } from '../../schemas/tournament'
 import { getTotalRounds, getRoundMatches, getPausingPlayers } from '../../utils/tournamentState'
 import { getTournamentStats } from '../../utils/tournamentStats'
@@ -37,8 +37,11 @@ export function RoundsHistory({
       {/* Legend */}
       <div className="mb-6 sm:mb-7 md:mb-8 text-center">
         <div className="inline-flex items-center gap-2 text-sm text-foreground-muted bg-surface/40 rounded-lg px-4 py-2.5">
-          <span className="text-foreground-muted">{t('results.rounds.legend.label')}:</span>
-          <span>{t('results.rounds.legend.description')}</span>
+          <CircleAlert className="w-4 h-4 text-[var(--color-padel-yellow)]" aria-hidden="true" />
+          <span>
+            <strong className="font-semibold text-foreground">#N</strong>{' '}
+            {t('results.rounds.legend.description')}
+          </span>
         </div>
       </div>
 

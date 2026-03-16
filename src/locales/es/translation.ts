@@ -292,8 +292,7 @@ const translation = {
       round: 'Ronda {{number}}',
       pausing: 'Descansando',
       emptyState: 'Aún no se han jugado rondas.',      legend: {
-        label: 'Leyenda',
-        description: 'Los números como (#1), (#2) muestran el ranking del jugador de la ronda anterior',
+        description: 'indica la posición del jugador en la clasificación al iniciar la ronda',
       },    },
     insights: {
       title: 'Análisis del Torneo',

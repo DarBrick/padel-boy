@@ -297,8 +297,7 @@ const translation = {
       pausing: 'Pausing',
       emptyState: 'No rounds have been played yet.',
       legend: {
-        label: 'Legend',
-        description: 'Numbers like (#1), (#2) show player rank from previous round',
+        description: 'indicates player position in the classification going into the round',
       },
     },
     insights: {
