@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Line } from 'recharts'
+import { Bar, Cell, LabelList, Line } from 'recharts'
 import { CircleSlash2, Scale } from 'lucide-react'
 import type { PlayerStanding } from '../../utils/tournamentStats'
 import type { StoredTournament } from '../../schemas/tournament'
@@ -19,7 +19,6 @@ interface PlayerDetailCardProps {
 
 export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps) {
   const { t } = useTranslation()
-  const [activeScoreIndex, setActiveScoreIndex] = useState<number | null>(null)
   const [activeRankIndex, setActiveRankIndex] = useState<number | null>(null)
   const [activeBalanceIndex, setActiveBalanceIndex] = useState<number | null>(null)
 
@@ -51,6 +50,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   const chartData = playerProgression.map((round, idx) => ({
     round: progression.rounds[idx],
     points: round.totalPointsWithSitting,
+    roundPoints: round.totalPointsWithSitting - (idx > 0 ? playerProgression[idx - 1].totalPointsWithSitting : 0),
     rank: round.rank,
     balance: round.balance,
     outcome: round.outcome,
@@ -59,8 +59,8 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
   // Calculate chart axis ranges
   const stats = getTournamentStats(tournament)
   const standingsByPlayerIndex = new Map(stats.standings.map(playerStanding => [playerStanding.index, playerStanding.rank]))
-  const chartMaxScore = stats.standings.length > 0 ? stats.standings[0].totalPointsWithSitting : 100
   const totalPlayers = tournament.players.length
+  const maxRoundPoints = chartData.length > 0 ? Math.max(...chartData.map(point => point.roundPoints)) : 0
   const balanceValues = chartData.map(point => point.balance)
   const balanceMin = Math.min(0, ...balanceValues)
   const balanceMax = Math.max(0, ...balanceValues)
@@ -125,56 +125,42 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
       {/* Score Progression Chart */}
       {chartData.length > 0 && (
         <ChartContainer
-          chartType="line"
+          chartType="bar"
           data={chartData}
           height={220}
           title={t('results.playerDetail.scoreProgression')}
           xAxisDataKey="round"
           xAxisLabel={t('results.insights.progression.round')}
-          yAxisDomain={[0, chartMaxScore]}
+          yAxisDomain={[0, Math.max(5, maxRoundPoints + 1)]}
           hideTicks
-          tooltipActive={activeScoreIndex !== null}
-          tooltipFormatter={(value: number | undefined) => 
-            value !== undefined ? [`${value} ${t('results.playerDetail.pointsShort')}`, t('results.standings.totalPoints')] : ['', '']
-          }
+          tooltipActive={false}
           chartProps={{
-            onClick: (data) => {
-              if (data?.activeTooltipIndex !== undefined) {
-                setActiveScoreIndex(
-                  activeScoreIndex === data.activeTooltipIndex ? null : data.activeTooltipIndex
-                )
-              }
-            },
+            margin: { top: 32, right: 5, bottom: 5, left: 5 },
+            barCategoryGap: '52%',
             style: { cursor: 'pointer', outline: 'none' },
           }}
         >
-          <Line
-            type="monotone"
-            dataKey="points"
-            stroke={NEUTRAL_STROKE}
-            strokeWidth={2}
-            isAnimationActive={false}
-            dot={(props: any) => {
-              const { cx, cy, payload, index } = props
-              const outcome = payload.outcome
+          <Bar dataKey="roundPoints" barSize={12} radius={[6, 6, 0, 0]} isAnimationActive={false}>
+            {chartData.map((point, index) => {
               let fill = NEUTRAL_STROKE
-              if (outcome === 'won') fill = 'var(--color-padel-yellow)'
-              else if (outcome === 'paused') fill = PAUSED_STROKE
-              const isActive = activeScoreIndex === index
+              if (point.outcome === 'won') fill = 'var(--color-padel-yellow)'
+              else if (point.outcome === 'paused') fill = PAUSED_STROKE
+
               return (
-                <circle 
-                  cx={cx} 
-                  cy={cy} 
-                  r={isActive ? 9 : 7} 
-                  fill={fill} 
-                  stroke={fill} 
-                  strokeWidth={isActive ? 2 : 1}
+                <Cell
+                  key={`score-round-${index}`}
+                  fill={fill}
                 />
               )
-            }}
-            activeDot={false}
-            label={(props: any) => <text x={props.x} y={props.y - 12} fill={LABEL_COLOR} fontSize="11" fontWeight="500" textAnchor="middle">{props.value}</text>}
-          />
+            })}
+            <LabelList
+              dataKey="roundPoints"
+              position="top"
+              fill={LABEL_COLOR}
+              fontSize={11}
+              fontWeight={500}
+            />
+          </Bar>
         </ChartContainer>
       )}
 
@@ -190,10 +176,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           yAxisDomain={[1, totalPlayers]}
           yAxisReversed
           hideTicks
-          tooltipActive={activeRankIndex !== null}
-          tooltipFormatter={(value: number | undefined) => 
-            value !== undefined ? [`#${value}`, t('results.standings.rank')] : ['', '']
-          }
+          tooltipActive={false}
           chartProps={{
             onClick: (data) => {
               if (data?.activeTooltipIndex !== undefined) {
@@ -246,10 +229,7 @@ export function PlayerDetailCard({ standing, tournament }: PlayerDetailCardProps
           xAxisLabel={t('results.insights.progression.round')}
           yAxisDomain={balanceChartDomain}
           hideTicks
-          tooltipActive={activeBalanceIndex !== null}
-          tooltipFormatter={(value: number | undefined) =>
-            value !== undefined ? [`${formatSignedValue(value)}`, t('results.standings.balance')] : ['', '']
-          }
+          tooltipActive={false}
           chartProps={{
             onClick: (data) => {
               if (data?.activeTooltipIndex !== undefined) {

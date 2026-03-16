@@ -15,6 +15,7 @@ interface ChartSpecificProps {
   margin?: { top?: number; right?: number; bottom?: number; left?: number }
   onClick?: (data: any) => void
   style?: React.CSSProperties
+  barCategoryGap?: string | number
 }
 
 interface ChartContainerProps {

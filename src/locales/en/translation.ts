@@ -275,7 +275,7 @@ const translation = {
       pointsFromPausing: 'Pausing Points',
       totalPointsWithSitting: 'Total Points',
       pointsShort: 'pts',
-      scoreProgression: 'Score Progression',
+      scoreProgression: 'Points per Round',
       rankProgression: 'Rank Change',
       balanceProgression: 'Balance Change',
       partnerships: 'Partnerships',

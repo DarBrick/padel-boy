@@ -271,7 +271,7 @@ const translation = {
       pointsFromPausing: 'Puntos de Pausa',
       totalPointsWithSitting: 'Puntos Totales',
       pointsShort: 'pts',
-      scoreProgression: 'Progresión de Puntuación',
+      scoreProgression: 'Puntos por ronda',
       rankProgression: 'Cambio en la clasificación',
       balanceProgression: 'Cambio de balance',
       partnerships: 'Parejas',
