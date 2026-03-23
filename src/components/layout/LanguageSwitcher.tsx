@@ -18,18 +18,45 @@ export function LanguageSwitcher() {
   const { i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [openUpward, setOpenUpward] = useState(false)
+  const [menuPosition, setMenuPosition] = useState({ left: 0, top: 0, width: 192 })
   const buttonRef = useRef<HTMLButtonElement>(null)
   const currentLang = languages.find(lang => lang.code === i18n.language) || languages[0]
 
   useEffect(() => {
-    if (isOpen && buttonRef.current) {
+    const updateMenuPosition = () => {
+      if (!buttonRef.current) {
+        return
+      }
+
       const buttonRect = buttonRef.current.getBoundingClientRect()
+      const horizontalMargin = 8
+      const dropdownWidth = Math.min(192, window.innerWidth - horizontalMargin * 2)
       const dropdownHeight = languages.length * 48 // approximate height per item
       const spaceBelow = window.innerHeight - buttonRect.bottom
       const spaceAbove = buttonRect.top
-      
+      const shouldOpenUpward = spaceBelow < dropdownHeight && spaceAbove > spaceBelow
+
       // Open upward if not enough space below but more space above
-      setOpenUpward(spaceBelow < dropdownHeight && spaceAbove > spaceBelow)
+      setOpenUpward(shouldOpenUpward)
+
+      const preferredLeft = buttonRect.right - dropdownWidth
+      const maxLeft = window.innerWidth - dropdownWidth - horizontalMargin
+      setMenuPosition({
+        left: Math.max(horizontalMargin, Math.min(preferredLeft, maxLeft)),
+        top: shouldOpenUpward ? buttonRect.top - 8 : buttonRect.bottom + 8,
+        width: dropdownWidth,
+      })
+    }
+
+    if (isOpen) {
+      updateMenuPosition()
+      window.addEventListener('resize', updateMenuPosition)
+      window.addEventListener('scroll', updateMenuPosition, true)
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateMenuPosition)
+      window.removeEventListener('scroll', updateMenuPosition, true)
     }
   }, [isOpen])
 
@@ -39,12 +66,15 @@ export function LanguageSwitcher() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative inline-block">
       <button
+        type="button"
         ref={buttonRef}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-3 py-2 rounded-lg bg-surface/70 hover:bg-surface-muted transition-colors"
         aria-label="Change language"
+        aria-expanded={isOpen}
+        aria-haspopup="menu"
       >
         <Languages className="w-5 h-5 text-foreground" />
         <span className="text-foreground text-sm font-medium">{currentLang.flag}</span>
@@ -59,9 +89,15 @@ export function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
           />
           
-          <div className={`absolute right-0 w-48 bg-background-elevated border border-border/70 rounded-lg shadow-xl z-20 ${
-            openUpward ? 'bottom-full mb-2' : 'top-full mt-2'
-          }`}>
+          <div
+            className="fixed w-48 bg-background-elevated border border-border/70 rounded-lg shadow-xl z-20"
+            style={{
+              left: menuPosition.left,
+              width: menuPosition.width,
+              top: openUpward ? 'auto' : menuPosition.top,
+              bottom: openUpward ? window.innerHeight - menuPosition.top : 'auto',
+            }}
+          >
             {languages.map((lang) => (
               <button
                 key={lang.code}
