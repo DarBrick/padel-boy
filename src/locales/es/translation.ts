@@ -199,6 +199,15 @@ const translation = {
     matchesRemaining_other: '{{count}} partidos restantes',
     courtLabel: 'Pista {{number}}',
     viewStandings: 'Ver clasificación',
+    reopen: {
+      button: 'Reabrir torneo',
+      title: '¿Reabrir torneo finalizado?',
+      description: 'Reabrir un torneo finalizado crea una nueva copia activa con un ID nuevo y elimina la versión finalizada del historial. Esto evita inconsistencias de datos compartidos entre dispositivos. ¿Quieres continuar?',
+      deleteAndContinue: 'Eliminar anterior y continuar',
+      cancel: 'Cancelar',
+      successDeleted: 'El torneo se reabrió y se eliminó la versión finalizada anterior.',
+      error: 'No se pudo reabrir el torneo. Inténtalo de nuevo.',
+    },
     match: {
       vs: 'vs',
       selectScore: 'Selecciona la puntuación para este equipo:',

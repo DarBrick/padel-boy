@@ -1,5 +1,6 @@
 import type { StoredTournament, StoredMatch } from '../schemas/tournament'
-import { extractTimestampFromId } from './tournamentId'
+import { extractTimestampFromId, generateTournamentId } from './tournamentId'
+import { getNextReopenedTournamentName } from './tournament'
 
 // ── Round Calculations ──────────────────────────────────────────────
 
@@ -176,6 +177,35 @@ export function finishTournament(
     ...tournament,
     matches: finalMatches,
     finishedAt: Date.now(),
+  }
+}
+
+export function createReopenedTournament(
+  tournament: StoredTournament,
+  tournaments: StoredTournament[],
+): StoredTournament {
+  const originalTimestamp = extractTimestampFromId(tournament.id)
+  const existingIds = new Set(tournaments.map((existingTournament) => existingTournament.id))
+
+  let reopenedId = ''
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const candidateId = generateTournamentId(originalTimestamp)
+    if (!existingIds.has(candidateId)) {
+      reopenedId = candidateId
+      break
+    }
+  }
+
+  if (!reopenedId) {
+    throw new Error('Failed to generate a unique reopened tournament ID')
+  }
+
+  const { finishedAt: _finishedAt, ...tournamentWithoutFinishedAt } = tournament
+
+  return {
+    ...tournamentWithoutFinishedAt,
+    id: reopenedId,
+    name: getNextReopenedTournamentName(tournament, tournaments),
   }
 }
 

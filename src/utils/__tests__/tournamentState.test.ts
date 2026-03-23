@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
+  createReopenedTournament,
   getTotalRounds,
   getRoundMatches,
   isRoundComplete,
@@ -16,6 +17,7 @@ import {
   parseRoundParam,
 } from '../tournamentState'
 import type { StoredTournament, StoredMatch } from '../../schemas/tournament'
+import { extractTimestampFromId } from '../tournamentId'
 
 function createBaseTournament(overrides: Partial<StoredTournament> = {}): StoredTournament {
   return {
@@ -349,6 +351,45 @@ describe('tournamentState', () => {
         finishedAt: Date.now(),
       })
       expect(isTournamentFinished(tournament)).toBe(true)
+    })
+  })
+
+  describe('createReopenedTournament', () => {
+    it('creates a new active tournament copy with the same encoded timestamp', () => {
+      const originalTournament = createBaseTournament({
+        id: '00000abcd',
+        name: 'Spring Open',
+        matches: [
+          createMatch([0, 1], [2, 3], true, 0, 5),
+        ],
+        finishedAt: 1710000000000,
+      })
+
+      const reopenedTournament = createReopenedTournament(originalTournament, [originalTournament])
+
+      expect(reopenedTournament).not.toBe(originalTournament)
+      expect(reopenedTournament.id).not.toBe(originalTournament.id)
+      expect(extractTimestampFromId(reopenedTournament.id).getTime()).toBe(
+        extractTimestampFromId(originalTournament.id).getTime(),
+      )
+      expect(reopenedTournament.name).toBe('Spring Open (v2)')
+      expect(reopenedTournament.matches).toEqual(originalTournament.matches)
+      expect(reopenedTournament.players).toEqual(originalTournament.players)
+      expect(reopenedTournament.finishedAt).toBeUndefined()
+      expect(originalTournament.finishedAt).toBe(1710000000000)
+      expect(originalTournament.name).toBe('Spring Open')
+    })
+
+    it('keeps unnamed tournaments unnamed when reopening', () => {
+      const originalTournament = createBaseTournament({
+        id: '00000efgh',
+        finishedAt: 1710000000000,
+      })
+
+      const reopenedTournament = createReopenedTournament(originalTournament, [originalTournament])
+
+      expect(reopenedTournament.name).toBeUndefined()
+      expect(reopenedTournament.finishedAt).toBeUndefined()
     })
   })
 

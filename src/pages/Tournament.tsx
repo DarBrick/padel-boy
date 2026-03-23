@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useParams, useLocation, useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
-import { ArrowLeft, Share2, Download, LoaderCircle, QrCode } from 'lucide-react'
+import { ArrowLeft, Share2, Download, LoaderCircle, QrCode, Power } from 'lucide-react'
 import { useTournaments } from '../stores/tournaments'
-import { isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
+import { createReopenedTournament, isTournamentFinished as checkIsTournamentFinished } from '../utils/tournamentState'
 import { shareTournament } from '../utils/shareHelper'
 import { exportTournamentResultsPdf } from '../utils/pdfExport'
 import { getTournamentQrAvailability } from '../utils/qrExport'
@@ -17,10 +17,12 @@ export function Tournament() {
   const { id } = useParams<{ id: string }>()
   const location = useLocation()
   const navigate = useNavigate()
-  const { getTournament } = useTournaments()
+  const { tournaments, addTournament, deleteTournament, getTournament } = useTournaments()
   const [isSharing, setIsSharing] = useState(false)
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
   const [isExportingPdf, setIsExportingPdf] = useState(false)
+  const [isReopenModalOpen, setIsReopenModalOpen] = useState(false)
+  const [isReopening, setIsReopening] = useState(false)
   
   const tournament = getTournament(id!)
   
@@ -113,6 +115,30 @@ export function Tournament() {
     }
   }
 
+  const handleReopen = async (deleteOriginal: boolean) => {
+    if (!tournament || !isTournamentFinished || isReopening) return
+
+    setIsReopening(true)
+
+    try {
+      const reopenedTournament = createReopenedTournament(tournament, tournaments)
+
+      addTournament(reopenedTournament)
+      setIsReopenModalOpen(false)
+      navigate(`/tournament/${reopenedTournament.id}`, { replace: deleteOriginal })
+
+      if (deleteOriginal) {
+        deleteTournament(tournament.id)
+      }
+
+      toast.success(t('tournament.reopen.successDeleted'))
+    } catch (error) {
+      toast.error(t('tournament.reopen.error'))
+    } finally {
+      setIsReopening(false)
+    }
+  }
+
   return (
     <div className="space-y-6 sm:space-y-7 md:space-y-8">
       {/* Navigation buttons */}
@@ -145,6 +171,14 @@ export function Tournament() {
             label={isExportingPdf ? t('results.export.loading') : t('results.export.label')}
           />
         )}
+        {isTournamentFinished && (
+          <IconButton
+            onClick={() => setIsReopenModalOpen(true)}
+            disabled={isReopening}
+            icon={Power}
+            label={t('tournament.reopen.button')}
+          />
+        )}
       </div>
 
       {/* Tournament content */}
@@ -159,6 +193,35 @@ export function Tournament() {
           tournament={tournament}
           onClose={() => setIsQrModalOpen(false)}
         />
+      )}
+
+      {isReopenModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="w-full max-w-md rounded-lg border border-border bg-background-elevated p-6">
+            <h3 className="mb-2 text-xl font-semibold text-foreground sm:text-2xl">
+              {t('tournament.reopen.title')}
+            </h3>
+            <p className="mb-6 text-foreground-muted">
+              {t('tournament.reopen.description')}
+            </p>
+            <div className="flex flex-col gap-3">
+              <button
+                onClick={() => handleReopen(true)}
+                disabled={isReopening}
+                className="w-full rounded-lg bg-danger px-4 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-rose-500 disabled:cursor-not-allowed disabled:opacity-60 min-h-[44px]"
+              >
+                {t('tournament.reopen.deleteAndContinue')}
+              </button>
+              <button
+                onClick={() => setIsReopenModalOpen(false)}
+                disabled={isReopening}
+                className="w-full rounded-lg bg-surface px-4 py-2.5 text-base font-medium text-foreground-muted transition-colors hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-60 min-h-[44px]"
+              >
+                {t('tournament.reopen.cancel')}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

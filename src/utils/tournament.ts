@@ -1,4 +1,8 @@
 import type { TFunction } from 'i18next'
+import type { StoredTournament } from '../schemas/tournament'
+import { extractTimestampFromId } from './tournamentId'
+
+const REOPEN_VERSION_PATTERN = /\s+\(v(\d+)\)$/i
 
 function getOrdinalSuffix(day: number, language: string): string {
   if (language === 'en') {
@@ -56,3 +60,38 @@ export function generateTournamentName(
   
   return `${typeName} ${dayOfWeek}, ${month} ${day}${ordinalSuffix}`
 }
+
+  function getVersionedBaseName(name: string): string {
+    return name.replace(REOPEN_VERSION_PATTERN, '').trim()
+  }
+
+  function getVersionNumber(name: string): number {
+    const match = name.match(REOPEN_VERSION_PATTERN)
+    return match ? parseInt(match[1], 10) : 1
+  }
+
+  export function getNextReopenedTournamentName(
+    tournament: StoredTournament,
+    tournaments: StoredTournament[],
+  ): string | undefined {
+    if (!tournament.name) {
+      return undefined
+    }
+
+    const baseName = getVersionedBaseName(tournament.name)
+    const sourceTimestamp = extractTimestampFromId(tournament.id).getTime()
+
+    const maxVersion = tournaments.reduce((currentMax, candidate) => {
+      if (!candidate.name || getVersionedBaseName(candidate.name) !== baseName) {
+        return currentMax
+      }
+
+      if (extractTimestampFromId(candidate.id).getTime() !== sourceTimestamp) {
+        return currentMax
+      }
+
+      return Math.max(currentMax, getVersionNumber(candidate.name))
+    }, 1)
+
+    return `${baseName} (v${maxVersion + 1})`
+  }

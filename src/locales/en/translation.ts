@@ -201,6 +201,15 @@ const translation = {
     matchesRemaining_other: '{{count}} matches remaining',
     courtLabel: 'Court {{number}}',
     viewStandings: 'View Standings',
+    reopen: {
+      button: 'Reopen Tournament',
+      title: 'Reopen finished tournament?',
+      description: 'Reopening a finished tournament creates a new active copy with a new ID and deletes the finished version from your history. This avoids shared-data inconsistencies across devices. Do you want to continue?',
+      deleteAndContinue: 'Delete old and continue',
+      cancel: 'Cancel',
+      successDeleted: 'Tournament reopened and previous finished version deleted.',
+      error: 'Failed to reopen tournament. Please try again.',
+    },
     match: {
       vs: 'vs',
       selectScore: 'Select score for this team:',

@@ -199,6 +199,15 @@ const translation = {
     matchesRemaining_other: 'Pozostało {{count}} meczów',
     courtLabel: 'Kort {{number}}',
     viewStandings: 'Zobacz klasyfikację',
+    reopen: {
+      button: 'Otwórz ponownie',
+      title: 'Otworzyć ponownie zakończony turniej?',
+      description: 'Ponowne otwarcie zakończonego turnieju tworzy nową aktywną kopię z nowym ID i usuwa zakończoną wersję z historii. To zapobiega niespójnościom danych współdzielonych między urządzeniami. Czy chcesz kontynuować?',
+      deleteAndContinue: 'Usuń stary i kontynuuj',
+      cancel: 'Anuluj',
+      successDeleted: 'Turniej został otwarty ponownie, a poprzednia zakończona wersja usunięta.',
+      error: 'Nie udało się ponownie otworzyć turnieju. Spróbuj ponownie.',
+    },
     match: {
       vs: 'vs',
       selectScore: 'Wybierz wynik dla tej drużyny:',
